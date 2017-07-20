@@ -11,8 +11,9 @@ public enum CameraState
 public class CameraController : MonoBehaviour
 {
     private Vector3 lerp;
-    public Transform TopDownCameraPosition;
-    public Transform SideScrollCameraPosition;
+    private Quaternion slerp;
+    public Transform topDownCameraPosition;
+    public Transform sideScrollCameraPosition;
     public float lerpSpeed = 1.0f;
     public float lerpDistance = 0.01f;
     private bool isLerpingCamera = false;
@@ -38,16 +39,32 @@ public class CameraController : MonoBehaviour
         switch(myState)
         {
             case CameraState.SIDESCROLL:
-                while(Vector3.Distance(transform.position,TopDownCameraPosition.position)>= lerpDistance)
+                myState = CameraState.TOPDOWN;
+                while (Vector3.Distance(transform.position,topDownCameraPosition.position)>= lerpDistance)
                 {
-                    lerp = Vector3.Lerp(transform.position, TopDownCameraPosition.position, lerpSpeed);
+                    lerp = Vector3.Lerp(transform.position, topDownCameraPosition.position, lerpSpeed);
                     transform.position = lerp;
+                    slerp = Quaternion.Slerp(transform.rotation, topDownCameraPosition.rotation, lerpSpeed);
+                    transform.rotation = slerp;
                     yield return null;
                 }
                 break;
+
             case CameraState.TOPDOWN:
+
+                myState = CameraState.SIDESCROLL;
+
+                while (Vector3.Distance(transform.position,sideScrollCameraPosition.position) >= lerpDistance)
+                {
+                    lerp = Vector3.Lerp(transform.position, sideScrollCameraPosition.position, lerpSpeed);
+                    transform.position = lerp;
+                    slerp = Quaternion.Slerp(transform.rotation, sideScrollCameraPosition.rotation, lerpSpeed);
+                    transform.rotation = slerp;
+                    yield return null;
+                }
                 break;
         }
 
+        isLerpingCamera = false;
     }
 }

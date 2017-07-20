@@ -18,12 +18,13 @@ public class PlayerController : MonoBehaviour
     public float fireRatio = 0.10f;
     private float fireTimer;
     public CameraController cameraInstance;
+    private Quaternion sideScrollerRotation;
   
 
     void Start()
     {
-       cameraInstance.myState = CameraState.SIDESCROLL;
         fireTimer = fireRatio;
+        sideScrollerRotation = transform.rotation;
     }
 
     void Update()
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
             case CameraState.SIDESCROLL:
                 Move(Vector3.up, "Vertical");
                 Move(Vector3.right, "Horizontal");
+                transform.rotation = sideScrollerRotation;
                 break;
             case CameraState.TOPDOWN:
                 Move(Vector3.right, "Vertical");
