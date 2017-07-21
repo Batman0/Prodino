@@ -29,29 +29,32 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        switch (cameraInstance.myState)
+        if (!cameraInstance.isLerpingCamera)
         {
-            case CameraState.SIDESCROLL:
-                Move(Vector3.up, "Vertical");
-                Move(Vector3.right, "Horizontal");
-                transform.rotation = sideScrollerRotation;
-                break;
-            case CameraState.TOPDOWN:
-                Move(Vector3.right, "Vertical");
-                Move(Vector3.back, "Horizontal");
-                TurnAroundPlayer();
-                break;
-        }
-        if (Input.GetMouseButton(0))
-        {
-            if (fireTimer < fireRatio)
+            switch (cameraInstance.myState)
             {
-                fireTimer += Time.deltaTime;
+                case CameraState.SIDESCROLL:
+                    Move(Vector3.up, "Vertical");
+                    Move(Vector3.right, "Horizontal");
+                    transform.rotation = sideScrollerRotation;
+                    break;
+                case CameraState.TOPDOWN:
+                    Move(Vector3.forward, "Vertical");
+                    Move(Vector3.right, "Horizontal");
+                    TurnAroundPlayer();
+                    break;
             }
-            else
+            if (Input.GetMouseButton(0))
             {
-                Shoot();
-                fireTimer = 0.00f;
+                if (fireTimer < fireRatio)
+                {
+                    fireTimer += Time.deltaTime;
+                }
+                else
+                {
+                    Shoot();
+                    fireTimer = 0.00f;
+                }
             }
         }
     }

@@ -10,13 +10,16 @@ public enum CameraState
 
 public class CameraController : MonoBehaviour
 {
+    public float timeScaleValueLerping = 0.0f;
+    public float timeScaleValueNotLerping = 1.0f;
     private Vector3 lerp;
     private Quaternion slerp;
     public Transform topDownCameraPosition;
     public Transform sideScrollCameraPosition;
     public float lerpSpeed = 1.0f;
     public float lerpDistance = 0.01f;
-    private bool isLerpingCamera = false;
+    [HideInInspector]
+    public bool isLerpingCamera = false;
     public CameraState myState;
 
     void Start()
@@ -36,7 +39,8 @@ public class CameraController : MonoBehaviour
 
     IEnumerator LerpCamera()
     {
-        switch(myState)
+        Time.timeScale = timeScaleValueLerping;
+        switch (myState)
         {
             case CameraState.SIDESCROLL:
                 myState = CameraState.TOPDOWN;
@@ -48,6 +52,7 @@ public class CameraController : MonoBehaviour
                     transform.rotation = slerp;
                     yield return null;
                 }
+                transform.position = topDownCameraPosition.position;
                 break;
 
             case CameraState.TOPDOWN:
@@ -62,9 +67,10 @@ public class CameraController : MonoBehaviour
                     transform.rotation = slerp;
                     yield return null;
                 }
+                transform.position = sideScrollCameraPosition.position;
                 break;
         }
-
+        Time.timeScale = timeScaleValueNotLerping;
         isLerpingCamera = false;
     }
 }
