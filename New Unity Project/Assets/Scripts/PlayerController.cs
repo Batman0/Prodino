@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraInstance;
     private Quaternion sideScrollerRotation;
   
-
+	private const string playerBulletTag = "PlayerBullet";
     void Start()
     {
         fireTimer = fireRatio;
@@ -76,5 +76,13 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation) as GameObject;
+		bullet.tag = playerBulletTag;
     }
+
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet") {
+			Destroy (this.gameObject);
+			Application.LoadLevel (Application.loadedLevel);
+		}
+	}
 }

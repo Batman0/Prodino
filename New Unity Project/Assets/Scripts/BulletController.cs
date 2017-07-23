@@ -6,7 +6,6 @@ public class BulletController : MonoBehaviour
 {
 
     public float speed = 10.0f;
-
     public float lifeTime = 4.0f;
 
     void Start()
