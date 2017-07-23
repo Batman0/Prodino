@@ -28,4 +28,15 @@ public class BulletController : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Player") {
+			Destroy (other.gameObject);
+			Application.LoadLevel (Application.loadedLevel);
+		}
+
+		if (other.gameObject.tag == "Enemy") {
+			Destroy (other.gameObject);
+		}
+	}
+
 }
