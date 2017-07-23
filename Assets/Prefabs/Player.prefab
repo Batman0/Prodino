@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54551036395036478}
   m_Layer: 0
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,7 +312,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   bulletSpawnPoint: {fileID: 4646673417196928}
-  fireRatio: 0
+  fireRatio: 0.5
   cameraInstance: {fileID: 0}
 --- !u!136 &136599450863381510
 CapsuleCollider:
