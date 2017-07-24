@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
 	private float fireTimer;
-    public CameraController cameraInstance;
+    //public CameraController cameraInstance;
     private Quaternion sideScrollerRotation;
 	private const string playerBulletTag = "PlayerBullet";
 	private RaycastHit hit;
@@ -45,9 +45,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!cameraInstance.isLerpingCamera)
+        if (!CameraController.instance.isLerpingCamera)
         {
-            switch (cameraInstance.myState)
+            switch (CameraController.instance.myState)
             {
 			case CameraState.SIDESCROLL:
 				Move (Vector3.up, "Vertical");
