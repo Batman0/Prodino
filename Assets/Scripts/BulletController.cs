@@ -29,12 +29,12 @@ public class BulletController : MonoBehaviour
     }
 
 	void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag == "Player") {
+		if (this.gameObject.tag == "EnemyBullet" && other.gameObject.tag == "Player") {
 			Destroy (other.gameObject);
 			Application.LoadLevel (Application.loadedLevel);
 		}
 
-		if (other.gameObject.tag == "Enemy") {
+		if (this.gameObject.tag == "PlyerBullet" && other.gameObject.tag == "Enemy") {
 			Destroy (other.gameObject);
 		}
 	}

@@ -676,6 +676,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 33210102905888402, guid: 63036bbc69baef74d9a5dfc7c2817048,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 207501932}
     - target: {fileID: 114760266231337890, guid: 63036bbc69baef74d9a5dfc7c2817048,
         type: 2}
       propertyPath: aim
@@ -686,11 +691,6 @@ Prefab:
       propertyPath: cameraInstance
       value: 
       objectReference: {fileID: 376639267}
-    - target: {fileID: 33210102905888402, guid: 63036bbc69baef74d9a5dfc7c2817048,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 207501932}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63036bbc69baef74d9a5dfc7c2817048, type: 2}
   m_IsPrefabParent: 0

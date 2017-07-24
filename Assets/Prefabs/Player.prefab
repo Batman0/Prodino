@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114760266231337890}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
   cameraInstance: {fileID: 0}
   angle: 0
   meleeDistance: 20
-  isInMelee: 0
+  canShoot: 1
 --- !u!136 &136599450863381510
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -334,7 +334,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1152913959614010}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2

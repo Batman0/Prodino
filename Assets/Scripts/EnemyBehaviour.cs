@@ -38,5 +38,10 @@ public class EnemyBehaviour : MonoBehaviour {
 		bullet.tag = enemyBulletTag;
 	}
 
-
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "Player") {
+			Destroy (other.gameObject);
+			Application.LoadLevel (Application.loadedLevel);
+		}
+	}
 }
