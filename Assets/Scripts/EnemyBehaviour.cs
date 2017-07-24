@@ -9,14 +9,25 @@ public class EnemyBehaviour : MonoBehaviour {
 	public GameObject enemyBullet;
 	public Transform enemyBulletSpawn;
 	public bool canShoot = true;
+    public PlayerController player;
 
-	private const string enemyBulletTag = "EnemyBullet";
+
+    private const string enemyBulletTag = "EnemyBullet";
 	// Use this for initialization
 	void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        switch(CameraController.instance.myState)
+        {
+            case CameraState.SIDESCROLL:
+                transform.position = new Vector3(transform.position.x, transform.position.y,0);
+                break;
+            case CameraState.TOPDOWN:
+                transform.position = new Vector3(transform.position.x, 0,transform.position.z);
+                break;
+        }
 		transform.Translate (Vector3.up * speed * Time.deltaTime);
 
 		if (canShoot)

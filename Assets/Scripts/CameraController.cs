@@ -20,10 +20,17 @@ public class CameraController : MonoBehaviour
     public float lerpDistance = 0.01f;
     [HideInInspector]
     public bool isLerpingCamera = false;
+    public static CameraController instance;
     public CameraState myState;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
+        
         myState = CameraState.SIDESCROLL;
     }
 
