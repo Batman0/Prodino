@@ -26,10 +26,15 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
-    private float fireTimer;
+	private float fireTimer;
     public CameraController cameraInstance;
     private Quaternion sideScrollerRotation;
 	private const string playerBulletTag = "PlayerBullet";
+	private RaycastHit hit;
+	public float angle;
+	public float meleeDistance;
+
+	public bool canShoot = true;
 
     void Start()
     {
@@ -69,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
                     break;
             }
-            if (Input.GetMouseButton(0))
+			if (Input.GetMouseButton(0) && canShoot)
             {
                 if (fireTimer < fireRatio)
                 {
@@ -81,6 +86,10 @@ public class PlayerController : MonoBehaviour
                     fireTimer = 0.00f;
                 }
             }
+
+			if (Input.GetMouseButtonDown (1)) {
+				StartCoroutine (Melee ());
+			}
         }
     }
 
@@ -103,4 +112,26 @@ public class PlayerController : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation) as GameObject;
 		bullet.tag = playerBulletTag;
     }
+
+	IEnumerator Melee(){
+		angle = 0;
+
+		while (angle < 180) {
+			canShoot = false;
+			angle += 5;
+			Vector3 initDir = -bulletSpawnPoint.right;
+			Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
+			Vector3 newVector = angleQ * initDir;
+
+			Ray ray = new Ray (transform.position, newVector);
+
+			if (Physics.Raycast (ray, out hit, meleeDistance)) {
+				Destroy (hit.transform.gameObject);
+			}
+			Debug.DrawRay (ray.origin, ray.direction * meleeDistance, Color.magenta);
+
+			yield return null;
+		}  
+		canShoot = true;
+	}
 }
