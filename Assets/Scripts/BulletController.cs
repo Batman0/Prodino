@@ -13,16 +13,6 @@ public class BulletController : MonoBehaviour
         DestroyGameObject();
     }
 
-    void Update()
-    {
-        Move();
-    }
-
-    void Move()
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-    }
-
     void DestroyGameObject()
     {
         Destroy(gameObject, lifeTime);

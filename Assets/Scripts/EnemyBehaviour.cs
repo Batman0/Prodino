@@ -13,22 +13,11 @@ public class EnemyBehaviour : MonoBehaviour {
 
 
     private const string enemyBulletTag = "EnemyBullet";
-	// Use this for initialization
-	void Start () {
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        switch(CameraController.instance.myState)
-        {
-            case CameraState.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x, transform.position.y,0);
-                break;
-            case CameraState.TOPDOWN:
-                transform.position = new Vector3(transform.position.x, 0,transform.position.z);
-                break;
-        }
-		transform.Translate (Vector3.up * speed * Time.deltaTime);
+
+        Move();
 
 		if (canShoot)
 		{
@@ -44,10 +33,25 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 	}
 
-	void Shoot(){
+	protected virtual void Shoot(){
 		GameObject bullet = Instantiate (enemyBullet, enemyBulletSpawn.position, enemyBulletSpawn.rotation) as GameObject;
 		bullet.tag = enemyBulletTag;
-	}
+        bullet.transform.Translate(-Vector3.right * speed * Time.deltaTime,Space.World);
+    }
+
+    protected virtual void Move()
+    {
+        switch (CameraController.instance.myState)
+        {
+            case CameraState.SIDESCROLL:
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                break;
+            case CameraState.TOPDOWN:
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                break;
+        }
+        transform.Translate(Vector3.right* speed * Time.deltaTime);
+    }
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
