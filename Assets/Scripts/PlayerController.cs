@@ -45,11 +45,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!CameraController.instance.isLerpingCamera)
+        if (!GameManager.instance.isLerpingCamera)
         {
-            switch (CameraController.instance.myState)
+            switch (GameManager.instance.cameraState)
             {
-			case CameraState.SIDESCROLL:
+			case State.SIDESCROLL:
 				Move (Vector3.up, "Vertical");
 				Move (Vector3.right, "Horizontal");
 				transform.rotation = sideScrollerRotation;
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 				);
 
                     break;
-                case CameraState.TOPDOWN:
+                case State.TOPDOWN:
                     Move(Vector3.forward, "Vertical");
                     Move(Vector3.right, "Horizontal");
                     TurnAroundPlayer();
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation) as GameObject;
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
 		bullet.tag = playerBulletTag;
     }
 

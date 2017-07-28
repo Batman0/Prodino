@@ -8,11 +8,10 @@ public class Aim : MonoBehaviour
     private Vector3 aimVector;
     private Plane aimPlane;
     private Ray aimRay;
-    public CameraController cameraInstance;
 
     void Update()
     {
-        if (cameraInstance.myState == CameraState.TOPDOWN)
+        if (GameManager.instance.cameraState == State.TOPDOWN)
         {
             aimPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
         }

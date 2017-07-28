@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-
-    public float speed = 10.0f;
+    public float bulletSpeed = 10.0f;
     public float lifeTime = 4.0f;
 
     void Start()
     {
+      
         DestroyGameObject();
+    }
+
+    void FixedUpdate()
+    {
+        switch (this.gameObject.tag)
+        {
+            case "PlayerBullet":
+                transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
+                break;
+            case "EnemyBullet":
+                transform.Translate(-Vector3.right * bulletSpeed * Time.deltaTime);
+                break;
+        }
+        
     }
 
     void DestroyGameObject()
@@ -24,7 +38,7 @@ public class BulletController : MonoBehaviour
 			Application.LoadLevel (Application.loadedLevel);
 		}
 
-		if (this.gameObject.tag == "PlyerBullet" && other.gameObject.tag == "Enemy") {
+		if (this.gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy") {
 			Destroy (other.gameObject);
 		}
 	}

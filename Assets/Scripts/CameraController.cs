@@ -18,28 +18,13 @@ public class CameraController : MonoBehaviour
     public Transform sideScrollCameraPosition;
     public float lerpSpeed = 1.0f;
     public float lerpDistance = 0.01f;
-    [HideInInspector]
-    public bool isLerpingCamera = false;
-    public static CameraController instance;
-    public CameraState myState;
 
-    void Awake()
-    {
-        instance = this;
-    }
-
-    void Start()
-    {
-        
-        myState = CameraState.SIDESCROLL;
-    }
 
     // Update is called once per frame
     void Update ()
     {
-		if(Input.GetKeyDown(KeyCode.Space) && !isLerpingCamera)
-        {
-            isLerpingCamera = true;
+		if( GameManager.instance.isLerpingCamera)
+        { 
             StartCoroutine("LerpCamera");
         }
 	}
@@ -47,10 +32,9 @@ public class CameraController : MonoBehaviour
     IEnumerator LerpCamera()
     {
         Time.timeScale = timeScaleValueLerping;
-        switch (myState)
+        switch (GameManager.instance.cameraState)
         {
-            case CameraState.SIDESCROLL:
-                myState = CameraState.TOPDOWN;
+            case State.SIDESCROLL:
                 while (Vector3.Distance(transform.position,topDownCameraPosition.position)>= lerpDistance)
                 {
                     lerp = Vector3.Lerp(transform.position, topDownCameraPosition.position, lerpSpeed);
@@ -60,12 +44,10 @@ public class CameraController : MonoBehaviour
                     yield return null;
                 }
                 transform.position = topDownCameraPosition.position;
+                GameManager.instance.cameraState = State.TOPDOWN;
                 break;
 
-            case CameraState.TOPDOWN:
-
-                myState = CameraState.SIDESCROLL;
-
+            case State.TOPDOWN:
                 while (Vector3.Distance(transform.position,sideScrollCameraPosition.position) >= lerpDistance)
                 {
                     lerp = Vector3.Lerp(transform.position, sideScrollCameraPosition.position, lerpSpeed);
@@ -75,9 +57,10 @@ public class CameraController : MonoBehaviour
                     yield return null;
                 }
                 transform.position = sideScrollCameraPosition.position;
+                GameManager.instance.cameraState = State.SIDESCROLL;
                 break;
         }
         Time.timeScale = timeScaleValueNotLerping;
-        isLerpingCamera = false;
+        GameManager.instance.isLerpingCamera = false;
     }
 }

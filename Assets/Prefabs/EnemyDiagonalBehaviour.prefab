@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23960986455602990}
   - component: {fileID: 114750449762629942}
   m_Layer: 0
-  m_Name: EnemyWaveBehaviour
+  m_Name: EnemyDiagonalBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1c13343235f0c49a6fa7815d7d1e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpeed: 10
   speed: 10
   timerFire: 0
   fireRatio: 2

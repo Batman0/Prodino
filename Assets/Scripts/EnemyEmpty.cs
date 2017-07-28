@@ -9,6 +9,6 @@ public class EnemyEmpty : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-       // transform.position=new Vector3(transform.position.x,0,0)*-speed*Time.deltaTime;
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 }

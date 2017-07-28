@@ -36,17 +36,16 @@ public class EnemyBehaviour : MonoBehaviour {
 	protected virtual void Shoot(){
 		GameObject bullet = Instantiate (enemyBullet, enemyBulletSpawn.position, enemyBulletSpawn.rotation) as GameObject;
 		bullet.tag = enemyBulletTag;
-        bullet.transform.Translate(-Vector3.right * speed * Time.deltaTime,Space.World);
     }
 
     protected virtual void Move()
     {
-        switch (CameraController.instance.myState)
+        switch (GameManager.instance.cameraState)
         {
-            case CameraState.SIDESCROLL:
+            case State.SIDESCROLL:
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                 break;
-            case CameraState.TOPDOWN:
+            case State.TOPDOWN:
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
                 break;
         }

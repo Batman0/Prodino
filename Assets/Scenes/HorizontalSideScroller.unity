@@ -375,10 +375,8 @@ MonoBehaviour:
   timeScaleValueNotLerping: 1
   topDownCameraPosition: {fileID: 353557677}
   sideScrollCameraPosition: {fileID: 652420205}
-  lerpSpeed: 0.05
+  lerpSpeed: 0.5
   lerpDistance: 0.01
-  isLerpingCamera: 0
-  myState: 0
 --- !u!1001 &559424108
 Prefab:
   m_ObjectHideFlags: 0
@@ -558,7 +556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c6a2a164ccfab44bec90017e894654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraInstance: {fileID: 376639267}
 --- !u!4 &699719386
 Transform:
   m_ObjectHideFlags: 0
@@ -610,6 +607,21 @@ Prefab:
     - target: {fileID: 4363351655778784, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114509695773263052, guid: ad2d962f502c2084ea8f73457f5786f4,
+        type: 2}
+      propertyPath: gm
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114509695773263052, guid: ad2d962f502c2084ea8f73457f5786f4,
+        type: 2}
+      propertyPath: lifeTime
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 114509695773263052, guid: ad2d962f502c2084ea8f73457f5786f4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
@@ -668,24 +680,61 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 33210102905888402, guid: 63036bbc69baef74d9a5dfc7c2817048,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 207501932}
     - target: {fileID: 114760266231337890, guid: 63036bbc69baef74d9a5dfc7c2817048,
         type: 2}
       propertyPath: aim
       value: 
       objectReference: {fileID: 699719386}
-    - target: {fileID: 114760266231337890, guid: 63036bbc69baef74d9a5dfc7c2817048,
+    - target: {fileID: 33210102905888402, guid: 63036bbc69baef74d9a5dfc7c2817048,
         type: 2}
-      propertyPath: cameraInstance
+      propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 376639267}
+      objectReference: {fileID: 207501932}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63036bbc69baef74d9a5dfc7c2817048, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1464305376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1464305377}
+  - component: {fileID: 1464305378}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1464305377
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464305376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1464305378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464305376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f83850263aa84049884b480b8ae4e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLerpingCamera: 0
+  cameraState: 0
 --- !u!1 &1693153699
 GameObject:
   m_ObjectHideFlags: 0
