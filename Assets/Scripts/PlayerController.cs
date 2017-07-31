@@ -50,8 +50,8 @@ public class PlayerController : MonoBehaviour
             switch (GameManager.instance.cameraState)
             {
 			case State.SIDESCROLL:
-				Move (Vector3.up, "Vertical");
-				Move (Vector3.right, "Horizontal");
+				Move (Vector3.up, speed, "Vertical");
+				Move (Vector3.right, speed, "Horizontal");
 				transform.rotation = sideScrollerRotation;
 					
 				transform.position = new Vector3 (
@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour
 
                     break;
                 case State.TOPDOWN:
-                    Move(Vector3.forward, "Vertical");
-                    Move(Vector3.right, "Horizontal");
+                    Move(Vector3.forward, speed, "Vertical");
+                    Move(Vector3.right, speed, "Horizontal");
                     TurnAroundPlayer();
 
 					transform.position = new Vector3 (
@@ -90,14 +90,15 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetMouseButtonDown (1)) {
 				StartCoroutine (Melee ());
 			}
+            GameManager.instance.playerPosition = transform.position;
         }
     }
 
-    void Move(Vector3 moveVector, string axis)
+    void Move(Vector3 moveVector, float speed, string moveAxis)
     {
-        if (Input.GetAxis(axis) < -controllerDeadZone || Input.GetAxis(axis) > controllerDeadZone)
+        if (Input.GetAxis(moveAxis) < -controllerDeadZone || Input.GetAxis(moveAxis) > controllerDeadZone)
         {
-            transform.Translate(moveVector * Input.GetAxis(axis) * speed * Time.deltaTime, Space.World);
+            transform.Translate(moveVector * Input.GetAxis(moveAxis) * speed * Time.deltaTime, Space.World);
         }
     }
 

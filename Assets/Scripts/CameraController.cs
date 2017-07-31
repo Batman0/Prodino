@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,10 @@ public class CameraController : MonoBehaviour
     private Quaternion slerp;
     public Transform topDownCameraPosition;
     public Transform sideScrollCameraPosition;
+    /// <summary>
+    /// The lerp speed. Increase to make it faster, decrease to make it slower.
+    /// </summary>
+    [Range(0.001f, 1.0f)]
     public float lerpSpeed = 1.0f;
     public float lerpDistance = 0.01f;
 

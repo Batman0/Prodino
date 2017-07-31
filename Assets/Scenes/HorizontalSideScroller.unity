@@ -375,7 +375,7 @@ MonoBehaviour:
   timeScaleValueNotLerping: 1
   topDownCameraPosition: {fileID: 353557677}
   sideScrollCameraPosition: {fileID: 652420205}
-  lerpSpeed: 0.5
+  lerpSpeed: 0.006
   lerpDistance: 0.01
 --- !u!1001 &559424108
 Prefab:
@@ -623,6 +623,18 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4793797363457864, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793797363457864, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4793797363457864, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
   m_IsPrefabParent: 0
@@ -734,7 +746,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLerpingCamera: 0
+  backgroundSpeed: 3
   cameraState: 0
+  playerPosition: {x: 0, y: 0, z: 0}
+  backgrounds:
+  - {fileID: 676984978}
+  - {fileID: 2081147338}
 --- !u!1 &1693153699
 GameObject:
   m_ObjectHideFlags: 0
