@@ -12,6 +12,40 @@ public class BulletController : MonoBehaviour
 
     private void Awake()
     {
+        AssignDirection();
+    }
+
+    void Start()
+    {
+        DestroyGameObject();
+    }
+
+    void FixedUpdate()
+    {
+        Move();
+    }
+
+	void OnTriggerEnter(Collider other)
+    {
+		if (gameObject.tag == "EnemyBullet" && other.gameObject.tag == "Player")
+        {
+			Destroy (other.gameObject);
+			Application.LoadLevel (Application.loadedLevel);
+		}
+
+		if (gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy")
+        {
+			Destroy (other.gameObject);
+		}
+	}
+
+    void DestroyGameObject()
+    {
+        Destroy(gameObject, lifeTime);
+    }
+
+    void AssignDirection()
+    {
         if (transform.position.x > GameManager.instance.playerPosition.x)
         {
             isRight = true;
@@ -32,12 +66,7 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        DestroyGameObject();
-    }
-
-    void FixedUpdate()
+    void Move()
     {
         switch (gameObject.tag)
         {
@@ -67,24 +96,4 @@ public class BulletController : MonoBehaviour
                 break;
         }
     }
-
-    void DestroyGameObject()
-    {
-        Destroy(gameObject, lifeTime);
-    }
-
-	void OnTriggerEnter(Collider other)
-    {
-		if (gameObject.tag == "EnemyBullet" && other.gameObject.tag == "Player")
-        {
-			Destroy (other.gameObject);
-			Application.LoadLevel (Application.loadedLevel);
-		}
-
-		if (gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy")
-        {
-			Destroy (other.gameObject);
-		}
-	}
-
 }

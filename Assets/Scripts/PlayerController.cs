@@ -90,7 +90,6 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetMouseButtonDown (1)) {
 				StartCoroutine (Melee ());
 			}
-            GameManager.instance.playerPosition = transform.position;
         }
     }
 
@@ -110,6 +109,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        GameManager.instance.playerPosition = transform.position;
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
 		bullet.tag = playerBulletTag;
     }
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 		while (angle < 180) {
 			canShoot = false;
 			angle += 5;
-			Vector3 initDir = -bulletSpawnPoint.right;
+			Vector3 initDir = -bulletSpawnPoint.forward;
 			Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
 			Vector3 newVector = angleQ * initDir;
 

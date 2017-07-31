@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public bool isLerpingCamera = false;
     public float backgroundSpeed;
     public State cameraState;
+    [HideInInspector]
     public Vector3 playerPosition;
     public GameObject[] backgrounds;
 
