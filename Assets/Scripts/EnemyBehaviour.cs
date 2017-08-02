@@ -10,10 +10,17 @@ public class EnemyBehaviour : MonoBehaviour {
 	public Transform enemyBulletSpawn;
 	public bool canShoot = true;
     public PlayerController player;
+    private Vector3 sideScrollPos;
+    private Vector3? TopDownPos;
+
 
 
     private const string enemyBulletTag = "EnemyBullet";
 
+    void Start()
+    {
+        sideScrollPos = transform.position;
+    }
 	// Update is called once per frame
 	void Update () {
 
@@ -43,13 +50,17 @@ public class EnemyBehaviour : MonoBehaviour {
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                transform.position = new Vector3(transform.position.x,sideScrollPos.y, 0);
                 break;
             case State.TOPDOWN:
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                if(TopDownPos==null)
+                {
+                    TopDownPos = transform.position;
+                }
+                transform.position = new Vector3(transform.position.x, 0, TopDownPos.Value.z);
                 break;
         }
-        transform.Translate(Vector3.right* speed * Time.deltaTime);
+        transform.Translate(Vector3.right* -speed * Time.deltaTime,Space.World);
     }
 
 	void OnTriggerEnter(Collider other){

@@ -11,6 +11,7 @@ public class EnemyCircle : EnemyBehaviour
 
     void Start()
     {
+        radius = Camera.main.orthographicSize;
         offset = transform.position;
         Destroy(this.gameObject, lifeTime);
     }
@@ -20,7 +21,7 @@ public class EnemyCircle : EnemyBehaviour
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
-                transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, radius * Mathf.Sin(Time.time * speed) + offset.y, 0);
+                transform.position = new Vector3(radius * (Mathf.Cos(Time.time * speed))/2 + offset.x, radius * (Mathf.Sin(Time.time * speed))/2 + offset.y, 0);
                 break;
             case State.TOPDOWN:
                 transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, 0, radius * Mathf.Sin(Time.time * speed) + offset.z);

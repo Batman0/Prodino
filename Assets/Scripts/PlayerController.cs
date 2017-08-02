@@ -72,6 +72,11 @@ public class PlayerController : MonoBehaviour
 						Mathf.Clamp (transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
 					);
 
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        StartCoroutine(Melee());
+                    }
+
                     break;
             }
 			if (Input.GetMouseButton(0) && canShoot)
@@ -86,10 +91,6 @@ public class PlayerController : MonoBehaviour
                     fireTimer = 0.00f;
                 }
             }
-
-			if (Input.GetMouseButtonDown (1)) {
-				StartCoroutine (Melee ());
-			}
         }
     }
 

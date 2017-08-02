@@ -92,7 +92,7 @@ public class BulletController : MonoBehaviour
                 }
                 break;
             case "EnemyBullet":
-                transform.Translate(-Vector3.forward * bulletSpeed * Time.deltaTime, Space.World);
+                transform.Translate(-Vector3.right * bulletSpeed * Time.deltaTime, Space.World);
                 break;
         }
     }

@@ -27,7 +27,7 @@ public class EnemyManager : MonoBehaviour {
 		//Spawn dei nemici in ordine di spawn possibile cambiare per farlo essere random o deciso da script senza dover
 		//cambiare gli spawnpoint in sceneview
 		for (int i = 0; i < enemySpawnPoints.Length; i++) {
-            enemyType = Random.Range(0, 2);
+            enemyType = Random.Range(0, enemyPrefab.Length);
 			GameObject enemy = Instantiate (enemyPrefab[enemyType], enemySpawnPoints [i]) as GameObject;
 		}
 		canSpawnHorde = true;
