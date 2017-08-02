@@ -16,12 +16,12 @@ public class EnemySquareBehaviour : EnemyBehaviour
         SquareSideCount += moveVector.magnitude * speed * Time.deltaTime;
     }
 
-    void ChangeMoveVector()
+   /* void ChangeMoveVector()
     {
         if(SquareSideCount >= squareSideLenght)
         {
-            moveVector.
+            moveVector
         }
-    }
+    }*/
 
 }

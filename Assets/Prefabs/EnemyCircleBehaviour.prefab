@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4793797363457864}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: -6488666005112524639, guid: 0000000000000000d000000000000000, type: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23878141204204924}
   - component: {fileID: 114509695773263052}
   - component: {fileID: 54160373844960380}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyCircleBehaviour
   m_TagString: Enemy
   m_Icon: {fileID: 0}
