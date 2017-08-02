@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [HideInInspector]
-    public bool isLerpingCamera = false;
+    public bool canChangeState = false;
     public float backgroundSpeed;
     public State cameraState;
     [HideInInspector]
@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isLerpingCamera)
+        if (Input.GetKeyDown(KeyCode.Space) && !canChangeState)
         {
-            isLerpingCamera = true;
+            canChangeState = true;
         }
         MoveBackgrounds(backgrounds, Vector3.left, backgroundSpeed);
     }

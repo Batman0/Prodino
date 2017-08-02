@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.isLerpingCamera)
+        if (!GameManager.instance.canChangeState)
         {
             switch (GameManager.instance.cameraState)
             {

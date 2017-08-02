@@ -282,7 +282,6 @@ GameObject:
   - component: {fileID: 376639264}
   - component: {fileID: 376639263}
   - component: {fileID: 376639262}
-  - component: {fileID: 376639267}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -353,30 +352,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 376639261}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -20}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -274.37933, y: 49.382812, z: -45.538292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1453629395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &376639267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 376639261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeScaleValueLerping: 0
-  timeScaleValueNotLerping: 1
-  topDownCameraPosition: {fileID: 353557677}
-  sideScrollCameraPosition: {fileID: 652420205}
-  lerpSpeed: 0.006
-  lerpDistance: 0.01
 --- !u!1 &425058900 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: ca016648f2a80eb40b33e049ff629434, type: 3}
@@ -624,11 +606,62 @@ Prefab:
       objectReference: {fileID: 699719386}
     - target: {fileID: 1488357268851966, guid: 63036bbc69baef74d9a5dfc7c2817048, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63036bbc69baef74d9a5dfc7c2817048, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1453629393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1453629395}
+  - component: {fileID: 1453629394}
+  m_Layer: 0
+  m_Name: Cameras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1453629394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1453629393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeScaleValueLerping: 0
+  timeScaleValueNotLerping: 1
+  topDownCameraPosition: {fileID: 353557677}
+  sideScrollCameraPosition: {fileID: 652420205}
+  cameras:
+  - {fileID: 376639266}
+  - {fileID: 1708933695}
+  lerpSpeed: 0.103
+  lerpDistance: 0.01
+--- !u!4 &1453629395
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1453629393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 274.37933, y: -46.382812, z: 25.538294}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 376639266}
+  - {fileID: 1708933695}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1464305376
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f83850263aa84049884b480b8ae4e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLerpingCamera: 0
+  canChangeState: 0
   backgroundSpeed: 3
   cameraState: 0
   playerPosition: {x: 0, y: 0, z: 0}
@@ -766,7 +799,6 @@ GameObject:
   - component: {fileID: 1708933693}
   - component: {fileID: 1708933692}
   - component: {fileID: 1708933691}
-  - component: {fileID: 1708933690}
   m_Layer: 0
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -774,23 +806,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1708933690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1708933689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeScaleValueLerping: 0
-  timeScaleValueNotLerping: 1
-  topDownCameraPosition: {fileID: 353557677}
-  sideScrollCameraPosition: {fileID: 652420205}
-  lerpSpeed: 0.006
-  lerpDistance: 0.01
 --- !u!81 &1708933691
 AudioListener:
   m_ObjectHideFlags: 0
@@ -854,12 +869,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1708933689}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -20}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -274.37933, y: 49.382812, z: -45.538292}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 1453629395}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1781955187 stripped
 Transform:
