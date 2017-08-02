@@ -8,10 +8,6 @@ public class EnemyManager : MonoBehaviour {
 	public float enemySpawnDelay;
 	public GameObject []enemyPrefab;
     private int enemyType;
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,7 +24,14 @@ public class EnemyManager : MonoBehaviour {
 		//cambiare gli spawnpoint in sceneview
 		for (int i = 0; i < enemySpawnPoints.Length; i++) {
             enemyType = Random.Range(0, enemyPrefab.Length);
-			GameObject enemy = Instantiate (enemyPrefab[enemyType], enemySpawnPoints [i]) as GameObject;
+            if(enemyPrefab[enemyType].layer==10)
+            {
+                GameObject enemy = Instantiate(enemyPrefab[enemyType], enemySpawnPoints[0].transform.position, enemyPrefab[enemyType].transform.rotation) as GameObject;
+            }
+            else
+            {
+                GameObject enemy = Instantiate(enemyPrefab[enemyType], enemySpawnPoints[i].transform.position, enemyPrefab[enemyType].transform.rotation) as GameObject;
+            }
 		}
 		canSpawnHorde = true;
 		yield return null;
