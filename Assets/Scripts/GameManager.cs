@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public State cameraState;
     [HideInInspector]
     public Vector3 playerPosition;
+    public Vector3 leftBound;
+    public Vector3 rightBound;
     public GameObject[] backgrounds;
 
     void Awake()
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
     void Start ()
     {
         cameraState = State.SIDESCROLL;
+        leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
+        rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
 	}
 
     // Update is called once per frame

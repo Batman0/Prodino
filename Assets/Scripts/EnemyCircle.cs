@@ -13,7 +13,7 @@ public class EnemyCircle : EnemyBehaviour
     {
         radius = Camera.main.orthographicSize;
         offset = transform.position;
-        Destroy(this.gameObject, lifeTime);
+        Destroy(gameObject, lifeTime);
     }
 
     protected override void Move()

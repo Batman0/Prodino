@@ -138,9 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de49629a70e4f9b408ef029835577979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 4
   timerFire: 0
   fireRatio: 2
+  destructionMargin: 3
   enemyBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   enemyBulletSpawn: {fileID: 4033452196873048}
