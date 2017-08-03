@@ -918,10 +918,12 @@ MonoBehaviour:
   - {fileID: 369624365}
   - {fileID: 500762253}
   canSpawnHorde: 1
-  enemySpawnDelay: 4
+  enemySpawnDelay: 5
   enemyPrefab:
   - {fileID: 1018309814513026, guid: f28cb5205f78c704299d2839c230223c, type: 2}
   - {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+  numberOfEnemies: 20
+  usedSpawnPoints: 
 --- !u!4 &2111443449
 Transform:
   m_ObjectHideFlags: 0
