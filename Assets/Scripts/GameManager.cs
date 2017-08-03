@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [HideInInspector]
     public bool canChangeState = false;
-    //public bool canMoveEnemies;
     public float backgroundSpeed;
     public State cameraState;
     [HideInInspector]

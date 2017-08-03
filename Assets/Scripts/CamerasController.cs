@@ -16,7 +16,7 @@ public class CamerasController : MonoBehaviour
     private Quaternion slerp;
     public Transform topDownCameraPosition;
     public Transform sideScrollCameraPosition;
-    public Transform[] cameras;
+    public GameObject cameras;
     /// <summary>
     /// The lerp speed. Increase to make it faster, decrease to make it slower.
     /// </summary>
@@ -26,33 +26,30 @@ public class CamerasController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update ()
+    void LateUpdate ()
     {
         if (GameManager.instance.canChangeState)
         {
             GameManager.instance.canChangeState = false;
-            Time.timeScale = timeScaleValueLerping;
-            foreach (Transform camera in cameras)
-            {
-                StartCoroutine(LerpCamera(camera));
-            }
+            StartCoroutine("LerpCamera");
         }
 	}
 
-    IEnumerator LerpCamera(Transform transform)
+    IEnumerator LerpCamera()
     {
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
-                while (Vector3.Distance(transform.position, topDownCameraPosition.position) >= lerpDistance)
+                while (Vector3.Distance(cameras.transform.position, topDownCameraPosition.position) >= lerpDistance)
                 {
-                    lerp = Vector3.Lerp(transform.position, topDownCameraPosition.position, lerpSpeed);
-                    transform.position = lerp;
-                    slerp = Quaternion.Slerp(transform.rotation, topDownCameraPosition.rotation, lerpSpeed);
-                    transform.rotation = slerp;
+                    lerp = Vector3.Lerp(cameras.transform.position, topDownCameraPosition.position, lerpSpeed);
+                    cameras.transform.position = lerp;
+                    slerp = Quaternion.Slerp(cameras.transform.rotation, topDownCameraPosition.rotation, lerpSpeed);
+                    cameras.transform.rotation = slerp;
                     yield return null;
                 }
-                transform.position = topDownCameraPosition.position;
+                cameras.transform.position = topDownCameraPosition.position;
+                cameras.transform.rotation = topDownCameraPosition.rotation;
                 if (GameManager.instance.cameraState != State.TOPDOWN)
                 {
                     GameManager.instance.cameraState = State.TOPDOWN;
@@ -60,24 +57,23 @@ public class CamerasController : MonoBehaviour
                 break;
 
             case State.TOPDOWN:
-                while (Vector3.Distance(transform.position, sideScrollCameraPosition.position) >= lerpDistance)
+                while (Vector3.Distance(cameras.transform.position, sideScrollCameraPosition.position) >= lerpDistance)
                 {
-                    lerp = Vector3.Lerp(transform.position, sideScrollCameraPosition.position, lerpSpeed);
-                    transform.position = lerp;
-                    slerp = Quaternion.Slerp(transform.rotation, sideScrollCameraPosition.rotation, lerpSpeed);
-                    transform.rotation = slerp;
+                    Debug.Log("Sono una mignotta");
+                    lerp = Vector3.Lerp(cameras.transform.position, sideScrollCameraPosition.position, lerpSpeed);
+                    cameras.transform.position = lerp;
+                    slerp = Quaternion.Slerp(cameras.transform.rotation, sideScrollCameraPosition.rotation, lerpSpeed);
+                    cameras.transform.rotation = slerp;
                     yield return null;
                 }
-                transform.position = sideScrollCameraPosition.position;
+                cameras.transform.position = sideScrollCameraPosition.position;
+                cameras.transform.rotation = sideScrollCameraPosition.rotation;
                 if (GameManager.instance.cameraState != State.SIDESCROLL)
                 {
                     GameManager.instance.cameraState = State.SIDESCROLL;
                 }
                 break;
         }
-        if (Time.timeScale != timeScaleValueNotLerping)
-        {
-            Time.timeScale = timeScaleValueNotLerping;
-        }
+        yield return null;
     }
 }

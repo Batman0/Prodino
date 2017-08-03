@@ -14,19 +14,28 @@ public class EnemyBehaviour : MonoBehaviour {
 	public Transform enemyBulletSpawn;
 	public bool canShoot = true;
     public PlayerController player;
-    private Vector3 sideScrollPos;
-    private Vector3? TopDownPos;
+    private Vector3? originalPos;
 
     private const string enemyBulletTag = "EnemyBullet";
 
-    void Start()
+    void Awake()
     {
-        sideScrollPos = transform.position;
+        originalPos = new Vector3(transform.position.x, transform.position.y, 0);
+        switch (GameManager.instance.cameraState)
+        {
+            case State.SIDESCROLL:
+                transform.position = new Vector3(transform.position.x, originalPos.Value.y, 0);
+                break;
+            case State.TOPDOWN:
+                transform.position = new Vector3(transform.position.x, 0, originalPos.Value.z);
+                break;
+        }
     }
 	// Update is called once per frame
 	void Update ()
     {
         Move();
+        ChangePerspective();
         Shoot();
         DestroyGameobject();
     }
@@ -53,20 +62,29 @@ public class EnemyBehaviour : MonoBehaviour {
 
     protected virtual void Move()
     {
-        switch (GameManager.instance.cameraState)
-        {
-            case State.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x, sideScrollPos.y, 0);
-                break;
-            case State.TOPDOWN:
-                if (TopDownPos == null)
-                {
-                    TopDownPos = transform.position;
-                }
-                transform.position = new Vector3(transform.position.x, 0, TopDownPos.Value.z);
-                break;
-        }
         transform.Translate(Vector3.right* -speed * Time.deltaTime,Space.World);
+    }
+
+    protected virtual void ChangePerspective()
+    {
+        if (GameManager.instance.canChangeState)
+        {
+            switch (GameManager.instance.cameraState)
+            {
+                case State.SIDESCROLL:
+                    if (transform.position != new Vector3(transform.position.x, 0, originalPos.Value.z))
+                    {
+                        transform.position = new Vector3(transform.position.x, 0, originalPos.Value.z);
+                    }
+                    break;
+                case State.TOPDOWN:
+                    if (transform.position != new Vector3(transform.position.x, originalPos.Value.y, 0))
+                    {
+                        transform.position = new Vector3(transform.position.x, originalPos.Value.y, 0);
+                    }
+                    break;
+            }
+        }
     }
 
     protected virtual void DestroyGameobject()
