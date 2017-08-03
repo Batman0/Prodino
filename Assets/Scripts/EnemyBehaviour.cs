@@ -25,8 +25,10 @@ public class EnemyBehaviour : MonoBehaviour {
 	void Update () {
 
         Move();
+        ChangePerspective();
 
-		if (canShoot)
+
+        if (canShoot)
 		{
 			if (timerFire < fireRatio)
 			{
@@ -47,20 +49,24 @@ public class EnemyBehaviour : MonoBehaviour {
 
     protected virtual void Move()
     {
+        transform.Translate(Vector3.right* -speed * Time.deltaTime,Space.World);
+    }
+
+    protected virtual void ChangePerspective()
+    {
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x,sideScrollPos.y, 0);
+                transform.position = new Vector3(transform.position.x, sideScrollPos.y, 0);
                 break;
             case State.TOPDOWN:
-                if(TopDownPos==null)
+                if (TopDownPos == null)
                 {
                     TopDownPos = transform.position;
                 }
                 transform.position = new Vector3(transform.position.x, 0, TopDownPos.Value.z);
                 break;
         }
-        transform.Translate(Vector3.right* -speed * Time.deltaTime,Space.World);
     }
 
 	void OnTriggerEnter(Collider other){
