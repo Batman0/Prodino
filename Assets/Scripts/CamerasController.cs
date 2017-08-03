@@ -31,6 +31,7 @@ public class CamerasController : MonoBehaviour
         if (GameManager.instance.canChangeState)
         {
             GameManager.instance.canChangeState = false;
+            Time.timeScale = timeScaleValueLerping;
             StartCoroutine("LerpCamera");
         }
 	}
@@ -74,6 +75,7 @@ public class CamerasController : MonoBehaviour
                 }
                 break;
         }
+        Time.timeScale = timeScaleValueNotLerping;
         yield return null;
     }
 }
