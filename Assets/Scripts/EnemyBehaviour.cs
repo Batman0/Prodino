@@ -18,7 +18,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     private const string enemyBulletTag = "EnemyBullet";
 
-    void Awake()
+    void Start()
     {
         originalPos = new Vector3(transform.position.x, transform.position.y, 0);
         switch (GameManager.instance.cameraState)

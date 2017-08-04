@@ -23,13 +23,13 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        cameraState = State.SIDESCROLL;
         instance = this;
     }
 
     // Use this for initialization
     void Start ()
     {
-        cameraState = State.SIDESCROLL;
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
 	}

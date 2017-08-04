@@ -5,25 +5,16 @@ using UnityEngine;
 public class EnemySpawnPoint : MonoBehaviour
 {
 
+    public enum EnemyType { Default, SemiCircular, Square, Diagonal }
+
     private const int circleEnemyLayer = 10;
     public float spawnDelay;
     private float delayTimer;
-    public GameObject enemyPrefab;
-
-    void Start()
-    {
-        if (enemyPrefab.layer == circleEnemyLayer)
-        {
-            SpawnEnemy(true);
-        }
-    }
+    public EnemyType myType;
 
     void Update()
     {
-        if (enemyPrefab.layer != circleEnemyLayer)
-        {
-            SpawnEnemy(false);
-        }
+        SpawnEnemy(false);
     }
 
     void SpawnEnemy(bool immediate)
@@ -34,8 +25,9 @@ public class EnemySpawnPoint : MonoBehaviour
         }
         else
         {
+            GameObject enemyPrefab = Register.instance.enemies[(int)myType];
             GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
-            delayTimer = 0.0f;
+            Destroy(gameObject);
         }
     }
 

@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemySquare : EnemyBehaviour {
 	public float length;
 	private float distance;
-	private Vector3 offset;
+    private Vector3 offset;
 	public float lifeTime = 5;
 
 	void Start()
 	{
-		length = Camera.main.orthographicSize;
+		//length = Camera.main.orthographicSize;
 		offset = transform.position;
 		Destroy(gameObject, lifeTime);
 	}
@@ -21,8 +21,8 @@ public class EnemySquare : EnemyBehaviour {
 		{
 		case State.SIDESCROLL:
 			transform.position = new Vector3(
-				length* Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(length * Mathf.Sin(Time.time * speed)),Mathf.Abs(length * Mathf.Cos(Time.time * speed))) + offset.x, 
-				length* Mathf.Sin(Time.time * speed)/ Mathf.Max(Mathf.Abs(length * Mathf.Cos(Time.time * speed)),Mathf.Abs(length * Mathf.Sin(Time.time * speed))) + offset.y, 
+				length* Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)),Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x, 
+				length* Mathf.Sin(Time.time * speed)/ Mathf.Max(Mathf.Abs(Mathf.Cos(Time.time * speed)),Mathf.Abs(Mathf.Sin(Time.time * speed))) + offset.y, 
 				0);
 			break;
 		case State.TOPDOWN:
