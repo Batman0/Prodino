@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.canChangeState)
+        if (!GameManager.instance.cameraTransitionIsRunning)
         {
             switch (GameManager.instance.cameraState)
             {

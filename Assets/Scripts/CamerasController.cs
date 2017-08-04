@@ -28,9 +28,10 @@ public class CamerasController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (GameManager.instance.canChangeState)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.cameraTransitionIsRunning)
         {
-            GameManager.instance.canChangeState = false;
+            GameManager.instance.cameraTransitionIsRunning = true;
+            Register.instance.canStartEnemyTransition = true;
             Time.timeScale = timeScaleValueLerping;
             StartCoroutine("LerpCamera");
         }
@@ -75,7 +76,9 @@ public class CamerasController : MonoBehaviour
                 }
                 break;
         }
+        Register.instance.canEndEnemyTransition = true;
         Time.timeScale = timeScaleValueNotLerping;
+        GameManager.instance.cameraTransitionIsRunning = false;
         yield return null;
     }
 }

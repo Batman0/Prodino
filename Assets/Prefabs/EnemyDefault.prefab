@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33680535396484082}
   - component: {fileID: 136314245389271650}
   - component: {fileID: 23244361627594272}
-  - component: {fileID: 114373241741529230}
   - component: {fileID: 54750069618813346}
+  - component: {fileID: 114234770532033470}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyDefault
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114373241741529230
+--- !u!114 &114234770532033470
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -135,18 +135,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1018309814513026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de49629a70e4f9b408ef029835577979, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ae3569a9d2a9ce41bdd569003e13ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  timerFire: 0
-  fireRatio: 2
-  destructionMargin: 3
+  speed: 3
+  fireRatio: 3
   enemyBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   enemyBulletSpawn: {fileID: 4033452196873048}
   canShoot: 1
-  player: {fileID: 114760266231337890, guid: 63036bbc69baef74d9a5dfc7c2817048, type: 2}
+  originalPos: {x: 0, y: 0, z: 0}
+  destructionMargin: 3
 --- !u!136 &136314245389271650
 CapsuleCollider:
   m_ObjectHideFlags: 1

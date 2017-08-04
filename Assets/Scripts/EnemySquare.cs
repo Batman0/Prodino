@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySquare : EnemyBehaviour {
+public class EnemySquare : Enemy {
 	public float length;
 	private float distance;
     private Vector3 offset;

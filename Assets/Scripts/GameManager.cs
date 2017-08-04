@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [HideInInspector]
-    public bool canChangeState = false;
+    public bool cameraTransitionIsRunning = false;
     public float backgroundSpeed;
     public State cameraState;
     [HideInInspector]
@@ -37,10 +37,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !canChangeState)
-        {
-            canChangeState = true;
-        }
         MoveBackgrounds(backgrounds, Vector3.left, backgroundSpeed);
     }
 
