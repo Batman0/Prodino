@@ -578,7 +578,7 @@ Prefab:
       objectReference: {fileID: 699719386}
     - target: {fileID: 1758926448620306, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f83850263aa84049884b480b8ae4e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canChangeState: 0
+  cameraTransitionIsRunning: 0
   backgroundSpeed: 3
   cameraState: 0
   playerPosition: {x: 0, y: 0, z: 0}
@@ -724,8 +724,11 @@ MonoBehaviour:
   enemies:
   - {fileID: 1018309814513026, guid: f28cb5205f78c704299d2839c230223c, type: 2}
   - {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+  - {fileID: 1874333301391660, guid: a0f529e91465d3b4c9e25ec1faa9e7f7, type: 2}
   canStartEnemyTransition: 0
   canEndEnemyTransition: 0
+  numberOfEnemies: 0
+  translatedEnemies: 0
 --- !u!4 &1510460156
 Transform:
   m_ObjectHideFlags: 0
