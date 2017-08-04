@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
 					transform.position = new Vector3 (
 						Mathf.Clamp (transform.position.x, boundaryTopDown.xMin, boundaryTopDown.xMax), 
-						-2.5f,
+						0.0f,
 						Mathf.Clamp (transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
 					);
 

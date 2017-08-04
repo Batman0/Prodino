@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour {
 	public GameObject enemyBullet;
 	public Transform enemyBulletSpawn;
 	public bool canShoot = true;
-    private Vector3 originalPos;
+    public Vector3 originalPos;
 
     private const string enemyBulletTag = "EnemyBullet";
 

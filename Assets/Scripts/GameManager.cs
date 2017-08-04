@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
         cameraState = State.SIDESCROLL;
+        instance = this;
     }
 
     // Use this for initialization
