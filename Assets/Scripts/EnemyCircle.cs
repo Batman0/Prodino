@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCircle : EnemyBehaviour
+public class EnemyCircle : Enemy
 {
     public float radius;
     private float distance;

@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.canChangeState)
+        if (!GameManager.instance.cameraTransitionIsRunning)
         {
             switch (GameManager.instance.cameraState)
             {
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
 					transform.position = new Vector3 (
 						Mathf.Clamp (transform.position.x, boundaryTopDown.xMin, boundaryTopDown.xMax), 
-						0.0f,
+						-2.5f,
 						Mathf.Clamp (transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
 					);
 
