@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletDefault : Bullet
 {
-    public override void Move()
+    protected override void Move()
     {
         switch (gameObject.tag)
         {

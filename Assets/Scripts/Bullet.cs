@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IMovable
+public class Bullet : MonoBehaviour
 {
     protected bool isRight;
     protected bool isLeft;
@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour, IMovable
         }
     }
 
-    public virtual void Move()
+    protected virtual void Move()
     {
 
     }

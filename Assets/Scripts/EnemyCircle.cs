@@ -16,7 +16,7 @@ public class EnemyCircle : Enemy
         Destroy(gameObject, lifeTime);
     }
 
-    public override void Move()
+    protected override void Move()
     {
         switch (GameManager.instance.cameraState)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IMovable {
+public class Enemy : MonoBehaviour {
 	public float speed;
 	private float timerFire;
 	public float fireRatio;
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour, IMovable {
         }
     }
 
-    public virtual void Move()
+    protected virtual void Move()
     {
 
     }
