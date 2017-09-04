@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//2 funzioni movimento per le 2 modalità
-//Sparo
-//Melee in top down
-[System.Serializable]
-public class BoundarySideScroll {
-	public float xMin, xMax, yMin, yMax;
-}
+////2 funzioni movimento per le 2 modalità
+////Sparo
+////Melee in top down
+//[System.Serializable]
+//public class BoundarySideScroll {
+//	public float xMin, xMax, yMin, yMax;
+//}
 
-[System.Serializable]
-public class BoundaryTopDown {
-	public float xMin, xMax, zMin, zMax;
-}
+//[System.Serializable]
+//public class BoundaryTopDown {
+//	public float xMin, xMax, zMin, zMax;
+//}
 
 public class PlayerController : MonoBehaviour
 {
     public BoundarySideScroll boundarySideScroll;
     public BoundaryTopDown boundaryTopDown;
-
+    public Transform startPosition;
     public float speed = 5.0f;
+    public float jumpForce = 5.0f;
     private float controllerDeadZone = 0.1f;
     public Transform aim;
     public GameObject bulletPrefab;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private RaycastHit hit;
     public float angle;
     public float meleeDistance;
+    private Rigidbody rb;
 
     public bool canShoot = true;
 
@@ -40,12 +42,13 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     void Start()
     {
-
+        transform.position = startPosition.position;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
     }
@@ -57,8 +60,12 @@ public class PlayerController : MonoBehaviour
             switch (GameManager.instance.cameraState)
             {
                 case State.SIDESCROLL:
-                    Move(Vector3.up, speed, "Vertical");
+                    //Move(Vector3.up, speed, "Vertical");
                     Move(Vector3.right, speed, "Horizontal");
+                    if (Input.GetKey(KeyCode.W))
+                    {
+                        Jump();
+                    }
                     transform.rotation = sideScrollerRotation;
 
                     transform.position = new Vector3(
@@ -99,6 +106,10 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+    void Jump()
+    {
+        rb.velocity = new Vector3(0, jumpForce, 0);
     }
 
     void Move(Vector3 moveVector, float speed, string moveAxis)
