@@ -6,7 +6,7 @@ public class EnemyDefault : Enemy {
 
     public float destructionMargin;
 
-    protected override void Move()
+    public override void Move()
     {
         transform.Translate(Vector3.right * -speed * Time.deltaTime, Space.World);
     }
