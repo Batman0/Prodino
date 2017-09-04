@@ -8,18 +8,17 @@ public class PlayerScript : MonoBehaviour
     private float horizontal;
     public float speed = 2f;
 
-	// Use this for initialization
-	void Awake ()
+    // Use this for initialization
+    void Awake()
     {
         //ani = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
         transform.Translate(0, 0, horizontal * -speed * Time.deltaTime);
-        ani.SetFloat("horizontal",horizontal);
-        Debug.Log(horizontal);
-	}
+        ani.SetFloat("horizontal", horizontal);
+    }
 }

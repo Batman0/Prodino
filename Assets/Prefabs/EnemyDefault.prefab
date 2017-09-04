@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33680535396484082}
   - component: {fileID: 136314245389271650}
   - component: {fileID: 23244361627594272}
-  - component: {fileID: 54750069618813346}
   - component: {fileID: 114234770532033470}
+  - component: {fileID: 54594731257023428}
   m_Layer: 0
   m_Name: EnemyDefault
   m_TagString: Enemy
@@ -112,7 +112,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1018309814513026}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54750069618813346
+--- !u!54 &54594731257023428
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -144,7 +144,6 @@ MonoBehaviour:
     type: 2}
   enemyBulletSpawn: {fileID: 4033452196873048}
   canShoot: 1
-  originalPos: {x: 0, y: 0, z: 0}
   destructionMargin: 3
 --- !u!136 &136314245389271650
 CapsuleCollider:

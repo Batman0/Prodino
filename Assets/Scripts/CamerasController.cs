@@ -61,7 +61,7 @@ public class CamerasController : MonoBehaviour
             case State.TOPDOWN:
                 while (Vector3.Distance(cameras.transform.position, sideScrollCameraPosition.position) >= lerpDistance)
                 {
-                    Debug.Log("Sono una mignotta");
+
                     lerp = Vector3.Lerp(cameras.transform.position, sideScrollCameraPosition.position, lerpSpeed);
                     cameras.transform.position = lerp;
                     slerp = Quaternion.Slerp(cameras.transform.rotation, sideScrollCameraPosition.rotation, lerpSpeed);

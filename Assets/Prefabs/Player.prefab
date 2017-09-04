@@ -110,7 +110,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4163318161406584}
   - component: {fileID: 137439890034802190}
-  - component: {fileID: 54651753432993454}
   - component: {fileID: 65617917213845190}
   m_Layer: 0
   m_Name: Trevor
@@ -340,6 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4021812952014568}
   - component: {fileID: 114521872841630456}
+  - component: {fileID: 54978495014258954}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -915,12 +915,12 @@ Transform:
   m_Father: {fileID: 4021812952014568}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!54 &54651753432993454
+--- !u!54 &54978495014258954
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1273643792899152}
+  m_GameObject: {fileID: 1758926448620306}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -999,6 +999,7 @@ MonoBehaviour:
     type: 2}
   bulletSpawnPoint: {fileID: 4295414299896406}
   fireRatio: 0.5
+  timerRespawn: 0.8
   angle: 0
   meleeDistance: 20
   canShoot: 1

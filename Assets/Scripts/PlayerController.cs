@@ -17,8 +17,8 @@ public class BoundaryTopDown {
 
 public class PlayerController : MonoBehaviour
 {
-	public BoundarySideScroll boundarySideScroll;
-	public BoundaryTopDown boundaryTopDown;
+    public BoundarySideScroll boundarySideScroll;
+    public BoundaryTopDown boundaryTopDown;
 
     public float speed = 5.0f;
     private float controllerDeadZone = 0.1f;
@@ -26,19 +26,26 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
-	private float fireTimer;
-    //public CameraController cameraInstance;
+    private float fireTimer;
+    public float timerRespawn = 0.5f;
     private Quaternion sideScrollerRotation;
-	private const string playerBulletTag = "PlayerBullet";
-	private RaycastHit hit;
-	public float angle;
-	public float meleeDistance;
+    private const string playerBulletTag = "PlayerBullet";
+    private RaycastHit hit;
+    public float angle;
+    public float meleeDistance;
 
-	public bool canShoot = true;
+    public bool canShoot = true;
+
+    private SkinnedMeshRenderer skinnedMeshRen;
+
+    void Awake()
+    {
+        skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
+    }
 
     void Start()
     {
-		
+
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
     }
@@ -49,16 +56,16 @@ public class PlayerController : MonoBehaviour
         {
             switch (GameManager.instance.cameraState)
             {
-			case State.SIDESCROLL:
-				Move (Vector3.up, speed, "Vertical");
-				Move (Vector3.right, speed, "Horizontal");
-				transform.rotation = sideScrollerRotation;
-					
-				transform.position = new Vector3 (
-					Mathf.Clamp (transform.position.x, boundarySideScroll.xMin, boundarySideScroll.xMax), 
-					Mathf.Clamp (transform.position.y, boundarySideScroll.yMin, boundarySideScroll.yMax),
-					0.0f
-				);
+                case State.SIDESCROLL:
+                    Move(Vector3.up, speed, "Vertical");
+                    Move(Vector3.right, speed, "Horizontal");
+                    transform.rotation = sideScrollerRotation;
+
+                    transform.position = new Vector3(
+                        Mathf.Clamp(transform.position.x, boundarySideScroll.xMin, boundarySideScroll.xMax),
+                        Mathf.Clamp(transform.position.y, boundarySideScroll.yMin, boundarySideScroll.yMax),
+                        0.0f
+                    );
 
                     break;
                 case State.TOPDOWN:
@@ -66,11 +73,11 @@ public class PlayerController : MonoBehaviour
                     Move(Vector3.right, speed, "Horizontal");
                     TurnAroundPlayer();
 
-					transform.position = new Vector3 (
-						Mathf.Clamp (transform.position.x, boundaryTopDown.xMin, boundaryTopDown.xMax), 
-						-2.5f,
-						Mathf.Clamp (transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
-					);
+                    transform.position = new Vector3(
+                        Mathf.Clamp(transform.position.x, boundaryTopDown.xMin, boundaryTopDown.xMax),
+                        -2.5f,
+                        Mathf.Clamp(transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
+                    );
 
                     if (Input.GetMouseButtonDown(1))
                     {
@@ -79,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
                     break;
             }
-			if (Input.GetMouseButton(0) && canShoot)
+            if (Input.GetMouseButton(0) && canShoot)
             {
                 if (fireTimer < fireRatio)
                 {
@@ -104,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     void TurnAroundPlayer()
     {
-        
+
         transform.LookAt(new Vector3(aim.position.x, transform.position.y, aim.position.z));
     }
 
@@ -112,30 +119,48 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.playerPosition = transform.position;
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
-		bullet.tag = playerBulletTag;
+        bullet.tag = playerBulletTag;
     }
 
-	IEnumerator Melee(){
-		angle = 0;
+    IEnumerator Melee()
+    {
+        angle = 0;
 
-		while (angle < 180) {
-			canShoot = false;
-			angle += 5;
-			Vector3 initDir = -bulletSpawnPoint.forward;
-			Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
-			Vector3 newVector = angleQ * initDir;
+        while (angle < 180)
+        {
+            canShoot = false;
+            angle += 5;
+            Vector3 initDir = -bulletSpawnPoint.forward;
+            Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
+            Vector3 newVector = angleQ * initDir;
 
-			Ray ray = new Ray (transform.position, newVector);
+            Ray ray = new Ray(transform.position, newVector);
 
-			if (Physics.Raycast (ray, out hit, meleeDistance)) {
-				Destroy (hit.transform.gameObject);
-			}
-			Debug.DrawRay (ray.origin, ray.direction * meleeDistance, Color.magenta);
+            if (Physics.Raycast(ray, out hit, meleeDistance))
+            {
+                Destroy(hit.transform.gameObject);
+            }
+            Debug.DrawRay(ray.origin, ray.direction * meleeDistance, Color.magenta);
 
-			yield return null;
-		}  
-		canShoot = true;
-	}
+            yield return null;
+        }
+        canShoot = true;
+    }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag=="EnemyBullet")
+        {
+            StartCoroutine("MESHRENDERER");
+        }
+    }
 
+    IEnumerator MESHRENDERER()
+    {
+        skinnedMeshRen.enabled = false;
+
+        yield return new WaitForSeconds(timerRespawn);
+
+        skinnedMeshRen.enabled = true;
+    }
 }
