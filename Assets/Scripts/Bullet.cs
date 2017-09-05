@@ -44,19 +44,19 @@ public class Bullet : MonoBehaviour
 
     void AssignDirection()
     {
-        if (transform.position.x > GameManager.instance.playerPosition.x)
+        if (transform.position.x > GameManager.instance.player.transform.position.x)
         {
             isRight = true;
             isLeft = false;
             isCenter = false;
         }
-        else if (transform.position.x < GameManager.instance.playerPosition.x)
+        else if (transform.position.x < GameManager.instance.player.transform.position.x)
         {
             isRight = false;
             isLeft = true;
             isCenter = false;
         }
-        else if (transform.position.x == GameManager.instance.playerPosition.x)
+        else if (transform.position.x == GameManager.instance.player.transform.position.x)
         {
             isRight = false;
             isLeft = false;

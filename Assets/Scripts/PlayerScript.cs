@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
-        transform.Translate(0, 0, horizontal * -speed * Time.deltaTime);
+        //transform.Translate(0, 0, horizontal * -speed * Time.deltaTime);
         ani.SetFloat("horizontal", horizontal);
     }
 }

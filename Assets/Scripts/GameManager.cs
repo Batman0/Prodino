@@ -16,9 +16,10 @@ public class GameManager : MonoBehaviour
     public float backgroundSpeed;
     public State cameraState;
     [HideInInspector]
-    public Vector3 playerPosition;
+    public PlayerControllerJump player;
     public Vector3 leftBound;
     public Vector3 rightBound;
+    public Vector3 playerBulletSpawnPos;
     public GameObject[] backgrounds;
 
     void Awake()
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
+        playerBulletSpawnPos = player.bulletSpawnPoint.position;
 	}
 
     // Update is called once per frame

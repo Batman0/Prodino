@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CameraState
-{
-    SIDESCROLL,
-    TOPDOWN
-}
-
 public class CamerasController : MonoBehaviour
 {
     public float timeScaleValueLerping = 0.0f;
@@ -32,13 +26,24 @@ public class CamerasController : MonoBehaviour
         {
             GameManager.instance.cameraTransitionIsRunning = true;
             Register.instance.canStartEnemyTransition = true;
+            //Vector3 playerPos = GameManager.instance.player.transform.position;
             Time.timeScale = timeScaleValueLerping;
+            //switch (GameManager.instance.cameraState)
+            //{
+            //    case (State.SIDESCROLL):
+            //        GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
+            //        break;
+            //    case (State.TOPDOWN):
+            //        GameManager.instance.player.transform.position = new Vector3(playerPos.x, 0.0f, playerPos.z);
+            //        break;
+            //}
             StartCoroutine("LerpCamera");
         }
 	}
 
     IEnumerator LerpCamera()
     {
+        Vector3 playerPos = GameManager.instance.player.transform.position;
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
@@ -56,9 +61,11 @@ public class CamerasController : MonoBehaviour
                 {
                     GameManager.instance.cameraState = State.TOPDOWN;
                 }
+                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
                 break;
 
             case State.TOPDOWN:
+                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
                 while (Vector3.Distance(cameras.transform.position, sideScrollCameraPosition.position) >= lerpDistance)
                 {
 
@@ -74,6 +81,7 @@ public class CamerasController : MonoBehaviour
                 {
                     GameManager.instance.cameraState = State.SIDESCROLL;
                 }
+                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, 0.0f);
                 break;
         }
         Register.instance.canEndEnemyTransition = true;

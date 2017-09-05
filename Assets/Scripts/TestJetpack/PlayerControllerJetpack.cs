@@ -15,7 +15,7 @@ using UnityEngine;
 //	public float xMin, xMax, zMin, zMax;
 //}
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerJetpack : MonoBehaviour
 {
     public BoundarySideScroll boundarySideScroll;
     public BoundaryTopDown boundaryTopDown;
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameManager.instance.playerPosition = transform.position;
+        //GameManager.instance.player = this;
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
         bullet.tag = playerBulletTag;
     }

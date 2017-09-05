@@ -118,7 +118,7 @@ public class DefaultPlayer : MonoBehaviour {
 
     void Shoot()
     {
-        GameManager.instance.playerPosition = transform.position;
+        //GameManager.instance.player = this;
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
         bullet.tag = playerBulletTag;
     }

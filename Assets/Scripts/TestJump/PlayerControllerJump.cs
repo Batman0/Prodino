@@ -19,12 +19,12 @@ public class BoundaryTopDown
 
 public class PlayerControllerJump : MonoBehaviour
 {
-    public BoundarySideScroll boundarySideScroll;
-    public BoundaryTopDown boundaryTopDown;
+    //public BoundarySideScroll boundarySideScroll;
+    //public BoundaryTopDown boundaryTopDown;
     public Transform startPosition;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
-    public float rayLength = 3.0f;
+    public float rayLength;
     private float controllerDeadZone = 0.1f;
     public Transform aim;
     public GameObject bulletPrefab;
@@ -32,6 +32,7 @@ public class PlayerControllerJump : MonoBehaviour
     public float fireRatio = 0.10f;
     private float fireTimer;
     public float timerRespawn = 0.5f;
+    public float gravitySurplus;
     private Quaternion sideScrollerRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
@@ -42,11 +43,22 @@ public class PlayerControllerJump : MonoBehaviour
 
     public bool canShoot = true;
     public bool canJump = true;
+    public bool isDead;
 
     private SkinnedMeshRenderer skinnedMeshRen;
 
+    [Header("Boundaries")]
+    public float sidexMin;
+    public float sidexMax, sideyMin, sideyMax;
+    public float topxMin, topxMax, topzMin, topzMax;
+
+    [Header("Animation")]
+    public Animator ani;
+    private float horizontal;
+
     void Awake()
     {
+        GameManager.instance.player = this;
         rb = GetComponent<Rigidbody>();
         skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
     }
@@ -60,64 +72,79 @@ public class PlayerControllerJump : MonoBehaviour
 
     void Update()
     {
-        canJump = CheckGround();
-        if (!GameManager.instance.cameraTransitionIsRunning)
+        if (!isDead)
         {
-            switch (GameManager.instance.cameraState)
+            if (!GameManager.instance.cameraTransitionIsRunning)
             {
-                case State.SIDESCROLL:
-                    //Move(Vector3.up, speed, "Vertical");
-                    Move(Vector3.right, speed, "Horizontal");
-                    if (Input.GetKeyDown(KeyCode.W) && canJump)
-                    {
-                        canJump = false;
-                        Jump();
-                    }
-                    if (!canJump)
-                    {
-                        rb.AddForce(Physics.gravity * 2);
-                    }
-                    transform.rotation = sideScrollerRotation;
-
-                    transform.position = new Vector3(
-                        Mathf.Clamp(transform.position.x, boundarySideScroll.xMin, boundarySideScroll.xMax),
-                        Mathf.Clamp(transform.position.y, boundarySideScroll.yMin, boundarySideScroll.yMax),
-                        0.0f
-                    );
-
-                    break;
-                case State.TOPDOWN:
-                    Move(Vector3.forward, speed, "Vertical");
-                    Move(Vector3.right, speed, "Horizontal");
-                    TurnAroundPlayer();
-
-                    transform.position = new Vector3(
-                        Mathf.Clamp(transform.position.x, boundaryTopDown.xMin, boundaryTopDown.xMax),
-                        -2.5f,
-                        Mathf.Clamp(transform.position.z, boundaryTopDown.zMin, boundaryTopDown.zMax)
-                    );
-
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        StartCoroutine(Melee());
-                    }
-
-                    break;
-            }
-            if (Input.GetMouseButton(0) && canShoot)
-            {
-                if (fireTimer < fireRatio)
+                canJump = CheckGround();
+                switch (GameManager.instance.cameraState)
                 {
-                    fireTimer += Time.deltaTime;
+                    case State.SIDESCROLL:
+                        //Move(Vector3.up, speed, "Vertical");
+                        if (transform.position.x > sidexMin && Input.GetAxis("Horizontal") < -controllerDeadZone)
+                        {
+                            Move(Vector3.right, speed, "Horizontal");
+                        }
+                        else if (transform.position.x < sidexMax && Input.GetAxis("Horizontal") > controllerDeadZone)
+                        {
+                            Move(Vector3.right, speed, "Horizontal");
+                        }
+                        if (Input.GetKeyDown(KeyCode.W) && canJump)
+                        {
+                            canJump = false;
+                            Jump();
+                        }
+                        if (!canJump)
+                        {
+                            rb.AddForce(Vector3.down * gravitySurplus, ForceMode.Acceleration);
+                        }
+                        if (transform.rotation != sideScrollerRotation)
+                        {
+                            transform.rotation = sideScrollerRotation;
+                        }
+
+                        ClampPosition(State.SIDESCROLL);
+
+                        break;
+                    case State.TOPDOWN:
+                        Move(Vector3.forward, speed, "Vertical");
+                        Move(Vector3.right, speed, "Horizontal");
+                        TurnAroundPlayer();
+
+                        ClampPosition(State.TOPDOWN);
+
+                        if (Input.GetMouseButtonDown(1))
+                        {
+                            StartCoroutine(Melee());
+                        }
+
+                        break;
                 }
-                else
+                if (Input.GetMouseButton(0) && canShoot)
                 {
-                    Shoot();
-                    fireTimer = 0.00f;
+                    if (fireTimer < fireRatio)
+                    {
+                        fireTimer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        Shoot();
+                        fireTimer = 0.00f;
+                    }
                 }
+                PlayAnimation();
             }
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
+        {
+            StartCoroutine("BlinkMeshRen");
+        }
+    }
+
     void Jump()
     {
         rb.velocity = new Vector3(0, jumpForce, 0);
@@ -125,8 +152,9 @@ public class PlayerControllerJump : MonoBehaviour
 
     bool CheckGround()
     {
-        Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z), Vector3.down);
-        if (Physics.Raycast(ray, rayLength))
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
+        Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down);
+        if (Physics.Raycast(ray, rayLength, groundMask))
         {
             return true;
         }
@@ -146,15 +174,40 @@ public class PlayerControllerJump : MonoBehaviour
 
     void TurnAroundPlayer()
     {
-
         transform.LookAt(new Vector3(aim.position.x, transform.position.y, aim.position.z));
     }
 
     void Shoot()
     {
-        GameManager.instance.playerPosition = transform.position;
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
         bullet.tag = playerBulletTag;
+    }
+
+    public void ClampPosition(State state)
+    {
+        switch (state)
+        {
+            case (State.SIDESCROLL):
+                transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, sidexMin, sidexMax),
+                Mathf.Clamp(transform.position.y, sideyMin, sideyMax),
+                0.0f
+                );
+                break;
+            case (State.TOPDOWN):
+                transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, topxMin, topxMax),
+                startPosition.position.y,
+                Mathf.Clamp(transform.position.z, topzMin, topzMax)
+                );
+                break;
+        }
+    }
+
+    void PlayAnimation()
+    {
+        horizontal = Input.GetAxis("Horizontal");
+        ani.SetFloat("horizontal", horizontal);
     }
 
     IEnumerator Melee()
@@ -182,20 +235,14 @@ public class PlayerControllerJump : MonoBehaviour
         canShoot = true;
     }
 
-    void OnTriggerEnter(Collider other)
+    IEnumerator BlinkMeshRen()
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
-        {
-            StartCoroutine("MESHRENDERER");
-        }
-    }
-
-    IEnumerator MESHRENDERER()
-    {
+        isDead = true;
         skinnedMeshRen.enabled = false;
 
         yield return new WaitForSeconds(timerRespawn);
 
         skinnedMeshRen.enabled = true;
+        isDead = false;
     }
 }

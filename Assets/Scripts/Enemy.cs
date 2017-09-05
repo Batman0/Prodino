@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x, originalPos.y, 0);
                 break;
             case State.TOPDOWN:
-                transform.position = new Vector3(transform.position.x, 0, originalPos.z);
+                transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
                 break;
         }
     }
@@ -95,9 +95,9 @@ public class Enemy : MonoBehaviour {
             switch (GameManager.instance.cameraState)
             {
                 case State.TOPDOWN:
-                    if (transform.position != new Vector3(transform.position.x, 0, originalPos.z))
+                    if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
                     {
-                        transform.position = new Vector3(transform.position.x, 0, originalPos.z);
+                        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
                     }
                     break;
                 case State.SIDESCROLL:
