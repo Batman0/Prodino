@@ -150,12 +150,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e33db46d9369041ba3ed7327e7af79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 5
   fireRatio: 2
   enemyBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   enemyBulletSpawn: {fileID: 4620927245569050}
   canShoot: 1
-  length: 80000
-  distance: 0
-  maxTimer: 2
+  directions:
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: -1, z: 0}
+  - {x: 1, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
+  pathLength: 15
+  stopTime: 2
+  pathIndex: 0

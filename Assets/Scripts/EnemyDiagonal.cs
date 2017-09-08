@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDiagonal : Enemy {
-
-    
+public class EnemyDiagonal : Enemy
+{
 
 }

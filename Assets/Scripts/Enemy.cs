@@ -12,14 +12,16 @@ public class Enemy : MonoBehaviour {
 	public GameObject enemyBullet;
 	public Transform enemyBulletSpawn;
 	public bool canShoot = true;
-    private Vector3 originalPos;
+    [HideInInspector]
+    public bool isRight;
+    [HideInInspector]
+    public Vector3 originalPos;
 
     private const string enemyBulletTag = "EnemyBullet";
 
     void Awake()
     {
         Register.instance.numberOfEnemies++;
-        originalPos = transform.position;
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
@@ -41,7 +43,7 @@ public class Enemy : MonoBehaviour {
 
 	protected virtual void Shoot()
     {
-        if (transform.position.x <= GameManager.instance.rightBound.x && transform.position.x > GameManager.instance.leftBound.x)
+        if (transform.position.x <= GameManager.instance.rightBound.x && transform.position.x >= GameManager.instance.leftBound.x)
         {
             if (canShoot)
             {
@@ -53,8 +55,15 @@ public class Enemy : MonoBehaviour {
                 {
                     GameObject bullet = Instantiate(enemyBullet, enemyBulletSpawn.position, enemyBulletSpawn.rotation) as GameObject;
                     bullet.tag = enemyBulletTag;
-                    timerFire = 0.00f;
+                    timerFire = 0.0f;
                 }
+            }
+        }
+        else
+        {
+            if (timerFire != 0.0f)
+            {
+                timerFire = 0.0f;
             }
         }
     }

@@ -32,7 +32,8 @@ public class PlayerControllerJump : MonoBehaviour
     public float fireRatio = 0.10f;
     private float fireTimer;
     public float timerRespawn = 0.5f;
-    public float gravitySurplus;
+    public float gravity;
+    public float glideSpeed;
     private Quaternion sideScrollerRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
@@ -96,7 +97,28 @@ public class PlayerControllerJump : MonoBehaviour
                         }
                         if (!canJump)
                         {
-                            rb.AddForce(Vector3.down * gravitySurplus, ForceMode.Acceleration);
+                            ApplyGravity();
+                        }
+                        //if (Input.GetKeyDown(KeyCode.W))
+                        //{
+                        //    if (!canJump && rb.velocity.y < 0.0f)
+                        //    {
+                        //        rb.AddForce(Vector3.up * gravity, ForceMode.Impulse);
+                        //    }
+                        //}
+                        if (Input.GetKey(KeyCode.W))
+                        {
+                            if (!canJump && rb.velocity.y < 0.0f)
+                            {
+                                if (rb.velocity.y < -2)
+                                {
+                                    StabilizeAcceleration();
+                                }
+                                else
+                                {
+                                    Glide();
+                                }
+                            }
                         }
                         if (transform.rotation != sideScrollerRotation)
                         {
@@ -139,15 +161,30 @@ public class PlayerControllerJump : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet")
+        if (!isDead && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet"))
         {
             StartCoroutine("BlinkMeshRen");
         }
     }
 
+    void ApplyGravity()
+    {
+        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+    }
+
+    void StabilizeAcceleration()
+    {
+        rb.AddForce(Vector3.up * Mathf.Abs((rb.velocity.y / 3)), ForceMode.Impulse);
+    }
+
     void Jump()
     {
         rb.velocity = new Vector3(0, jumpForce, 0);
+    }
+
+    void Glide()
+    {
+        rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
     }
 
     bool CheckGround()
@@ -243,6 +280,8 @@ public class PlayerControllerJump : MonoBehaviour
         yield return new WaitForSeconds(timerRespawn);
 
         skinnedMeshRen.enabled = true;
+        transform.position = new Vector3(transform.position.x, startPosition.position.y, transform.position.z);
+        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isDead = false;
     }
 }

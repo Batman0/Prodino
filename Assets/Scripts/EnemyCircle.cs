@@ -21,10 +21,25 @@ public class EnemyCircle : Enemy
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
-                transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, radius * Mathf.Sin(Time.time * speed) + offset.y, 0);
+                if (isRight)
+                {
+                    transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, 0);
+                }
+                else
+                {
+                    transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, 0);
+                }
+                //transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, radius * Mathf.Sin(Time.time * speed) + offset.y, 0);
                 break;
             case State.TOPDOWN:
-                transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, 0, radius * Mathf.Sin(Time.time * speed) + offset.z);
+                if (isRight)
+                {
+                    transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, 0, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
+                }
+                else
+                {
+                    transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, 0, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
+                }
                 break;
         }
     }
