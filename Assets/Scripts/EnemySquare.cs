@@ -33,7 +33,15 @@ public class EnemySquare : Enemy {
     {
         if (actualDirection != null && pathDone < pathLength)
         {
-            transform.Translate(actualDirection.Value * speed * Time.deltaTime, Space.World);
+            switch (GameManager.instance.cameraState)
+            {
+                case State.SIDESCROLL:
+                    transform.Translate(actualDirection.Value * speed * Time.deltaTime, Space.World);
+                    break;
+                case State.TOPDOWN:
+                    transform.Translate(new Vector3(actualDirection.Value.x, actualDirection.Value.z, actualDirection.Value.y) * speed * Time.deltaTime, Space.World);
+                    break;
+            }
             pathDone += speed * Time.deltaTime;
         }
         else
@@ -65,6 +73,58 @@ public class EnemySquare : Enemy {
         //}
     }
 
+    protected override void ChangePerspective()
+    {
+        if (Register.instance.canStartEnemyTransition)
+        {
+            switch (GameManager.instance.cameraState)
+            {
+                case State.SIDESCROLL:
+                    if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
+                    {
+                        transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
+                    }
+                    break;
+                case State.TOPDOWN:
+                    if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
+                    {
+                        transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
+                    }
+                    break;
+            }
+            Register.instance.translatedEnemies++;
+            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+            {
+                Register.instance.translatedEnemies = 0;
+                Register.instance.canStartEnemyTransition = false;
+            }
+        }
+        else if (Register.instance.canEndEnemyTransition)
+        {
+            switch (GameManager.instance.cameraState)
+            {
+                case State.TOPDOWN:
+                    if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
+                    {
+                        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+                    }
+                    break;
+                case State.SIDESCROLL:
+                    if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
+                    {
+                        transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+                    }
+                    break;
+            }
+            Register.instance.translatedEnemies++;
+            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+            {
+                Register.instance.translatedEnemies = 0;
+                Register.instance.canEndEnemyTransition = false;
+            }
+        }
+    }
+
     //IEnumerator FollowPath()
     //{
     //    if (actualDirection != null)
@@ -85,35 +145,35 @@ public class EnemySquare : Enemy {
     //    }
     //}
 
-	//protected override void Move()
-	//{
-	//	switch (GameManager.instance.cameraState)
-	//	{
-	//	case State.SIDESCROLL:
- //               //if(!straightwayIsRunning)
- //               //{
- //               //    straightwayIsRunning = true;
- //               //    StartCoroutine("STRAIGHTWAY");
- //               //}
- //               //float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
- //               //transform.position = new Vector3(x, transform.position.y, 0);
- //               //distance += x;
- //               transform.position = new Vector3(
- //                   length* Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)),Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x, 
- //                   length* Mathf.Sin(Time.time * speed)/ Mathf.Max(Mathf.Abs(Mathf.Cos(Time.time * speed)),Mathf.Abs(Mathf.Sin(Time.time * speed))) + offset.y, 
- //                   0);
- //               break;
-	//	case State.TOPDOWN:
-	//		//transform.position = new Vector3(length * Mathf.Cos(Time.time * speed) + offset.x, 0, length * Mathf.Sin(Time.time * speed) + offset.z);
-	//		break;
-	//	}
-	//}
+    //protected override void Move()
+    //{
+    //	switch (GameManager.instance.cameraState)
+    //	{
+    //	case State.SIDESCROLL:
+    //               //if(!straightwayIsRunning)
+    //               //{
+    //               //    straightwayIsRunning = true;
+    //               //    StartCoroutine("STRAIGHTWAY");
+    //               //}
+    //               //float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
+    //               //transform.position = new Vector3(x, transform.position.y, 0);
+    //               //distance += x;
+    //               transform.position = new Vector3(
+    //                   length* Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)),Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x, 
+    //                   length* Mathf.Sin(Time.time * speed)/ Mathf.Max(Mathf.Abs(Mathf.Cos(Time.time * speed)),Mathf.Abs(Mathf.Sin(Time.time * speed))) + offset.y, 
+    //                   0);
+    //               break;
+    //	case State.TOPDOWN:
+    //		//transform.position = new Vector3(length * Mathf.Cos(Time.time * speed) + offset.x, 0, length * Mathf.Sin(Time.time * speed) + offset.z);
+    //		break;
+    //	}
+    //}
 
- //   IEnumerator STRAIGHTWAY()
- //   {
- //           float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
- //           transform.position = new Vector3(x, transform.position.y, 0);
- //           distance += x;
- //           yield return null;
- //   }
+    //   IEnumerator STRAIGHTWAY()
+    //   {
+    //           float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
+    //           transform.position = new Vector3(x, transform.position.y, 0);
+    //           distance += x;
+    //           yield return null;
+    //   }
 }

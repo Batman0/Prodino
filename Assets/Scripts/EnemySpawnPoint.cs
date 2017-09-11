@@ -12,6 +12,7 @@ public class EnemySpawnPoint : MonoBehaviour
     public float spawnDelay;
     private float delayTimer;
     public EnemyType myType;
+    [Tooltip("Sidescroll axises values. It is necessary to fill these fields if 'My Type' is 'Square' only")]
     public Vector3[] moveVectors;
 
     void Update()
@@ -28,9 +29,11 @@ public class EnemySpawnPoint : MonoBehaviour
         else
         {
             GameObject enemyPrefab = Register.instance.enemies[(int)myType];
+            Quaternion enemyPrefabRotation = enemyPrefab.transform.rotation;
+            Debug.Log(enemyPrefabRotation.eulerAngles + " " + enemyPrefab.name);
+            Quaternion rotation = isRight ? enemyPrefabRotation : Quaternion.Euler(enemyPrefabRotation.z, enemyPrefabRotation.x, enemyPrefabRotation.y + 180);
             GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.originalPos = transform.position;
             enemyScript.isRight = isRight;
             if (myType == EnemyType.Square)
             {
@@ -40,5 +43,4 @@ public class EnemySpawnPoint : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

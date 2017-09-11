@@ -52,27 +52,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1958210817586058}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 24.86, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4793797363457864}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4793797363457864
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397875959760266}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.65, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4363351655778784}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23878141204204924
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -140,10 +140,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.5
   fireRatio: 2
-  enemyBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
+  enemyBullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}
   enemyBulletSpawn: {fileID: 4793797363457864}
   canShoot: 1
+  isRight: 0
+  originalPos: {x: 0, y: 0, z: 0}
   radius: 12
   lifeTime: 80
 --- !u!135 &135479019580152154

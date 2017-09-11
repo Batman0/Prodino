@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1208920796772156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4864777817906808}
@@ -65,14 +65,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730174443221068}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 15.2, y: 2.1, z: -14.040627}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4609860658572418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &23960986455602990
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -140,10 +140,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   fireRatio: 2
-  enemyBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
+  enemyBullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}
   enemyBulletSpawn: {fileID: 4609860658572418}
   canShoot: 1
+  isRight: 0
+  originalPos: {x: 0, y: 0, z: 0}
 --- !u!136 &136771204928418300
 CapsuleCollider:
   m_ObjectHideFlags: 1

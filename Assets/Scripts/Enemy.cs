@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour {
     void Awake()
     {
         Register.instance.numberOfEnemies++;
+        originalPos = transform.position;
         switch (GameManager.instance.cameraState)
         {
             case State.SIDESCROLL:
@@ -32,8 +33,13 @@ public class Enemy : MonoBehaviour {
                 break;
         }
     }
-	// Update is called once per frame
-	void Update ()
+
+    void Start()
+    {
+        transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+    }
+    // Update is called once per frame
+    void Update ()
     {
         Move();
         ChangePerspective();
@@ -43,8 +49,8 @@ public class Enemy : MonoBehaviour {
 
 	protected virtual void Shoot()
     {
-        if (transform.position.x <= GameManager.instance.rightBound.x && transform.position.x >= GameManager.instance.leftBound.x)
-        {
+        //if (transform.position.x <= GameManager.instance.rightBound.x && transform.position.x >= GameManager.instance.leftBound.x)
+        //{
             if (canShoot)
             {
                 if (timerFire < fireRatio)
@@ -53,19 +59,19 @@ public class Enemy : MonoBehaviour {
                 }
                 else
                 {
-                    GameObject bullet = Instantiate(enemyBullet, enemyBulletSpawn.position, enemyBulletSpawn.rotation) as GameObject;
+                    GameObject bullet = Instantiate(enemyBullet, enemyBulletSpawn.position, transform.rotation) as GameObject;
                     bullet.tag = enemyBulletTag;
                     timerFire = 0.0f;
                 }
             }
-        }
-        else
-        {
-            if (timerFire != 0.0f)
-            {
-                timerFire = 0.0f;
-            }
-        }
+        //}
+        //else
+        //{
+        //    if (timerFire != 0.0f)
+        //    {
+        //        timerFire = 0.0f;
+        //    }
+        //}
     }
 
     protected virtual void Move()
