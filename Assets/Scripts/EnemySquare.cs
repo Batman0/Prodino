@@ -12,8 +12,12 @@ public class EnemySquare : Enemy {
     //   private float angleSquare = 0;
     //   private bool straightwayIsRunning=false;
     [HideInInspector]
-    public Vector3[] moveVectors;
-    public Vector3? actualDirection;
+    public Transform[] targets;
+    [HideInInspector]
+    public float[] speeds;
+    [HideInInspector]
+    public float[] waitingTimes;
+    //public Vector3? actualTarget;
     public float pathLength;
     private float pathDone;
     public float stopTime;
@@ -31,29 +35,29 @@ public class EnemySquare : Enemy {
 
     protected override void Move()
     {
-        if (actualDirection != null && pathDone < pathLength)
+        if (/*actualTarget != null && */pathDone < pathLength)
         {
             switch (GameManager.instance.cameraState)
             {
                 case State.SIDESCROLL:
-                    transform.Translate(actualDirection.Value * speed * Time.deltaTime, Space.World);
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[pathIndex].position.x, targets[pathIndex].position.y, 0), speed * Time.deltaTime);
                     break;
                 case State.TOPDOWN:
-                    transform.Translate(new Vector3(actualDirection.Value.x, actualDirection.Value.z, actualDirection.Value.y) * speed * Time.deltaTime, Space.World);
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[pathIndex].position.x, GameManager.instance.playerBulletSpawnPos.y, targets[pathIndex].position.z), speeds[pathIndex] * Time.deltaTime);
                     break;
             }
-            pathDone += speed * Time.deltaTime;
+            pathDone += speeds[pathIndex] * Time.deltaTime;
         }
         else
         {
-            if (actualDirection != null && stopTimer < stopTime)
+            if (/*actualTarget != null && */stopTimer < waitingTimes[pathIndex])
             {
                 stopTimer += Time.deltaTime;
             }
             else
             {
-                actualDirection = moveVectors[pathIndex];
-                if (pathIndex < moveVectors.Length - 1)
+                //actualTarget = targets[pathIndex].position;
+                if (pathIndex < targets.Length - 1)
                 {
                     pathIndex++;
                 }

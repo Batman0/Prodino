@@ -12,8 +12,11 @@ public class EnemySpawnPoint : MonoBehaviour
     public float spawnDelay;
     private float delayTimer;
     public EnemyType myType;
-    [Tooltip("Sidescroll axises values. It is necessary to fill these fields if 'My Type' is 'Square' only")]
-    public Vector3[] moveVectors;
+    [Tooltip("It is necessary to fill these fields if 'My Type' is 'Square' only")]
+    [Header("Path Definers")]
+    public Transform[] targets;
+    public float[] speeds;
+    public float[] waitingTimes;
 
     void Update()
     {
@@ -38,7 +41,9 @@ public class EnemySpawnPoint : MonoBehaviour
             if (myType == EnemyType.Square)
             {
                 EnemySquare enemySquare = (EnemySquare)enemyScript;
-                enemySquare.moveVectors = moveVectors;
+                enemySquare.targets = targets;
+                enemySquare.speeds = speeds;
+                enemySquare.waitingTimes = waitingTimes;
             }
             Destroy(gameObject);
         }

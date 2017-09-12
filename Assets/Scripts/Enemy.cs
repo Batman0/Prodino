@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
     public bool isRight;
     [HideInInspector]
     public Vector3 originalPos;
+    public int type;
 
     private const string enemyBulletTag = "EnemyBullet";
 
@@ -41,7 +42,6 @@ public class Enemy : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        Move();
         ChangePerspective();
         Shoot();
         DestroyGameobject();
