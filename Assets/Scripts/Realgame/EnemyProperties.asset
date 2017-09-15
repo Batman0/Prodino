@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
+  m_Name: EnemyProperties
+  m_EditorClassIdentifier: 
+  St_speed: 0
+  Sq_speed: 5
+  Sq_waitingTime: 2
+  Sq_targets:
+  - {fileID: 4623819927551784, guid: 0946a069396452b40937a5130ec487b9, type: 2}
+  - {fileID: 4294765013186620, guid: 0946a069396452b40937a5130ec487b9, type: 2}
+  - {fileID: 4721663649701090, guid: 0946a069396452b40937a5130ec487b9, type: 2}
+  C_speed: 0
+  C_radius: 0
+  D_bulletSpeed: 0
+  D_ratioOfFire: 0
+  L_height: 0
+  L_width: 0
+  T_height: 0
+  T_width: 0
+  B_spawnTime: 0

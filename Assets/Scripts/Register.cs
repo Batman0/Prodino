@@ -7,6 +7,10 @@ public class Register : MonoBehaviour
     public static Register instance;
     [Header("Enemies")]
     public GameObject[] enemies;
+    /// <summary>
+    /// New enemy prefab.
+    /// </summary>
+    public GameObject enemyPrefab;
     [HideInInspector]
     public bool canStartEnemyTransition = false;
     [HideInInspector]
