@@ -126,8 +126,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4957682556504504}
-  - component: {fileID: 95419075633853634}
-  - component: {fileID: 114485151971331072}
   m_Layer: 0
   m_Name: Trevor
   m_TagString: Untagged
@@ -338,8 +336,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4021812952014568}
-  - component: {fileID: 114521872841630456}
   - component: {fileID: 54978495014258954}
+  - component: {fileID: 114361016435548334}
+  - component: {fileID: 95393272320219176}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -925,7 +924,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -942,13 +941,13 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.013411529, y: 0.0140910195, z: 0.012222789}
   m_Center: {x: -0.00040010735, y: 0.0145, z: 0.00060864084}
---- !u!95 &95419075633853634
+--- !u!95 &95393272320219176
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1324899495522464}
+  m_GameObject: {fileID: 1758926448620306}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4ea2f350528e2d8429e7115d362e29b2, type: 3}
   m_Controller: {fileID: 9100000, guid: c6124f08fe138184190d4d5c043b8c9a, type: 2}
@@ -959,20 +958,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114485151971331072
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1324899495522464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49037bdb2a317a846b11bf43a734fad1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ani: {fileID: 95419075633853634}
-  speed: 2
---- !u!114 &114521872841630456
+--- !u!114 &114361016435548334
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -980,31 +966,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758926448620306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e08f3eb933e7ae2499c210dba5d404fb, type: 3}
+  m_Script: {fileID: 11500000, guid: b7da0903a1a1d684b966a5623874482e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundarySideScroll:
-    xMin: -16.8
-    xMax: 16.8
-    yMin: -6.7
-    yMax: 10.5
-  boundaryTopDown:
-    xMin: -16.8
-    xMax: 16.8
-    zMin: -8
-    zMax: 8
-  startPosition: {fileID: 0}
+  startPosition: {x: 0, y: 0, z: 0}
   speed: 10
-  jumpForce: 5
-  aim: {fileID: 0}
+  jumpForce: 40
+  rayLength: 1.1
+  aimTransform: {fileID: 0}
   bulletPrefab: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   bulletSpawnPoint: {fileID: 4295414299896406}
   fireRatio: 0.5
   timerRespawn: 0.8
+  gravity: 30
+  glideSpeed: 20
   angle: 0
   meleeDistance: 20
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 512
   canShoot: 1
+  canJump: 0
+  isDead: 0
+  sidexMin: -16.8
+  sidexMax: 16.8
+  sideyMin: -6.2
+  sideyMax: 10.5
+  topxMin: -16.8
+  topxMax: 16.8
+  topzMin: -8
+  topzMax: 8
+  ani: {fileID: 95393272320219176}
 --- !u!137 &137439890034802190
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

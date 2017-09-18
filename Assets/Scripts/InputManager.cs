@@ -11,6 +11,11 @@ public class InputManager : MonoBehaviour
     private Ray aimRay;
     public Transform aimTransform;
 
+    void Start()
+    {
+        aimTransform = Register.instance.aimTransform;
+    }
+
     void Update()
     {
         Aim();
@@ -18,7 +23,7 @@ public class InputManager : MonoBehaviour
 
     void Aim()
     {
-        if (GameManager.instance.cameraState == State.TOPDOWN)
+        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
             if (aimPlane == null)
             {

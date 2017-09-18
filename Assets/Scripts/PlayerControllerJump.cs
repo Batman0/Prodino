@@ -19,14 +19,13 @@ public class BoundaryTopDown
 
 public class PlayerControllerJump : MonoBehaviour
 {
-    //public BoundarySideScroll boundarySideScroll;
-    //public BoundaryTopDown boundaryTopDown;
-    public Transform startPosition;
+    public Vector3 startPosition;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float rayLength;
     private float controllerDeadZone = 0.1f;
-    public Transform aim;
+    [HideInInspector]
+    public Transform aimTransform;
     public GameObject bulletPrefab;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
@@ -59,14 +58,13 @@ public class PlayerControllerJump : MonoBehaviour
 
     void Awake()
     {
-        GameManager.instance.player = this;
         rb = GetComponent<Rigidbody>();
         skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     void Start()
     {
-        transform.position = startPosition.position;
+        transform.position = startPosition;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
     }
@@ -75,13 +73,12 @@ public class PlayerControllerJump : MonoBehaviour
     {
         if (!isDead)
         {
-            if (!GameManager.instance.cameraTransitionIsRunning)
+            if (!GameManager.instance.transitionIsRunning)
             {
                 canJump = CheckGround();
-                switch (GameManager.instance.cameraState)
+                switch (GameManager.instance.currentGameMode)
                 {
-                    case State.SIDESCROLL:
-                        //Move(Vector3.up, speed, "Vertical");
+                    case GameMode.SIDESCROLL:
                         if (transform.position.x > sidexMin && Input.GetAxis("Horizontal") < -controllerDeadZone)
                         {
                             Move(Vector3.right, speed, "Horizontal");
@@ -99,13 +96,6 @@ public class PlayerControllerJump : MonoBehaviour
                         {
                             ApplyGravity();
                         }
-                        //if (Input.GetKeyDown(KeyCode.W))
-                        //{
-                        //    if (!canJump && rb.velocity.y < 0.0f)
-                        //    {
-                        //        rb.AddForce(Vector3.up * gravity, ForceMode.Impulse);
-                        //    }
-                        //}
                         if (Input.GetKey(KeyCode.W))
                         {
                             if (!canJump && rb.velocity.y < 0.0f)
@@ -125,15 +115,15 @@ public class PlayerControllerJump : MonoBehaviour
                             transform.rotation = sideScrollerRotation;
                         }
 
-                        ClampPosition(State.SIDESCROLL);
+                        ClampPosition(GameMode.SIDESCROLL);
 
                         break;
-                    case State.TOPDOWN:
+                    case GameMode.TOPDOWN:
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         TurnAroundPlayer();
 
-                        ClampPosition(State.TOPDOWN);
+                        ClampPosition(GameMode.TOPDOWN);
 
                         if (Input.GetMouseButtonDown(1))
                         {
@@ -211,7 +201,7 @@ public class PlayerControllerJump : MonoBehaviour
 
     void TurnAroundPlayer()
     {
-        transform.LookAt(new Vector3(aim.position.x, transform.position.y, aim.position.z));
+        transform.LookAt(new Vector3(aimTransform.position.x, transform.position.y, aimTransform.position.z));
     }
 
     void Shoot()
@@ -220,21 +210,21 @@ public class PlayerControllerJump : MonoBehaviour
         bullet.tag = playerBulletTag;
     }
 
-    public void ClampPosition(State state)
+    public void ClampPosition(GameMode state)
     {
         switch (state)
         {
-            case (State.SIDESCROLL):
+            case (GameMode.SIDESCROLL):
                 transform.position = new Vector3(
                 Mathf.Clamp(transform.position.x, sidexMin, sidexMax),
                 Mathf.Clamp(transform.position.y, sideyMin, sideyMax),
                 0.0f
                 );
                 break;
-            case (State.TOPDOWN):
+            case (GameMode.TOPDOWN):
                 transform.position = new Vector3(
                 Mathf.Clamp(transform.position.x, topxMin, topxMax),
-                startPosition.position.y,
+                startPosition.y,
                 Mathf.Clamp(transform.position.z, topzMin, topzMax)
                 );
                 break;
@@ -280,7 +270,7 @@ public class PlayerControllerJump : MonoBehaviour
         yield return new WaitForSeconds(timerRespawn);
 
         skinnedMeshRen.enabled = true;
-        transform.position = new Vector3(transform.position.x, startPosition.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isDead = false;
     }

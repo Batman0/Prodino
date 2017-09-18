@@ -20,25 +20,25 @@ public class Enemy : MonoBehaviour {
 
     private const string enemyBulletTag = "EnemyBullet";
 
-    void Awake()
-    {
-        Register.instance.numberOfEnemies++;
-        originalPos = transform.position;
-        switch (GameManager.instance.cameraState)
-        {
-            case State.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-                break;
-            case State.TOPDOWN:
-                transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-                break;
-        }
-    }
+    //void Awake()
+    //{
+    //    Register.instance.numberOfEnemies++;
+    //    originalPos = transform.position;
+    //    switch (GameManager.instance.currentGameMode)
+    //    {
+    //        case GameMode.SIDESCROLL:
+    //            transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+    //            break;
+    //        case GameMode.TOPDOWN:
+    //            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+    //            break;
+    //    }
+    //}
 
-    void Start()
-    {
-        transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-    }
+    //void Start()
+    //{
+    //    transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+    //}
     // Update is called once per frame
     void Update ()
     {
@@ -83,15 +83,15 @@ public class Enemy : MonoBehaviour {
     {
         if (Register.instance.canStartEnemyTransition)
         {
-            switch (GameManager.instance.cameraState)
+            switch (GameManager.instance.currentGameMode)
             {
-                case State.SIDESCROLL:
+                case GameMode.SIDESCROLL:
                     if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
                     {
                         transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
                     }
                     break;
-                case State.TOPDOWN:
+                case GameMode.TOPDOWN:
                     if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
                     {
                         transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
@@ -107,15 +107,15 @@ public class Enemy : MonoBehaviour {
         }
         else if (Register.instance.canEndEnemyTransition)
         {
-            switch (GameManager.instance.cameraState)
+            switch (GameManager.instance.currentGameMode)
             {
-                case State.TOPDOWN:
+                case GameMode.TOPDOWN:
                     if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
                     {
                         transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
                     }
                     break;
-                case State.SIDESCROLL:
+                case GameMode.SIDESCROLL:
                     if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
                     {
                         transform.position = new Vector3(transform.position.x, originalPos.y, 0);

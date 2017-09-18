@@ -19,6 +19,8 @@ public class Register : MonoBehaviour
     public int numberOfEnemies;
     [HideInInspector]
     public int translatedEnemies;
+    [Header("Aim")]
+    public Transform aimTransform;
 
     void Awake()
     {

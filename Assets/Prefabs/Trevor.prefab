@@ -276,7 +276,6 @@ GameObject:
   - component: {fileID: 4113144839411018}
   - component: {fileID: 95844989600415786}
   - component: {fileID: 114632161426523090}
-  - component: {fileID: 114208991352968180}
   m_Layer: 0
   m_Name: Trevor
   m_TagString: Untagged
@@ -872,35 +871,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114208991352968180
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1635014356429744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e08f3eb933e7ae2499c210dba5d404fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boundarySideScroll:
-    xMin: 0
-    xMax: 0
-    yMin: 0
-    yMax: 0
-  boundaryTopDown:
-    xMin: 0
-    xMax: 0
-    zMin: 0
-    zMax: 0
-  speed: 5
-  aim: {fileID: 0}
-  bulletPrefab: {fileID: 0}
-  bulletSpawnPoint: {fileID: 0}
-  fireRatio: 0.1
-  angle: 0
-  meleeDistance: 0
-  canShoot: 1
 --- !u!114 &114632161426523090
 MonoBehaviour:
   m_ObjectHideFlags: 1

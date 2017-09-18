@@ -8,6 +8,7 @@ public class EnemyProperties : ScriptableObject
     [Header("Movement")]
     [Header("Straight")]
     public float St_speed;
+    public float St_destructionMargin;
     [Header("Square")]
     public float Sq_speed;
     public float Sq_waitingTime;
@@ -15,6 +16,7 @@ public class EnemyProperties : ScriptableObject
     [Header("Circular")]
     public float C_speed;
     public float C_radius;
+    public float C_lifeTime;
 
     [Header("Fire")]
     [Header("Default")]

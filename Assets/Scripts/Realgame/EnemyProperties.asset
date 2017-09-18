@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
   m_Name: EnemyProperties
   m_EditorClassIdentifier: 
-  St_speed: 0
+  St_speed: 5
+  St_destructionMargin: 2
   Sq_speed: 5
   Sq_waitingTime: 2
   Sq_targets:
   - {fileID: 4623819927551784, guid: 0946a069396452b40937a5130ec487b9, type: 2}
   - {fileID: 4294765013186620, guid: 0946a069396452b40937a5130ec487b9, type: 2}
   - {fileID: 4721663649701090, guid: 0946a069396452b40937a5130ec487b9, type: 2}
-  C_speed: 0
-  C_radius: 0
+  C_speed: 1
+  C_radius: 15
+  C_lifeTime: 100
   D_bulletSpeed: 0
   D_ratioOfFire: 0
   L_height: 0

@@ -18,9 +18,9 @@ public class EnemyCircle : Enemy
 
     protected override void Move()
     {
-        switch (GameManager.instance.cameraState)
+        switch (GameManager.instance.currentGameMode)
         {
-            case State.SIDESCROLL:
+            case GameMode.SIDESCROLL:
                 if (isRight)
                 {
                     transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, 0);
@@ -31,7 +31,7 @@ public class EnemyCircle : Enemy
                 }
                 //transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + offset.x, radius * Mathf.Sin(Time.time * speed) + offset.y, 0);
                 break;
-            case State.TOPDOWN:
+            case GameMode.TOPDOWN:
                 if (isRight)
                 {
                     transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, 0, radius * Mathf.Sin(Time.time * speed) + originalPos.z);

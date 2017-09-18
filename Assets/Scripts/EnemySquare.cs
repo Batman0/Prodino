@@ -37,12 +37,12 @@ public class EnemySquare : Enemy {
     {
         if (/*actualTarget != null && */pathDone < pathLength)
         {
-            switch (GameManager.instance.cameraState)
+            switch (GameManager.instance.currentGameMode)
             {
-                case State.SIDESCROLL:
+                case GameMode.SIDESCROLL:
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[pathIndex].position.x, targets[pathIndex].position.y, 0), speed * Time.deltaTime);
                     break;
-                case State.TOPDOWN:
+                case GameMode.TOPDOWN:
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[pathIndex].position.x, GameManager.instance.playerBulletSpawnPos.y, targets[pathIndex].position.z), speeds[pathIndex] * Time.deltaTime);
                     break;
             }
@@ -77,107 +77,57 @@ public class EnemySquare : Enemy {
         //}
     }
 
-    protected override void ChangePerspective()
-    {
-        if (Register.instance.canStartEnemyTransition)
-        {
-            switch (GameManager.instance.cameraState)
-            {
-                case State.SIDESCROLL:
-                    if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
-                    {
-                        transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
-                    }
-                    break;
-                case State.TOPDOWN:
-                    if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
-                    {
-                        transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
-                    }
-                    break;
-            }
-            Register.instance.translatedEnemies++;
-            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
-            {
-                Register.instance.translatedEnemies = 0;
-                Register.instance.canStartEnemyTransition = false;
-            }
-        }
-        else if (Register.instance.canEndEnemyTransition)
-        {
-            switch (GameManager.instance.cameraState)
-            {
-                case State.TOPDOWN:
-                    if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
-                    {
-                        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-                    }
-                    break;
-                case State.SIDESCROLL:
-                    if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
-                    {
-                        transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-                    }
-                    break;
-            }
-            Register.instance.translatedEnemies++;
-            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
-            {
-                Register.instance.translatedEnemies = 0;
-                Register.instance.canEndEnemyTransition = false;
-            }
-        }
-    }
-
-    //IEnumerator FollowPath()
+    //protected override void ChangePerspective()
     //{
-    //    if (actualDirection != null)
+    //    if (Register.instance.canStartEnemyTransition)
     //    {
-    //        while (pathDone < pathLength)
+    //        switch (GameManager.instance.currentGameMode)
     //        {
-    //            transform.Translate(actualDirection.Value * speed * Time.deltaTime, Space.World);
-    //            pathDone += speed * Time.deltaTime;
-    //            yield return null;
+    //            case GameMode.SIDESCROLL:
+    //                if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
+    //                {
+    //                    transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
+    //                }
+    //                break;
+    //            case GameMode.TOPDOWN:
+    //                if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
+    //                {
+    //                    transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
+    //                }
+    //                break;
     //        }
-    //        yield return new WaitForSeconds(stopTime);
-    //        actualDirection = null;
+    //        Register.instance.translatedEnemies++;
+    //        if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+    //        {
+    //            Register.instance.translatedEnemies = 0;
+    //            Register.instance.canStartEnemyTransition = false;
+    //        }
     //    }
-    //    else
+    //    else if (Register.instance.canEndEnemyTransition)
     //    {
-    //        actualDirection = directions[pathIndex];
-    //        pathIndex++;
+    //        switch (GameManager.instance.currentGameMode)
+    //        {
+    //            case GameMode.TOPDOWN:
+    //                if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
+    //                {
+    //                    transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+    //                }
+    //                break;
+    //            case GameMode.SIDESCROLL:
+    //                if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
+    //                {
+    //                    transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+    //                }
+    //                break;
+    //        }
+    //        Register.instance.translatedEnemies++;
+    //        if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+    //        {
+    //            Register.instance.translatedEnemies = 0;
+    //            Register.instance.canEndEnemyTransition = false;
+    //        }
     //    }
     //}
 
-    //protected override void Move()
-    //{
-    //	switch (GameManager.instance.cameraState)
-    //	{
-    //	case State.SIDESCROLL:
-    //               //if(!straightwayIsRunning)
-    //               //{
-    //               //    straightwayIsRunning = true;
-    //               //    StartCoroutine("STRAIGHTWAY");
-    //               //}
-    //               //float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
-    //               //transform.position = new Vector3(x, transform.position.y, 0);
-    //               //distance += x;
-    //               transform.position = new Vector3(
-    //                   length* Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)),Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x, 
-    //                   length* Mathf.Sin(Time.time * speed)/ Mathf.Max(Mathf.Abs(Mathf.Cos(Time.time * speed)),Mathf.Abs(Mathf.Sin(Time.time * speed))) + offset.y, 
-    //                   0);
-    //               break;
-    //	case State.TOPDOWN:
-    //		//transform.position = new Vector3(length * Mathf.Cos(Time.time * speed) + offset.x, 0, length * Mathf.Sin(Time.time * speed) + offset.z);
-    //		break;
-    //	}
-    //}
-
-    //   IEnumerator STRAIGHTWAY()
-    //   {
-    //           float x = (length * Mathf.Cos(Time.time * speed) / Mathf.Max(Mathf.Abs(Mathf.Sin(Time.time * speed)), Mathf.Abs(Mathf.Cos(Time.time * speed))) + offset.x);
-    //           transform.position = new Vector3(x, transform.position.y, 0);
-    //           distance += x;
-    //           yield return null;
-    //   }
+   
 }

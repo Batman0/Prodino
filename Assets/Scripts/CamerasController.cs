@@ -22,21 +22,11 @@ public class CamerasController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.cameraTransitionIsRunning)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning)
         {
-            GameManager.instance.cameraTransitionIsRunning = true;
+            GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartEnemyTransition = true;
-            //Vector3 playerPos = GameManager.instance.player.transform.position;
             Time.timeScale = timeScaleValueLerping;
-            //switch (GameManager.instance.cameraState)
-            //{
-            //    case (State.SIDESCROLL):
-            //        GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
-            //        break;
-            //    case (State.TOPDOWN):
-            //        GameManager.instance.player.transform.position = new Vector3(playerPos.x, 0.0f, playerPos.z);
-            //        break;
-            //}
             StartCoroutine("LerpCamera");
         }
 	}
@@ -44,9 +34,9 @@ public class CamerasController : MonoBehaviour
     IEnumerator LerpCamera()
     {
         Vector3 playerPos = GameManager.instance.player.transform.position;
-        switch (GameManager.instance.cameraState)
+        switch (GameManager.instance.currentGameMode)
         {
-            case State.SIDESCROLL:
+            case GameMode.SIDESCROLL:
                 while (Vector3.Distance(cameras.transform.position, topDownCameraPosition.position) >= lerpDistance)
                 {
                     lerp = Vector3.Lerp(cameras.transform.position, topDownCameraPosition.position, lerpSpeed);
@@ -57,15 +47,13 @@ public class CamerasController : MonoBehaviour
                 }
                 cameras.transform.position = topDownCameraPosition.position;
                 cameras.transform.rotation = topDownCameraPosition.rotation;
-                if (GameManager.instance.cameraState != State.TOPDOWN)
+                if (GameManager.instance.currentGameMode != GameMode.TOPDOWN)
                 {
-                    GameManager.instance.cameraState = State.TOPDOWN;
+                    GameManager.instance.currentGameMode = GameMode.TOPDOWN;
                 }
-                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
                 break;
 
-            case State.TOPDOWN:
-                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, playerPos.z);
+            case GameMode.TOPDOWN:
                 while (Vector3.Distance(cameras.transform.position, sideScrollCameraPosition.position) >= lerpDistance)
                 {
 
@@ -77,16 +65,15 @@ public class CamerasController : MonoBehaviour
                 }
                 cameras.transform.position = sideScrollCameraPosition.position;
                 cameras.transform.rotation = sideScrollCameraPosition.rotation;
-                if (GameManager.instance.cameraState != State.SIDESCROLL)
+                if (GameManager.instance.currentGameMode != GameMode.SIDESCROLL)
                 {
-                    GameManager.instance.cameraState = State.SIDESCROLL;
+                    GameManager.instance.currentGameMode = GameMode.SIDESCROLL;
                 }
-                //GameManager.instance.player.transform.position = new Vector3(playerPos.x, playerPos.y, 0.0f);
                 break;
         }
         Register.instance.canEndEnemyTransition = true;
         Time.timeScale = timeScaleValueNotLerping;
-        GameManager.instance.cameraTransitionIsRunning = false;
+        GameManager.instance.transitionIsRunning = false;
         yield return null;
     }
 }

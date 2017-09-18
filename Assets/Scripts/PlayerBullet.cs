@@ -33,7 +33,7 @@ public class PlayerBullet : BaseBullet
 
     protected override void Move()
     {
-        if (GameManager.instance.cameraState == State.SIDESCROLL)
+        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (isRight && !isCenter)
             {
@@ -48,7 +48,7 @@ public class PlayerBullet : BaseBullet
                 transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.World);
             }
         }
-        else if (GameManager.instance.cameraState == State.TOPDOWN)
+        else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
             transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.Self);
         }

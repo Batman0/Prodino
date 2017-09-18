@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
 
     public MovementType movementType;
+    public bool isRight;
     public float delay;
     private float delayTimer;
     private GameObject enemyPrefab;
@@ -32,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = Instantiate(Register.instance.enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
             NewEnemy enemyScript = enemy.GetComponent<NewEnemy>();
             enemyScript.movementType = movementType;
+            enemyScript.isRight = isRight;
             Destroy(gameObject);
         }
     }
