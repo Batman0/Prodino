@@ -51,20 +51,20 @@ public class NewEnemy : MonoBehaviour
 
     public void Move()
     {
-        switch (movementType)
+        if (!GameManager.instance.transitionIsRunning)
         {
-            case MovementType.STRAIGHT:
-                Movements.StraightMove(transform, isRight, enemyProperties.St_speed, enemyProperties.St_destructionMargin, ref toDestroy);
-                break;
-            case MovementType.CIRCULAR:
-                Movements.CircularMove(transform, enemyProperties.C_speed, isRight, enemyProperties.C_radius, originalPos, ref lifeTime, ref toDestroy);
-                break;
-            case MovementType.SQUARE:
-                Movements.SquareMove(ref index, enemyProperties.Sq_speed, enemyProperties.Sq_waitingTime, ref waitingTimer, enemyProperties.Sq_targets, transform, ref toDestroy);
-                break;
-            default:
-                Debug.Log("Nothing");
-                break;
+            switch (movementType)
+            {
+                case MovementType.STRAIGHT:
+                    Movements.StraightMove(transform, isRight, enemyProperties.St_speed, enemyProperties.St_destructionMargin, ref toDestroy);
+                    break;
+                case MovementType.CIRCULAR:
+                    Movements.CircularMove(transform, enemyProperties.C_speed, isRight, enemyProperties.C_radius, originalPos, ref lifeTime, ref toDestroy);
+                    break;
+                case MovementType.SQUARE:
+                    Movements.SquareMove(ref index, enemyProperties.Sq_speed, enemyProperties.Sq_waitingTime, ref waitingTimer, enemyProperties.Sq_targets, transform, ref toDestroy);
+                    break;
+            }
         }
     }
 
@@ -75,36 +75,36 @@ public class NewEnemy : MonoBehaviour
             switch (GameManager.instance.currentGameMode)
             {
                 case GameMode.SIDESCROLL:
-                    //if (movementType != MovementType.CIRCULAR)
-                    //{
+                    if (movementType != MovementType.CIRCULAR)
+                    {
                         if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
                         {
                             transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
                         }
-                    //}
-                    //else
-                    //{
-                    //    if (transform.position != new Vector3(transform.position.x, transform.position.y, transform.position.y))
-                    //    {
-                    //        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
-                    //    }
-                    //}
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        {
+                            transform.position = new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                        }
+                    }
                     break;
                 case GameMode.TOPDOWN:
-                    //if (movementType != MovementType.CIRCULAR)
-                    //{
+                    if (movementType != MovementType.CIRCULAR)
+                    {
                         if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
                         {
                             transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
                         }
-                    //}
-                    //else
-                    //{
-                    //    if (transform.position != new Vector3(transform.position.x, transform.position.z, transform.position.z))
-                    //    {
-                    //        transform.position = new Vector3(transform.position.x, transform.position.z, transform.position.z);
-                    //    }
-                    //}
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z))
+                        {
+                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z);
+                        }
+                    }
                     break;
             }
             Register.instance.translatedEnemies++;
@@ -119,36 +119,36 @@ public class NewEnemy : MonoBehaviour
             switch (GameManager.instance.currentGameMode)
             {
                 case GameMode.TOPDOWN:
-                    //if (movementType != MovementType.CIRCULAR)
-                    //{
+                    if (movementType != MovementType.CIRCULAR)
+                    {
                         if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
                         {
                             transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
                         }
-                    //}
-                    //else
-                    //{
-                    //    if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, transform.position.z))
-                    //    {
-                    //        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, transform.position.z);
-                    //    }
-                    //}
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        {
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                        }
+                    }
                     break;
                 case GameMode.SIDESCROLL:
-                    //if (movementType != MovementType.CIRCULAR)
-                    //{
+                    if (movementType != MovementType.CIRCULAR)
+                    {
                         if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
                         {
                             transform.position = new Vector3(transform.position.x, originalPos.y, 0);
                         }
-                    //}
-                    //else
-                    //{
-                    //    if (transform.position != new Vector3(transform.position.x, transform.position.y, 0))
-                    //    {
-                    //        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-                    //    }
-                    //}
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0))
+                        {
+                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0);
+                        }
+                    }
                     break;
             }
             Register.instance.translatedEnemies++;

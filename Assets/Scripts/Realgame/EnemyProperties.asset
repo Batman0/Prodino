@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 4623819927551784, guid: 0946a069396452b40937a5130ec487b9, type: 2}
   - {fileID: 4294765013186620, guid: 0946a069396452b40937a5130ec487b9, type: 2}
   - {fileID: 4721663649701090, guid: 0946a069396452b40937a5130ec487b9, type: 2}
-  C_speed: 1
+  C_speed: 0.2
   C_radius: 15
   C_lifeTime: 100
   D_bulletSpeed: 0

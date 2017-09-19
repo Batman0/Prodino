@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0.3f;
         RespawnPlayer(playerStartPos);
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
@@ -37,6 +36,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         MoveBackgrounds(backgrounds, Vector3.left, backgroundSpeed);
+        //Debug.Log(Time.time.ToString("#.##"));
     }
 
     void RespawnPlayer(Transform restartPos)

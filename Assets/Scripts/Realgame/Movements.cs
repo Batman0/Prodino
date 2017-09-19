@@ -56,11 +56,11 @@ public static class Movements
             case GameMode.TOPDOWN:
                 if (isRight)
                 {
-                    transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
+                    transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.y);
                 }
                 else
                 {
-                    transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
+                    transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.y);
                 }
                 break;
         }
