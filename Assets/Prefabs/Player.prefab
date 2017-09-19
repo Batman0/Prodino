@@ -189,7 +189,7 @@ GameObject:
   m_Layer: 0
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -972,6 +972,8 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   speed: 10
   jumpForce: 40
+  upRotationAngle: 60
+  downRotationAngle: 90
   rayLength: 1.1
   aimTransform: {fileID: 0}
   bulletPrefab: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
@@ -981,7 +983,6 @@ MonoBehaviour:
   timerRespawn: 0.8
   gravity: 30
   glideSpeed: 20
-  angle: 0
   meleeDistance: 20
   groundMask:
     serializedVersion: 2

@@ -22,6 +22,8 @@ public class PlayerControllerJump : MonoBehaviour
     public Vector3 startPosition;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
+    public float upRotationAngle;
+    public float downRotationAngle;
     public float rayLength;
     private float controllerDeadZone = 0.1f;
     [HideInInspector]
@@ -36,7 +38,7 @@ public class PlayerControllerJump : MonoBehaviour
     private Quaternion sideScrollerRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
-    public float angle;
+    private float angle;
     public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
@@ -71,6 +73,7 @@ public class PlayerControllerJump : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(Vector3.Angle(Vector3.right, new Vector3(aimTransform.position.x, aimTransform.position.y, 0)));
         if (!isDead)
         {
             if (!GameManager.instance.transitionIsRunning)
@@ -114,14 +117,26 @@ public class PlayerControllerJump : MonoBehaviour
                         {
                             transform.rotation = sideScrollerRotation;
                         }
-
+                        Vector3 aim = aimTransform.position - bulletSpawnPoint.position;
+                        float aimAngle = Vector3.Angle(Vector3.right, aim);
+                        Vector3 cross = Vector3.Cross(Vector3.right, aim);
+                        Debug.Log("aimAngle: " + aimAngle);
+                        //Debug.Log("cross: " + Vector3.Cross(Vector3.right, aim));
+                        if (aimAngle <= upRotationAngle && cross.z >= 0)
+                        {
+                            TurnAroundPlayer(bulletSpawnPoint);
+                        }
+                        else if (aimAngle <= downRotationAngle && cross.z < 0)
+                        {
+                            TurnAroundPlayer(bulletSpawnPoint);
+                        }
                         ClampPosition(GameMode.SIDESCROLL);
 
                         break;
                     case GameMode.TOPDOWN:
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
-                        TurnAroundPlayer();
+                        TurnAroundPlayer(transform);
 
                         ClampPosition(GameMode.TOPDOWN);
 
@@ -199,9 +214,17 @@ public class PlayerControllerJump : MonoBehaviour
         }
     }
 
-    void TurnAroundPlayer()
+    void TurnAroundPlayer(Transform transform)
     {
-        transform.LookAt(new Vector3(aimTransform.position.x, transform.position.y, aimTransform.position.z));
+        switch (GameManager.instance.currentGameMode)
+        {
+            case GameMode.SIDESCROLL:
+                transform.LookAt(new Vector3(aimTransform.position.x, aimTransform.position.y, transform.position.z));
+                break;
+            case GameMode.TOPDOWN:
+                transform.LookAt(new Vector3(aimTransform.position.x, transform.position.y, aimTransform.position.z));
+                break;
+        }
     }
 
     void Shoot()

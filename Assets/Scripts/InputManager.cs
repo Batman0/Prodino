@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
     private float intersectionPoint;
     private Vector3 aimVector;
     private Plane? aimPlane;
+    private Plane? sidescrollPlane;
+    private Plane? topDownPlane;
     private Ray aimRay;
     public Transform aimTransform;
 
@@ -23,14 +25,27 @@ public class InputManager : MonoBehaviour
 
     void Aim()
     {
-        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        if (sidescrollPlane == null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            if (aimPlane == null)
-            {
-                aimPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
-            }
+            sidescrollPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane == null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            topDownPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
             aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (aimPlane.Value.Raycast(aimRay, out intersectionPoint))
+            if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
+            {
+                aimVector = aimRay.GetPoint(intersectionPoint);
+                aimTransform.position = aimVector;
+            }
+        }
+        if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (sidescrollPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.position = aimVector;

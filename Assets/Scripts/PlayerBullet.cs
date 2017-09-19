@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerBullet : BaseBullet
 {
-    protected bool isRight;
-    protected bool isCenter;
+    protected bool? isRight = null;
+    protected bool? isCenter = null;
 
-    private void Awake()
+    private void Start()
     {
-        AssignDirection();
+        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            AssignDirection();
+        }
     }
 
     protected void AssignDirection()
@@ -35,17 +38,24 @@ public class PlayerBullet : BaseBullet
     {
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            if (isRight && !isCenter)
+            if ((isRight == null))
             {
-                transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime, Space.World);
+                transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.Self);
             }
-            else if (!isRight && !isCenter)
+            else
             {
-                transform.Translate(Vector3.left * bulletSpeed * Time.deltaTime, Space.World);
-            }
-            else if (!isRight && isCenter)
-            {
-                transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.World);
+                if (isRight.Value && !isCenter.Value)
+                {
+                    transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime, Space.World);
+                }
+                else if (!isRight.Value && !isCenter.Value)
+                {
+                    transform.Translate(Vector3.left * bulletSpeed * Time.deltaTime, Space.World);
+                }
+                else if (!isRight.Value && isCenter.Value)
+                {
+                    transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.World);
+                }
             }
         }
         else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
