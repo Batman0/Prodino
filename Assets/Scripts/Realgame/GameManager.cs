@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public PlayerControllerJump player;
     public Vector3 leftBound;
     public Vector3 rightBound;
+    public Vector3 downBound;
+    public Vector3 upBound;
     public Vector3 playerBulletSpawnPos;
     public GameObject[] backgrounds;
 
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour
         RespawnPlayer(playerStartPos);
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
+        downBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane));
+        upBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane));
     }
 
     void Update()
