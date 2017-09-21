@@ -22,10 +22,23 @@ MonoBehaviour:
   C_speed: 0.2
   C_radius: 15
   C_lifeTime: 100
-  D_bulletSpeed: 0
-  D_ratioOfFire: 0
+  playerBulletSpeed: 5
+  playerBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
+    type: 2}
+  D_bulletSpeed: 7
+  D_ratioOfFire: 1
+  straightEnemy: {fileID: 1018309814513026, guid: f28cb5205f78c704299d2839c230223c,
+    type: 2}
+  D_bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
   L_height: 0
   L_width: 0
+  diagonalEnemy: {fileID: 1874333301391660, guid: a0f529e91465d3b4c9e25ec1faa9e7f7,
+    type: 2}
+  L_bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
   T_height: 0
   T_width: 0
+  aimEnemy: {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
+  T_bullet: {fileID: 0}
   B_spawnTime: 0
+  bombEnemy: {fileID: 1730174443221068, guid: d2b5bda85ea4fca4b974df069a0c18b2, type: 2}
+  B_bullet: {fileID: 0}

@@ -40,27 +40,27 @@ public class PlayerBullet : BaseBullet
         {
             if ((isRight == null))
             {
-                transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.Self);
+                transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.Self);
             }
             else
             {
                 if (isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.right * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.left * bulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.left * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && isCenter.Value)
                 {
-                    transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
                 }
             }
         }
         else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
-            transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime, Space.Self);
+            transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.Self);
         }
     }
 }

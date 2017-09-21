@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33680535396484082}
   - component: {fileID: 136314245389271650}
   - component: {fileID: 23244361627594272}
-  - component: {fileID: 114234770532033470}
   - component: {fileID: 54594731257023428}
   m_Layer: 0
   m_Name: EnemyDefault
@@ -127,26 +126,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114234770532033470
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1018309814513026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae3569a9d2a9ce41bdd569003e13ef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  fireRatio: 3
-  enemyBullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
-    type: 2}
-  enemyBulletSpawn: {fileID: 4033452196873048}
-  canShoot: 1
-  isRight: 0
-  originalPos: {x: 0, y: 0, z: 0}
-  destructionMargin: 3
 --- !u!136 &136314245389271650
 CapsuleCollider:
   m_ObjectHideFlags: 1

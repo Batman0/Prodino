@@ -93,8 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093edeccc9755444987a2afb91e92549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 10
-  lifeTime: 2
+  isRight: 0
+  enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
   destructionMargin: 1
 --- !u!135 &135693013443197694
 SphereCollider:

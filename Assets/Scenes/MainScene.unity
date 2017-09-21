@@ -214,13 +214,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 141376577}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
-  isRight: 1
+  isRight: 0
   delay: 3
 --- !u!4 &141376579
 Transform:
@@ -257,11 +258,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 244141832}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
   isRight: 0
   delay: 3
@@ -417,11 +419,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 418437458}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
   isRight: 0
   delay: 3
@@ -479,11 +482,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 436331180}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 0
   isRight: 0
   delay: 3
@@ -607,8 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 2
-  isRight: 1
+  isRight: 0
   delay: 3
 --- !u!4 &971569835
 Transform:
@@ -698,8 +703,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 0
-  isRight: 1
+  isRight: 0
   delay: 3
 --- !u!4 &1194246489
 Transform:
@@ -736,13 +742,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254111359}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 2
-  isRight: 1
+  isRight: 0
   delay: 3
 --- !u!4 &1254111361
 Transform:
@@ -806,6 +813,8 @@ MonoBehaviour:
   player: {fileID: 0}
   leftBound: {x: 0, y: 0, z: 0}
   rightBound: {x: 0, y: 0, z: 0}
+  downBound: {x: 0, y: 0, z: 0}
+  upBound: {x: 0, y: 0, z: 0}
   playerBulletSpawnPos: {x: 0, y: 0, z: 0}
   backgrounds:
   - {fileID: 425058900}
@@ -836,10 +845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f944f1fccf33b5c4e92d435dda35c2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 1018309814513026, guid: f28cb5205f78c704299d2839c230223c, type: 2}
-  - {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
-  - {fileID: 1874333301391660, guid: a0f529e91465d3b4c9e25ec1faa9e7f7, type: 2}
   enemyPrefab: {fileID: 1753797962395300, guid: 4f0bff4a3bc49c140a16f7dbabd861c5,
     type: 2}
   canStartEnemyTransition: 0
@@ -847,6 +852,7 @@ MonoBehaviour:
   numberOfEnemies: 0
   translatedEnemies: 0
   aimTransform: {fileID: 699719386}
+  enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
 --- !u!4 &1510460156
 Transform:
   m_ObjectHideFlags: 0
@@ -882,11 +888,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1538264590}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
   isRight: 0
   delay: 3
@@ -974,11 +981,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1622398464}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
   isRight: 0
   delay: 3
@@ -1251,11 +1259,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1894816527}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootType: 0
   movementType: 1
   isRight: 0
   delay: 3

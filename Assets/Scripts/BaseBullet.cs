@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
-    public float bulletSpeed = 10.0f;
-    public float lifeTime = 4.0f;
+    public EnemyProperties enemyProperties;
     /// <summary>
     /// How much far must the bullet be from the near clipping plane to be destroyed?
     /// </summary>

@@ -11,11 +11,15 @@ public class NewEnemy : MonoBehaviour
     private float waitingTimer;
     [HideInInspector]
     public MovementType movementType;
+    [HideInInspector]
+    public ShootType shootType;
     private bool toDestroy;
     public EnemyProperties enemyProperties;
     [HideInInspector]
     public Vector3 originalPos;
     private float lifeTime;
+    public Transform bulletSpawnpoint;
+    private float timeToShoot;
 
     private void Awake()
     {
@@ -24,8 +28,18 @@ public class NewEnemy : MonoBehaviour
 
     private void Start()
     {
+        if(isRight)
+        {
+            this.gameObject.layer.ToString("Right");
+        }
+        else
+        {
+            this.gameObject.layer.ToString("Left");
+        }
         Register.instance.numberOfEnemies++;
+        bulletSpawnpoint = this.GetComponentInChildren<Transform>();
         originalPos = transform.position;
+        timeToShoot = 0.0f;
         switch (GameManager.instance.currentGameMode)
         {
             case GameMode.SIDESCROLL:
@@ -46,7 +60,32 @@ public class NewEnemy : MonoBehaviour
     {
         ChangePerspective();
         Move();
+        Shoot();
         Destroy();
+    }
+    
+    public void Shoot()
+    {
+        if(!GameManager.instance.transitionIsRunning)
+        {
+            switch(shootType)
+            {
+                case ShootType.DEFAULT:
+                    if(timeToShoot<enemyProperties.D_ratioOfFire)
+                    {
+                        timeToShoot += Time.deltaTime;
+                    }
+                    else 
+                    {
+                        Shoots.fireShoot(bulletSpawnpoint, enemyProperties.D_bullet, transform);
+                        timeToShoot = 0.0f;
+                    }
+                    break;
+                case ShootType.LASER:
+                    Debug.Log("Laser");
+                    break;
+            }
+        }
     }
 
     public void Move()

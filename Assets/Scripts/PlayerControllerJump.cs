@@ -120,7 +120,7 @@ public class PlayerControllerJump : MonoBehaviour
                         Vector3 aim = aimTransform.position - bulletSpawnPoint.position;
                         float aimAngle = Vector3.Angle(Vector3.right, aim);
                         Vector3 cross = Vector3.Cross(Vector3.right, aim);
-                        Debug.Log("aimAngle: " + aimAngle);
+                        //Debug.Log("aimAngle: " + aimAngle);
                         //Debug.Log("cross: " + Vector3.Cross(Vector3.right, aim));
                         if (aimAngle <= upRotationAngle && cross.z >= 0)
                         {

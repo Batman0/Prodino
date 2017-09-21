@@ -11,7 +11,6 @@ public enum MovementType
 }
 public static class Movements
 {
-
     public static void StraightMove(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
     {
         if (isRight)

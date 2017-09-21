@@ -7,7 +7,14 @@ public class EnemyBullet : BaseBullet
 
     protected override void Move()
     {
-        transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime, Space.Self);
+        //if(this.gameObject.layer.ToString()=="Left")
+        {
+            transform.Translate(Vector3.right * enemyProperties.D_bulletSpeed * Time.deltaTime, Space.Self);
+        }
+        /*else
+        {
+            transform.Translate(Vector3.right * -enemyProperties.D_bulletSpeed * Time.deltaTime, Space.Self);
+        }*/
     }
 
 }

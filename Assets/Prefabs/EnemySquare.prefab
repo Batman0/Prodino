@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 33267382182901084}
   - component: {fileID: 65699385324024052}
   - component: {fileID: 23541438751003148}
-  - component: {fileID: 114930875181072246}
   - component: {fileID: 54021618760710738}
   m_Layer: 0
   m_Name: EnemySquare
@@ -139,25 +138,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114930875181072246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1874333301391660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90e33db46d9369041ba3ed7327e7af79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  fireRatio: 2
-  enemyBullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
-    type: 2}
-  enemyBulletSpawn: {fileID: 4620927245569050}
-  canShoot: 1
-  isRight: 0
-  originalPos: {x: 0, y: 0, z: 0}
-  moveVectors: []
-  pathLength: 15
-  stopTime: 2

@@ -37,7 +37,6 @@ GameObject:
   - component: {fileID: 33934971405242264}
   - component: {fileID: 136771204928418300}
   - component: {fileID: 23960986455602990}
-  - component: {fileID: 114750449762629942}
   - component: {fileID: 54656626111222794}
   m_Layer: 0
   m_Name: EnemyDiagonal
@@ -127,25 +126,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114750449762629942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1730174443221068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af1c13343235f0c49a6fa7815d7d1e95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  fireRatio: 2
-  enemyBullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
-    type: 2}
-  enemyBulletSpawn: {fileID: 4609860658572418}
-  canShoot: 1
-  isRight: 0
-  originalPos: {x: 0, y: 0, z: 0}
 --- !u!136 &136771204928418300
 CapsuleCollider:
   m_ObjectHideFlags: 1
