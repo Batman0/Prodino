@@ -11,9 +11,9 @@ public enum ShootType
 }
 public static class Shoots
 {
-    public static void fireShoot(Transform bulletSpawnpoint, GameObject bulletPrefab,Transform enemyTransform)
+    public static void straightShoot(Transform bulletSpawnpoint, GameObject bulletPrefab,Transform enemyTransform)
     {
-        GameObject bullet = MonoBehaviour.Instantiate(bulletPrefab, bulletSpawnpoint.position,enemyTransform.rotation) as GameObject;
+        GameObject bullet = Object.Instantiate(bulletPrefab, bulletSpawnpoint.position, enemyTransform.rotation) as GameObject;
         //bullet.layer = layer;
     }
 

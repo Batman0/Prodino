@@ -19,14 +19,11 @@ public class EnemyProperties : ScriptableObject
     public float C_lifeTime;
 
     [Header("Fire")]
-    [Header("PlayerBullet")]
-    public float playerBulletSpeed;
-    public GameObject playerBullet;
     [Header("Default")]
-    public float D_bulletSpeed;
+    //public float D_bulletSpeed;
     public float D_ratioOfFire;
     public GameObject straightEnemy;
-    public GameObject D_bullet;
+    public GameObject bullet;
     [Header("Laser")]
     public float L_height;
     public float L_width;

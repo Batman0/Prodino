@@ -9,7 +9,7 @@ public class EnemyBullet : BaseBullet
     {
         //if(this.gameObject.layer.ToString()=="Left")
         {
-            transform.Translate(Vector3.right * enemyProperties.D_bulletSpeed * Time.deltaTime, Space.Self);
+            transform.Translate(Vector3.right * speed * Time.deltaTime, Space.Self);
         }
         /*else
         {

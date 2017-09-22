@@ -10,22 +10,24 @@ public class EnemySpawner : MonoBehaviour
     public float delay;
     private float delayTimer;
     private GameObject enemyPrefab;
+    private EnemyProperties enemyProperties;
 
     private void Start()
     {
+        enemyProperties = Register.instance.enemyProperties;
         switch (shootType)
         {
             case ShootType.DEFAULT:
-                enemyPrefab = Register.instance.enemyProperties.straightEnemy;
+                enemyPrefab = enemyProperties.straightEnemy;
                 break;
             case ShootType.LASER:
-                enemyPrefab = Register.instance.enemyProperties.diagonalEnemy;
+                enemyPrefab = enemyProperties.diagonalEnemy;
                 break;
             case ShootType.TRAIL:
-                enemyPrefab = Register.instance.enemyProperties.aimEnemy;
+                enemyPrefab = enemyProperties.aimEnemy;
                 break;
             case ShootType.BOMB:
-                enemyPrefab = Register.instance.enemyProperties.bombEnemy;
+                enemyPrefab = enemyProperties.bombEnemy;
                 break;
         }
     }
@@ -44,16 +46,15 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Quaternion enemyRotation = enemyPrefab.transform.rotation;
-            Quaternion rotation = isRight ? enemyPrefab.transform.rotation : Quaternion.Euler(enemyRotation.z, enemyRotation.x + 180, enemyRotation.y);
+            //Quaternion enemyRotation = enemyPrefab.transform.rotation;
+            //Quaternion rotation = isRight ? enemyPrefab.transform.rotation : Quaternion.Euler(enemyRotation.z, enemyRotation.x + 180, enemyRotation.y);
             GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
-            NewEnemy enemyScript = enemy.AddComponent<NewEnemy>();
+            NewEnemy enemyScript = enemy.GetComponent<NewEnemy>();
             enemyScript.movementType = movementType;
-            enemyScript.enemyProperties = Register.instance.enemyProperties;
+            enemyScript.enemyProperties = enemyProperties;
             enemyScript.shootType = shootType;
             enemyScript.isRight = isRight;
             Destroy(gameObject);
-            delayTimer = 0.0f;
         }
     }
 }

@@ -21,23 +21,10 @@ public class NewEnemy : MonoBehaviour
     public Transform bulletSpawnpoint;
     private float timeToShoot;
 
-    private void Awake()
-    {
-        index = 0;
-    }
-
     private void Start()
     {
-        if(isRight)
-        {
-            this.gameObject.layer.ToString("Right");
-        }
-        else
-        {
-            this.gameObject.layer.ToString("Left");
-        }
+        index = 0;
         Register.instance.numberOfEnemies++;
-        bulletSpawnpoint = this.GetComponentInChildren<Transform>();
         originalPos = transform.position;
         timeToShoot = 0.0f;
         switch (GameManager.instance.currentGameMode)
@@ -71,13 +58,13 @@ public class NewEnemy : MonoBehaviour
             switch(shootType)
             {
                 case ShootType.DEFAULT:
-                    if(timeToShoot<enemyProperties.D_ratioOfFire)
+                    if(timeToShoot < enemyProperties.D_ratioOfFire)
                     {
                         timeToShoot += Time.deltaTime;
                     }
                     else 
                     {
-                        Shoots.fireShoot(bulletSpawnpoint, enemyProperties.D_bullet, transform);
+                        Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
                         timeToShoot = 0.0f;
                     }
                     break;

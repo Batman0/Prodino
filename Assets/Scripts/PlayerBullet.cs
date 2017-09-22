@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerBullet : BaseBullet
 {
-    protected bool? isRight = null;
-    protected bool? isCenter = null;
+    private bool? isRight = null;
+    private bool? isCenter = null;
 
     private void Start()
     {
@@ -40,27 +40,27 @@ public class PlayerBullet : BaseBullet
         {
             if ((isRight == null))
             {
-                transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.Self);
+                transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
             }
             else
             {
                 if (isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.right * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.left * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && isCenter.Value)
                 {
-                    transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
                 }
             }
         }
         else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
-            transform.Translate(Vector3.forward * enemyProperties.playerBulletSpeed * Time.deltaTime, Space.Self);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
         }
     }
 }

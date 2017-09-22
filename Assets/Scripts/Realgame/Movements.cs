@@ -16,14 +16,7 @@ public static class Movements
         if (isRight)
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
-        }
-        else
-        {
-            transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
-        }
 
-        if (isRight)
-        {
             if (transform.position.x <= GameManager.instance.leftBound.x - destructionMargin)
             {
                 destroy = true;
@@ -31,6 +24,8 @@ public static class Movements
         }
         else
         {
+            transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+
             if (transform.position.x >= GameManager.instance.rightBound.x + destructionMargin)
             {
                 destroy = true;
