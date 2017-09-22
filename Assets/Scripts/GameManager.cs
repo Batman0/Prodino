@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameMode currentGameMode;
     public bool transitionIsRunning;
     public float backgroundSpeed;
-    public PlayerControllerJump player;
+    public PlayerController player;
     public Vector3 leftBound;
     public Vector3 rightBound;
     public Vector3 downBound;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     void RespawnPlayer(Transform restartPos)
     {
         GameObject playerGO = Instantiate(playerPrefab, restartPos.position, playerPrefab.transform.rotation) as GameObject;
-        player = playerGO.GetComponent<PlayerControllerJump>();
+        player = playerGO.GetComponent<PlayerController>();
         player.startPosition = playerStartPos.position;
         player.aimTransform = Register.instance.aimTransform;
         playerBulletSpawnPos = player.bulletSpawnPoint.position;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   St_speed: 5
   St_destructionMargin: 2
-  Sq_speed: 5
+  Sq_speed: 2
   Sq_waitingTime: 2
   Sq_targets:
   - {fileID: 4623819927551784, guid: 0946a069396452b40937a5130ec487b9, type: 2}
@@ -22,14 +22,10 @@ MonoBehaviour:
   C_speed: 0.2
   C_radius: 15
   C_lifeTime: 100
-  playerBulletSpeed: 5
-  playerBullet: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
-    type: 2}
-  D_bulletSpeed: 7
   D_ratioOfFire: 1
-  straightEnemy: {fileID: 1018309814513026, guid: f28cb5205f78c704299d2839c230223c,
+  straightEnemy: {fileID: 1753797962395300, guid: 4f0bff4a3bc49c140a16f7dbabd861c5,
     type: 2}
-  D_bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
+  bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
   L_height: 0
   L_width: 0
   diagonalEnemy: {fileID: 1874333301391660, guid: a0f529e91465d3b4c9e25ec1faa9e7f7,

@@ -49,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
             //Quaternion enemyRotation = enemyPrefab.transform.rotation;
             //Quaternion rotation = isRight ? enemyPrefab.transform.rotation : Quaternion.Euler(enemyRotation.z, enemyRotation.x + 180, enemyRotation.y);
             GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
-            NewEnemy enemyScript = enemy.GetComponent<NewEnemy>();
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.movementType = movementType;
             enemyScript.enemyProperties = enemyProperties;
             enemyScript.shootType = shootType;

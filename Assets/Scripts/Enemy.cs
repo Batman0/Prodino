@@ -2,99 +2,134 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
-	public float speed;
-	private float timerFire;
-	public float fireRatio;
-    /// <summary>
-    /// How much far must the enemy be from the near clipping plane to be destroyed?
-    /// </summary>
-	public GameObject enemyBullet;
-	public Transform enemyBulletSpawn;
-	public bool canShoot = true;
+public class Enemy : MonoBehaviour
+{
+
+    private int index;
     [HideInInspector]
     public bool isRight;
+    private float waitingTimer;
+    [HideInInspector]
+    public MovementType movementType;
+    [HideInInspector]
+    public ShootType shootType;
+    private bool toDestroy;
+    public EnemyProperties enemyProperties;
     [HideInInspector]
     public Vector3 originalPos;
-    public int type;
+    private float lifeTime;
+    public Transform bulletSpawnpoint;
+    private float timeToShoot;
 
-    private const string enemyBulletTag = "EnemyBullet";
+    private void Start()
+    {
+        index = 0;
+        Register.instance.numberOfEnemies++;
+        originalPos = transform.position;
+        timeToShoot = 0.0f;
+        switch (GameManager.instance.currentGameMode)
+        {
+            case GameMode.SIDESCROLL:
+                transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+                break;
+            case GameMode.TOPDOWN:
+                transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+                break;
+        }
+        if (movementType==MovementType.CIRCULAR)
+        {
+            lifeTime = enemyProperties.C_lifeTime;
+        }
+        transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+    }
 
-    //void Awake()
-    //{
-    //    Register.instance.numberOfEnemies++;
-    //    originalPos = transform.position;
-    //    switch (GameManager.instance.currentGameMode)
-    //    {
-    //        case GameMode.SIDESCROLL:
-    //            transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-    //            break;
-    //        case GameMode.TOPDOWN:
-    //            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-    //            break;
-    //    }
-    //}
-
-    //void Start()
-    //{
-    //    transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
-    //}
-    // Update is called once per frame
-    void Update ()
+    private void Update()
     {
         ChangePerspective();
+        Move();
         Shoot();
-        DestroyGameobject();
+        Destroy();
     }
-
-	protected virtual void Shoot()
+    
+    public void Shoot()
     {
-        //if (transform.position.x <= GameManager.instance.rightBound.x && transform.position.x >= GameManager.instance.leftBound.x)
-        //{
-            if (canShoot)
+        if(!GameManager.instance.transitionIsRunning)
+        {
+            switch(shootType)
             {
-                if (timerFire < fireRatio)
-                {
-                    timerFire += Time.deltaTime;
-                }
-                else
-                {
-                    GameObject bullet = Instantiate(enemyBullet, enemyBulletSpawn.position, transform.rotation) as GameObject;
-                    bullet.tag = enemyBulletTag;
-                    timerFire = 0.0f;
-                }
+                case ShootType.DEFAULT:
+                    if(timeToShoot < enemyProperties.D_ratioOfFire)
+                    {
+                        timeToShoot += Time.deltaTime;
+                    }
+                    else 
+                    {
+                        Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
+                        timeToShoot = 0.0f;
+                    }
+                    break;
+                case ShootType.LASER:
+                    Debug.Log("Laser");
+                    break;
             }
-        //}
-        //else
-        //{
-        //    if (timerFire != 0.0f)
-        //    {
-        //        timerFire = 0.0f;
-        //    }
-        //}
+        }
     }
 
-    protected virtual void Move()
+    public void Move()
     {
-
+        if (!GameManager.instance.transitionIsRunning)
+        {
+            switch (movementType)
+            {
+                case MovementType.STRAIGHT:
+                    Movements.StraightMove(transform, isRight, enemyProperties.St_speed, enemyProperties.St_destructionMargin, ref toDestroy);
+                    break;
+                case MovementType.CIRCULAR:
+                    Movements.CircularMove(transform, enemyProperties.C_speed, isRight, enemyProperties.C_radius, originalPos, ref lifeTime, ref toDestroy);
+                    break;
+                case MovementType.SQUARE:
+                    Movements.SquareMove(ref index, enemyProperties.Sq_speed, enemyProperties.Sq_waitingTime, ref waitingTimer, enemyProperties.Sq_targets, transform, ref toDestroy);
+                    break;
+            }
+        }
     }
 
-    protected virtual void ChangePerspective()
+    public void ChangePerspective()
     {
         if (Register.instance.canStartEnemyTransition)
         {
             switch (GameManager.instance.currentGameMode)
             {
                 case GameMode.SIDESCROLL:
-                    if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
+                    if (movementType != MovementType.CIRCULAR)
                     {
-                        transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
+                        if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
+                        {
+                            transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        {
+                            transform.position = new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                        }
                     }
                     break;
                 case GameMode.TOPDOWN:
-                    if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
+                    if (movementType != MovementType.CIRCULAR)
                     {
-                        transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
+                        if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
+                        {
+                            transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z))
+                        {
+                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z);
+                        }
                     }
                     break;
             }
@@ -110,15 +145,35 @@ public class Enemy : MonoBehaviour {
             switch (GameManager.instance.currentGameMode)
             {
                 case GameMode.TOPDOWN:
-                    if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
+                    if (movementType != MovementType.CIRCULAR)
                     {
-                        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
+                        {
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        {
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                        }
                     }
                     break;
                 case GameMode.SIDESCROLL:
-                    if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
+                    if (movementType != MovementType.CIRCULAR)
                     {
-                        transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+                        if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
+                        {
+                            transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0))
+                        {
+                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0);
+                        }
                     }
                     break;
             }
@@ -131,8 +186,11 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    protected virtual void DestroyGameobject()
+    public void Destroy()
     {
-
+        if (toDestroy)
+        {
+            Destroy(gameObject);
+        }
     }
 }

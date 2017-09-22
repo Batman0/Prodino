@@ -17,7 +17,7 @@ public class BoundaryTopDown
     public float xMin, xMax, zMin, zMax;
 }
 
-public class PlayerControllerJump : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public Vector3 startPosition;
     public float speed = 5.0f;
