@@ -63,7 +63,7 @@ public static class Movements
         {
             lifeTime -= Time.deltaTime;
         }
-        else if(lifeTime <= 0.0f && !destroy)
+        else if (lifeTime <= 0.0f && !destroy)
         {
             destroy = true;
         }
@@ -71,36 +71,59 @@ public static class Movements
 
     public static void SquareMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
-        if (transform.position != targets[index].position)
+        Debug.Log("CAZZO");
+        switch (GameManager.instance.currentGameMode)
         {
-            switch (GameManager.instance.currentGameMode)
-            {
-                case GameMode.SIDESCROLL:
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, targets[index].position.y, 0), speed * Time.deltaTime);
-                    break;
-                case GameMode.TOPDOWN:
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, 0, targets[index].position.z), speed * Time.deltaTime);
-                    break;
-            }
-        }
-        else
-        {
-            if (waitingTimer < waitingTime && index < targets.Length - 1)
-            {
-                waitingTimer += Time.deltaTime;
-            }
-            else
-            {
-                if (index < targets.Length - 1)
+            case GameMode.SIDESCROLL:
+                if (transform.position != new Vector3(targets[index].position.x, targets[index].position.y, 0))
                 {
-                    index++;
-                    waitingTimer = 0.0f;
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, targets[index].position.y, 0), speed * Time.deltaTime);
                 }
                 else
                 {
-                    destroy = true;
+                    if (waitingTimer < waitingTime && index < targets.Length - 1)
+                    {
+                        waitingTimer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        if (index < targets.Length - 1)
+                        {
+                            index++;
+                            waitingTimer = 0.0f;
+                        }
+                        else
+                        {
+                            destroy = true;
+                        }
+                    }
                 }
-            }
+                break;
+            case GameMode.TOPDOWN:
+                if (transform.position != new Vector3(targets[index].position.x, 0, targets[index].position.z))
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, 0, targets[index].position.z), speed * Time.deltaTime);
+                }
+                else
+                {
+                    if (waitingTimer < waitingTime && index < targets.Length - 1)
+                    {
+                        waitingTimer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        if (index < targets.Length - 1)
+                        {
+                            index++;
+                            waitingTimer = 0.0f;
+                        }
+                        else
+                        {
+                            destroy = true;
+                        }
+                    }
+                }
+                break;
         }
     }
 }

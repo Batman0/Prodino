@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
         }
         if (movementType==MovementType.CIRCULAR)
         {
-            lifeTime = enemyProperties.C_lifeTime;
+            lifeTime = enemyProperties.c_LifeTime;
         }
         transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
     }
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
             switch(shootType)
             {
                 case ShootType.DEFAULT:
-                    if(timeToShoot < enemyProperties.D_ratioOfFire)
+                    if(timeToShoot < enemyProperties.d_RatioOfFire)
                     {
                         timeToShoot += Time.deltaTime;
                     }
@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
                     }
                     break;
                 case ShootType.LASER:
-                    Debug.Log("Laser");
+                    //Debug.Log("Laser");
                     break;
             }
         }
@@ -82,13 +82,21 @@ public class Enemy : MonoBehaviour
             switch (movementType)
             {
                 case MovementType.STRAIGHT:
-                    Movements.StraightMove(transform, isRight, enemyProperties.St_speed, enemyProperties.St_destructionMargin, ref toDestroy);
+                    Movements.StraightMove(transform, isRight, enemyProperties.st_Speed, enemyProperties.st_DestructionMargin, ref toDestroy);
                     break;
                 case MovementType.CIRCULAR:
-                    Movements.CircularMove(transform, enemyProperties.C_speed, isRight, enemyProperties.C_radius, originalPos, ref lifeTime, ref toDestroy);
+                    Movements.CircularMove(transform, enemyProperties.c_Speed, isRight, enemyProperties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
                     break;
                 case MovementType.SQUARE:
-                    Movements.SquareMove(ref index, enemyProperties.Sq_speed, enemyProperties.Sq_waitingTime, ref waitingTimer, enemyProperties.Sq_targets, transform, ref toDestroy);
+                    if (isRight)
+                    {
+                        Movements.SquareMove(ref index, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_RightTargets, transform, ref toDestroy);
+                    }
+                    else
+                    {
+                        Debug.Log("Ho le palle rotte");
+                        Movements.SquareMove(ref index, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_LeftTargets, transform, ref toDestroy);
+                    }
                     break;
             }
         }
@@ -110,9 +118,9 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (transform.position != new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        if (transform.position != new Vector3(transform.position.x, transform.position.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y))
                         {
-                            transform.position = new Vector3(transform.position.x, transform.position.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                            transform.position = new Vector3(transform.position.x, transform.position.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y);
                         }
                     }
                     break;
@@ -126,9 +134,9 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z))
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y, transform.position.z))
                         {
-                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, transform.position.z);
+                            transform.position = new Vector3(transform.position.x, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y, transform.position.z);
                         }
                     }
                     break;
@@ -154,9 +162,9 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y))
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y))
                         {
-                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y);
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y);
                         }
                     }
                     break;
@@ -170,9 +178,9 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        if (transform.position != new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0))
+                        if (transform.position != new Vector3(transform.position.x, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y, 0))
                         {
-                            transform.position = new Vector3(transform.position.x, enemyProperties.C_radius * Mathf.Sin(Time.time * enemyProperties.C_speed) + originalPos.y, 0);
+                            transform.position = new Vector3(transform.position.x, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y, 0);
                         }
                     }
                     break;

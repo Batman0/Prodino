@@ -7,35 +7,36 @@ public class EnemyProperties : ScriptableObject
 {
     [Header("Movement")]
     [Header("Straight")]
-    public float St_speed;
-    public float St_destructionMargin;
+    public float st_Speed;
+    public float st_DestructionMargin;
     [Header("Square")]
-    public float Sq_speed;
-    public float Sq_waitingTime;
-    public Transform[] Sq_targets;
+    public float sq_Speed;
+    public float sq_WaitingTime;
+    public Transform[] sq_RightTargets;
+    public Transform[] sq_LeftTargets;
     [Header("Circular")]
-    public float C_speed;
-    public float C_radius;
-    public float C_lifeTime;
+    public float c_Speed;
+    public float c_Radius;
+    public float c_LifeTime;
 
     [Header("Fire")]
     [Header("Default")]
     //public float D_bulletSpeed;
-    public float D_ratioOfFire;
+    public float d_RatioOfFire;
     public GameObject straightEnemy;
     public GameObject bullet;
     [Header("Laser")]
-    public float L_height;
-    public float L_width;
+    public float l_Height;
+    public float l_Width;
     public GameObject diagonalEnemy;
-    public GameObject L_bullet;
+    public GameObject l_Bullet;
     [Header("Trail")]
-    public float T_height;
-    public float T_width;
+    public float t_Height;
+    public float t_Width;
     public GameObject aimEnemy;
-    public GameObject T_bullet;
+    public GameObject t_Bullet;
     [Header("Bomb")]
-    public float B_spawnTime;
+    public float b_SpawnTime;
     public GameObject bombEnemy;
-    public GameObject B_bullet;
+    public GameObject b_Bullet;
 }
