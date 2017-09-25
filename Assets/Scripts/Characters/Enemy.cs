@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
+    public GameObject myBullet;
+    public EnemyBullet myBulletScript;
 
     void Start()
     {
@@ -44,7 +46,19 @@ public class Enemy : MonoBehaviour
         {
             lifeTime = enemyProperties.c_LifeTime;
         }
+
         transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+
+        if (shootType != ShootType.DEFAULT)
+        {
+            Destroy(myBullet);
+        }
+        else
+        {
+            myBulletScript.speed = bulletProperties.e_Speed;
+            myBulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
+            myBulletScript.originalPos = originalPos;
+        }
     }
 
     void Update()
@@ -73,11 +87,8 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
-                        GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
-                        EnemyBullet bulletScript = bullet.AddComponent<EnemyBullet>();
-                        bulletScript.speed = bulletProperties.e_Speed;
-                        bulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
-                        bulletScript.originalPos = originalPos;
+                        GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, myBullet, transform);
+                        bullet.SetActive(true);
                         timeToShoot = 0.0f;
                     }
                     break;

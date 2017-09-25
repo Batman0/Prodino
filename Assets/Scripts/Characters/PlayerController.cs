@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
     private float controllerDeadZone = 0.1f;
     [HideInInspector]
     public Transform aimTransform;
-    public GameObject bulletPrefab;
+    public GameObject myBullet;
+    public PlayerBullet myBulletScript;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
     private float fireTimer;
@@ -71,6 +72,9 @@ public class PlayerController : MonoBehaviour
         transform.position = startPosition;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
+        myBulletScript.speed = bulletProperties.p_Speed;
+        myBulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
+        myBulletScript.originalPos = startPosition;
     }
 
     void Update()
@@ -231,11 +235,8 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
-        PlayerBullet bulletScript = bullet.AddComponent<PlayerBullet>();
-        bulletScript.speed = bulletProperties.p_Speed;
-        bulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
-        bulletScript.originalPos = startPosition;
+        GameObject bullet = Instantiate(myBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+        bullet.SetActive(true);
         bullet.tag = playerBulletTag;
     }
 

@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
+    [HideInInspector]
     /// <summary>
     /// How much far must the bullet be from the near clipping plane to be destroyed?
     /// </summary>
     public float destructionMargin;
+    [HideInInspector]
     public float speed;
+    [HideInInspector]
     public Vector3 originalPos;
 
     protected virtual void Start()
     {
-        Debug.Log("SONO UNA MIGNOTTA");
         Register.instance.numberOfTransitableObjects++;
     }
 
