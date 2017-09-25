@@ -380,7 +380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1855562597584748
 GameObject:
   m_ObjectHideFlags: 1
@@ -1064,8 +1064,8 @@ MonoBehaviour:
   downRotationAngle: 90
   rayLength: 1.1
   aimTransform: {fileID: 0}
-  bulletPrefab: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
-    type: 2}
+  myBullet: {fileID: 1848514285581756}
+  myBulletScript: {fileID: 114902150947855040}
   bulletSpawnPoint: {fileID: 4295414299896406}
   fireRatio: 0.3
   timerRespawn: 0.8

@@ -64,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4394163504018830
 Transform:
   m_ObjectHideFlags: 1
@@ -228,8 +228,8 @@ MonoBehaviour:
   enemyLife: 3
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4527322021927994}
-  myBullet: {fileID: 0}
-  myBulletScript: {fileID: 0}
+  myBullet: {fileID: 1661061894649698}
+  myBulletScript: {fileID: 114490911140554230}
 --- !u!114 &114490911140554230
 MonoBehaviour:
   m_ObjectHideFlags: 1

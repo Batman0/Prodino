@@ -87,6 +87,7 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
+                        myBulletScript.originalPos = originalPos;
                         GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, myBullet, transform);
                         bullet.SetActive(true);
                         timeToShoot = 0.0f;
