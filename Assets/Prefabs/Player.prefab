@@ -970,8 +970,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
-  speed: 10
-  jumpForce: 40
+  speed: 5
+  jumpForce: 32
   upRotationAngle: 60
   downRotationAngle: 90
   rayLength: 1.1
@@ -979,7 +979,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1155078852427402, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   bulletSpawnPoint: {fileID: 4295414299896406}
-  fireRatio: 0.5
+  fireRatio: 0.3
   timerRespawn: 0.8
   gravity: 30
   glideSpeed: 20

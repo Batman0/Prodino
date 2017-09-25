@@ -14,8 +14,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public ShootType shootType;
     private bool toDestroy;
-    private EnemyProperties enemyProperties;
-    private BulletProperties bulletProperties;
+    public int enemyLife;
+    public EnemyProperties enemyProperties;
     [HideInInspector]
     public Vector3 originalPos;
     private float lifeTime;
@@ -24,10 +24,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        enemyProperties = Register.instance.enemyProperties;
-        bulletProperties = Register.instance.bulletProperties;
         index = 0;
-        Register.instance.numberOfTransitableObjects++;
+        Register.instance.numberOfEnemies++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
         switch (GameManager.instance.currentGameMode)
@@ -53,12 +51,7 @@ public class Enemy : MonoBehaviour
         Shoot();
         Destroy();
     }
-
-    private void OnDestroy()
-    {
-        Register.instance.numberOfTransitableObjects--;
-    }
-
+    
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
@@ -72,11 +65,7 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
-                        GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
-                        EnemyBullet bulletScript = bullet.AddComponent<EnemyBullet>();
-                        bulletScript.speed = bulletProperties.e_Speed;
-                        bulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
-                        bulletScript.originalPos = originalPos;
+                        Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
                         timeToShoot = 0.0f;
                     }
                     break;
@@ -115,7 +104,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangePerspective()
     {
-        if (Register.instance.canStartTransitions)
+        if (Register.instance.canStartEnemyTransition)
         {
             switch (GameManager.instance.currentGameMode)
             {
@@ -152,14 +141,14 @@ public class Enemy : MonoBehaviour
                     }
                     break;
             }
-            Register.instance.translatedObjects++;
-            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
+            Register.instance.translatedEnemies++;
+            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
             {
-                Register.instance.translatedObjects = 0;
-                Register.instance.canStartTransitions = false;
+                Register.instance.translatedEnemies = 0;
+                Register.instance.canStartEnemyTransition = false;
             }
         }
-        else if (Register.instance.canEndTransitions)
+        else if (Register.instance.canEndEnemyTransition)
         {
             switch (GameManager.instance.currentGameMode)
             {
@@ -196,20 +185,37 @@ public class Enemy : MonoBehaviour
                     }
                     break;
             }
-            Register.instance.translatedObjects++;
-            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
+            Register.instance.translatedEnemies++;
+            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
             {
-                Register.instance.translatedObjects = 0;
-                Register.instance.canEndTransitions = false;
+                Register.instance.translatedEnemies = 0;
+                Register.instance.canEndEnemyTransition = false;
             }
         }
     }
 
     public void Destroy()
     {
-        if (toDestroy)
+        if(EnemyLife())
         {
             Destroy(gameObject);
+        }
+        else if (toDestroy)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool EnemyLife()
+    {
+        return enemyLife <= 0;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PlayerBullet")
+        {
+            enemyLife--;
         }
     }
 }

@@ -24,13 +24,13 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if (gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+           other.gameObject.
         }
-    }
+    }*/
 
     void OnDestroy()
     {

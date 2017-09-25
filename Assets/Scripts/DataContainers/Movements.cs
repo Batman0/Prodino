@@ -71,7 +71,6 @@ public static class Movements
 
     public static void SquareMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
-        Debug.Log("CAZZO");
         switch (GameManager.instance.currentGameMode)
         {
             case GameMode.SIDESCROLL:
