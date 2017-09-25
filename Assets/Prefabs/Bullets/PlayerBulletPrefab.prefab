@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33813488053800878}
   - component: {fileID: 135693013443197694}
   - component: {fileID: 23094504005473192}
-  - component: {fileID: 114343826320911298}
   m_Layer: 0
   m_Name: PlayerBulletPrefab
   m_TagString: Untagged
@@ -82,19 +81,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1155078852427402}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114343826320911298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1155078852427402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093edeccc9755444987a2afb91e92549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destructionMargin: 1
-  speed: 5
 --- !u!135 &135693013443197694
 SphereCollider:
   m_ObjectHideFlags: 1

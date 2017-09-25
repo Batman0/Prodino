@@ -5,24 +5,24 @@ using UnityEngine;
 public class Register : MonoBehaviour
 {
     public static Register instance;
-    [Header("Enemies")]
-    public GameObject enemyPrefab;
     [HideInInspector]
-    public bool canStartEnemyTransition = false;
+    public bool canStartTransitions = false;
     [HideInInspector]
-    public bool canEndEnemyTransition = false;
-    [HideInInspector]
-    public int numberOfEnemies;
-    [HideInInspector]
-    public int translatedEnemies;
-    [Header("Aim")]
+    public bool canEndTransitions = false;
+
+    public int numberOfTransitableObjects;
+
+    public int translatedObjects;
+
+    [Header("PlayerAim")]
     public Transform aimTransform;
 
+    [Header("Scriptables")]
     public EnemyProperties enemyProperties;
+    public BulletProperties bulletProperties;
 
     void Awake()
     {
         instance = this;
     }
-
 }

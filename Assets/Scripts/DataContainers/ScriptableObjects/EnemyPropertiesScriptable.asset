@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
-  m_Name: EnemyProperties
+  m_Name: EnemyPropertiesScriptable
   m_EditorClassIdentifier: 
   st_Speed: 5
   st_DestructionMargin: 5

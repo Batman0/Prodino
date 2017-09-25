@@ -14,7 +14,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public ShootType shootType;
     private bool toDestroy;
-    public EnemyProperties enemyProperties;
+    private EnemyProperties enemyProperties;
+    private BulletProperties bulletProperties;
     [HideInInspector]
     public Vector3 originalPos;
     private float lifeTime;
@@ -23,8 +24,10 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        enemyProperties = Register.instance.enemyProperties;
+        bulletProperties = Register.instance.bulletProperties;
         index = 0;
-        Register.instance.numberOfEnemies++;
+        Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
         switch (GameManager.instance.currentGameMode)
@@ -50,7 +53,12 @@ public class Enemy : MonoBehaviour
         Shoot();
         Destroy();
     }
-    
+
+    private void OnDestroy()
+    {
+        Register.instance.numberOfTransitableObjects--;
+    }
+
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
@@ -64,7 +72,11 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
-                        Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
+                        GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, enemyProperties.bullet, transform);
+                        EnemyBullet bulletScript = bullet.AddComponent<EnemyBullet>();
+                        bulletScript.speed = bulletProperties.e_Speed;
+                        bulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
+                        bulletScript.originalPos = originalPos;
                         timeToShoot = 0.0f;
                     }
                     break;
@@ -94,7 +106,6 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Ho le palle rotte");
                         Movements.SquareMove(ref index, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_LeftTargets, transform, ref toDestroy);
                     }
                     break;
@@ -104,7 +115,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangePerspective()
     {
-        if (Register.instance.canStartEnemyTransition)
+        if (Register.instance.canStartTransitions)
         {
             switch (GameManager.instance.currentGameMode)
             {
@@ -141,14 +152,14 @@ public class Enemy : MonoBehaviour
                     }
                     break;
             }
-            Register.instance.translatedEnemies++;
-            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+            Register.instance.translatedObjects++;
+            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
             {
-                Register.instance.translatedEnemies = 0;
-                Register.instance.canStartEnemyTransition = false;
+                Register.instance.translatedObjects = 0;
+                Register.instance.canStartTransitions = false;
             }
         }
-        else if (Register.instance.canEndEnemyTransition)
+        else if (Register.instance.canEndTransitions)
         {
             switch (GameManager.instance.currentGameMode)
             {
@@ -185,11 +196,11 @@ public class Enemy : MonoBehaviour
                     }
                     break;
             }
-            Register.instance.translatedEnemies++;
-            if (Register.instance.translatedEnemies == Register.instance.numberOfEnemies)
+            Register.instance.translatedObjects++;
+            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
             {
-                Register.instance.translatedEnemies = 0;
-                Register.instance.canEndEnemyTransition = false;
+                Register.instance.translatedObjects = 0;
+                Register.instance.canEndTransitions = false;
             }
         }
     }

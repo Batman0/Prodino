@@ -11,9 +11,10 @@ public enum ShootType
 }
 public static class Shoots
 {
-    public static void straightShoot(Transform bulletSpawnpoint, GameObject bulletPrefab,Transform enemyTransform)
+    public static GameObject straightShoot(Transform bulletSpawnpoint, GameObject bulletPrefab,Transform enemyTransform)
     {
         GameObject bullet = Object.Instantiate(bulletPrefab, bulletSpawnpoint.position, enemyTransform.rotation) as GameObject;
+        return bullet;
         //bullet.layer = layer;
     }
 

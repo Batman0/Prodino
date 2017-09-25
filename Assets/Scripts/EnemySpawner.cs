@@ -51,7 +51,6 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScript.movementType = movementType;
-            enemyScript.enemyProperties = enemyProperties;
             enemyScript.shootType = shootType;
             enemyScript.isRight = isRight;
             Destroy(gameObject);

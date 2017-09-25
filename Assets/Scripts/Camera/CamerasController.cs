@@ -25,7 +25,7 @@ public class CamerasController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning)
         {
             GameManager.instance.transitionIsRunning = true;
-            Register.instance.canStartEnemyTransition = true;
+            Register.instance.canStartTransitions = true;
             Time.timeScale = timeScaleValueLerping;
             StartCoroutine("LerpCamera");
         }
@@ -71,7 +71,7 @@ public class CamerasController : MonoBehaviour
                 }
                 break;
         }
-        Register.instance.canEndEnemyTransition = true;
+        Register.instance.canEndTransitions = true;
         Time.timeScale = timeScaleValueNotLerping;
         GameManager.instance.transitionIsRunning = false;
         yield return null;

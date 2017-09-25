@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
+    private BulletProperties bulletProperties;
 
     public bool canShoot = true;
     public bool canJump = true;
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        bulletProperties = Register.instance.bulletProperties;
         transform.position = startPosition;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
@@ -230,6 +232,10 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+        PlayerBullet bulletScript = bullet.AddComponent<PlayerBullet>();
+        bulletScript.speed = bulletProperties.p_Speed;
+        bulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
+        bulletScript.originalPos = startPosition;
         bullet.tag = playerBulletTag;
     }
 

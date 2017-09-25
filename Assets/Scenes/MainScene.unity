@@ -433,7 +433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &436331181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,8 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootType: 1
-  movementType: 2
+  shootType: 0
+  movementType: 0
   isRight: 0
   delay: 3
 --- !u!4 &436331182
@@ -564,14 +564,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 971569833}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
+  isRight: 1
   delay: 3
 --- !u!4 &971569835
 Transform:
@@ -580,7 +580,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 971569833}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.41, y: 5.12, z: -3.3599997}
+  m_LocalPosition: {x: 36, y: 5.12, z: -3.3599997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1665334173}
@@ -656,13 +656,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1194246487}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootType: 1
-  movementType: 2
+  shootType: 0
+  movementType: 0
   isRight: 1
   delay: 3
 --- !u!4 &1194246489
@@ -672,7 +672,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1194246487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.41, y: 7.05, z: 2.21}
+  m_LocalPosition: {x: 36, y: 7.05, z: 2.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1665334173}
@@ -700,14 +700,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254111359}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
+  isRight: 1
   delay: 3
 --- !u!4 &1254111361
 Transform:
@@ -716,7 +716,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254111359}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.41, y: -1.1799998, z: -2.6999998}
+  m_LocalPosition: {x: 36, y: -1.1799998, z: -2.6999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1665334173}
@@ -803,14 +803,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f944f1fccf33b5c4e92d435dda35c2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1753797962395300, guid: 4f0bff4a3bc49c140a16f7dbabd861c5,
-    type: 2}
-  canStartEnemyTransition: 0
-  canEndEnemyTransition: 0
-  numberOfEnemies: 0
-  translatedEnemies: 0
+  canStartTransitions: 0
+  canEndTransitions: 0
+  numberOfTransitableObjects: 0
+  translatedObjects: 0
   aimTransform: {fileID: 699719386}
   enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
+  bulletProperties: {fileID: 11400000, guid: 02197e0efab61cf4d85967013fdef267, type: 2}
 --- !u!4 &1510460156
 Transform:
   m_ObjectHideFlags: 0
@@ -896,7 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScaleValueLerping: 0
-  timeScaleValueNotLerping: 1
+  timeScaleValueNotLerping: 0.32
   topDownCameraPosition: {fileID: 353557677}
   sideScrollCameraPosition: {fileID: 652420205}
   cameras: {fileID: 1551538176}
