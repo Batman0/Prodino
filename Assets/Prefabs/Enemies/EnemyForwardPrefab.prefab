@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4480043570700958}
   - component: {fileID: 33935351514776326}
   - component: {fileID: 23109189635273502}
-  - component: {fileID: 95011320495384014}
   - component: {fileID: 114011616888306822}
+  - component: {fileID: 65326402660751212}
   m_Layer: 0
   m_Name: EnemyForwardPrefab
   m_TagString: Untagged
@@ -111,23 +111,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1148503124633518}
   m_Mesh: {fileID: 4300000, guid: 7a2d8da98ef14eb4f9ba7ef2701509a1, type: 3}
---- !u!95 &95011320495384014
-Animator:
-  serializedVersion: 3
+--- !u!65 &65326402660751212
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1148503124633518}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7a2d8da98ef14eb4f9ba7ef2701509a1, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  serializedVersion: 2
+  m_Size: {x: 133, y: 95, z: 90}
+  m_Center: {x: 10, y: 1, z: 0}
 --- !u!114 &114011616888306822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,6 +137,7 @@ MonoBehaviour:
   isRight: 0
   movementType: 0
   shootType: 0
+  enemyLife: 2
   enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4527322021927994}

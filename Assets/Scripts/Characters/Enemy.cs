@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public ShootType shootType;
     private bool toDestroy;
+    public int enemyLife;
     public EnemyProperties enemyProperties;
     [HideInInspector]
     public Vector3 originalPos;
@@ -94,7 +95,6 @@ public class Enemy : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Ho le palle rotte");
                         Movements.SquareMove(ref index, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_LeftTargets, transform, ref toDestroy);
                     }
                     break;
@@ -196,9 +196,26 @@ public class Enemy : MonoBehaviour
 
     public void Destroy()
     {
-        if (toDestroy)
+        if(EnemyLife())
         {
             Destroy(gameObject);
+        }
+        else if (toDestroy)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool EnemyLife()
+    {
+        return enemyLife <= 0;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "PlayerBullet")
+        {
+            enemyLife--;
         }
     }
 }

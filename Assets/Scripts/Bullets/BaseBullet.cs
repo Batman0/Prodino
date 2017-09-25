@@ -16,13 +16,13 @@ public class BaseBullet : MonoBehaviour
         DestroyGameobject();
     }
 
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if (gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+           other.gameObject.
         }
-    }
+    }*/
 
     void DestroyGameobject()
     {

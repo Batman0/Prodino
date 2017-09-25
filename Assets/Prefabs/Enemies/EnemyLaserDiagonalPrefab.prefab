@@ -36,8 +36,8 @@ GameObject:
   - component: {fileID: 4424506323402592}
   - component: {fileID: 33256100308725378}
   - component: {fileID: 23394101431289282}
-  - component: {fileID: 95191622339514746}
   - component: {fileID: 114278011119849102}
+  - component: {fileID: 65973418151392822}
   m_Layer: 0
   m_Name: EnemyLaserDiagonalPrefab
   m_TagString: Untagged
@@ -111,23 +111,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1659422405132948}
   m_Mesh: {fileID: 4300000, guid: 356ec9a79a19f334bb1e1242f195c843, type: 3}
---- !u!95 &95191622339514746
-Animator:
-  serializedVersion: 3
+--- !u!65 &65973418151392822
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1659422405132948}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 356ec9a79a19f334bb1e1242f195c843, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114278011119849102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,6 +137,7 @@ MonoBehaviour:
   isRight: 0
   movementType: 0
   shootType: 0
+  enemyLife: 2
   enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4747070033299636}
