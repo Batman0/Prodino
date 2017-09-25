@@ -137,7 +137,6 @@ MonoBehaviour:
   isRight: 0
   movementType: 0
   shootType: 0
-  enemyLife: 2
-  enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
+  enemyLife: 3
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4527322021927994}

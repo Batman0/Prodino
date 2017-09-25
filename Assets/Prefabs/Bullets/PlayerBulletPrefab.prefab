@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33813488053800878}
   - component: {fileID: 135693013443197694}
   - component: {fileID: 23094504005473192}
-  - component: {fileID: 114343826320911298}
   - component: {fileID: 54747012877264576}
   m_Layer: 0
   m_Name: PlayerBulletPrefab
@@ -98,19 +97,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &114343826320911298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1155078852427402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 093edeccc9755444987a2afb91e92549, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destructionMargin: 1
-  speed: 10
 --- !u!135 &135693013443197694
 SphereCollider:
   m_ObjectHideFlags: 1
