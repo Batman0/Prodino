@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public float glideSpeed;
     private Quaternion sideScrollerRotation;
+    private Quaternion bulletSpawnPointStartRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
     private float angle;
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         transform.position = startPosition;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
+        bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
         myBulletScript.speed = bulletProperties.p_Speed;
         myBulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
         myBulletScript.originalPos = startPosition;
@@ -166,6 +168,13 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 PlayAnimation();
+            }
+            else
+            {
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPoint.rotation != bulletSpawnPointStartRotation)
+                {
+                    bulletSpawnPoint.rotation = bulletSpawnPointStartRotation;
+                }
             }
         }
     }
