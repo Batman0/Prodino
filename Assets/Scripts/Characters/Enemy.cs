@@ -235,6 +235,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "PlayerBullet")
         {
             enemyLife--;
+            Destroy(other.gameObject);
         }
     }
 }
