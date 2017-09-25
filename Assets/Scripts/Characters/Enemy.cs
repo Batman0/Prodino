@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private float timeToShoot;
     public GameObject myBullet;
     public EnemyBullet myBulletScript;
+    public RaycastHit hit;
 
     void Start()
     {
@@ -94,7 +95,20 @@ public class Enemy : MonoBehaviour
                     }
                     break;
                 case ShootType.LASER:
-                    //Debug.Log("Laser");
+                    Shoots.laserShoot(bulletSpawnpoint, enemyProperties.l_Width,hit,enemyProperties.l_timeVisibleLine);
+                    break;
+                case ShootType.TRAIL:
+                    break;
+                case ShootType.BOMB:
+                    if (timeToShoot < enemyProperties.b_SpawnTime)
+                    {
+                        timeToShoot += Time.deltaTime;
+                    }
+                    else
+                    {
+                        Shoots.bombShoot(bulletSpawnpoint, enemyProperties.b_Bullet, transform);
+                        timeToShoot = 0.0f;
+                    }
                     break;
             }
         }
@@ -236,7 +250,6 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "PlayerBullet")
         {
             enemyLife--;
-            Destroy(other.gameObject);
         }
     }
 }

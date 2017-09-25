@@ -28,6 +28,7 @@ public class EnemyProperties : ScriptableObject
     [Header("Laser")]
     public float l_Height;
     public float l_Width;
+    public float l_timeVisibleLine;
     public GameObject diagonalEnemy;
     public GameObject l_Bullet;
     [Header("Trail")]

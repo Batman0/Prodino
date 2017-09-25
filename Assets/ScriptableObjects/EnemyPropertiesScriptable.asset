@@ -31,7 +31,8 @@ MonoBehaviour:
     type: 2}
   bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
   l_Height: 0
-  l_Width: 0
+  l_Width: 10
+  l_timeVisibleLine: 2
   diagonalEnemy: {fileID: 1659422405132948, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
   l_Bullet: {fileID: 0}
@@ -39,6 +40,6 @@ MonoBehaviour:
   t_Width: 0
   aimEnemy: {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
   t_Bullet: {fileID: 0}
-  b_SpawnTime: 0
-  bombEnemy: {fileID: 1730174443221068, guid: d2b5bda85ea4fca4b974df069a0c18b2, type: 2}
-  b_Bullet: {fileID: 0}
+  b_SpawnTime: 3
+  bombEnemy: {fileID: 1451149965707218, guid: aa16cf02acb476b4eb992cf6f769295b, type: 2}
+  b_Bullet: {fileID: 1705572862094328, guid: 79693080d1cad134c833af220349e460, type: 2}
