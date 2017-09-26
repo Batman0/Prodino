@@ -18,18 +18,23 @@ public static class Shoots
         //bullet.layer = layer;
     }
 
-    public static void laserShoot()
+    public static void laserShoot(Transform bulletSpawnpoint, float width, RaycastHit hit, float timeVisibleLine)
     {
+        Debug.DrawRay(bulletSpawnpoint.position, bulletSpawnpoint.right, Color.red, timeVisibleLine);
 
+        if (Physics.Raycast(bulletSpawnpoint.position, bulletSpawnpoint.right, out hit, width))
+        {
+            Object.Destroy(hit.collider.gameObject);
+        }
     }
 
     public static void trailShoot()
     {
 
     }
-	
-    public static void bombShoot()
-    {
 
+    public static void bombShoot(Transform bulletSpawnpoint, GameObject bombPrefab, Transform enemyTransform)
+    {
+        GameObject bomb = Object.Instantiate(bombPrefab, bulletSpawnpoint.position, enemyTransform.rotation);
     }
 }
