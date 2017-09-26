@@ -9,6 +9,7 @@ public class Register : MonoBehaviour
     public bool canStartTransitions = false;
     [HideInInspector]
     public bool canEndTransitions = false;
+    public bool bulletsCanRotate;
 
     public int numberOfTransitableObjects;
 

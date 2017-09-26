@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
+    public GameObject bulletGO;
+    [HideInInspector]
+    public bool iCanRotate;
     [HideInInspector]
     /// <summary>
     /// How much far must the bullet be from the near clipping plane to be destroyed?
@@ -16,7 +19,10 @@ public class BaseBullet : MonoBehaviour
 
     protected virtual void Start()
     {
+        transform.rotation = Quaternion.identity;
+        transform.Rotate(Vector3.up, 90, Space.World);
         Register.instance.numberOfTransitableObjects++;
+        iCanRotate = true;
     }
 
     void Update()
@@ -43,59 +49,28 @@ public class BaseBullet : MonoBehaviour
     {
         if (transform.position.x < GameManager.instance.leftBound.x - destructionMargin || transform.position.x > GameManager.instance.rightBound.x + destructionMargin || transform.position.y < GameManager.instance.downBound.y - destructionMargin || transform.position.y > GameManager.instance.upBound.y + destructionMargin)
         {
-            Destroy(gameObject);
+            Destroy(bulletGO);
         }
     }
 
     void ChangePerspective()
     {
-        if (Register.instance.canStartTransitions)
+        if (Register.instance.bulletsCanRotate && iCanRotate)
         {
-            switch (GameManager.instance.currentGameMode)
-            {
-                case GameMode.SIDESCROLL:
-                        if (transform.position != new Vector3(transform.position.x, transform.position.y, originalPos.z))
-                        {
-                            transform.position = new Vector3(transform.position.x, transform.position.y, originalPos.z);
-                        }
-                    break;
-                case GameMode.TOPDOWN:
-                        if (transform.position != new Vector3(transform.position.x, originalPos.y, transform.position.z))
-                        {
-                            transform.position = new Vector3(transform.position.x, originalPos.y, transform.position.z);
-                        }
-                    break;
-            }
+            transform.Rotate(Vector3.forward, 90, Space.Self);
             Register.instance.translatedObjects++;
-            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
-            {
-                Register.instance.translatedObjects = 0;
-                Register.instance.canStartTransitions = false;
-            }
+            Debug.Log(Register.instance.translatedObjects);
+            iCanRotate = false;
         }
-        else if (Register.instance.canEndTransitions)
+        if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
         {
-            switch (GameManager.instance.currentGameMode)
-            {
-                case GameMode.TOPDOWN:
-                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
-                        {
-                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-                        }
-                    break;
-                case GameMode.SIDESCROLL:
-                        if (transform.position != new Vector3(transform.position.x, originalPos.y, 0))
-                        {
-                            transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-                        }
-                    break;
-            }
-            Register.instance.translatedObjects++;
-            if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
-            {
-                Register.instance.translatedObjects = 0;
-                Register.instance.canEndTransitions = false;
-            }
+            Register.instance.translatedObjects = 0;
+            Register.instance.bulletsCanRotate = false;
+            Debug.Log(Register.instance.translatedObjects);
+        }
+        if (!Register.instance.bulletsCanRotate && !iCanRotate)
+        {
+            iCanRotate = true;
         }
     }
 

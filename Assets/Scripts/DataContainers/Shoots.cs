@@ -11,21 +11,16 @@ public enum ShootType
 }
 public static class Shoots
 {
-    public static GameObject straightShoot(Transform bulletSpawnpoint, GameObject bulletPrefab,Transform enemyTransform)
+    public static GameObject straightShoot(GameObject bulletPrefab, Transform bulletSpawnpoint, Transform rotTransform)
     {
-        GameObject bullet = Object.Instantiate(bulletPrefab, bulletSpawnpoint.position, enemyTransform.rotation) as GameObject;
+        GameObject bullet = Object.Instantiate(bulletPrefab, bulletSpawnpoint.position, rotTransform.rotation) as GameObject;
         return bullet;
         //bullet.layer = layer;
     }
 
-    public static void laserShoot(Transform bulletSpawnpoint,float width,RaycastHit hit,float timeVisibleLine)
+    public static void laserShoot()
     {
-        Debug.DrawRay(bulletSpawnpoint.position, bulletSpawnpoint.right, Color.red, timeVisibleLine);
 
-        if (Physics.Raycast(bulletSpawnpoint.position,bulletSpawnpoint.right,out hit,width))
-        {
-           Object.Destroy(hit.collider.gameObject);
-        }
     }
 
     public static void trailShoot()
@@ -33,8 +28,8 @@ public static class Shoots
 
     }
 	
-    public static void bombShoot(Transform bulletSpawnpoint,GameObject bombPrefab,Transform enemyTransform)
+    public static void bombShoot()
     {
-        GameObject bomb = Object.Instantiate(bombPrefab, bulletSpawnpoint.position, enemyTransform.rotation);
+
     }
 }

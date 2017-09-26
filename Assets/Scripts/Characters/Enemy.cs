@@ -24,31 +24,33 @@ public class Enemy : MonoBehaviour
     private float timeToShoot;
     public GameObject myBullet;
     public EnemyBullet myBulletScript;
-    public RaycastHit hit;
 
     void Start()
     {
         enemyProperties = Register.instance.enemyProperties;
         bulletProperties = Register.instance.bulletProperties;
         index = 0;
-        Register.instance.numberOfTransitableObjects++;
+        //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
-        switch (GameManager.instance.currentGameMode)
-        {
-            case GameMode.SIDESCROLL:
-                transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-                break;
-            case GameMode.TOPDOWN:
-                transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-                break;
-        }
+        //switch (GameManager.instance.currentGameMode)
+        //{
+        //    case GameMode.SIDESCROLL:
+        //        transform.position = new Vector3(transform.position.x, originalPos.y, 0);
+        //        break;
+        //    case GameMode.TOPDOWN:
+        //        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+        //        break;
+        //}
         if (movementType==MovementType.CIRCULAR)
         {
             lifeTime = enemyProperties.c_LifeTime;
         }
-
-        transform.rotation = isRight ? transform.rotation : Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z);
+        
+        if (!isRight)
+        {
+            transform.Rotate(Vector3.up, 180, Space.World);
+        }
 
         if (shootType != ShootType.DEFAULT)
         {
@@ -64,7 +66,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        ChangePerspective();
+    //    ChangePerspective();
         Move();
         Shoot();
         Destroy();
@@ -89,26 +91,13 @@ public class Enemy : MonoBehaviour
                     else 
                     {
                         myBulletScript.originalPos = originalPos;
-                        GameObject bullet = Shoots.straightShoot(bulletSpawnpoint, myBullet, transform);
+                        GameObject bullet = Shoots.straightShoot(myBullet, bulletSpawnpoint, transform);
                         bullet.SetActive(true);
                         timeToShoot = 0.0f;
                     }
                     break;
                 case ShootType.LASER:
-                    Shoots.laserShoot(bulletSpawnpoint, enemyProperties.l_Width,hit,enemyProperties.l_timeVisibleLine);
-                    break;
-                case ShootType.TRAIL:
-                    break;
-                case ShootType.BOMB:
-                    if (timeToShoot < enemyProperties.b_SpawnTime)
-                    {
-                        timeToShoot += Time.deltaTime;
-                    }
-                    else
-                    {
-                        Shoots.bombShoot(bulletSpawnpoint, enemyProperties.b_Bullet, transform);
-                        timeToShoot = 0.0f;
-                    }
+                    //Debug.Log("Laser");
                     break;
             }
         }
@@ -247,9 +236,11 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PlayerBullet")
+        Transform parentTr = other.transform.parent;
+        if (parentTr.tag == "PlayerBullet")
         {
             enemyLife--;
+            Destroy(parentTr.gameObject);
         }
     }
 }

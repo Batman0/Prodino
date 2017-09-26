@@ -181,9 +181,18 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!isDead && (other.gameObject.tag == "Enemy" || other.gameObject.tag == "EnemyBullet"))
+        if (!isDead)
         {
-            StartCoroutine("BlinkMeshRen");
+            if (other.gameObject.tag == "Enemy")
+            {
+                StartCoroutine("BlinkMeshRen");
+                Destroy(other.gameObject);
+            }
+            else if (other.transform.parent.tag == "EnemyBullet")
+            {
+                StartCoroutine("BlinkMeshRen");
+                Destroy(other.transform.parent.gameObject);
+            }
         }
     }
 

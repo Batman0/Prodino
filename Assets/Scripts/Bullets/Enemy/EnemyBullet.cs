@@ -7,7 +7,7 @@ public class EnemyBullet : BaseBullet
 
     protected override void Move()
     {
-       transform.Translate(Vector3.right * speed * Time.deltaTime, Space.Self);
+       bulletGO.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
 
 }

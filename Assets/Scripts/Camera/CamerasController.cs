@@ -33,6 +33,7 @@ public class CamerasController : MonoBehaviour
 
     IEnumerator LerpCamera()
     {
+        Register.instance.bulletsCanRotate = true;
         Vector3 playerPos = GameManager.instance.player.transform.position;
         switch (GameManager.instance.currentGameMode)
         {
