@@ -7,7 +7,8 @@ public enum ShootType
     DEFAULT,
     LASER,
     TRAIL,
-    BOMB
+    BOMB,
+    NOFIRE
 }
 public static class Shoots
 {
@@ -36,5 +37,10 @@ public static class Shoots
     public static void bombShoot(Transform bulletSpawnpoint, GameObject bombPrefab, Transform enemyTransform)
     {
         GameObject bomb = Object.Instantiate(bombPrefab, bulletSpawnpoint.position, enemyTransform.rotation);
+    }
+
+    public static void noFire()
+    {
+
     }
 }

@@ -99,6 +99,13 @@ public class Enemy : MonoBehaviour
                 case ShootType.LASER:
                     //Debug.Log("Laser");
                     break;
+                case ShootType.TRAIL:
+                    break;
+                case ShootType.BOMB:
+                    break;
+                case ShootType.NOFIRE:
+                    Shoots.noFire();
+                    break;
             }
         }
     }
