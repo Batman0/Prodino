@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7a2d8da98ef14eb4f9ba7ef2701509a1
-timeCreated: 1506087514
+guid: d9f5d70ec26752547a357e0fd3c92fdd
+timeCreated: 1506433088
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Enemy_Forward
+    4300000: Enemy_Laser_Diagonal
     9500000: //RootNode
   materials:
     importMaterials: 1
