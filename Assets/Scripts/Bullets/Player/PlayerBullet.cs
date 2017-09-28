@@ -18,17 +18,17 @@ public class PlayerBullet : BaseBullet
 
     protected void AssignDirection()
     {
-        if (transform.position.x > GameManager.instance.player.transform.position.x)
+        if (transform.position.x > Register.instance.player.transform.position.x)
         {
             isRight = true;
             isCenter = false;
         }
-        else if (transform.position.x < GameManager.instance.player.transform.position.x)
+        else if (transform.position.x < Register.instance.player.transform.position.x)
         {
             isRight = false;
             isCenter = false;
         }
-        else if (transform.position.x == GameManager.instance.player.transform.position.x)
+        else if (transform.position.x == Register.instance.player.transform.position.x)
         {
             isRight = false;
             isCenter = true;
@@ -41,21 +41,21 @@ public class PlayerBullet : BaseBullet
         {
             if ((isRight == null))
             {
-                bulletGO.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+                bulletGO.transform.Translate(Vector3.forward * Register.instance.bulletProperties.p_Speed * Time.deltaTime, Space.Self);
             }
             else
             {
                 if (isRight.Value && !isCenter.Value)
                 {
-                    bulletGO.transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+                    bulletGO.transform.Translate(Vector3.right * Register.instance.bulletProperties.p_Speed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && !isCenter.Value)
                 {
-                    bulletGO.transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
+                    bulletGO.transform.Translate(Vector3.left * Register.instance.bulletProperties.p_Speed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && isCenter.Value)
                 {
-                    bulletGO.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+                    bulletGO.transform.Translate(Vector3.forward * Register.instance.bulletProperties.p_Speed * Time.deltaTime, Space.World);
                 }
             }
         }

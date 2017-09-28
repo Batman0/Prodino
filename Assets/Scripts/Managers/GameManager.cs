@@ -12,15 +12,21 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject playerPrefab;
     public Transform playerStartPos;
+    [HideInInspector]
     public GameMode currentGameMode;
+    [HideInInspector]
     public bool transitionIsRunning;
     public float backgroundSpeed;
-    public PlayerController player;
+    [HideInInspector]
     public Vector3 leftBound;
+    [HideInInspector]
     public Vector3 rightBound;
+    [HideInInspector]
     public Vector3 downBound;
+    [HideInInspector]
     public Vector3 upBound;
-    public Vector3 playerBulletSpawnPos;
+    [HideInInspector]
+    public float playerBulletSpawnpoointY;
     public GameObject[] backgrounds;
 
     private void Awake()
@@ -30,7 +36,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        RespawnPlayer(playerStartPos);
+        Register.instance.player.startPosition = playerStartPos.position;
+        Register.instance.player.aimTransform = Register.instance.aimTransform;
+        playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
         downBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane));
@@ -43,14 +51,14 @@ public class GameManager : MonoBehaviour
         //Debug.Log(Time.time.ToString("#.##"));
     }
 
-    void RespawnPlayer(Transform restartPos)
-    {
-        GameObject playerGO = Instantiate(playerPrefab, restartPos.position, playerPrefab.transform.rotation) as GameObject;
-        player = playerGO.GetComponent<PlayerController>();
-        player.startPosition = playerStartPos.position;
-        player.aimTransform = Register.instance.aimTransform;
-        playerBulletSpawnPos = player.bulletSpawnPoint.position;
-    }
+    //void RespawnPlayer(Transform restartPos)
+    //{
+    //    GameObject playerGO = Instantiate(playerPrefab, restartPos.position, playerPrefab.transform.rotation) as GameObject;
+    //    Register.instance.player = playerGO.GetComponent<PlayerController>();
+    //    Register.instance.player.startPosition = playerStartPos.position;
+    //    Register.instance.player.aimTransform = Register.instance.aimTransform;
+    //    playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
+    //}
 
     void MoveBackgrounds(GameObject[] backgrounds, Vector3 moveVector, float speed)
     {

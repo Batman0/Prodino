@@ -7,7 +7,6 @@ public class InputManager : MonoBehaviour
     [Header("Aim")]
     private float intersectionPoint;
     private Vector3 aimVector;
-    private Plane? aimPlane;
     private Plane? sidescrollPlane;
     private Plane? topDownPlane;
     private Ray aimRay;

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
   m_Name: EnemyPropertiesScriptable
   m_EditorClassIdentifier: 
-  st_Speed: 5
+  st_Speed: 3
   st_DestructionMargin: 5
   sq_Speed: 5
   sq_WaitingTime: 1
@@ -23,24 +23,20 @@ MonoBehaviour:
   - {fileID: 4178582690395706, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4412127990732084, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
-  c_Speed: 5
-  c_Radius: 10
-  c_LifeTime: 10
+  c_Speed: 21.2
+  c_Radius: 31.3
+  c_LifeTime: 95.86
   d_RatioOfFire: 3
   straightEnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
-  bullet: {fileID: 1278651475264132, guid: 32cff3bd0c712e44b8d0ad2b6661082f, type: 2}
   l_Height: 0
   l_Width: 0
   diagonalEnemy: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
-  l_Bullet: {fileID: 0}
   t_Height: 0
   t_Width: 0
   aimEnemy: {fileID: 1958210817586058, guid: ad2d962f502c2084ea8f73457f5786f4, type: 2}
-  t_Bullet: {fileID: 0}
   b_SpawnTime: 0
   bombEnemy: {fileID: 1730174443221068, guid: d2b5bda85ea4fca4b974df069a0c18b2, type: 2}
-  b_Bullet: {fileID: 0}
-  noFireEnemy: {fileID: 1451149965707218, guid: aa16cf02acb476b4eb992cf6f769295b,
+  noFireEnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}

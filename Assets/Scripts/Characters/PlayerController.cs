@@ -19,6 +19,7 @@ public class BoundaryTopDown
 
 public class PlayerController : MonoBehaviour
 {
+    [HideInInspector]
     public Vector3 startPosition;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
@@ -28,12 +29,12 @@ public class PlayerController : MonoBehaviour
     private float controllerDeadZone = 0.1f;
     [HideInInspector]
     public Transform aimTransform;
-    public GameObject myBullet;
-    public PlayerBullet myBulletScript;
+    //public GameObject myBullet;
+    //public PlayerBullet myBulletScript;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
     private float fireTimer;
-    public float timerRespawn = 0.5f;
+    public float respawnTimer = 0.5f;
     public float gravity;
     public float glideSpeed;
     private Quaternion sideScrollerRotation;
@@ -44,11 +45,10 @@ public class PlayerController : MonoBehaviour
     public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
-    private BulletProperties bulletProperties;
-
-    public bool canShoot = true;
-    public bool canJump = true;
-    public bool isDead;
+    private bool canShoot = true;
+    private bool canJump = true;
+    private bool isDead;
+    private float horizontal;
 
     private SkinnedMeshRenderer skinnedMeshRen;
 
@@ -57,9 +57,8 @@ public class PlayerController : MonoBehaviour
     public float sidexMax, sideyMin, sideyMax;
     public float topxMin, topxMax, topzMin, topzMax;
 
-    [Header("Animation")]
+    [Header("Animations")]
     public Animator ani;
-    private float horizontal;
 
     void Awake()
     {
@@ -69,14 +68,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        bulletProperties = Register.instance.bulletProperties;
-        transform.position = startPosition;
+        //transform.position = startPosition;
         fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
-        myBulletScript.speed = bulletProperties.p_Speed;
-        myBulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
-        myBulletScript.originalPos = startPosition;
+        //myBulletScript.speed = bulletProperties.p_Speed;
+        //myBulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
+        //myBulletScript.originalPos = startPosition;
     }
 
     void Update()
@@ -183,14 +181,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
+            StartCoroutine("BlinkMeshRen");
+
             if (other.gameObject.tag == "Enemy")
             {
-                StartCoroutine("BlinkMeshRen");
                 Destroy(other.gameObject);
             }
             else if (other.transform.parent.tag == "EnemyBullet")
             {
-                StartCoroutine("BlinkMeshRen");
                 Destroy(other.transform.parent.gameObject);
             }
         }
@@ -253,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(myBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+        GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
         bullet.SetActive(true);
         bullet.tag = playerBulletTag;
     }
@@ -315,7 +313,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         skinnedMeshRen.enabled = false;
 
-        yield return new WaitForSeconds(timerRespawn);
+        yield return new WaitForSeconds(respawnTimer);
 
         skinnedMeshRen.enabled = true;
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);

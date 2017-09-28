@@ -14,13 +14,17 @@ public class BaseBullet : MonoBehaviour
     public float destructionMargin;
     [HideInInspector]
     public float speed;
-    [HideInInspector]
-    public Vector3 originalPos;
+    //[HideInInspector]
+    //public Vector3 originalPos;
 
     protected virtual void Start()
     {
         transform.rotation = Quaternion.identity;
         transform.Rotate(Vector3.up, 90, Space.World);
+        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            transform.Rotate(Vector3.forward, 90, Space.Self);
+        }
         Register.instance.numberOfTransitableObjects++;
         iCanRotate = true;
     }

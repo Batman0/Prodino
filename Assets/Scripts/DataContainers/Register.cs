@@ -9,18 +9,26 @@ public class Register : MonoBehaviour
     public bool canStartTransitions = false;
     [HideInInspector]
     public bool canEndTransitions = false;
+    [HideInInspector]
     public bool bulletsCanRotate;
-
+    [HideInInspector]
     public int numberOfTransitableObjects;
-
+    [HideInInspector]
     public int translatedObjects;
 
-    [Header("PlayerAim")]
+    [Header("Player")]
+    public PlayerController player;
+
+    [Header("Aim")]
     public Transform aimTransform;
 
     [Header("Scriptables")]
     public EnemyProperties enemyProperties;
     public BulletProperties bulletProperties;
+
+    [Header("Bullets")]
+    public GameObject playerBullet;
+    public GameObject enemyBullet;
 
     void Awake()
     {

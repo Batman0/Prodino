@@ -12,10 +12,9 @@ public enum ShootType
 }
 public static class Shoots
 {
-    public static GameObject straightShoot(GameObject bulletPrefab, Transform bulletSpawnpoint, Transform rotTransform)
+    public static void straightShoot(GameObject prefab, Transform sSpawnpoint, Transform rotTransform)
     {
-        GameObject bullet = Object.Instantiate(bulletPrefab, bulletSpawnpoint.position, rotTransform.rotation) as GameObject;
-        return bullet;
+        GameObject bullet = Object.Instantiate(prefab, sSpawnpoint.position, rotTransform.rotation) as GameObject;
         //bullet.layer = layer;
     }
 
@@ -34,13 +33,8 @@ public static class Shoots
 
     }
 
-    public static void bombShoot(Transform bulletSpawnpoint, GameObject bombPrefab, Transform enemyTransform)
+    public static void bombShoot(GameObject prefab, Transform spawnpoint, Transform rotTransform)
     {
-        GameObject bomb = Object.Instantiate(bombPrefab, bulletSpawnpoint.position, enemyTransform.rotation);
-    }
-
-    public static void noFire()
-    {
-
+        GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 }

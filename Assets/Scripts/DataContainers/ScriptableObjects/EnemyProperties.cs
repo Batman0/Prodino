@@ -24,21 +24,21 @@ public class EnemyProperties : ScriptableObject
     //public float D_bulletSpeed;
     public float d_RatioOfFire;
     public GameObject straightEnemy;
-    public GameObject bullet;
+    //public GameObject bullet;
     [Header("Laser")]
     public float l_Height;
     public float l_Width;
     public GameObject diagonalEnemy;
-    public GameObject l_Bullet;
+    //public GameObject l_Bullet;
     [Header("Trail")]
     public float t_Height;
     public float t_Width;
     public GameObject aimEnemy;
-    public GameObject t_Bullet;
+    //public GameObject t_Bullet;
     [Header("Bomb")]
     public float b_SpawnTime;
     public GameObject bombEnemy;
-    public GameObject b_Bullet;
+    //public GameObject b_Bullet;
     [Header("NoFire")]
     public GameObject noFireEnemy;
 }

@@ -33,8 +33,11 @@ public class CamerasController : MonoBehaviour
 
     IEnumerator LerpCamera()
     {
-        Register.instance.bulletsCanRotate = true;
-        Vector3 playerPos = GameManager.instance.player.transform.position;
+        if (Register.instance.numberOfTransitableObjects > 0)
+        {
+            Register.instance.bulletsCanRotate = true;
+        }
+        Vector3 playerPos = Register.instance.player.transform.position;
         switch (GameManager.instance.currentGameMode)
         {
             case GameMode.SIDESCROLL:

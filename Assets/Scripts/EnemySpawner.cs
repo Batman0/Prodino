@@ -29,6 +29,9 @@ public class EnemySpawner : MonoBehaviour
             case ShootType.BOMB:
                 enemyPrefab = enemyProperties.bombEnemy;
                 break;
+            case ShootType.NOFIRE:
+                enemyPrefab = enemyProperties.noFireEnemy;
+                break;
         }
     }
 

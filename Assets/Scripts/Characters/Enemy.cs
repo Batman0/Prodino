@@ -16,19 +16,17 @@ public class Enemy : MonoBehaviour
     private bool toDestroy;
     public int enemyLife;
     private EnemyProperties enemyProperties;
-    private BulletProperties bulletProperties;
     [HideInInspector]
     public Vector3 originalPos;
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
-    public GameObject myBullet;
-    public EnemyBullet myBulletScript;
+    //public GameObject myBullet;
+    //public EnemyBullet myBulletScript;
 
     void Start()
     {
         enemyProperties = Register.instance.enemyProperties;
-        bulletProperties = Register.instance.bulletProperties;
         index = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
@@ -52,16 +50,16 @@ public class Enemy : MonoBehaviour
             transform.Rotate(Vector3.up, 180, Space.World);
         }
 
-        if (shootType != ShootType.DEFAULT)
-        {
-            Destroy(myBullet);
-        }
-        else
-        {
-            myBulletScript.speed = bulletProperties.e_Speed;
-            myBulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
-            myBulletScript.originalPos = originalPos;
-        }
+        //if (shootType != ShootType.DEFAULT)
+        //{
+        //    Destroy(myBullet);
+        //}
+        //else
+        //{
+        //    myBulletScript.speed = bulletProperties.e_Speed;
+        //    myBulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
+        //    myBulletScript.originalPos = originalPos;
+        //}
     }
 
     void Update()
@@ -70,6 +68,16 @@ public class Enemy : MonoBehaviour
         Move();
         Shoot();
         Destroy();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Transform parentTr = other.transform.parent;
+        if (parentTr.tag == "PlayerBullet")
+        {
+            enemyLife--;
+            Destroy(parentTr.gameObject);
+        }
     }
 
     void OnDestroy()
@@ -90,9 +98,9 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
-                        myBulletScript.originalPos = originalPos;
-                        GameObject bullet = Shoots.straightShoot(myBullet, bulletSpawnpoint, transform);
-                        bullet.SetActive(true);
+                        //myBulletScript.originalPos = originalPos;
+                        /*GameObject bullet = */Shoots.straightShoot(Register.instance.enemyBullet, bulletSpawnpoint, transform);
+                        //bullet.SetActive(true);
                         timeToShoot = 0.0f;
                     }
                     break;
@@ -104,7 +112,6 @@ public class Enemy : MonoBehaviour
                 case ShootType.BOMB:
                     break;
                 case ShootType.NOFIRE:
-                    Shoots.noFire();
                     break;
             }
         }
@@ -189,16 +196,16 @@ public class Enemy : MonoBehaviour
                 case GameMode.TOPDOWN:
                     if (movementType != MovementType.CIRCULAR)
                     {
-                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z))
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnpoointY, originalPos.z))
                         {
-                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnpoointY, originalPos.z);
                         }
                     }
                     else
                     {
-                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y))
+                        if (transform.position != new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnpoointY, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y))
                         {
-                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y);
+                            transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnpoointY, enemyProperties.c_Radius * Mathf.Sin(Time.time * enemyProperties.c_Speed) + originalPos.y);
                         }
                     }
                     break;
@@ -239,15 +246,5 @@ public class Enemy : MonoBehaviour
     public bool EnemyLife()
     {
         return enemyLife <= 0;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        Transform parentTr = other.transform.parent;
-        if (parentTr.tag == "PlayerBullet")
-        {
-            enemyLife--;
-            Destroy(parentTr.gameObject);
-        }
     }
 }
