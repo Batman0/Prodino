@@ -18,6 +18,7 @@ public class Register : MonoBehaviour
 
     [Header("Player")]
     public PlayerController player;
+    //public Transform playerStartPos;
 
     [Header("Aim")]
     public Transform aimTransform;

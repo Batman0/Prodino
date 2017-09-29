@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
                         fireTimer = 0.00f;
                     }
                 }
-                PlayAnimation();
+                //PlayAnimation();
             }
             else
             {

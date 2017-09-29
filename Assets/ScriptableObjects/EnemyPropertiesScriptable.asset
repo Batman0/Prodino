@@ -23,9 +23,9 @@ MonoBehaviour:
   - {fileID: 4178582690395706, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4412127990732084, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
-  c_Speed: 21.2
-  c_Radius: 31.3
-  c_LifeTime: 95.86
+  c_Speed: 5
+  c_Radius: 5
+  c_LifeTime: 20
   d_RatioOfFire: 3
   straightEnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}

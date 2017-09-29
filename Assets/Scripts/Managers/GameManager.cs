@@ -10,8 +10,6 @@ public enum GameMode
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public GameObject playerPrefab;
-    public Transform playerStartPos;
     [HideInInspector]
     public GameMode currentGameMode;
     [HideInInspector]
@@ -36,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Register.instance.player.startPosition = playerStartPos.position;
+        Register.instance.player.startPosition = Register.instance.player.transform.position;
         Register.instance.player.aimTransform = Register.instance.aimTransform;
         playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
         leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));

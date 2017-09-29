@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public ShootType shootType;
     public MovementType movementType;
-    public bool isRight;
+    private bool isRight;
     public float delay;
     private float delayTimer;
     private GameObject enemyPrefab;
@@ -33,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
                 enemyPrefab = enemyProperties.noFireEnemy;
                 break;
         }
+        isRight = transform.position.x >= Register.instance.player.transform.position.x ? true : false;
     }
 
     private void Update()
