@@ -190,7 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
   delay: 3
 --- !u!4 &141376579
 Transform:
@@ -281,7 +280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 1
-  isRight: 0
   delay: 3
 --- !u!4 &244141834
 Transform:
@@ -330,7 +328,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 1
-  isRight: 0
   delay: 3
 --- !u!4 &418437460
 Transform:
@@ -393,7 +390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 1
-  isRight: 0
   delay: 3
 --- !u!4 &436331182
 Transform:
@@ -494,7 +490,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
   delay: 3
 --- !u!4 &971569835
 Transform:
@@ -628,7 +623,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
   delay: 3
 --- !u!4 &1194246489
 Transform:
@@ -672,7 +666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
   delay: 3
 --- !u!4 &1254111361
 Transform:
@@ -815,7 +808,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 1
-  isRight: 0
   delay: 3
 --- !u!4 &1538264592
 Transform:
@@ -859,7 +851,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 1
-  isRight: 0
   delay: 3
 --- !u!4 &1622398466
 Transform:
@@ -1004,7 +995,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.77
+      value: -6.188
       objectReference: {fileID: 0}
     - target: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1029,6 +1020,21 @@ Prefab:
     - target: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
+        type: 2}
+      propertyPath: rayLength
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
+        type: 2}
+      propertyPath: canJumpLength
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
+        type: 2}
+      propertyPath: isGroundLength
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
@@ -1068,7 +1074,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootType: 0
   movementType: 0
-  isRight: 0
   delay: 3
 --- !u!4 &1894816529
 Transform:

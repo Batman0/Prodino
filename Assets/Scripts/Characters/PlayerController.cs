@@ -21,12 +21,16 @@ public class PlayerController : MonoBehaviour
 {
     [HideInInspector]
     public Vector3 startPosition;
+    [SerializeField]
+    private GameObject mesh;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
-    public float rayLength;
+    public float canJumpLength;
+    public float isGroundLength;
     private float controllerDeadZone = 0.1f;
+    //private float CheckGroundRaycastMargin = 1;
     [HideInInspector]
     public Transform aimTransform;
     //public GameObject myBullet;
@@ -46,11 +50,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public LayerMask groundMask;
     private bool canShoot = true;
-    private bool canJump = true;
+    public bool canJump = true;
+    private bool isGround;
     private bool isDead;
     private float horizontal;
 
-    private SkinnedMeshRenderer skinnedMeshRen;
+    //private SkinnedMeshRenderer skinnedMeshRen;
 
     [Header("Boundaries")]
     public float sidexMin;
@@ -63,7 +68,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
+        //skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     void Start()
@@ -79,12 +84,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(Vector3.Angle(Vector3.right, new Vector3(aimTransform.position.x, aimTransform.position.y, 0)));
+        //Debug.Log(rb.velocity);
         if (!isDead)
         {
             if (!GameManager.instance.transitionIsRunning)
             {
-                canJump = CheckGround();
+                canJump = CheckGround(canJumpLength);
+                isGround = CheckGround(isGroundLength);
                 switch (GameManager.instance.currentGameMode)
                 {
                     case GameMode.SIDESCROLL:
@@ -98,12 +104,18 @@ public class PlayerController : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.W) && canJump)
                         {
-                            canJump = false;
                             Jump();
                         }
-                        if (!canJump)
+                        if (isGround && !canJump)
                         {
                             ApplyGravity();
+                        }
+                        else if ((isGround && canJump))
+                        {
+                            if (rb.velocity.y < 0)
+                            {
+                                rb.velocity = Vector3.zero;
+                            }
                         }
                         if (Input.GetKey(KeyCode.W))
                         {
@@ -214,10 +226,11 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
     }
 
-    bool CheckGround()
+    bool CheckGround(float rayLength)
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
-        Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y + 1, transform.position.z), Vector3.down);
+        Debug.Log(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+        Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         if (Physics.Raycast(ray, rayLength, groundMask))
         {
             return true;
@@ -311,11 +324,11 @@ public class PlayerController : MonoBehaviour
     IEnumerator BlinkMeshRen()
     {
         isDead = true;
-        skinnedMeshRen.enabled = false;
+        mesh.SetActive(false);
 
         yield return new WaitForSeconds(respawnTimer);
 
-        skinnedMeshRen.enabled = true;
+        mesh.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isDead = false;

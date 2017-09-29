@@ -1855,6 +1855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  mesh: {fileID: 1375617026502066}
   speed: 5
   jumpForce: 32
   upRotationAngle: 60
