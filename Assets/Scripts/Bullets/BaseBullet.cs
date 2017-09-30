@@ -70,7 +70,7 @@ public class BaseBullet : MonoBehaviour
         {
             Register.instance.translatedObjects = 0;
             Register.instance.bulletsCanRotate = false;
-            Debug.Log(Register.instance.translatedObjects);
+            //Debug.Log(Register.instance.translatedObjects);
         }
         if (!Register.instance.bulletsCanRotate && !iCanRotate)
         {

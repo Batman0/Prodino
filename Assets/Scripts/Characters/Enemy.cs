@@ -110,6 +110,15 @@ public class Enemy : MonoBehaviour
                 case ShootType.TRAIL:
                     break;
                 case ShootType.BOMB:
+                    if(timeToShoot < enemyProperties.b_SpawnTime)
+                    {
+                        timeToShoot += Time.deltaTime;
+                    }
+                    else
+                    {
+                       Shoots.bombShoot(enemyProperties.b_Bullet, bulletSpawnpoint, bulletSpawnpoint);
+                        timeToShoot = 0.0f;
+                    }
                     break;
                 case ShootType.NOFIRE:
                     break;

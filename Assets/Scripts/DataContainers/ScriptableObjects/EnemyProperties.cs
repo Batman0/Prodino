@@ -38,7 +38,8 @@ public class EnemyProperties : ScriptableObject
     [Header("Bomb")]
     public float b_SpawnTime;
     public GameObject bombEnemy;
-    //public GameObject b_Bullet;
+    public GameObject b_Bullet;
+    public float b_lifeTime;
     [Header("NoFire")]
     public GameObject noFireEnemy;
 }
