@@ -18,14 +18,14 @@ public static class Movements
 
         if (isRight)
         {
-            if (transform.position.x <= GameManager.instance.leftBound.x - destructionMargin)
+            if (transform.position.x <= Register.instance.xMin - destructionMargin)
             {
                 destroy = true;
             }
         }
         else
         {
-            if (transform.position.x >= GameManager.instance.rightBound.x + destructionMargin)
+            if (transform.position.x >= Register.instance.xMax + destructionMargin)
             {
                 destroy = true;
             }
@@ -125,24 +125,24 @@ public static class Movements
         //}
     }
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, EnemyProperties enemyProperties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
     {
         switch (movementType)
         {
             case MovementType.STRAIGHT:
-                StraightMove(transform, isRight, enemyProperties.st_Speed, enemyProperties.st_DestructionMargin, ref toDestroy);
+                StraightMove(transform, isRight, properties.st_Speed, properties.st_DestructionMargin, ref toDestroy);
                 break;
             case MovementType.CIRCULAR:
-                CircularMove(transform, enemyProperties.c_Speed, isRight, enemyProperties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
+                CircularMove(transform, properties.c_Speed, isRight, properties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
                 break;
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    SquareMove(ref targetIndex, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_RightTargets, transform, ref toDestroy);
+                    SquareMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    SquareMove(ref targetIndex, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_LeftTargets, transform, ref toDestroy);
+                    SquareMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }

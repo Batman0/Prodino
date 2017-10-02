@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
-  m_Name: EnemyPropertiesScriptable
+  m_Name: PropertiesScriptable
   m_EditorClassIdentifier: 
   st_Speed: 3
   st_DestructionMargin: 5
@@ -29,8 +29,11 @@ MonoBehaviour:
   d_RatioOfFire: 3
   straightEnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
-  l_Height: 0
-  l_Width: 0
+  l_Height: 2
+  l_Width: 5
+  l_Speed: 3
+  l_RatioOfFire: 3
+  l_Lifetime: 5
   diagonalEnemy: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
   t_Height: 0
@@ -42,3 +45,7 @@ MonoBehaviour:
   b_lifeTime: 1
   noFireEnemy: {fileID: 1451149965707218, guid: aa16cf02acb476b4eb992cf6f769295b,
     type: 2}
+  e_Speed: 15
+  e_DestructionMargin: 5
+  p_Speed: 15
+  p_DestructionMargin: 5

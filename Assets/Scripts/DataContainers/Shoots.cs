@@ -18,14 +18,11 @@ public static class Shoots
         //bullet.layer = layer;
     }
 
-    public static void laserShoot(Transform bulletSpawnpoint, float width, RaycastHit hit, float timeVisibleLine)
+    public static GameObject laserShoot(Transform bulletSpawnpoint, Transform rotTransform, float width, float height)
     {
-        Debug.DrawRay(bulletSpawnpoint.position, bulletSpawnpoint.right, Color.red, timeVisibleLine);
-
-        if (Physics.Raycast(bulletSpawnpoint.position, bulletSpawnpoint.right, out hit, width))
-        {
-            Object.Destroy(hit.collider.gameObject);
-        }
+        GameObject bullet = Object.Instantiate(Register.instance.enemyLaser, bulletSpawnpoint.position, rotTransform.rotation) as GameObject;
+        bullet.transform.localScale = new Vector3(width, height, bullet.transform.localScale.z);
+        return bullet;
     }
 
     public static void trailShoot()
@@ -38,12 +35,12 @@ public static class Shoots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void Shoot(ShootType shootType, EnemyProperties enemyProperties, ref float timer, Transform spawnPoint, Transform rotTransform)
+    public static void Shoot(ShootType shootType, Properties properties, ref float timer, ref bool canShoot, Transform spawnPoint, Transform rotTransform)
     {
         switch (shootType)
         {
             case ShootType.DEFAULT:
-                if (timer < enemyProperties.d_RatioOfFire)
+                if (timer < properties.d_RatioOfFire)
                 {
                     timer += Time.deltaTime;
                 }
@@ -54,18 +51,43 @@ public static class Shoots
                 }
                 break;
             case ShootType.LASER:
-                //Debug.Log("Laser");
+                if (timer < properties.l_RatioOfFire)
+                {
+                    timer += Time.deltaTime;
+                    if (!canShoot)
+                    {
+                        canShoot = true;
+                    }
+                }
+                else
+                {
+                    if (canShoot)
+                    {
+                        GameObject laser = laserShoot(spawnPoint, rotTransform, properties.l_Width, properties.l_Height);
+                        laser.transform.SetParent(spawnPoint.parent);
+                        canShoot = false;
+                    }
+                    if (timer < properties.l_RatioOfFire + properties.l_Lifetime)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        timer = 0.0f;
+                        canShoot = true;
+                    }
+                }
                 break;
             case ShootType.TRAIL:
                 break;
             case ShootType.BOMB:
-                if (timer < enemyProperties.b_SpawnTime)
+                if (timer < properties.b_SpawnTime)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    bombShoot(enemyProperties.b_Bullet, spawnPoint, rotTransform);
+                    bombShoot(properties.b_Bullet, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
                 break;

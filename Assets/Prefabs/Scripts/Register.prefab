@@ -64,3 +64,4 @@ MonoBehaviour:
     type: 2}
   enemyBullet: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}
+  enemyLaser: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4, type: 2}

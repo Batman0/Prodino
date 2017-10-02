@@ -15,14 +15,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool transitionIsRunning;
     public float backgroundSpeed;
-    [HideInInspector]
-    public Vector3 leftBound;
-    [HideInInspector]
-    public Vector3 rightBound;
-    [HideInInspector]
-    public Vector3 downBound;
-    [HideInInspector]
-    public Vector3 upBound;
+    private float distanceZSurplus = 20;
     [HideInInspector]
     public float playerBulletSpawnpoointY;
     public GameObject[] backgrounds;
@@ -37,14 +30,22 @@ public class GameManager : MonoBehaviour
         Register.instance.player.startPosition = Register.instance.player.transform.position;
         Register.instance.player.aimTransform = Register.instance.aimTransform;
         playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
-        leftBound = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
-        rightBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane));
-        downBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane));
-        upBound = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane));
+        Register.instance.xMin = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
+        Register.instance.xMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
+        Register.instance.yMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane + distanceZSurplus)).y;
+        Register.instance.yMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane + distanceZSurplus)).y;
     }
 
     void Update()
     {
+        if (Register.instance.zMin == null && Register.instance.zMax == null)
+        {
+            if (currentGameMode == GameMode.TOPDOWN)
+            {
+                Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane + distanceZSurplus)).z;
+                Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane + distanceZSurplus)).z;
+            }
+        }
         MoveBackgrounds(backgrounds, Vector3.left, backgroundSpeed);
         //Debug.Log(Time.time.ToString("#.##"));
     }

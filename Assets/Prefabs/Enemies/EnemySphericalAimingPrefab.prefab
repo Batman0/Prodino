@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 23285802575694720}
   - component: {fileID: 135051669144565422}
   - component: {fileID: 114367154526326326}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EnemySphericalAimingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

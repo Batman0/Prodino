@@ -23,12 +23,26 @@ public class Register : MonoBehaviour
     public Transform aimTransform;
 
     [Header("Scriptables")]
-    public EnemyProperties enemyProperties;
-    public BulletProperties bulletProperties;
+    public Properties properties;
 
     [Header("Bullets")]
     public GameObject playerBullet;
     public GameObject enemyBullet;
+    public GameObject enemyLaser;
+
+    [Header("Bounds")]
+    [HideInInspector]
+    public float xMin;
+    [HideInInspector]
+    public float xMax;
+    [HideInInspector]
+    public float yMin;
+    [HideInInspector]
+    public float yMax;
+    [HideInInspector]
+    public float? zMin = null;
+    [HideInInspector]
+    public float? zMax = null;
 
     void Awake()
     {

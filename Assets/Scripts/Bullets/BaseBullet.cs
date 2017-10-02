@@ -51,7 +51,7 @@ public class BaseBullet : MonoBehaviour
 
     void DestroyGameobject()
     {
-        if (transform.position.x < GameManager.instance.leftBound.x - destructionMargin || transform.position.x > GameManager.instance.rightBound.x + destructionMargin || transform.position.y < GameManager.instance.downBound.y - destructionMargin || transform.position.y > GameManager.instance.upBound.y + destructionMargin)
+        if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
         {
             Destroy(bulletGO);
         }

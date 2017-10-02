@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
+    private int enemyLayer = 12;
     //GURRA Cioè?
     //Carlo sono gli angoli massimi di rotazione del player in sideScroll
     //ANDREA resolved V
@@ -48,9 +49,11 @@ public class PlayerController : MonoBehaviour
     //private SkinnedMeshRenderer skinnedMeshRen;
 
     [Header("Boundaries")]
-    public float sidexMin;
-    public float sidexMax, sideyMin, sideyMax;
-    public float topxMin, topxMax, topzMin, topzMax;
+    public float sideXMin;
+    public float sideXMax;
+    private float sideYMin = 5.5f;
+    public float sideYMax;
+    public float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
     public Animator ani;
@@ -84,17 +87,16 @@ public class PlayerController : MonoBehaviour
                 switch (GameManager.instance.currentGameMode)
                 {
                     case GameMode.SIDESCROLL:
-                        if (transform.position.x > sidexMin && Input.GetAxis("Horizontal") < -controllerDeadZone)
+                        if (transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone)
                         {
                             Move(Vector3.right, speed, "Horizontal");
                         }
-                        else if (transform.position.x < sidexMax && Input.GetAxis("Horizontal") > controllerDeadZone)
+                        else if (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone)
                         {
                             Move(Vector3.right, speed, "Horizontal");
                         }
                         if (Input.GetKeyDown(KeyCode.W) && canJump)
                         {
-                            Debug.Log("SSS");
                             Jump();
                         }
                         if (thereIsGround && !canJump)
@@ -166,7 +168,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("SSS");
+                    Debug.Log("SSS");
                     Shoot();
                     fireTimer = 0.00f;
                 }
@@ -184,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!isDead)
+        if (other.gameObject.layer == enemyLayer && !isDead)
         {
             StartCoroutine("EnableDisableMesh");
 
@@ -270,16 +272,16 @@ public class PlayerController : MonoBehaviour
         {
             case (GameMode.SIDESCROLL):
                 transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, sidexMin, sidexMax),
-                Mathf.Clamp(transform.position.y, sideyMin, sideyMax),
+                Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
+                Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
                 0.0f
                 );
                 break;
             case (GameMode.TOPDOWN):
                 transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, topxMin, topxMax),
+                Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
                 startPosition.y,
-                Mathf.Clamp(transform.position.z, topzMin, topzMax)
+                Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
                 );
                 break;
         }

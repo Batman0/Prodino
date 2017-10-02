@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     public SphereCollider explosionCollider;
-    public EnemyProperties enemyProperties;
+    public Properties properties;
 
     public void OnCollisionEnter(Collision other)
     {
@@ -13,13 +13,13 @@ public class Bomb : MonoBehaviour
         {
             explosionCollider.enabled = true;
             gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Destroy(gameObject, enemyProperties.b_lifeTime);
+            Destroy(gameObject, properties.b_lifeTime);
         }
 
         if(other.gameObject.tag =="Player")
         {
             Destroy(other.gameObject);
-            Destroy(gameObject, enemyProperties.b_lifeTime);
+            Destroy(gameObject, properties.b_lifeTime);
         }
     }
 	

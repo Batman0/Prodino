@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class EnemyProperties : ScriptableObject
+public class Properties : ScriptableObject
 {
-    [Header("Movement")]
+    [Header("Enemy Movement")]
     [Header("Straight")]
     public float st_Speed;
     public float st_DestructionMargin;
@@ -19,7 +19,7 @@ public class EnemyProperties : ScriptableObject
     public float c_Radius;
     public float c_LifeTime;
 
-    [Header("Fire")]
+    [Header("Enemy Fire")]
     [Header("Default")]
     //public float D_bulletSpeed;
     public float d_RatioOfFire;
@@ -28,6 +28,9 @@ public class EnemyProperties : ScriptableObject
     [Header("Laser")]
     public float l_Height;
     public float l_Width;
+    public float l_Speed;
+    public float l_RatioOfFire;
+    public float l_Lifetime;
     public GameObject diagonalEnemy;
     //public GameObject l_Bullet;
     [Header("Trail")]
@@ -40,6 +43,15 @@ public class EnemyProperties : ScriptableObject
     public GameObject bombEnemy;
     public GameObject b_Bullet;
     public float b_lifeTime;
-    [Header("NoFire")]
+    [Header("No Fire")]
     public GameObject noFireEnemy;
+
+    [Header("Enemy Bullet")]
+    public float e_Speed;
+    public float e_DestructionMargin;
+
+    [Header("Player Bullet")]
+    public float p_Speed;
+    public float p_DestructionMargin;
+
 }
