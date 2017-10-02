@@ -86,6 +86,7 @@ public class Enemy : MonoBehaviour
     }
 
     //GURRA quindi se io ho 20 tipi di sparo ho nella classe enemy uno switch enorme con scritti dentro tutti i tipi di sparo? non penso sia il modo migliore
+    //CARLO rivedremo questo 
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
@@ -99,9 +100,7 @@ public class Enemy : MonoBehaviour
                     }
                     else 
                     {
-                        //myBulletScript.originalPos = originalPos;
-                        /*GameObject bullet = */Shoots.straightShoot(Register.instance.enemyBullet, bulletSpawnpoint, transform);
-                        //bullet.SetActive(true);
+                        Shoots.straightShoot(Register.instance.enemyBullet, bulletSpawnpoint, transform);
                         timeToShoot = 0.0f;
                     }
                     break;
@@ -247,14 +246,15 @@ public class Enemy : MonoBehaviour
 
     public void Destroy()
     {
-        if(EnemyLife() || toDestroy)
+        if(CheckEnemyLife() || toDestroy)
         {
             Destroy(gameObject);
         }
     }
 
     //GURRA nome dubbio su questo metodo, non fa quello che mi aspettavo quando l'ho letto
-    public bool EnemyLife()
+    //Hai ragione mi ero scordato di mettere CheckEnemyLife cambio
+    public bool CheckEnemyLife()
     {
         return enemyLife <= 0;
     }

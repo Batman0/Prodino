@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public float upRotationAngle;
     public float downRotationAngle;
     //GURRA Cioè?
+    //Carlo sono gli angoli massimi di rotazione del player in sideScroll
     public float canJumpLength;
     public float isGroundLength;
     private float controllerDeadZone = 0.1f;
@@ -170,19 +171,17 @@ public class PlayerController : MonoBehaviour
 
                         break;
                 }
-                if (Input.GetMouseButton(0) && canShoot)
-                {
 
-                    //GURRA WHAAAAAT? Quindi se il player non preme il mouse il timer non viene aggiornato???
-                    if (fireTimer < fireRatio)
-                    {
-                        fireTimer += Time.deltaTime;
-                    }
-                    else
-                    {
-                        Shoot();
-                        fireTimer = 0.00f;
-                    }
+                //GURRA WHAAAAAT? Quindi se il player non preme il mouse il timer non viene aggiornato???
+                //Il timer veniva aggiornato lo stesso ma comunque ho sistemato 
+                if (fireTimer < fireRatio)
+                {
+                    fireTimer += Time.deltaTime;
+                }
+                else
+                {
+                    Shoot();
+                    fireTimer = 0.00f;
                 }
                 //PlayAnimation();
             }
@@ -202,12 +201,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine("BlinkMeshRen");
 
-            if (other.gameObject.tag == "Enemy")
-            {
-                //GURRA magari sarebbe più conveniente avere un metodo che gestisce la morte del nemico. Se c'è un vfx, un calcolo di punti, un drop?
-                Destroy(other.gameObject);
-            }
-            else if (other.transform.parent.tag == "EnemyBullet")
+            if (other.transform.parent.tag == "EnemyBullet")
             {
                 Destroy(other.transform.parent.gameObject);
             }
@@ -237,7 +231,6 @@ public class PlayerController : MonoBehaviour
     bool CheckGround(float rayLength)
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
-        Debug.Log(new Vector3(transform.position.x, transform.position.y, transform.position.z));
         Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         if (Physics.Raycast(ray, rayLength, groundMask))
         {
@@ -273,12 +266,17 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         //GURRA istanzia a run time i proiettili? Non sarebbe meglio avere un pool?
-        GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
-        bullet.SetActive(true);
-        bullet.tag = playerBulletTag;
+        //Carlo intendi un set già fatto?
+        if (Input.GetMouseButton(0) && canShoot)
+        {
+            GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+            bullet.SetActive(true);
+            bullet.tag = playerBulletTag;
+        }
     }
 
     //GURRA cosa fa questo metodo?
+    //CARLO Blocca la posizione del player tra due limiti.Cioè se sei in side hai un certo limite così da non poter superare lo schermo lo stesso in Top
     public void ClampPosition(GameMode state)
     {
         switch (state)
@@ -332,6 +330,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //GURRA perché il metodo che gestisce la morte del player si chiama blinkmeshren?
+    //CARLO Effettivamente bisogna cambiarlo ma perchè si è modificato il metodo base provvediamo subito 
     IEnumerator BlinkMeshRen()
     {
         isDead = true;
