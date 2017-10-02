@@ -124,4 +124,27 @@ public static class Movements
         //        break;
         //}
     }
+
+    public static void Move(MovementType movementType, Transform transform, bool isRight, EnemyProperties enemyProperties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
+    {
+        switch (movementType)
+        {
+            case MovementType.STRAIGHT:
+                StraightMove(transform, isRight, enemyProperties.st_Speed, enemyProperties.st_DestructionMargin, ref toDestroy);
+                break;
+            case MovementType.CIRCULAR:
+                CircularMove(transform, enemyProperties.c_Speed, isRight, enemyProperties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
+                break;
+            case MovementType.SQUARE:
+                if (isRight)
+                {
+                    SquareMove(ref targetIndex, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_RightTargets, transform, ref toDestroy);
+                }
+                else
+                {
+                    SquareMove(ref targetIndex, enemyProperties.sq_Speed, enemyProperties.sq_WaitingTime, ref waitingTimer, enemyProperties.sq_LeftTargets, transform, ref toDestroy);
+                }
+                break;
+        }
+    }
 }

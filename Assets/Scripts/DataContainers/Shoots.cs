@@ -37,4 +37,40 @@ public static class Shoots
     {
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
+
+    public static void Shoot(ShootType shootType, EnemyProperties enemyProperties, ref float timer, Transform spawnPoint, Transform rotTransform)
+    {
+        switch (shootType)
+        {
+            case ShootType.DEFAULT:
+                if (timer < enemyProperties.d_RatioOfFire)
+                {
+                    timer += Time.deltaTime;
+                }
+                else
+                {
+                    straightShoot(Register.instance.enemyBullet, spawnPoint, rotTransform);
+                    timer = 0.0f;
+                }
+                break;
+            case ShootType.LASER:
+                //Debug.Log("Laser");
+                break;
+            case ShootType.TRAIL:
+                break;
+            case ShootType.BOMB:
+                if (timer < enemyProperties.b_SpawnTime)
+                {
+                    timer += Time.deltaTime;
+                }
+                else
+                {
+                    bombShoot(enemyProperties.b_Bullet, spawnPoint, rotTransform);
+                    timer = 0.0f;
+                }
+                break;
+            case ShootType.NOFIRE:
+                break;
+        }
+    }
 }
