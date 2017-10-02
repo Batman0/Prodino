@@ -11,9 +11,12 @@ public class BoundarySideScroll
     public float xMin, xMax, yMin, yMax;
 }
 
+
+//GURRA Class?
 [System.Serializable]
 public class BoundaryTopDown
 {
+    //GURRA Quanto è preciso questos sistema? Se facessi uno zoom/movimento di camera?
     public float xMin, xMax, zMin, zMax;
 }
 
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
+    //GURRA Cioè?
     public float canJumpLength;
     public float isGroundLength;
     private float controllerDeadZone = 0.1f;
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public LayerMask groundMask;
     private bool canShoot = true;
+    //GURRA  
     public bool canJump = true;
     private bool isGround;
     private bool isDead;
@@ -167,6 +172,8 @@ public class PlayerController : MonoBehaviour
                 }
                 if (Input.GetMouseButton(0) && canShoot)
                 {
+
+                    //GURRA WHAAAAAT? Quindi se il player non preme il mouse il timer non viene aggiornato???
                     if (fireTimer < fireRatio)
                     {
                         fireTimer += Time.deltaTime;
@@ -197,6 +204,7 @@ public class PlayerController : MonoBehaviour
 
             if (other.gameObject.tag == "Enemy")
             {
+                //GURRA magari sarebbe più conveniente avere un metodo che gestisce la morte del nemico. Se c'è un vfx, un calcolo di punti, un drop?
                 Destroy(other.gameObject);
             }
             else if (other.transform.parent.tag == "EnemyBullet")
@@ -264,11 +272,13 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        //GURRA istanzia a run time i proiettili? Non sarebbe meglio avere un pool?
         GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
         bullet.SetActive(true);
         bullet.tag = playerBulletTag;
     }
 
+    //GURRA cosa fa questo metodo?
     public void ClampPosition(GameMode state)
     {
         switch (state)
@@ -321,6 +331,7 @@ public class PlayerController : MonoBehaviour
         canShoot = true;
     }
 
+    //GURRA perché il metodo che gestisce la morte del player si chiama blinkmeshren?
     IEnumerator BlinkMeshRen()
     {
         isDead = true;

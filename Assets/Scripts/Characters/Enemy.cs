@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    //GURRA index di cosa?
     private int index;
     [HideInInspector]
     public bool isRight;
@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
         {
             lifeTime = enemyProperties.c_LifeTime;
         }
-        
+
         if (!isRight)
         {
             transform.Rotate(Vector3.up, 180, Space.World);
@@ -85,6 +85,7 @@ public class Enemy : MonoBehaviour
         Register.instance.numberOfTransitableObjects--;
     }
 
+    //GURRA quindi se io ho 20 tipi di sparo ho nella classe enemy uno switch enorme con scritti dentro tutti i tipi di sparo? non penso sia il modo migliore
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
@@ -252,6 +253,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //GURRA nome dubbio su questo metodo, non fa quello che mi aspettavo quando l'ho letto
     public bool EnemyLife()
     {
         return enemyLife <= 0;
