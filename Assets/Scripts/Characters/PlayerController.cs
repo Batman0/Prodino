@@ -2,38 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//2 funzioni movimento per le 2 modalità
-//Sparo
-//Melee in top down
-[System.Serializable]
-public class BoundarySideScroll
-{
-    public float xMin, xMax, yMin, yMax;
-}
-
-
-//GURRA Class?
-[System.Serializable]
-public class BoundaryTopDown
-{
-    //GURRA Quanto è preciso questos sistema? Se facessi uno zoom/movimento di camera?
-    public float xMin, xMax, zMin, zMax;
-}
-
 public class PlayerController : MonoBehaviour
 {
     [HideInInspector]
     public Vector3 startPosition;
     [SerializeField]
-    private GameObject mesh;
+    private GameObject meshGO;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
     //GURRA Cioè?
     //Carlo sono gli angoli massimi di rotazione del player in sideScroll
-    public float canJumpLength;
-    public float isGroundLength;
+    public float jumpCheckRayLength;
+    public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
     //private float CheckGroundRaycastMargin = 1;
     [HideInInspector]
@@ -57,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private bool canShoot = true;
     //GURRA  
     public bool canJump = true;
-    private bool isGround;
+    private bool thereIsGround;
     private bool isDead;
     private float horizontal;
 
@@ -95,8 +77,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!GameManager.instance.transitionIsRunning)
             {
-                canJump = CheckGround(canJumpLength);
-                isGround = CheckGround(isGroundLength);
+                canJump = CheckGround(jumpCheckRayLength);
+                thereIsGround = CheckGround(groundCheckRayLength);
                 switch (GameManager.instance.currentGameMode)
                 {
                     case GameMode.SIDESCROLL:
@@ -110,13 +92,14 @@ public class PlayerController : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.W) && canJump)
                         {
+                            Debug.Log("SSS");
                             Jump();
                         }
-                        if (isGround && !canJump)
+                        if (thereIsGround && !canJump)
                         {
                             ApplyGravity();
                         }
-                        else if ((isGround && canJump))
+                        else if ((thereIsGround && canJump))
                         {
                             if (rb.velocity.y < 0)
                             {
@@ -199,7 +182,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
-            StartCoroutine("BlinkMeshRen");
+            StartCoroutine("EnableDisableMesh");
 
             if (other.transform.parent.tag == "EnemyBullet")
             {
@@ -270,7 +253,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0) && canShoot)
         {
             GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
-            bullet.SetActive(true);
+            //bullet.SetActive(true);
             bullet.tag = playerBulletTag;
         }
     }
@@ -331,14 +314,14 @@ public class PlayerController : MonoBehaviour
 
     //GURRA perché il metodo che gestisce la morte del player si chiama blinkmeshren?
     //CARLO Effettivamente bisogna cambiarlo ma perchè si è modificato il metodo base provvediamo subito 
-    IEnumerator BlinkMeshRen()
+    IEnumerator EnableDisableMesh()
     {
         isDead = true;
-        mesh.SetActive(false);
+        meshGO.SetActive(false);
 
         yield return new WaitForSeconds(respawnTimer);
 
-        mesh.SetActive(true);
+        meshGO.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isDead = false;
