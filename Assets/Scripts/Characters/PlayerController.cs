@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float downRotationAngle;
     //GURRA Cioè?
     //Carlo sono gli angoli massimi di rotazione del player in sideScroll
+    //ANDREA resolved V
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private bool thereIsGround;
     private bool isDead;
     private float horizontal;
+    public Transform landmark;
 
     //private SkinnedMeshRenderer skinnedMeshRen;
 
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         //transform.position = startPosition;
-        fireTimer = fireRatio;
+        //fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
         //myBulletScript.speed = bulletProperties.p_Speed;
@@ -104,6 +106,7 @@ public class PlayerController : MonoBehaviour
                             if (rb.velocity.y < 0)
                             {
                                 rb.velocity = Vector3.zero;
+                                transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
                             }
                         }
                         if (Input.GetKey(KeyCode.W))
@@ -163,6 +166,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    //Debug.Log("SSS");
                     Shoot();
                     fireTimer = 0.00f;
                 }
@@ -314,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
     //GURRA perché il metodo che gestisce la morte del player si chiama blinkmeshren?
     //CARLO Effettivamente bisogna cambiarlo ma perchè si è modificato il metodo base provvediamo subito 
+    //ANDREA Resolved V
     IEnumerator EnableDisableMesh()
     {
         isDead = true;
