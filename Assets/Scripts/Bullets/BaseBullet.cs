@@ -36,14 +36,6 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    /*void OnTriggerEnter(Collider other)
-    {
-        if (gameObject.tag == "PlayerBullet" && other.gameObject.tag == "Enemy")
-        {
-           other.gameObject.
-        }
-    }*/
-
     void OnDestroy()
     {
         Register.instance.numberOfTransitableObjects--;
@@ -63,14 +55,12 @@ public class BaseBullet : MonoBehaviour
         {
             transform.Rotate(Vector3.forward, 90, Space.Self);
             Register.instance.translatedObjects++;
-            Debug.Log(Register.instance.translatedObjects);
             iCanRotate = false;
         }
         if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
         {
             Register.instance.translatedObjects = 0;
             Register.instance.bulletsCanRotate = false;
-            //Debug.Log(Register.instance.translatedObjects);
         }
         if (!Register.instance.bulletsCanRotate && !iCanRotate)
         {

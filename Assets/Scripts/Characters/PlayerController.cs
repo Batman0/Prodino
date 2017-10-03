@@ -13,17 +13,12 @@ public class PlayerController : MonoBehaviour
     public float upRotationAngle;
     public float downRotationAngle;
     private int enemyLayer = 12;
-    //GURRA Cioè?
-    //Carlo sono gli angoli massimi di rotazione del player in sideScroll
-    //ANDREA resolved V
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
     //private float CheckGroundRaycastMargin = 1;
     [HideInInspector]
     public Transform aimTransform;
-    //public GameObject myBullet;
-    //public PlayerBullet myBulletScript;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
     private float fireTimer;
@@ -39,7 +34,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public LayerMask groundMask;
     private bool canShoot = true;
-    //GURRA  
     public bool canJump = true;
     private bool thereIsGround;
     private bool isDead;
@@ -51,7 +45,7 @@ public class PlayerController : MonoBehaviour
     [Header("Boundaries")]
     public float sideXMin;
     public float sideXMax;
-    private float sideYMin = 5.5f;
+    public float sideYMin = 5.5f;
     public float sideYMax;
     public float topXMin, topXMax, topZMin, topZMax;
 
@@ -66,15 +60,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //transform.position = startPosition;
-        //fireTimer = fireRatio;
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
-        //myBulletScript.speed = bulletProperties.p_Speed;
-        //myBulletScript.destructionMargin = bulletProperties.p_DestructionMargin;
-        //myBulletScript.originalPos = startPosition;
     }
-
     void Update()
     {
         //Debug.Log(rb.velocity);
@@ -132,8 +120,6 @@ public class PlayerController : MonoBehaviour
                         Vector3 aim = aimTransform.position - bulletSpawnPoint.position;
                         float aimAngle = Vector3.Angle(Vector3.right, aim);
                         Vector3 cross = Vector3.Cross(Vector3.right, aim);
-                        //Debug.Log("aimAngle: " + aimAngle);
-                        //Debug.Log("cross: " + Vector3.Cross(Vector3.right, aim));
                         if (aimAngle <= upRotationAngle && cross.z >= 0)
                         {
                             TurnAroundPlayer(bulletSpawnPoint);
@@ -160,15 +146,12 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
 
-                //GURRA WHAAAAAT? Quindi se il player non preme il mouse il timer non viene aggiornato???
-                //Il timer veniva aggiornato lo stesso ma comunque ho sistemato 
                 if (fireTimer < fireRatio)
                 {
                     fireTimer += Time.deltaTime;
                 }
                 else
                 {
-                    Debug.Log("SSS");
                     Shoot();
                     fireTimer = 0.00f;
                 }
@@ -254,8 +237,6 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        //GURRA istanzia a run time i proiettili? Non sarebbe meglio avere un pool?
-        //Carlo intendi un set già fatto?
         if (Input.GetMouseButton(0) && canShoot)
         {
             GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
@@ -264,8 +245,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //GURRA cosa fa questo metodo?
-    //CARLO Blocca la posizione del player tra due limiti.Cioè se sei in side hai un certo limite così da non poter superare lo schermo lo stesso in Top
     public void ClampPosition(GameMode state)
     {
         switch (state)
@@ -318,9 +297,6 @@ public class PlayerController : MonoBehaviour
         canShoot = true;
     }
 
-    //GURRA perché il metodo che gestisce la morte del player si chiama blinkmeshren?
-    //CARLO Effettivamente bisogna cambiarlo ma perchè si è modificato il metodo base provvediamo subito 
-    //ANDREA Resolved V
     IEnumerator EnableDisableMesh()
     {
         isDead = true;

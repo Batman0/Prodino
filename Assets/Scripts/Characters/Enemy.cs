@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    //GURRA index di cosa?
-    //ANDREA Resolved V
     private int movementTargetIndex;
     [HideInInspector]
     public bool isRight;
@@ -23,8 +21,6 @@ public class Enemy : MonoBehaviour
     public Transform bulletSpawnpoint;
     private float timeToShoot;
     private bool canShoot;
-    //public GameObject myBullet;
-    //public EnemyBullet myBulletScript;
 
     void Start()
     {
@@ -33,15 +29,7 @@ public class Enemy : MonoBehaviour
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
-        //switch (GameManager.instance.currentGameMode)
-        //{
-        //    case GameMode.SIDESCROLL:
-        //        transform.position = new Vector3(transform.position.x, originalPos.y, 0);
-        //        break;
-        //    case GameMode.TOPDOWN:
-        //        transform.position = new Vector3(transform.position.x, GameManager.instance.playerBulletSpawnPos.y, originalPos.z);
-        //        break;
-        //}
+        
         if (movementType==MovementType.CIRCULAR)
         {
             lifeTime = properties.c_LifeTime;
@@ -52,21 +40,11 @@ public class Enemy : MonoBehaviour
             transform.Rotate(Vector3.up, 180, Space.World);
         }
 
-        //if (shootType != ShootType.DEFAULT)
-        //{
-        //    Destroy(myBullet);
-        //}
-        //else
-        //{
-        //    myBulletScript.speed = bulletProperties.e_Speed;
-        //    myBulletScript.destructionMargin = bulletProperties.e_DestructionMargin;
-        //    myBulletScript.originalPos = originalPos;
-        //}
+      
     }
 
     void Update()
     {
-    //    ChangePerspective();
         Move();
         Shoot();
         Destroy();
@@ -87,8 +65,6 @@ public class Enemy : MonoBehaviour
         Register.instance.numberOfTransitableObjects--;
     }
 
-    //GURRA quindi se io ho 20 tipi di sparo ho nella classe enemy uno switch enorme con scritti dentro tutti i tipi di sparo? non penso sia il modo migliore
-    //CARLO rivedremo questo 
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
