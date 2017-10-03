@@ -396,12 +396,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 436331180}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootType: 3
+  shootType: 0
   movementType: 0
   delay: 3
 --- !u!4 &436331182
@@ -411,7 +411,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 436331180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.8, y: 3.22, z: 0}
+  m_LocalPosition: {x: -18.8, y: -3.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1665334173}

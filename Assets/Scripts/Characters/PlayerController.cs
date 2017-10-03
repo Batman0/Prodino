@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
                 if (other.transform.tag == "EnemyBullet")
                 {
-                    Destroy(other.transform.parent.gameObject);
+                    Destroy(other.transform.gameObject);
                 }
             }
         }
@@ -196,14 +196,7 @@ public class PlayerController : MonoBehaviour
         {
             if (other.gameObject.layer == enemyLayer && !isDead)
             {
-                if (other.transform.tag == "EnemyBullet")
-                {
-                    Destroy(other.transform.parent.gameObject);
-                }
-                else
-                {
-                    Destroy(other.transform.gameObject);
-                }
+                Destroy(other.transform.gameObject);
             }
         }
     }
