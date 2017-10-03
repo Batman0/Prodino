@@ -8,8 +8,8 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: m_Trevor_Gun
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8f00c7fe93df6504c9af352b3c959c21, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,19 +35,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: bfb7c11a6965acd4ab4bc8f5eddaae62, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ef669a5f1e1b7cf4297f703b42719d0c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d08310a038a6f1149914df50fa8c8317, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7af7f70e5c534614c8cbaf0d48984477, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -59,18 +59,32 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _GlossMapScale: 1
+    - _GlossMapScale: 0
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LightSmoothness: 0.5
+    - _LightThreshold: 0.01
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutlineSize: 0.06
     - _Parallax: 0.02
+    - _RimIntensity: 0.5
+    - _RimSize: 1.5
+    - _RimSmoothness: 0.5
+    - _ShadowIntensity: 1
+    - _Shininess: 0.01
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 1, b: 0.3372549, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.25, g: 0.25, b: 0.25, a: 0.5}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 0.5}
