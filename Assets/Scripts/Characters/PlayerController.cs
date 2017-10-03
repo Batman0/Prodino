@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     [Header("Boundaries")]
     public float sideXMin;
     public float sideXMax;
-    public float sideYMin = 5.5f;
+    private float sideYMin = 3.8f;
     public float sideYMax;
     public float topXMin, topXMax, topZMin, topZMax;
 
