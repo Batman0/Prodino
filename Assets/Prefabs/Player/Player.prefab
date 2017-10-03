@@ -386,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4131419845760396}
   m_Layer: 0
-  m_Name: Trevor_rigged
+  m_Name: TrevorRigged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +694,9 @@ GameObject:
   - component: {fileID: 54978495014258954}
   - component: {fileID: 114361016435548334}
   - component: {fileID: 95393272320219176}
+  - component: {fileID: 65660415095524202}
   - component: {fileID: 65169831621517012}
+  - component: {fileID: 65505668385684740}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1822,9 +1824,33 @@ BoxCollider:
   m_GameObject: {fileID: 1758926448620306}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 60, z: 1}
+  m_Center: {x: 0, y: 2, z: 0}
+--- !u!65 &65505668385684740
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1758926448620306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 60, z: 2.65}
+  m_Center: {x: 0, y: 2, z: -1.825}
+--- !u!65 &65660415095524202
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1758926448620306}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 60, y: 1, z: 1}
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!95 &95393272320219176
 Animator:
@@ -1872,17 +1898,21 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  canShootAndMove: 1
   canJump: 1
   landmark: {fileID: 0}
+  sideBodyCollider: {fileID: 65660415095524202}
+  topBodyCollider: {fileID: 65169831621517012}
+  topTailCollider: {fileID: 65505668385684740}
   sideXMin: 4
   sideXMax: 4
-  sideYMin: 6
   sideYMax: 4
   topXMin: 4
   topXMax: 4
   topZMin: 4
   topZMax: 4
   ani: {fileID: 95393272320219176}
+  topdownSpeed: 5
 --- !u!137 &137239189092961080
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

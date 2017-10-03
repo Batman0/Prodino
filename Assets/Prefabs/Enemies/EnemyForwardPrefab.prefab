@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23410314197661144}
   - component: {fileID: 114002524796094322}
   - component: {fileID: 65381888155023296}
+  - component: {fileID: 65066026575963902}
   m_Layer: 12
   m_Name: EnemyForwardPrefab
   m_TagString: Untagged
@@ -111,6 +112,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1275809954252400}
   m_Mesh: {fileID: 4300000, guid: a2bdd6757a0ea5048a8a59221370b15b, type: 3}
+--- !u!65 &65066026575963902
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275809954252400}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0209112, y: 40, z: 2.1498392}
+  m_Center: {x: 0, y: -0.022551045, z: 0.24373683}
 --- !u!65 &65381888155023296
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -118,11 +131,11 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1275809954252400}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.020911, y: 1.027158, z: 2.1498387}
-  m_Center: {x: 0, y: -0.022551045, z: 0.24373677}
+  m_Size: {x: 40, y: 1, z: 2.15}
+  m_Center: {x: 0, y: -0.0225, z: 0.25}
 --- !u!114 &114002524796094322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -140,3 +153,5 @@ MonoBehaviour:
   enemyLife: 2
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4587967034834114}
+  sideCollider: {fileID: 65381888155023296}
+  topCollider: {fileID: 65066026575963902}

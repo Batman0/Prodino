@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     public Transform bulletSpawnpoint;
     private float timeToShoot;
     private bool canShoot;
+    public Collider sideCollider;
+    public Collider topCollider;
 
     void Start()
     {
@@ -40,11 +42,28 @@ public class Enemy : MonoBehaviour
             transform.Rotate(Vector3.up, 180, Space.World);
         }
 
-      
+        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            if (!sideCollider.enabled || topCollider.enabled)
+            {
+                topCollider.enabled = false;
+                sideCollider.enabled = true;
+            }
+        }
+        else
+        {
+            if (!topCollider.enabled || sideCollider.enabled)
+            {
+                sideCollider.enabled = false;
+                topCollider.enabled = true;
+            }
+        }
+
     }
 
     void Update()
     {
+        ChangePerspective();
         Move();
         Shoot();
         Destroy();
@@ -52,18 +71,17 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Transform parentTr = other.transform.parent;
-        if (parentTr.tag == "PlayerBullet")
+        if (other.tag == "PlayerBullet")
         {
             enemyLife--;
-            Destroy(parentTr.gameObject);
+            Destroy(other.transform.parent.gameObject);
         }
     }
 
-    void OnDestroy()
-    {
-        Register.instance.numberOfTransitableObjects--;
-    }
+    //void OnDestroy()
+    //{
+    //    Register.instance.numberOfTransitableObjects--;
+    //}
 
     public void Shoot()
     {
@@ -78,6 +96,29 @@ public class Enemy : MonoBehaviour
         if (!GameManager.instance.transitionIsRunning)
         {
             Movements.Move(movementType, transform, isRight, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref toDestroy);
+        }
+    }
+
+    void ChangePerspective()
+    {
+        if (GameManager.instance.transitionIsRunning)
+        {
+            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            {
+                if (!sideCollider.enabled)
+                {
+                    topCollider.enabled = false;
+                    sideCollider.enabled = true;
+                }
+            }
+            else
+            {
+                if (!topCollider.enabled)
+                {
+                    sideCollider.enabled = false;
+                    topCollider.enabled = true;
+                }
+            }
         }
     }
 

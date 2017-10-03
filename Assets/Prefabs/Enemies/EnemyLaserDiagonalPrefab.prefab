@@ -36,8 +36,9 @@ GameObject:
   - component: {fileID: 4810204316244916}
   - component: {fileID: 33954578175854522}
   - component: {fileID: 23528693852630570}
-  - component: {fileID: 65562383542620152}
   - component: {fileID: 114938444122959460}
+  - component: {fileID: 65562383542620152}
+  - component: {fileID: 65958224007894580}
   m_Layer: 12
   m_Name: EnemyLaserDiagonalPrefab
   m_TagString: Untagged
@@ -85,7 +86,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b91d815fbb2d47b469a25da60ffad0d0, type: 2}
+  - {fileID: 2100000, guid: 0bc31be50d4012643a8405fac786ea73, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,11 +119,23 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1686296282635880}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2142222, y: 1.5339886, z: 2.885977}
+  m_Size: {x: 40, y: 1.5339886, z: 2.885977}
   m_Center: {x: -0.000000029802322, y: 0, z: 0}
+--- !u!65 &65958224007894580
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1686296282635880}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1.2142224, y: 40, z: 2.8859777}
+  m_Center: {x: -0.00000002980233, y: 0, z: 0}
 --- !u!114 &114938444122959460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -140,3 +153,5 @@ MonoBehaviour:
   enemyLife: 2
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4923712833204592}
+  sideCollider: {fileID: 65562383542620152}
+  topCollider: {fileID: 65958224007894580}

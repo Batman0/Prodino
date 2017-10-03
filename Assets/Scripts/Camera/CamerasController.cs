@@ -22,7 +22,7 @@ public class CamerasController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning && Register.instance.player.canShootAndMove)
         {
             GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartTransitions = true;
@@ -33,10 +33,10 @@ public class CamerasController : MonoBehaviour
 
     IEnumerator LerpCamera()
     {
-        if (Register.instance.numberOfTransitableObjects > 0)
-        {
-            Register.instance.bulletsCanRotate = true;
-        }
+        //if (Register.instance.numberOfTransitableObjects > 0)
+        //{
+        //    Register.instance.bulletsCanRotate = true;
+        //}
         Vector3 playerPos = Register.instance.player.transform.position;
         switch (GameManager.instance.currentGameMode)
         {
