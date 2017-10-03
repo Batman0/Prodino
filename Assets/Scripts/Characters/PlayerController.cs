@@ -33,12 +33,16 @@ public class PlayerController : MonoBehaviour
     public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
-    private bool canShoot = true;
+    public bool canShootAndMove = true;
     public bool canJump = true;
     private bool thereIsGround;
     private bool isDead;
     private float horizontal;
     public Transform landmark;
+    public Collider sideBodyCollider;
+    //public Collider sideTailCollider;
+    public Collider topBodyCollider;
+    public Collider topTailCollider;
 
     //private SkinnedMeshRenderer skinnedMeshRen;
 
@@ -51,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     public Animator ani;
+
+    [Header("Meele")]
+    public float topdownSpeed;
 
     void Awake()
     {
@@ -134,13 +141,16 @@ public class PlayerController : MonoBehaviour
                     case GameMode.TOPDOWN:
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
-                        TurnAroundPlayer(transform);
+                        if (canShootAndMove)
+                        {
+                            TurnAroundPlayer(transform);
+                        }
 
                         ClampPosition(GameMode.TOPDOWN);
 
-                        if (Input.GetMouseButtonDown(1))
+                        if (canShootAndMove && Input.GetMouseButtonDown(1))
                         {
-                            StartCoroutine(Melee());
+                            StartCoroutine("MeeleAttack");
                         }
 
                         break;
@@ -163,19 +173,37 @@ public class PlayerController : MonoBehaviour
                 {
                     bulletSpawnPoint.rotation = bulletSpawnPointStartRotation;
                 }
+                ChangePerspective();
             }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == enemyLayer && !isDead)
+        if (!topTailCollider.enabled)
         {
-            StartCoroutine("EnableDisableMesh");
-
-            if (other.transform.parent.tag == "EnemyBullet")
+            if (other.gameObject.layer == enemyLayer && !isDead)
             {
-                Destroy(other.transform.parent.gameObject);
+                StartCoroutine("EnableDisableMesh");
+
+                if (other.transform.tag == "EnemyBullet")
+                {
+                    Destroy(other.transform.parent.gameObject);
+                }
+            }
+        }
+        else if (topTailCollider.enabled)
+        {
+            if (other.gameObject.layer == enemyLayer && !isDead)
+            {
+                if (other.transform.tag == "EnemyBullet")
+                {
+                    Destroy(other.transform.parent.gameObject);
+                }
+                else
+                {
+                    Destroy(other.transform.gameObject);
+                }
             }
         }
     }
@@ -237,11 +265,11 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (Input.GetMouseButton(0) && canShoot)
+        if (Input.GetMouseButton(0) && canShootAndMove)
         {
             GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
             //bullet.SetActive(true);
-            bullet.tag = playerBulletTag;
+            //bullet.tag = playerBulletTag;
         }
     }
 
@@ -266,35 +294,62 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void ChangePerspective()
+    {
+        if (GameManager.instance.transitionIsRunning)
+        {
+            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            {
+                if (!sideBodyCollider.enabled)
+                {
+                    topBodyCollider.enabled = false;
+                    sideBodyCollider.enabled = true;
+                }
+            }
+            else
+            {
+                if (!topBodyCollider.enabled)
+                {
+                    sideBodyCollider.enabled = false;
+                    topBodyCollider.enabled = true;
+                }
+            }
+        }
+    }
+
     void PlayAnimation()
     {
         horizontal = Input.GetAxis("Horizontal");
         ani.SetFloat("horizontal", horizontal);
     }
 
-    IEnumerator Melee()
+    IEnumerator MeeleAttack()
     {
+        canShootAndMove = false;
         angle = 0;
+        topTailCollider.enabled = true;
 
-        while (angle < 180)
+        while (angle < 360)
         {
-            canShoot = false;
-            angle += 5;
-            Vector3 initDir = -bulletSpawnPoint.forward;
-            Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
-            Vector3 newVector = angleQ * initDir;
+            angle += topdownSpeed;
+            //Vector3 initDir = -bulletSpawnPoint.forward;
+            //Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
+            //Vector3 newVector = angleQ * initDir;
 
-            Ray ray = new Ray(transform.position, newVector);
+            //Ray ray = new Ray(transform.position, newVector);
 
-            if (Physics.Raycast(ray, out hit, meleeDistance))
-            {
-                Destroy(hit.transform.gameObject);
-            }
-            Debug.DrawRay(ray.origin, ray.direction * meleeDistance, Color.magenta);
+            //if (Physics.Raycast(ray, out hit, meleeDistance))
+            //{
+            //    Destroy(hit.transform.gameObject);
+            //}
+            //Debug.DrawRay(ray.origin, ray.direction * meleeDistance, Color.magenta);
+
+            transform.Rotate(Vector3.up, topdownSpeed, Space.World);
 
             yield return null;
         }
-        canShoot = true;
+        topTailCollider.enabled = false;
+        canShootAndMove = true;
     }
 
     IEnumerator EnableDisableMesh()
