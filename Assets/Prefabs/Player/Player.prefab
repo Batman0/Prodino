@@ -1835,7 +1835,7 @@ Animator:
   m_GameObject: {fileID: 1758926448620306}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2c5b6cfb879f39c4580c656c398eb144, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6124f08fe138184190d4d5c043b8c9a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1876,7 +1876,6 @@ MonoBehaviour:
   landmark: {fileID: 0}
   sideXMin: 4
   sideXMax: 4
-  sideYMin: 6
   sideYMax: 4
   topXMin: 4
   topXMax: 4
