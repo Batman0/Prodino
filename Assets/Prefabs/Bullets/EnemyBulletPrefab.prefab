@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4849325275573364}
   - component: {fileID: 33895911828150204}
   - component: {fileID: 23157120062768876}
-  - component: {fileID: 114022231183977848}
-  - component: {fileID: 54637459705739904}
-  - component: {fileID: 65290183747679542}
-  - component: {fileID: 65608800848590380}
+  - component: {fileID: 54446186332661852}
+  - component: {fileID: 114085724401690666}
+  - component: {fileID: 65760198001956956}
+  - component: {fileID: 65979747051137134}
   m_Layer: 12
   m_Name: EnemyBulletPrefab
   m_TagString: EnemyBullet
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077403304418244}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54637459705739904
+--- !u!54 &54446186332661852
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!65 &65290183747679542
+--- !u!65 &65760198001956956
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -111,7 +111,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 120, y: 1.0000001, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65608800848590380
+--- !u!65 &65979747051137134
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -119,11 +119,11 @@ BoxCollider:
   m_GameObject: {fileID: 1077403304418244}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 120, z: 1}
+  m_Size: {x: 1, y: 120, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114022231183977848
+--- !u!114 &114085724401690666
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,5 +136,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destructionMargin: 1
   speed: 10
-  sideCollider: {fileID: 65290183747679542}
-  topCollider: {fileID: 65608800848590380}
+  sideCollider: {fileID: 65760198001956956}
+  topCollider: {fileID: 65979747051137134}

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
-    public GameObject bulletGO;
-    [HideInInspector]
-    public bool iCanRotate;
+    //public GameObject bulletGO;
+    //[HideInInspector]
+    //public bool iCanRotate;
     [HideInInspector]
     /// <summary>
     /// How much far must the bullet be from the near clipping plane to be destroyed?
@@ -16,17 +16,37 @@ public class BaseBullet : MonoBehaviour
     public float speed;
     //[HideInInspector]
     //public Vector3 originalPos;
+    public Collider sideCollider;
+    public Collider topCollider;
+    protected Vector3 direction;
 
     protected virtual void Start()
     {
+        //transform.rotation = Quaternion.identity;
+        direction = transform.forward;
         transform.rotation = Quaternion.identity;
         transform.Rotate(Vector3.up, 90, Space.World);
-        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        //if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        //{
+        //    transform.Rotate(Vector3.forward, 90, Space.Self);
+        //}
+        //Register.instance.numberOfTransitableObjects++;
+        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            transform.Rotate(Vector3.forward, 90, Space.Self);
+            if (!sideCollider.enabled || topCollider.enabled)
+            {
+                topCollider.enabled = false;
+                sideCollider.enabled = true;
+            }
         }
-        Register.instance.numberOfTransitableObjects++;
-        iCanRotate = true;
+        else
+        {
+            if (!topCollider.enabled || sideCollider.enabled)
+            {
+                sideCollider.enabled = false;
+                topCollider.enabled = true;
+            }
+        }
     }
 
     void Update()
@@ -36,35 +56,58 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    void OnDestroy()
-    {
-        Register.instance.numberOfTransitableObjects--;
-    }
+    //void OnDestroy()
+    //{
+    //    Register.instance.numberOfTransitableObjects--;
+    //}
 
     void DestroyGameobject()
     {
         if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
         {
-            Destroy(bulletGO);
+            Destroy(gameObject);
         }
     }
 
+    //void ChangePerspective()
+    //{
+    //    if (Register.instance.bulletsCanRotate && iCanRotate)
+    //    {
+    //        transform.Rotate(Vector3.forward, 90, Space.Self);
+    //        Register.instance.translatedObjects++;
+    //        iCanRotate = false;
+    //    }
+    //    if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
+    //    {
+    //        Register.instance.translatedObjects = 0;
+    //        Register.instance.bulletsCanRotate = false;
+    //    }
+    //    if (!Register.instance.bulletsCanRotate && !iCanRotate)
+    //    {
+    //        iCanRotate = true;
+    //    }
+    //}
+
     void ChangePerspective()
     {
-        if (Register.instance.bulletsCanRotate && iCanRotate)
+        if (GameManager.instance.transitionIsRunning)
         {
-            transform.Rotate(Vector3.forward, 90, Space.Self);
-            Register.instance.translatedObjects++;
-            iCanRotate = false;
-        }
-        if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
-        {
-            Register.instance.translatedObjects = 0;
-            Register.instance.bulletsCanRotate = false;
-        }
-        if (!Register.instance.bulletsCanRotate && !iCanRotate)
-        {
-            iCanRotate = true;
+            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            {
+                if (!sideCollider.enabled)
+                {
+                    topCollider.enabled = false;
+                    sideCollider.enabled = true;
+                }
+            }
+            else
+            {
+                if (!topCollider.enabled)
+                {
+                    sideCollider.enabled = false;
+                    topCollider.enabled = true;
+                }
+            }
         }
     }
 

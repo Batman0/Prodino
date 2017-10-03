@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
                     Shoot();
                     fireTimer = 0.00f;
                 }
-                //PlayAnimation();
+                PlayAnimation();
             }
             else
             {
@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            GameObject bullet = Instantiate(Register.instance.playerBullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+            GameObject bullet = Instantiate(Register.instance.properties.playerBulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
             //bullet.SetActive(true);
             //bullet.tag = playerBulletTag;
         }

@@ -23,7 +23,7 @@ public class Properties : ScriptableObject
     [Header("Default")]
     //public float D_bulletSpeed;
     public float d_RatioOfFire;
-    public GameObject straightEnemy;
+    public GameObject defaultnemy;
     //public GameObject bullet;
     [Header("Laser")]
     public float l_Height;
@@ -31,12 +31,12 @@ public class Properties : ScriptableObject
     public float l_Speed;
     public float l_RatioOfFire;
     public float l_Lifetime;
-    public GameObject diagonalEnemy;
+    public GameObject laserEnemy;
     //public GameObject l_Bullet;
     [Header("Trail")]
     public float t_Height;
     public float t_Width;
-    public GameObject aimEnemy;
+    public GameObject trailEnemy;
     //public GameObject t_Bullet;
     [Header("Bomb")]
     public float b_SpawnTime;
@@ -53,5 +53,10 @@ public class Properties : ScriptableObject
     [Header("Player Bullet")]
     public float p_Speed;
     public float p_DestructionMargin;
+
+    [Header("Bullets")]
+    public GameObject playerBulletPrefab;
+    public GameObject enemyBulletPrefab;
+    public GameObject enemyLaserPrefab;
 
 }

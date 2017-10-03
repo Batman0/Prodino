@@ -18,13 +18,13 @@ public class EnemySpawner : MonoBehaviour
         switch (shootType)
         {
             case ShootType.DEFAULT:
-                enemyPrefab = properties.straightEnemy;
+                enemyPrefab = properties.defaultnemy;
                 break;
             case ShootType.LASER:
-                enemyPrefab = properties.diagonalEnemy;
+                enemyPrefab = properties.laserEnemy;
                 break;
             case ShootType.TRAIL:
-                enemyPrefab = properties.aimEnemy;
+                enemyPrefab = properties.trailEnemy;
                 break;
             case ShootType.BOMB:
                 enemyPrefab = properties.bombEnemy;

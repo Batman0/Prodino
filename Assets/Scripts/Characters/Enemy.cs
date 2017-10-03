@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
 
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            if (!sideCollider.enabled)
+            if (!sideCollider.enabled || topCollider.enabled)
             {
                 topCollider.enabled = false;
                 sideCollider.enabled = true;
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (!topCollider.enabled)
+            if (!topCollider.enabled || sideCollider.enabled)
             {
                 sideCollider.enabled = false;
                 topCollider.enabled = true;

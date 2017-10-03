@@ -18,9 +18,9 @@ public static class Shoots
         //bullet.layer = layer;
     }
 
-    public static GameObject laserShoot(Transform bulletSpawnpoint, Transform rotTransform, float width, float height)
+    public static GameObject laserShoot(GameObject prefab, Transform bulletSpawnpoint, Transform rotTransform, float width, float height)
     {
-        GameObject bullet = Object.Instantiate(Register.instance.enemyLaser, bulletSpawnpoint.position, rotTransform.rotation) as GameObject;
+        GameObject bullet = Object.Instantiate(prefab, bulletSpawnpoint.position, rotTransform.rotation) as GameObject;
         bullet.transform.localScale = new Vector3(width, height, bullet.transform.localScale.z);
         return bullet;
     }
@@ -46,7 +46,7 @@ public static class Shoots
                 }
                 else
                 {
-                    straightShoot(Register.instance.enemyBullet, spawnPoint, rotTransform);
+                    straightShoot(properties.enemyBulletPrefab, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
                 break;
@@ -63,7 +63,7 @@ public static class Shoots
                 {
                     if (canShoot)
                     {
-                        GameObject laser = laserShoot(spawnPoint, rotTransform, properties.l_Width, properties.l_Height);
+                        GameObject laser = laserShoot(properties.enemyLaserPrefab, spawnPoint, rotTransform, properties.l_Width, properties.l_Height);
                         laser.transform.SetParent(spawnPoint.parent);
                         canShoot = false;
                     }

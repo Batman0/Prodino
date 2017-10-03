@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4972455597471648}
   - component: {fileID: 33847057405577688}
   - component: {fileID: 23701880341495974}
-  - component: {fileID: 114830193546382110}
-  - component: {fileID: 54238713341462714}
-  - component: {fileID: 65233851566857906}
-  - component: {fileID: 65590551407201292}
+  - component: {fileID: 54889362937992732}
+  - component: {fileID: 114599131925660462}
+  - component: {fileID: 65500761285806874}
+  - component: {fileID: 65629360401863642}
   m_Layer: 0
   m_Name: PlayerBulletPrefab
   m_TagString: PlayerBullet
@@ -84,7 +84,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1857389230154406}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54238713341462714
+--- !u!54 &54889362937992732
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!65 &65233851566857906
+--- !u!65 &65500761285806874
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -111,7 +111,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 120, y: 1.0000002, z: 1.0000001}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65590551407201292
+--- !u!65 &65629360401863642
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -119,11 +119,11 @@ BoxCollider:
   m_GameObject: {fileID: 1857389230154406}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 120, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114830193546382110
+--- !u!114 &114599131925660462
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -136,5 +136,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destructionMargin: 1
   speed: 10
-  sideCollider: {fileID: 65233851566857906}
-  topCollider: {fileID: 65590551407201292}
+  sideCollider: {fileID: 65500761285806874}
+  topCollider: {fileID: 65629360401863642}

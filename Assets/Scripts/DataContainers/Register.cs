@@ -25,11 +25,6 @@ public class Register : MonoBehaviour
     [Header("Scriptables")]
     public Properties properties;
 
-    [Header("Bullets")]
-    public GameObject playerBullet;
-    public GameObject enemyBullet;
-    public GameObject enemyLaser;
-
     [Header("Bounds")]
     [HideInInspector]
     public float xMin;

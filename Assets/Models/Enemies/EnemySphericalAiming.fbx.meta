@@ -1,21 +1,20 @@
 fileFormatVersion: 2
-guid: bb9ba6285cfac1647b9efeeb3ab3c309
-timeCreated: 1506087514
+guid: 4db282e167e735f43b0aa8da3decf6c2
+timeCreated: 1507042626
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
-    100000: Enemy_Spherical_Aiming_Cannon
-    100002: //RootNode
-    400000: Enemy_Spherical_Aiming_Cannon
-    400002: //RootNode
-    2300000: Enemy_Spherical_Aiming_Cannon
-    2300002: //RootNode
-    3300000: Enemy_Spherical_Aiming_Cannon
-    3300002: //RootNode
+    100000: //RootNode
+    100002: Enemy_Spherical_Aiming_Cannon
+    400000: //RootNode
+    400002: Enemy_Spherical_Aiming_Cannon
+    2300000: //RootNode
+    2300002: Enemy_Spherical_Aiming_Cannon
+    3300000: //RootNode
+    3300002: Enemy_Spherical_Aiming_Cannon
     4300000: Enemy_Spherical_Aiming_Body
     4300002: Enemy_Spherical_Aiming_Cannon
-    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -85,7 +84,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

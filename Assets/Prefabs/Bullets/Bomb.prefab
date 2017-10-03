@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65858234139008040}
   - component: {fileID: 114813301702638966}
   - component: {fileID: 54014682950675450}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionCollider: {fileID: 135083534160794430}
-  enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
+  properties: {fileID: 0}
 --- !u!135 &135083534160794430
 SphereCollider:
   m_ObjectHideFlags: 1
