@@ -45,18 +45,6 @@ public static class Movements
         {
             transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
         }
-        //        break;
-        //    case GameMode.TOPDOWN:
-        //        if (isRight)
-        //        {
-        //            transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.y);
-        //        }
-        //        else
-        //        {
-        //            transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, transform.position.y, radius * Mathf.Sin(Time.time * speed) + originalPos.y);
-        //        }
-        //        break;
-        //}
 
         if (lifeTime > 0.0f)
         {
@@ -70,9 +58,7 @@ public static class Movements
 
     public static void SquareMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
-        //switch (GameManager.instance.currentGameMode)
-        //{
-        //    case GameMode.SIDESCROLL:
+
         if (transform.position != targets[index].position)
         {
             transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
@@ -96,34 +82,62 @@ public static class Movements
                 }
             }
         }
-        //        break;
-        //    case GameMode.TOPDOWN:
-        //        if (transform.position != new Vector3(targets[index].position.x, 0, targets[index].position.z))
-        //        {
-        //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, 0, targets[index].position.z), speed * Time.deltaTime);
-        //        }
-        //        else
-        //        {
-        //            if (waitingTimer < waitingTime && index < targets.Length - 1)
-        //            {
-        //                waitingTimer += Time.deltaTime;
-        //            }
-        //            else
-        //            {
-        //                if (index < targets.Length - 1)
-        //                {
-        //                    index++;
-        //                    waitingTimer = 0.0f;
-        //                }
-        //                else
-        //                {
-        //                    destroy = true;
-        //                }
-        //            }
-        //        }
-        //        break;
-        //}
     }
+    //        break;
+    //    case GameMode.TOPDOWN:
+    //        if (transform.position != new Vector3(targets[index].position.x, 0, targets[index].position.z))
+    //        {
+    //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, 0, targets[index].position.z), speed * Time.deltaTime);
+    //        }
+    //        else
+    //        {
+    //            if (waitingTimer < waitingTime && index < targets.Length - 1)
+    //            {
+    //                waitingTimer += Time.deltaTime;
+    //            }
+    //            else
+    //            {
+    //                if (index < targets.Length - 1)
+    //                {
+    //                    index++;
+    //                    waitingTimer = 0.0f;
+    //                }
+    //                else
+    //                {
+    //                    destroy = true;
+    //                }
+    //            }
+    //        }
+    //        break;
+    //}
+    public static void DiagonalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    {
+
+        if (transform.position != targets[index].position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
+        }
+        else
+        {
+            if (waitingTimer < waitingTime && index < targets.Length - 1)
+            {
+                waitingTimer += Time.deltaTime;
+            }
+            else
+            {
+                if (index < targets.Length - 1)
+                {
+                    index++;
+                    waitingTimer = 0.0f;
+                }
+                else
+                {
+                    destroy = true;
+                }
+            }
+        }
+    }
+    
 
     public static void Move(MovementType movementType, Transform transform, bool isRight, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
     {
@@ -143,6 +157,16 @@ public static class Movements
                 else
                 {
                     SquareMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
+                }
+                break;
+            case MovementType.DIAGONAL:
+                if(isRight)
+                {
+                    DiagonalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
+                }
+                else
+                {
+                    DiagonalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }

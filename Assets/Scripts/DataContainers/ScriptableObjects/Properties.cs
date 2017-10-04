@@ -18,13 +18,15 @@ public class Properties : ScriptableObject
     public float c_Speed;
     public float c_Radius;
     public float c_LifeTime;
-
+    [Header("Diagonal")]
+    public float diag_Speed;
+    public float diag_WaitingTime;
+    public Transform[] diag_RightTargets;
+    public Transform[] diag_LeftTargets;
     [Header("Enemy Fire")]
     [Header("Default")]
-    //public float D_bulletSpeed;
     public float d_RatioOfFire;
     public GameObject defaultnemy;
-    //public GameObject bullet;
     [Header("Laser")]
     public float l_Height;
     public float l_Width;
@@ -32,12 +34,10 @@ public class Properties : ScriptableObject
     public float l_RatioOfFire;
     public float l_Lifetime;
     public GameObject laserEnemy;
-    //public GameObject l_Bullet;
     [Header("Trail")]
     public float t_Height;
     public float t_Width;
     public GameObject trailEnemy;
-    //public GameObject t_Bullet;
     [Header("Bomb")]
     public float b_SpawnTime;
     public GameObject bombEnemy;
