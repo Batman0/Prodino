@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
     private float angle;
-    public float meleeDistance;
+    //public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
     public bool canShootAndMove = true;
