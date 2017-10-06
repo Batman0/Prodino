@@ -82,11 +82,7 @@ public class PlayerController : MonoBehaviour
                 switch (GameManager.instance.currentGameMode)
                 {
                     case GameMode.SIDESCROLL:
-                        if (transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone)
-                        {
-                            Move(Vector3.right, speed, "Horizontal");
-                        }
-                        else if (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone)
+                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone))
                         {
                             Move(Vector3.right, speed, "Horizontal");
                         }

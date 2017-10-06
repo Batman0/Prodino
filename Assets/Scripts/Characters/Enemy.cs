@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     private int movementTargetIndex;
     [HideInInspector]
     public bool isRight;
+    private bool shoots;
+    private bool canShoot;
     private float waitingTimer;
     [HideInInspector]
     public MovementType movementType;
@@ -20,9 +22,9 @@ public class Enemy : MonoBehaviour
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
-    private bool canShoot;
     public Collider sideCollider;
     public Collider topCollider;
+    public Transform shooterTransform;
 
     void Start()
     {
@@ -31,7 +33,9 @@ public class Enemy : MonoBehaviour
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
-        
+        shoots = shootType == ShootType.NOFIRE ? false : true;
+
+
         if (movementType==MovementType.CIRCULAR)
         {
             lifeTime = properties.c_LifeTime;
@@ -87,7 +91,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shoots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, transform);
+            Shoots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform);
         }
     }
 
@@ -95,7 +99,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref toDestroy);
+            Movements.Move(movementType, transform, isRight, shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref toDestroy);
         }
     }
 

@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
   m_Name: PropertiesScriptable
   m_EditorClassIdentifier: 
-  st_Speed: 3
+  st_CanShoot_Speed: 10
+  st_CannotShoot_Speed: 15
   st_DestructionMargin: 5
   sq_Speed: 5
   sq_WaitingTime: 1

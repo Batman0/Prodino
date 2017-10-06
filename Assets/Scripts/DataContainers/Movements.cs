@@ -56,7 +56,7 @@ public static class Movements
         }
     }
 
-    public static void SquareMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    public static void GeometricalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
 
         if (transform.position != targets[index].position)
@@ -110,41 +110,48 @@ public static class Movements
     //        }
     //        break;
     //}
-    public static void DiagonalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
-    {
+    //public static void DiagonalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    //{
 
-        if (transform.position != targets[index].position)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
-        }
-        else
-        {
-            if (waitingTimer < waitingTime && index < targets.Length - 1)
-            {
-                waitingTimer += Time.deltaTime;
-            }
-            else
-            {
-                if (index < targets.Length - 1)
-                {
-                    index++;
-                    waitingTimer = 0.0f;
-                }
-                else
-                {
-                    destroy = true;
-                }
-            }
-        }
-    }
+    //    if (transform.position != targets[index].position)
+    //    {
+    //        transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
+    //    }
+    //    else
+    //    {
+    //        if (waitingTimer < waitingTime && index < targets.Length - 1)
+    //        {
+    //            waitingTimer += Time.deltaTime;
+    //        }
+    //        else
+    //        {
+    //            if (index < targets.Length - 1)
+    //            {
+    //                index++;
+    //                waitingTimer = 0.0f;
+    //            }
+    //            else
+    //            {
+    //                destroy = true;
+    //            }
+    //        }
+    //    }
+    //}
     
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
     {
         switch (movementType)
         {
             case MovementType.STRAIGHT:
-                StraightMove(transform, isRight, properties.st_Speed, properties.st_DestructionMargin, ref toDestroy);
+                if (canShoot)
+                {
+                    StraightMove(transform, isRight, properties.st_CanShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                }
+                else
+                {
+                    StraightMove(transform, isRight, properties.st_CannotShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                }
                 break;
             case MovementType.CIRCULAR:
                 CircularMove(transform, properties.c_Speed, isRight, properties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
@@ -152,21 +159,21 @@ public static class Movements
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    SquareMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
+                    GeometricalMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    SquareMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
+                    GeometricalMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
                 }
                 break;
             case MovementType.DIAGONAL:
                 if(isRight)
                 {
-                    DiagonalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
+                    GeometricalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    DiagonalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
+                    GeometricalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }
