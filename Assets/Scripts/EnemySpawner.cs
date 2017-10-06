@@ -18,19 +18,25 @@ public class EnemySpawner : MonoBehaviour
         switch (shootType)
         {
             case ShotType.FORWARDSHOOTER:
-                enemyPrefab = properties.defaultnemy;
-                break;
-            case ShotType.LASERDIAGONAL:
-                enemyPrefab = properties.laserEnemy;
-                break;
-            case ShotType.TRAIL:
-                enemyPrefab = properties.trailEnemy;
-                break;
-            case ShotType.BOMBDROP:
-                enemyPrefab = properties.bombEnemy;
+                enemyPrefab = properties.forwardShooterPrefab;
                 break;
             case ShotType.FORWARD:
-                enemyPrefab = properties.noFireEnemy;
+                enemyPrefab = properties.forwardPrefab;
+                break;
+            case ShotType.LASERDIAGONAL:
+                enemyPrefab = properties.laserDiagonalPrefab;
+                break;
+            case ShotType.SPHERICALAIMING:
+                enemyPrefab = properties.sphericalAimingPrefab;
+                break;
+            case ShotType.BOMBDROP:
+                enemyPrefab = properties.bombDropPrefab;
+                break;
+            case ShotType.TRAIL:
+                enemyPrefab = properties.trailPrefab;
+                break;
+            case ShotType.DOUBLEAIMING:
+                enemyPrefab = properties.doubleAimingBulletPrefab;
                 break;
         }
         isRight = transform.position.x >= Register.instance.player.transform.position.x ? true : false;

@@ -6,47 +6,73 @@ using UnityEngine;
 public class Properties : ScriptableObject
 {
     [Header("Enemy Movement")]
-    [Header("Straight")]
-    public float st_CanShoot_Speed;
-    public float st_CannotShoot_Speed;
-    public float st_DestructionMargin;
+    [Header("ForwardShooter")]
+    public float fs_Speed;
+    public float fs_DestructionMargin;
+    [Header("Forward")]
+    public float f_Speed;
+    public float f_DestructionMargin;
+    [Header("LaserDiagonal")]
+    public float ld_XMovementSpeed;
+    public float ld_YMovementSpeed;
+    public float ld_YMovementSpeedShot;
+    public float ld_DestructionMargin;
+    public Transform[] ld_RightTargets;
+    public Transform[] ld_LeftTargets;
+    [Header("SphericalAiming")]
+    public float sa_XMovementSpeed;
+    public float sa_ZMovementSpeed;
+    public float sa_RotationSpeed;
+    public float sa_DestructionMargin;
+    public Transform[] sa_RightTargets;
+    public Transform[] sa_LeftTargets;
+    [Header("BombDrop")]
+    public float bd_XMovementSpeed;
+    public float bd_DestructionMargin;
+    [Header("Trail")]
+    public float t_XMovementSpeed;
+    public float t_XReturnSpeed;
+    public float t_MovementDuration;
+    [Header("DoubleAiming")]
+    public float da_XMovementSpeed;
+    public float da_ZMovementSpeed;
+    public float da_DestructionMargin;
+    public Transform[] da_RightTargets;
+    public Transform[] da_LeftTargets;
+    [Header("Circular")]
+    public float c_Speed;
+    public float c_Radius;
+    public float c_LifeTime;
     [Header("Square")]
     public float sq_Speed;
     public float sq_WaitingTime;
     public Transform[] sq_RightTargets;
     public Transform[] sq_LeftTargets;
-    [Header("Circular")]
-    public float c_Speed;
-    public float c_Radius;
-    public float c_LifeTime;
-    [Header("Diagonal")]
-    public float diag_Speed;
-    public float diag_WaitingTime;
-    public Transform[] diag_RightTargets;
-    public Transform[] diag_LeftTargets;
+   
     [Header("Enemy Fire")]
-    [Header("Default")]
-    public float d_RatioOfFire;
-    public GameObject defaultnemy;
-    [Header("Laser")]
-    public float l_Height;
-    public float l_Width;
+    [Header("ForwardShooter")]
+    public float fs_FireRate;
+    public float fs_BulletSpeed;
+    [Header("LaserDiagonal")]
+    public float l_LaserHeight;
+    public float l_LaserDepth;
     public float l_Speed;
     public float l_WaitingTime;
     public float l_LoadingTime;
     public float l_ShootingTime;
-    public GameObject laserEnemy;
+    [Header("SphericalAiming")]
+    public float sa_FireRate;
+    public float sa_BulletSpeed;
+    [Header("BombDrop")]
+    public float bd_LoadingTime;
+    public float bd_BombFallSpeed;
+    public float bd_LifeTime;
     [Header("Trail")]
-    public float t_Height;
-    public float t_Width;
-    public GameObject trailEnemy;
-    [Header("Bomb")]
-    public float b_SpawnTime;
-    public GameObject bombEnemy;
-    public GameObject b_Bullet;
-    public float b_lifeTime;
-    [Header("No Fire")]
-    public GameObject noFireEnemy;
+    public float t_FadeTime;
+    [Header("DoubleAiming")]
+    public float da_BulletSpeed;
+    public float da_FireRate;
+    
 
     [Header("Enemy Bullet")]
     public float e_Speed;
@@ -56,9 +82,21 @@ public class Properties : ScriptableObject
     public float p_Speed;
     public float p_DestructionMargin;
 
+    [Header("Prefabs")]
+    [Header("Enemies")]
+    public GameObject forwardShooterPrefab;
+    public GameObject forwardPrefab;
+    public GameObject laserDiagonalPrefab;
+    public GameObject sphericalAimingPrefab;
+    public GameObject bombDropPrefab;
+    public GameObject trailPrefab;
+    public GameObject doubleAimingPrefab;
     [Header("Bullets")]
     public GameObject playerBulletPrefab;
     public GameObject enemyBulletPrefab;
     public GameObject enemyLaserPrefab;
+    public GameObject bombPrefab;
+    public GameObject trailBulletPrefab;
+    public GameObject doubleAimingBulletPrefab;
 
 }

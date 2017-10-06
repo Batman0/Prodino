@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    private MeshRenderer mesh;
     public SphereCollider explosionCollider;
-    public Properties properties;
+    public Rigidbody rb;
 
-    void awake()
+    void Update()
     {
-        mesh = GetComponent<MeshRenderer>();
+        rb.AddForce(Vector3.down * Register.instance.properties.bd_BombFallSpeed,ForceMode.Acceleration);
     }
 
     public void OnCollisionEnter(Collision other)
@@ -18,15 +17,14 @@ public class Bomb : MonoBehaviour
         if(other.gameObject.tag =="Env")
         {
             explosionCollider.enabled = true;
-            mesh.enabled = false;
-            Destroy(gameObject, properties.b_lifeTime);
         }
 
         if(other.gameObject.tag =="Player")
         {
             Destroy(other.gameObject);
-            Destroy(gameObject, properties.b_lifeTime);
         }
+
+        Destroy(gameObject, Register.instance.properties.bd_LifeTime);
     }
 	
 }

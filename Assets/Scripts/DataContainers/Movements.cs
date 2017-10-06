@@ -4,14 +4,19 @@ using UnityEngine;
 
 public enum MovementType
 {
-    STRAIGHT,
+    FORWARDSHOOTER,
+    FORWARD,
     CIRCULAR,
     SQUARE,
-    DIAGONAL
+    LASERDIAGONAL,
+    SPHERICALAIMING,
+    BOMBDROP,
+    TRAIL,
+    DOUBLEAIMING
 }
 public static class Movements
 {
-    public static void MoveStraight(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
+    public static void MoveForward(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
     {
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
@@ -34,9 +39,6 @@ public static class Movements
 
     public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
     {
-        //switch (GameManager.instance.currentGameMode)
-        //{
-        //    case GameMode.SIDESCROLL:
         if (isRight)
         {
             transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
@@ -56,7 +58,27 @@ public static class Movements
         }
     }
 
-    public static void MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    public static void MoveGeometric(ref int index, float speed, Transform[] targets, Transform transform, ref bool destroy)
+    {
+
+        if (transform.position != targets[index].position)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
+        }
+        else
+        {
+            if (index < targets.Length - 1)
+            {
+                index++;
+            }
+            else
+            {
+                destroy = true;
+            }      
+        }
+    }
+
+    public static Vector3 MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
 
         if (transform.position != targets[index].position)
@@ -82,75 +104,75 @@ public static class Movements
                 }
             }
         }
+        return transform.position;
     }
-    //        break;
-    //    case GameMode.TOPDOWN:
-    //        if (transform.position != new Vector3(targets[index].position.x, 0, targets[index].position.z))
-    //        {
-    //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targets[index].position.x, 0, targets[index].position.z), speed * Time.deltaTime);
-    //        }
-    //        else
-    //        {
-    //            if (waitingTimer < waitingTime && index < targets.Length - 1)
-    //            {
-    //                waitingTimer += Time.deltaTime;
-    //            }
-    //            else
-    //            {
-    //                if (index < targets.Length - 1)
-    //                {
-    //                    index++;
-    //                    waitingTimer = 0.0f;
-    //                }
-    //                else
-    //                {
-    //                    destroy = true;
-    //                }
-    //            }
-    //        }
-    //        break;
-    //}
-    //public static void DiagonalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
-    //{
-
-    //    if (transform.position != targets[index].position)
-    //    {
-    //        transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
-    //    }
-    //    else
-    //    {
-    //        if (waitingTimer < waitingTime && index < targets.Length - 1)
-    //        {
-    //            waitingTimer += Time.deltaTime;
-    //        }
-    //        else
-    //        {
-    //            if (index < targets.Length - 1)
-    //            {
-    //                index++;
-    //                waitingTimer = 0.0f;
-    //            }
-    //            else
-    //            {
-    //                destroy = true;
-    //            }
-    //        }
-    //    }
-    //}
-    
+   
 
     public static void Move(MovementType movementType, Transform transform, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
     {
         switch (movementType)
         {
-            case MovementType.STRAIGHT:
-                if (canShoot)
+            case MovementType.FORWARDSHOOTER:
+                MoveForward(transform, isRight, properties.fs_Speed, properties.fs_DestructionMargin, ref toDestroy);
+                break;
+            case MovementType.FORWARD:
+                MoveForward(transform, isRight, properties.f_Speed, properties.f_DestructionMargin, ref toDestroy);
+                break;
+            case MovementType.LASERDIAGONAL:
+                if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    MoveStraight(transform, isRight, properties.st_CanShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                    if (isRight)
+                    {
+                        MoveGeometric(ref targetIndex, properties.ld_YMovementSpeed, properties.ld_RightTargets, transform, ref toDestroy);
+                    }
+                    else
+                    {
+                        MoveGeometric(ref targetIndex, properties.ld_YMovementSpeed, properties.ld_LeftTargets, transform, ref toDestroy);
+                    }
                 }
                 else
                 {
-                    MoveStraight(transform, isRight, properties.st_CannotShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                    MoveForward(transform, isRight, properties.ld_XMovementSpeed, properties.ld_DestructionMargin, ref toDestroy);
+                }
+                break;
+            case MovementType.SPHERICALAIMING:
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                {
+                    MoveForward(transform, isRight, properties.sa_XMovementSpeed, properties.sa_DestructionMargin, ref toDestroy);
+                }
+                else
+                {
+                    if (isRight)
+                    {
+                        MoveGeometric(ref targetIndex, properties.sa_ZMovementSpeed, properties.sa_RightTargets, transform, ref toDestroy);
+                    }
+                    else
+                    {
+                        MoveGeometric(ref targetIndex, properties.sa_ZMovementSpeed, properties.sa_LeftTargets, transform, ref toDestroy);
+                    }
+                }
+                break;
+            case MovementType.BOMBDROP:
+                MoveForward(transform, isRight, properties.bd_XMovementSpeed, properties.bd_DestructionMargin, ref toDestroy);
+                break;
+            case MovementType.TRAIL:
+                //MoveBackAndForth();
+                break;
+            case MovementType.DOUBLEAIMING:
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                {
+                    MoveForward(transform, isRight, properties.da_XMovementSpeed, properties.da_DestructionMargin, ref toDestroy);
+                }
+                else
+                {
+                    if (isRight)
+                    {
+                        MoveGeometric(ref targetIndex, properties.da_ZMovementSpeed, properties.da_RightTargets, transform, ref toDestroy);
+                    }
+                    else
+                    {
+                        MoveGeometric(ref targetIndex, properties.da_ZMovementSpeed, properties.da_LeftTargets, transform, ref toDestroy);
+                    }
                 }
                 break;
             case MovementType.CIRCULAR:
@@ -164,16 +186,6 @@ public static class Movements
                 else
                 {
                     MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
-                }
-                break;
-            case MovementType.DIAGONAL:
-                if(isRight)
-                {
-                    MoveGeometric(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
-                }
-                else
-                {
-                    MoveGeometric(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }

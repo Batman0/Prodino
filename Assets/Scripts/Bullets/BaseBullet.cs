@@ -22,15 +22,9 @@ public class BaseBullet : MonoBehaviour
 
     protected virtual void Start()
     {
-        //transform.rotation = Quaternion.identity;
         direction = transform.forward;
-        transform.rotation = Quaternion.identity;
-        transform.Rotate(Vector3.up, 90, Space.World);
-        //if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-        //{
-        //    transform.Rotate(Vector3.forward, 90, Space.Self);
-        //}
-        //Register.instance.numberOfTransitableObjects++;
+        //transform.rotation = Quaternion.identity;
+        //transform.Rotate(Vector3.up, 90, Space.World);
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -56,11 +50,6 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    //void OnDestroy()
-    //{
-    //    Register.instance.numberOfTransitableObjects--;
-    //}
-
     void DestroyGameobject()
     {
         if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
@@ -68,25 +57,6 @@ public class BaseBullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //void ChangePerspective()
-    //{
-    //    if (Register.instance.bulletsCanRotate && iCanRotate)
-    //    {
-    //        transform.Rotate(Vector3.forward, 90, Space.Self);
-    //        Register.instance.translatedObjects++;
-    //        iCanRotate = false;
-    //    }
-    //    if (Register.instance.translatedObjects == Register.instance.numberOfTransitableObjects)
-    //    {
-    //        Register.instance.translatedObjects = 0;
-    //        Register.instance.bulletsCanRotate = false;
-    //    }
-    //    if (!Register.instance.bulletsCanRotate && !iCanRotate)
-    //    {
-    //        iCanRotate = true;
-    //    }
-    //}
 
     void ChangePerspective()
     {

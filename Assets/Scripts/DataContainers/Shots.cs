@@ -5,16 +5,19 @@ using UnityEngine;
 public enum ShotType
 {
     FORWARDSHOOTER,
+    FORWARD,
     LASERDIAGONAL,
-    TRAIL,
+    SPHERICALAIMING,
     BOMBDROP,
-    FORWARD
+    TRAIL,
+    DOUBLEAIMING
+    
 }
 public static class Shots
 {
-    public static void ShootStraight(GameObject prefab, Transform sSpawnpoint, Transform rotTransform)
+    public static void ShootForward(GameObject prefab, Transform spawnpoint, Transform rotTransform)
     {
-        GameObject bullet = Object.Instantiate(prefab, sSpawnpoint.position, rotTransform.rotation) as GameObject;
+        GameObject bullet = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation) as GameObject;
         //bullet.layer = layer;
     }
 
@@ -40,15 +43,17 @@ public static class Shots
         switch (shotType)
         {
             case ShotType.FORWARDSHOOTER:
-                if (timer < properties.d_RatioOfFire)
+                if (timer < properties.fs_FireRate)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    ShootStraight(properties.enemyBulletPrefab, spawnPoint, rotTransform);
+                    ShootForward(properties.enemyBulletPrefab, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
+                break;
+            case ShotType.FORWARD:
                 break;
             case ShotType.LASERDIAGONAL:
                 if (timer < properties.l_WaitingTime)
@@ -69,7 +74,7 @@ public static class Shots
                         }
                         if (canShoot)
                         {
-                            GameObject laser = ShootLaser(properties.enemyLaserPrefab, spawnPoint, rotTransform, properties.l_Width, properties.l_Height);
+                            GameObject laser = ShootLaser(properties.enemyLaserPrefab, spawnPoint, rotTransform, properties.l_LaserDepth, properties.l_LaserHeight);
                             laser.transform.SetParent(spawnPoint.parent);
                             canShoot = false;
                         }
@@ -85,20 +90,22 @@ public static class Shots
                     }
                 }
                 break;
-            case ShotType.TRAIL:
+            case ShotType.SPHERICALAIMING:
                 break;
             case ShotType.BOMBDROP:
-                if (timer < properties.b_SpawnTime)
+                if (timer < properties.bd_LoadingTime)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    ShootBomb(properties.b_Bullet, spawnPoint, rotTransform);
+                    ShootBomb(properties.bombPrefab, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
                 break;
-            case ShotType.FORWARD:
+            case ShotType.TRAIL:
+                break;
+            case ShotType.DOUBLEAIMING:
                 break;
         }
     }

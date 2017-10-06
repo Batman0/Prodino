@@ -11,9 +11,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
   m_Name: PropertiesScriptable
   m_EditorClassIdentifier: 
-  st_CanShoot_Speed: 10
-  st_CannotShoot_Speed: 15
-  st_DestructionMargin: 5
+  fs_Speed: 5
+  fs_DestructionMargin: 2
+  f_Speed: 0
+  f_DestructionMargin: 0
+  ld_XMovementSpeed: 0
+  ld_YMovementSpeed: 0
+  ld_YMovementSpeedShot: 0
+  ld_DestructionMargin: 0
+  ld_RightTargets: []
+  ld_LeftTargets: []
+  sa_XMovementSpeed: 0
+  sa_ZMovementSpeed: 0
+  sa_RotationSpeed: 0
+  sa_DestructionMargin: 0
+  sa_RightTargets: []
+  sa_LeftTargets: []
+  bd_XMovementSpeed: 0
+  bd_DestructionMargin: 0
+  t_XMovementSpeed: 0
+  t_XReturnSpeed: 0
+  t_MovementDuration: 0
+  da_XMovementSpeed: 0
+  da_ZMovementSpeed: 0
+  da_DestructionMargin: 0
+  da_RightTargets: []
+  da_LeftTargets: []
+  c_Speed: 5
+  c_Radius: 5
+  c_LifeTime: 20
   sq_Speed: 5
   sq_WaitingTime: 1
   sq_RightTargets:
@@ -24,48 +50,40 @@ MonoBehaviour:
   - {fileID: 4178582690395706, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4412127990732084, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
-  c_Speed: 5
-  c_Radius: 5
-  c_LifeTime: 20
-  diag_Speed: 5
-  diag_WaitingTime: 3
-  diag_RightTargets:
-  - {fileID: 4101385932214528, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4323485275126154, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4275495779890628, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4790329654628278, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4701270667479660, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  diag_LeftTargets:
-  - {fileID: 4624846134210718, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4381871889232844, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4117244941592744, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4181255215374488, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4558784401294358, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  d_RatioOfFire: 3
-  defaultnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
-    type: 2}
-  l_Height: 1
-  l_Width: 2
+  fs_FireRate: 3
+  fs_BulletSpeed: 7
+  l_LaserHeight: 0
+  l_LaserDepth: 0
   l_Speed: 5
-  l_RatioOfFire: 4
-  l_Lifetime: 6
-  laserEnemy: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced, type: 2}
-  t_Height: 0
-  t_Width: 0
-  trailEnemy: {fileID: 0}
-  b_SpawnTime: 2
-  bombEnemy: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4, type: 2}
-  b_Bullet: {fileID: 1846936218991036, guid: 873e561818ec4ed43bf65a8db117dd59, type: 2}
-  b_lifeTime: 1
-  noFireEnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
-    type: 2}
+  l_WaitingTime: 0
+  l_LoadingTime: 0
+  l_ShootingTime: 0
+  sa_FireRate: 0
+  sa_BulletSpeed: 0
+  bd_LoadingTime: 0
+  bd_BombFallSpeed: 0
+  bd_LifeTime: 0
+  t_FadeTime: 0
+  da_BulletSpeed: 0
+  da_FireRate: 0
   e_Speed: 15
   e_DestructionMargin: 5
   p_Speed: 15
   p_DestructionMargin: 5
+  forwardShooterPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
+    type: 2}
+  forwardPrefab: {fileID: 0}
+  laserDiagonalPrefab: {fileID: 0}
+  sphericalAimingPrefab: {fileID: 0}
+  bombDropPrefab: {fileID: 0}
+  trailPrefab: {fileID: 0}
+  doubleAimingPrefab: {fileID: 0}
   playerBulletPrefab: {fileID: 1857389230154406, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   enemyBulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}
   enemyLaserPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
     type: 2}
+  bombPrefab: {fileID: 0}
+  trailBulletPrefab: {fileID: 0}
+  doubleAimingBulletPrefab: {fileID: 0}
