@@ -150,7 +150,7 @@ MonoBehaviour:
   isRight: 0
   movementType: 0
   shootType: 0
-  enemyLife: 2
+  enemyLife: 5
   originalPos: {x: 0, y: 0, z: 0}
   bulletSpawnpoint: {fileID: 4923712833204592}
   sideCollider: {fileID: 65562383542620152}

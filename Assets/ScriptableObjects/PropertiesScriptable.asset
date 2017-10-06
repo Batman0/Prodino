@@ -44,11 +44,11 @@ MonoBehaviour:
   d_RatioOfFire: 3
   defaultnemy: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
-  l_Height: 2
-  l_Width: 5
-  l_Speed: 3
-  l_RatioOfFire: 3
-  l_Lifetime: 5
+  l_Height: 1
+  l_Width: 2
+  l_Speed: 5
+  l_RatioOfFire: 4
+  l_Lifetime: 6
   laserEnemy: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced, type: 2}
   t_Height: 0
   t_Width: 0
