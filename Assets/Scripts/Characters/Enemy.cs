@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private float timeToShoot;
     public Collider sideCollider;
     public Collider topCollider;
+    public Transform shooterTransform;
 
     void Start()
     {
@@ -90,7 +91,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shoots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, transform);
+            Shoots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform);
         }
     }
 
