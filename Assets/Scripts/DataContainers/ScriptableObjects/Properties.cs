@@ -7,7 +7,8 @@ public class Properties : ScriptableObject
 {
     [Header("Enemy Movement")]
     [Header("Straight")]
-    public float st_Speed;
+    public float st_CanShoot_Speed;
+    public float st_CannotShoot_Speed;
     public float st_DestructionMargin;
     [Header("Square")]
     public float sq_Speed;
