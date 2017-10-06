@@ -53,11 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentGameMode: 0
   transitionIsRunning: 0
-  backgroundSpeed: 3
-  leftBound: {x: 0, y: 0, z: 0}
-  rightBound: {x: 0, y: 0, z: 0}
-  downBound: {x: 0, y: 0, z: 0}
-  upBound: {x: 0, y: 0, z: 0}
+  backgroundSpeed: 2
   playerBulletSpawnpoointY: 0
   backgrounds:
   - {fileID: 0}
