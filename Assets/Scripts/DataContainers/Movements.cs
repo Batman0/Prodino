@@ -11,7 +11,7 @@ public enum MovementType
 }
 public static class Movements
 {
-    public static void StraightMove(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
+    public static void MoveStraight(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
     {
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
@@ -32,7 +32,7 @@ public static class Movements
         }
     }
 
-    public static void CircularMove(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
+    public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
     {
         //switch (GameManager.instance.currentGameMode)
         //{
@@ -56,7 +56,7 @@ public static class Movements
         }
     }
 
-    public static void GeometricalMove(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    public static void MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
     {
 
         if (transform.position != targets[index].position)
@@ -146,34 +146,34 @@ public static class Movements
             case MovementType.STRAIGHT:
                 if (canShoot)
                 {
-                    StraightMove(transform, isRight, properties.st_CanShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                    MoveStraight(transform, isRight, properties.st_CanShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
                 }
                 else
                 {
-                    StraightMove(transform, isRight, properties.st_CannotShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
+                    MoveStraight(transform, isRight, properties.st_CannotShoot_Speed, properties.st_DestructionMargin, ref toDestroy);
                 }
                 break;
             case MovementType.CIRCULAR:
-                CircularMove(transform, properties.c_Speed, isRight, properties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
+                MoveCircular(transform, properties.c_Speed, isRight, properties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
                 break;
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    GeometricalMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    GeometricalMove(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
                 }
                 break;
             case MovementType.DIAGONAL:
                 if(isRight)
                 {
-                    GeometricalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    GeometricalMove(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.diag_Speed, properties.diag_WaitingTime, ref waitingTimer, properties.diag_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }

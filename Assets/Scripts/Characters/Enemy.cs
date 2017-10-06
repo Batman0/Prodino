@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public MovementType movementType;
     [HideInInspector]
-    public ShootType shootType;
+    public ShotType shootType;
     private bool toDestroy;
     public int enemyLife;
     private Properties properties;
@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
-        shoots = shootType == ShootType.NOFIRE ? false : true;
+        shoots = shootType == ShotType.FORWARD ? false : true;
 
 
         if (movementType==MovementType.CIRCULAR)
@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shoots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform);
+            Shots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform);
         }
     }
 

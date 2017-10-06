@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public ShootType shootType;
+    public ShotType shootType;
     public MovementType movementType;
     private bool isRight;
     public float delay;
@@ -17,19 +17,19 @@ public class EnemySpawner : MonoBehaviour
         properties = Register.instance.properties;
         switch (shootType)
         {
-            case ShootType.DEFAULT:
+            case ShotType.FORWARDSHOOTER:
                 enemyPrefab = properties.defaultnemy;
                 break;
-            case ShootType.LASER:
+            case ShotType.LASERDIAGONAL:
                 enemyPrefab = properties.laserEnemy;
                 break;
-            case ShootType.TRAIL:
+            case ShotType.TRAIL:
                 enemyPrefab = properties.trailEnemy;
                 break;
-            case ShootType.BOMB:
+            case ShotType.BOMBDROP:
                 enemyPrefab = properties.bombEnemy;
                 break;
-            case ShootType.NOFIRE:
+            case ShotType.FORWARD:
                 enemyPrefab = properties.noFireEnemy;
                 break;
         }

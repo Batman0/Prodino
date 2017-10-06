@@ -7,13 +7,13 @@ public class Laser : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, Register.instance.properties.l_Lifetime);
+        Destroy(gameObject, Register.instance.properties.l_ShootingTime);
     }
 
-    private void Update()
-    {
-        Extend();
-    }
+    //private void Update()
+    //{
+    //    Extend();
+    //}
 
     //private void OnTriggerEnter(Collider other)
     //{
@@ -23,9 +23,9 @@ public class Laser : MonoBehaviour
     //    }
     //}
 
-    private void Extend()
-    {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + Register.instance.properties.l_Speed * Time.deltaTime);
-    }
+    //private void Extend()
+    //{
+    //    transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + Register.instance.properties.l_Speed * Time.deltaTime);
+    //}
 
 }

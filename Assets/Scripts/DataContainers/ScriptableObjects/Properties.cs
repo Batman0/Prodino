@@ -32,8 +32,9 @@ public class Properties : ScriptableObject
     public float l_Height;
     public float l_Width;
     public float l_Speed;
-    public float l_RatioOfFire;
-    public float l_Lifetime;
+    public float l_WaitingTime;
+    public float l_LoadingTime;
+    public float l_ShootingTime;
     public GameObject laserEnemy;
     [Header("Trail")]
     public float t_Height;
