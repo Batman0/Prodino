@@ -43,7 +43,7 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, ref float timer, ref bool canShoot, ref bool rotateRight, Transform spawnPoint, Transform rotTransform, Transform transform)
+    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight, Transform spawnPoint, Transform rotTransform, Transform transform)
     {
         switch (shotType)
         {
@@ -107,12 +107,10 @@ public static class Shots
                     {
                         if (cross.z >= 0)
                         {
-                            Debug.Log("Ciao)");
                             rotTransform.RotateAround(transform.position, Vector3.forward, -properties.sa_RotationSpeed);
                         }
                         else
                         {
-                            Debug.Log("CiaoAllaSeconda");
                             rotTransform.RotateAround(transform.position, Vector3.forward, properties.sa_RotationSpeed);
                         }
                     }                  
@@ -129,12 +127,20 @@ public static class Shots
                 }
                 else
                 {
-                    if(Register.instance.player.transform.position.x >= transform.position.x)
+                    if (rotateRight && rotTransform.rotation != barrelStartRot)
+                    {
+                        rotTransform.rotation = barrelStartRot;
+                    }
+                    else if (!rotateRight && rotTransform.rotation != barrelInvertedRot)
+                    {
+                        rotTransform.rotation = barrelInvertedRot;
+                    }
+
+                    if (Register.instance.player.transform.position.x >= transform.position.x)
                     {
                         if(rotateRight)
                         {
-                            rotTransform.rotation = barrelStartRot;
-                            rotTransform.RotateAround(transform.position, Vector3.forward, 180);
+                            rotTransform.rotation = barrelInvertedRot;
                             rotateRight = false;
                         }
                     }
@@ -145,6 +151,16 @@ public static class Shots
                             rotTransform.rotation = barrelStartRot;
                             rotateRight = true;
                         }
+                    }
+
+                    if (timer < properties.sa_FireRate)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        ShootForward(properties.enemyBulletPrefab, spawnPoint, rotTransform);
+                        timer = 0.0f;
                     }
                 }             
                 break;

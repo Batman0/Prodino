@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     public Vector3 originalPos;
     [HideInInspector]
     public Quaternion barrelStartRot;
+    public Quaternion barrelInvertedRot;
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
@@ -42,6 +43,9 @@ public class Enemy : MonoBehaviour
         if (shooterTransform != null)
         {
             barrelStartRot = shooterTransform.rotation;
+            shooterTransform.RotateAround(transform.position, Vector3.forward, 180);
+            barrelInvertedRot = shooterTransform.rotation;
+            shooterTransform.rotation = barrelStartRot;
         }
 
         if (movementType == MovementType.CIRCULAR)
@@ -99,7 +103,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 
