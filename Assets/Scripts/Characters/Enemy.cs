@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public ShotType shootType;
     private bool toDestroy;
+    private bool canRotate;
     public int enemyLife;
     private Properties properties;
     [HideInInspector]
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
         shoots = shootType == ShotType.FORWARD ? false : true;
 
 
-        if (movementType==MovementType.CIRCULAR)
+        if (movementType == MovementType.CIRCULAR)
         {
             lifeTime = properties.c_LifeTime;
         }
@@ -91,7 +92,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform);
+            Shots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 
