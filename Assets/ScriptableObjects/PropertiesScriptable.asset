@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fs_Speed: 5
   fs_DestructionMargin: 2
-  f_Speed: 0
-  f_DestructionMargin: 0
+  f_Speed: 5
+  f_DestructionMargin: 5
   ld_XMovementSpeed: 0
   ld_YMovementSpeed: 0
   ld_YMovementSpeedShot: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   ld_LeftTargets: []
   sa_XMovementSpeed: 0
   sa_ZMovementSpeed: 0
-  sa_RotationSpeed: 0
+  sa_RotationSpeed: 2
   sa_DestructionMargin: 0
   sa_RightTargets: []
   sa_LeftTargets: []
@@ -74,7 +74,8 @@ MonoBehaviour:
     type: 2}
   forwardPrefab: {fileID: 0}
   laserDiagonalPrefab: {fileID: 0}
-  sphericalAimingPrefab: {fileID: 0}
+  sphericalAimingPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
+    type: 2}
   bombDropPrefab: {fileID: 0}
   trailPrefab: {fileID: 0}
   doubleAimingPrefab: {fileID: 0}
