@@ -17,9 +17,12 @@ public class Enemy : MonoBehaviour
     private bool toDestroy;
     private bool canRotate;
     public int enemyLife;
-    private Properties properties;
+    [HideInInspector]
+    public Properties properties;
     [HideInInspector]
     public Vector3 originalPos;
+    [HideInInspector]
+    public Quaternion barrelStartRot;
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
@@ -35,7 +38,11 @@ public class Enemy : MonoBehaviour
         originalPos = transform.position;
         timeToShoot = 0.0f;
         shoots = shootType == ShotType.FORWARD ? false : true;
-
+        canRotate = isRight ? true : false;
+        if (shooterTransform != null)
+        {
+            barrelStartRot = shooterTransform.rotation;
+        }
 
         if (movementType == MovementType.CIRCULAR)
         {
@@ -92,7 +99,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, properties, barrelStartRot, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 

@@ -43,7 +43,7 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void Shoot(ShotType shotType, Properties properties, ref float timer, ref bool canShoot, ref bool rotateRight, Transform spawnPoint, Transform rotTransform, Transform transform)
+    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, ref float timer, ref bool canShoot, ref bool rotateRight, Transform spawnPoint, Transform rotTransform, Transform transform)
     {
         switch (shotType)
         {
@@ -96,9 +96,26 @@ public static class Shots
                 break;
             case ShotType.SPHERICALAIMING:
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-                {    
-                    rotTransform.LookAt(Register.instance.player.transform);
-                    
+                {
+
+                    Vector3 playerTransform = new Vector3(Register.instance.player.transform.position.x - transform.position.x, Register.instance.player.transform.position.y - transform.position.y, 0);
+                    Vector3 barrelSpawnpointTransform = new Vector3(spawnPoint.position.x - transform.position.x, spawnPoint.position.y - transform.position.y, 0);
+                    float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
+                    Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);
+
+                    if (angle > properties.sa_RotationDeadZone)
+                    {
+                        if (cross.z >= 0)
+                        {
+                            Debug.Log("Ciao)");
+                            rotTransform.RotateAround(transform.position, Vector3.forward, -properties.sa_RotationSpeed);
+                        }
+                        else
+                        {
+                            Debug.Log("CiaoAllaSeconda");
+                            rotTransform.RotateAround(transform.position, Vector3.forward, properties.sa_RotationSpeed);
+                        }
+                    }                  
                     
                     if (timer < properties.sa_FireRate)
                     {
@@ -116,6 +133,7 @@ public static class Shots
                     {
                         if(rotateRight)
                         {
+                            rotTransform.rotation = barrelStartRot;
                             rotTransform.RotateAround(transform.position, Vector3.forward, 180);
                             rotateRight = false;
                         }
@@ -124,7 +142,7 @@ public static class Shots
                     {
                         if(!rotateRight)
                         {
-                            rotTransform.RotateAround(transform.position, Vector3.forward, 180);
+                            rotTransform.rotation = barrelStartRot;
                             rotateRight = true;
                         }
                     }

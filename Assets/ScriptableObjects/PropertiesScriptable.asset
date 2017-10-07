@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fs_Speed: 5
   fs_DestructionMargin: 2
-  f_Speed: 5
+  f_Speed: 1
   f_DestructionMargin: 5
   ld_XMovementSpeed: 0
   ld_YMovementSpeed: 0
@@ -21,10 +21,11 @@ MonoBehaviour:
   ld_DestructionMargin: 0
   ld_RightTargets: []
   ld_LeftTargets: []
-  sa_XMovementSpeed: 0
-  sa_ZMovementSpeed: 0
-  sa_RotationSpeed: 2
+  sa_XMovementSpeed: -209.7
+  sa_ZMovementSpeed: 24.85
+  sa_RotationSpeed: 1.5
   sa_DestructionMargin: 0
+  sa_RotationDeadZone: 1
   sa_RightTargets: []
   sa_LeftTargets: []
   bd_XMovementSpeed: 0
@@ -58,8 +59,8 @@ MonoBehaviour:
   l_WaitingTime: 0
   l_LoadingTime: 0
   l_ShootingTime: 0
-  sa_FireRate: 0
-  sa_BulletSpeed: 0
+  sa_FireRate: 3
+  sa_BulletSpeed: 2
   bd_LoadingTime: 0
   bd_BombFallSpeed: 0
   bd_LifeTime: 0

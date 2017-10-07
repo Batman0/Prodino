@@ -24,6 +24,7 @@ public class Properties : ScriptableObject
     public float sa_ZMovementSpeed;
     public float sa_RotationSpeed;
     public float sa_DestructionMargin;
+    public float sa_RotationDeadZone;
     public Transform[] sa_RightTargets;
     public Transform[] sa_LeftTargets;
     [Header("BombDrop")]
