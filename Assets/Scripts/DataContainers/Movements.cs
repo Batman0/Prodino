@@ -121,10 +121,6 @@ public static class Movements
         }
         else if (movementTimer > 0.0f && doneRotation >= 180)
         {
-            if (canShoot)
-            {
-                canShoot = false;
-            }
             MoveForward(transform, forthSpeed);
             movementTimer -= Time.deltaTime;
         }
