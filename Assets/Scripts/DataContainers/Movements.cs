@@ -147,7 +147,7 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
     {
         switch (movementType)
         {

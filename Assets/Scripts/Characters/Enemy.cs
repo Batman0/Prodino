@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public bool isRight;
     private bool shoots;
-    private bool canShoot;
+    //private bool canShoot;
     private float waitingTimer;
     [HideInInspector]
     public MovementType movementType;
@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref canShoot, ref canRotate,particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 
@@ -114,7 +114,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
+            Movements.Move(movementType, transform, isRight, ref shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
         }
     }
 
