@@ -95,7 +95,7 @@ public static class Shots
                     }
                     else
                     {
-                        if (!canShoot)
+                        if (!canShoot && shotType != ShotType.TRAIL)
                         {
                             canShoot = true;
                         }
@@ -111,7 +111,7 @@ public static class Shots
                         else
                         {
                             timer = 0.0f;
-                            canShoot = true;
+                            //canShoot = true;
                         }
                     }
                 }

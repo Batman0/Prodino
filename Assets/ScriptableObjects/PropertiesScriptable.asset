@@ -15,10 +15,10 @@ MonoBehaviour:
   fs_DestructionMargin: 2
   f_Speed: 1
   f_DestructionMargin: 5
-  ld_XMovementSpeed: 0
-  ld_YMovementSpeed: 0
-  ld_YMovementSpeedShot: 0
-  ld_DestructionMargin: 0
+  ld_XMovementSpeed: 3
+  ld_YMovementSpeed: 3
+  ld_YMovementSpeedShot: 3
+  ld_DestructionMargin: 3
   ld_RightTargets: []
   ld_LeftTargets: []
   sa_XMovementSpeed: 5
@@ -54,12 +54,12 @@ MonoBehaviour:
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   fs_FireRate: 3
   fs_BulletSpeed: 7
-  l_LaserHeight: 0
-  l_LaserDepth: 0
+  l_LaserHeight: 3
+  l_LaserDepth: 3
   l_Speed: 5
-  l_WaitingTime: 0
-  l_LoadingTime: 0
-  l_ShootingTime: 0
+  l_WaitingTime: 2
+  l_LoadingTime: 2
+  l_ShootingTime: 2
   sa_FireRate: 3
   sa_BulletSpeed: 2
   bd_LoadingTime: 0

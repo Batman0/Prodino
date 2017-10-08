@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
         timeToShoot = 0.0f;
-        shoots = shootType == ShotType.FORWARD ? false : true;
+        shoots = false;
         canRotate = isRight ? true : false;
         if (shooterTransform != null)
         {
