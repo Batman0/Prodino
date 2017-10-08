@@ -21,8 +21,8 @@ MonoBehaviour:
   ld_DestructionMargin: 0
   ld_RightTargets: []
   ld_LeftTargets: []
-  sa_XMovementSpeed: -209.7
-  sa_ZMovementSpeed: 24.85
+  sa_XMovementSpeed: 5
+  sa_ZMovementSpeed: 6
   sa_RotationSpeed: 1.5
   sa_DestructionMargin: 0
   sa_RotationDeadZone: 1
@@ -65,7 +65,7 @@ MonoBehaviour:
   bd_LoadingTime: 0
   bd_BombFallSpeed: 0
   bd_LifeTime: 0
-  t_FadeTime: 0
+  t_FadeTime: 2
   da_BulletSpeed: 0
   da_FireRate: 0
   e_Speed: 15
@@ -91,5 +91,6 @@ MonoBehaviour:
   enemyLaserPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
     type: 2}
   bombPrefab: {fileID: 0}
-  trailBulletPrefab: {fileID: 0}
+  trailBulletPrefab: {fileID: 1610792645392690, guid: aa2f87bfb508d9841a48dc3e32da5953,
+    type: 2}
   doubleAimingBulletPrefab: {fileID: 0}

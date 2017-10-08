@@ -38,11 +38,15 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void ShootTrail(GameObject prefab,GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot)
+    public static void ShootTrail(GameObject prefab,GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot, Properties properties)
     {
         if(gameObjectParticle == null)
         {
             gameObjectParticle = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
+            ParticleSystem ps = gameObjectParticle.GetComponent<ParticleSystem>();
+            var main = ps.main;
+            main.startLifetime = properties.t_FadeTime;
+            gameObjectParticle.transform.SetParent(spawnpoint);
         }
 
         if(canShoot)
@@ -190,7 +194,7 @@ public static class Shots
                 }
                 break;
             case ShotType.TRAIL:
-                ShootTrail(properties.trailBulletPrefab, particleTrail, spawnPoint, rotTransform, canShoot);
+                ShootTrail(properties.trailBulletPrefab, particleTrail, spawnPoint, rotTransform, canShoot, properties);
                 break;
             case ShotType.DOUBLEAIMING:
                /* if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
