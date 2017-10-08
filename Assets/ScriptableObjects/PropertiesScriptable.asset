@@ -65,7 +65,7 @@ MonoBehaviour:
   bd_LoadingTime: 0
   bd_BombFallSpeed: 0
   bd_LifeTime: 0
-  t_FadeTime: 2
+  t_FadeTime: 5
   da_BulletSpeed: 0
   da_FireRate: 0
   e_Speed: 15

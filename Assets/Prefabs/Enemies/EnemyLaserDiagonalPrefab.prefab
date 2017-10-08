@@ -151,7 +151,13 @@ MonoBehaviour:
   movementType: 0
   shootType: 0
   enemyLife: 5
+  properties: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
+  barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
+  barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
   bulletSpawnpoint: {fileID: 4923712833204592}
   sideCollider: {fileID: 65562383542620152}
   topCollider: {fileID: 65958224007894580}
+  shooterTransform: {fileID: 0}
+  particleTrail: {fileID: 1610792645392690, guid: aa2f87bfb508d9841a48dc3e32da5953,
+    type: 2}

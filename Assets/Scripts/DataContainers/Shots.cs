@@ -38,17 +38,21 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void ShootTrail(GameObject prefab,GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot, Properties properties)
+    public static void ShootTrail(GameObject prefab,ref GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot, Properties properties)
     {
-        if(gameObjectParticle == null)
+        if(!gameObjectParticle)
         {
             gameObjectParticle = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
+            Debug.Log(gameObjectParticle);
             ParticleSystem ps = gameObjectParticle.GetComponent<ParticleSystem>();
             var main = ps.main;
             main.startLifetime = properties.t_FadeTime;
             gameObjectParticle.transform.SetParent(spawnpoint);
+            gameObjectParticle.SetActive(false);
+            Debug.Log(canShoot);
+            
         }
-
+        
         if(canShoot)
         {
             gameObjectParticle.SetActive(true);
@@ -61,7 +65,7 @@ public static class Shots
 
     //public static void ShootDouble(GameObject prefab,Transform)
 
-    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
+    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
     {
         switch (shotType)
         {
@@ -194,7 +198,7 @@ public static class Shots
                 }
                 break;
             case ShotType.TRAIL:
-                ShootTrail(properties.trailBulletPrefab, particleTrail, spawnPoint, rotTransform, canShoot, properties);
+                ShootTrail(properties.trailBulletPrefab,ref particleTrail, spawnPoint, rotTransform, canShoot, properties);
                 break;
             case ShotType.DOUBLEAIMING:
                /* if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
