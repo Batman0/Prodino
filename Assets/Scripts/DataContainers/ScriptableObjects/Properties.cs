@@ -33,6 +33,7 @@ public class Properties : ScriptableObject
     [Header("Trail")]
     public float t_XMovementSpeed;
     public float t_XReturnSpeed;
+    public float t_RotationSpeed;
     public float t_MovementDuration;
     [Header("DoubleAiming")]
     public float da_XMovementSpeed;

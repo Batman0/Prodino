@@ -37,6 +37,11 @@ public static class Movements
         }
     }
 
+    public static void MoveForward(Transform transform, float speed)
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+    }
+
     public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
     {
         if (isRight)
@@ -106,9 +111,43 @@ public static class Movements
         }
         return transform.position;
     }
-   
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float waitingTimer, ref bool toDestroy)
+    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy)
+    {
+        if (movementTimer < movementDuration && doneRotation == 0)
+        {
+            MoveForward(transform, forthSpeed);
+            movementTimer += Time.deltaTime;
+        }
+        else if (movementTimer > 0.0f && doneRotation >= 180)
+        {
+            if (canShoot)
+            {
+                canShoot = false;
+            }
+            MoveForward(transform, forthSpeed);
+            movementTimer -= Time.deltaTime;
+        }
+        else if (movementTimer <= 0.0f && doneRotation >= 180)
+        {
+            destroy = true;
+        }
+        else
+        {
+            if (doneRotation == 0 && !canShoot)
+            {
+                canShoot = true;
+            }
+            if (doneRotation < 180)
+            {
+                transform.Rotate(Vector3.up, rotationSpeed);
+                doneRotation += rotationSpeed;
+            }
+        }
+    }
+
+
+    public static void Move(MovementType movementType, Transform transform, Quaternion startRotation, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
     {
         switch (movementType)
         {
@@ -156,7 +195,7 @@ public static class Movements
                 MoveForward(transform, isRight, properties.bd_XMovementSpeed, properties.bd_DestructionMargin, ref toDestroy);
                 break;
             case MovementType.TRAIL:
-                //MoveBackAndForth();
+                MoveBackAndForth(transform, properties.t_XMovementSpeed, properties.t_XReturnSpeed, properties.t_RotationSpeed, properties.t_MovementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
                 break;
             case MovementType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -181,11 +220,11 @@ public static class Movements
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_RightTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref timer, properties.sq_RightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref waitingTimer, properties.sq_LeftTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref timer, properties.sq_LeftTargets, transform, ref toDestroy);
                 }
                 break;
         }
