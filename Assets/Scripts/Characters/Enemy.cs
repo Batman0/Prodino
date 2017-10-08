@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     public Quaternion barrelStartRot;
     [HideInInspector]
     public Quaternion barrelInvertedRot;
-    private Quaternion startRotation;
     private float lifeTime;
     public Transform bulletSpawnpoint;
     private float timeToShoot;
@@ -41,10 +40,6 @@ public class Enemy : MonoBehaviour
         movementTargetIndex = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
-        if (movementType == MovementType.TRAIL)
-        {
-            startRotation = transform.rotation;
-        }
         timeToShoot = 0.0f;
         shoots = shootType == ShotType.FORWARD ? false : true;
         canRotate = isRight ? true : false;
@@ -119,7 +114,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, startRotation, isRight, shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
+            Movements.Move(movementType, transform, isRight, shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
         }
     }
 

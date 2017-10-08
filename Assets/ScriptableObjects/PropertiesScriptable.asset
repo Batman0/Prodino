@@ -30,9 +30,10 @@ MonoBehaviour:
   sa_LeftTargets: []
   bd_XMovementSpeed: 0
   bd_DestructionMargin: 0
-  t_XMovementSpeed: 0
-  t_XReturnSpeed: 0
-  t_MovementDuration: 0
+  t_XMovementSpeed: 5
+  t_XReturnSpeed: 8
+  t_RotationSpeed: 1
+  t_MovementDuration: 4
   da_XMovementSpeed: 0
   da_ZMovementSpeed: 0
   da_DestructionMargin: 0
@@ -73,13 +74,15 @@ MonoBehaviour:
   p_DestructionMargin: 5
   forwardShooterPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
-  forwardPrefab: {fileID: 0}
+  forwardPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
+    type: 2}
   laserDiagonalPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
   sphericalAimingPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}
   bombDropPrefab: {fileID: 0}
-  trailPrefab: {fileID: 0}
+  trailPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+    type: 2}
   doubleAimingPrefab: {fileID: 0}
   playerBulletPrefab: {fileID: 1857389230154406, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
