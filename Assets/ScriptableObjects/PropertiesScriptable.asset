@@ -74,7 +74,8 @@ MonoBehaviour:
   forwardShooterPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
   forwardPrefab: {fileID: 0}
-  laserDiagonalPrefab: {fileID: 0}
+  laserDiagonalPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+    type: 2}
   sphericalAimingPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}
   bombDropPrefab: {fileID: 0}

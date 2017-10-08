@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
     public Collider sideCollider;
     public Collider topCollider;
     public Transform shooterTransform;
+    public GameObject particleTrail;
 
     void Start()
     {
@@ -103,7 +104,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref canShoot, ref canRotate, bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref canShoot, ref canRotate,particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 

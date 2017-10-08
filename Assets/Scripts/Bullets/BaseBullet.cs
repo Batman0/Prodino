@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
-    //public GameObject bulletGO;
-    //[HideInInspector]
-    //public bool iCanRotate;
     [HideInInspector]
     /// <summary>
     /// How much far must the bullet be from the near clipping plane to be destroyed?
@@ -23,8 +20,7 @@ public class BaseBullet : MonoBehaviour
     protected virtual void Start()
     {
         direction = transform.forward;
-        //transform.rotation = Quaternion.identity;
-        //transform.Rotate(Vector3.up, 90, Space.World);
+
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
