@@ -19,15 +19,35 @@ MonoBehaviour:
   ld_YMovementSpeed: 3
   ld_YMovementSpeedShot: 3
   ld_DestructionMargin: 3
-  ld_RightTargets: []
-  ld_LeftTargets: []
+  ld_RightTargets:
+  - {fileID: 4101385932214528, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4323485275126154, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4275495779890628, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4790329654628278, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4701270667479660, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  ld_LeftTargets:
+  - {fileID: 4624846134210718, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4381871889232844, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4117244941592744, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4181255215374488, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4558784401294358, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
   sa_XMovementSpeed: 5
   sa_ZMovementSpeed: 6
   sa_RotationSpeed: 1.5
   sa_DestructionMargin: 0
   sa_RotationDeadZone: 1
-  sa_RightTargets: []
-  sa_LeftTargets: []
+  sa_RightTargets:
+  - {fileID: 4419943865753576, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  - {fileID: 4837276631644224, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  - {fileID: 4653792970370806, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  - {fileID: 4499571619305656, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  - {fileID: 4454961948470438, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  sa_LeftTargets:
+  - {fileID: 4101456875423478, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
+  - {fileID: 4285041718058556, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
+  - {fileID: 4407702014594112, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
+  - {fileID: 4765357940163226, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
+  - {fileID: 4034545439923266, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
   bd_XMovementSpeed: 0
   bd_DestructionMargin: 0
   t_XMovementSpeed: 5
@@ -37,8 +57,18 @@ MonoBehaviour:
   da_XMovementSpeed: 0
   da_ZMovementSpeed: 0
   da_DestructionMargin: 0
-  da_RightTargets: []
-  da_LeftTargets: []
+  da_RightTargets:
+  - {fileID: 4907130717405562, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
+  - {fileID: 4384550156128826, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
+  - {fileID: 4160244082787566, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
+  - {fileID: 4199938976435534, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
+  - {fileID: 4288628217039466, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
+  da_LeftTargets:
+  - {fileID: 4474097682633112, guid: dcf3710f9ef734a48b9b3d0aa8a688be, type: 2}
+  - {fileID: 4750624788940340, guid: dcf3710f9ef734a48b9b3d0aa8a688be, type: 2}
+  - {fileID: 4418900091701302, guid: dcf3710f9ef734a48b9b3d0aa8a688be, type: 2}
+  - {fileID: 4839214936633426, guid: dcf3710f9ef734a48b9b3d0aa8a688be, type: 2}
+  - {fileID: 4727798954295874, guid: dcf3710f9ef734a48b9b3d0aa8a688be, type: 2}
   c_Speed: 5
   c_Radius: 5
   c_LifeTime: 20
