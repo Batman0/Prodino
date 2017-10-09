@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0677a39024dd2044cb8eacfa717b467c
-timeCreated: 1507321700
+guid: 9916fca94cb8fcc4c9f830838abd5f3f
+timeCreated: 1507557530
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: BuildB_Floor_Mid
-    4300002: BuildB_Roof_Mid
+    4300000: BuildC_Roof_Dx
   materials:
     importMaterials: 1
     materialName: 0
