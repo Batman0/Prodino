@@ -7,7 +7,7 @@ public class Laser : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, Register.instance.properties.l_ShootingTime);
+        Destroy(gameObject, Register.instance.propertiesLaserDiagonal.shootingTime);
     }
 
     //private void Update()

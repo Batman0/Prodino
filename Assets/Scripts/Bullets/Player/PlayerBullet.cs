@@ -16,6 +16,12 @@ public class PlayerBullet : BaseBullet
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        DestroyGameobject(Register.instance.propertiesPlayer.bulletDestructionMargin);
+    }
+
     protected void AssignDirection()
     {
         if (transform.position.x > Register.instance.player.transform.position.x)
@@ -41,27 +47,27 @@ public class PlayerBullet : BaseBullet
         {
             if ((isRight == null))
             {
-                transform.Translate(direction * Register.instance.properties.p_Speed * Time.deltaTime, Space.World);
+                transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
             }
             else
             {
                 if (isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.right * Register.instance.properties.p_Speed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.right * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && !isCenter.Value)
                 {
-                    transform.Translate(Vector3.left * Register.instance.properties.p_Speed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.left * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
                 }
                 else if (!isRight.Value && isCenter.Value)
                 {
-                    transform.Translate(Vector3.forward * Register.instance.properties.p_Speed * Time.deltaTime, Space.World);
+                    transform.Translate(Vector3.forward * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
                 }
             }
         }
         else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
-            transform.Translate(direction * speed * Time.deltaTime, Space.World);
+            transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
         }
     }
 }

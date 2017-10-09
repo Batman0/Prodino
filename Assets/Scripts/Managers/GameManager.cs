@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Register.instance.player.startPosition = Register.instance.player.transform.position;
-        Register.instance.player.aimTransform = Register.instance.aimTransform;
+        //Register.instance.player.startPosition = Register.instance.player.transform.position;
+        //Register.instance.player.aimTransform = Register.instance.aimTransform;
         playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
         Register.instance.xMin = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
         Register.instance.xMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;

@@ -96,17 +96,15 @@ public static class Movements
             {
                 waitingTimer += Time.deltaTime;
             }
-            else
+
+            if (waitingTimer >= waitingTime && index < targets.Length - 1)
             {
-                if (index < targets.Length - 1)
-                {
-                    index++;
-                    waitingTimer = 0.0f;
-                }
-                else
-                {
-                    destroy = true;
-                }
+                index++;
+                waitingTimer = 0.0f;
+            }
+            else if (index >= targets.Length - 1)
+            {
+                destroy = true;
             }
         }
         return transform.position;
@@ -121,10 +119,6 @@ public static class Movements
         }
         else if (movementTimer > 0.0f && doneRotation >= 180)
         {
-            if (canShoot)
-            {
-                canShoot = false;
-            }
             MoveForward(transform, forthSpeed);
             movementTimer -= Time.deltaTime;
         }
@@ -147,84 +141,85 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, Quaternion startRotation, bool isRight, bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
     {
         switch (movementType)
         {
             case MovementType.FORWARDSHOOTER:
-                MoveForward(transform, isRight, properties.fs_Speed, properties.fs_DestructionMargin, ref toDestroy);
+                MoveForward(transform, isRight, Register.instance.propertiesForwardShooter.speed, Register.instance.propertiesForwardShooter.bulletDestructionMargin, ref toDestroy);
                 break;
             case MovementType.FORWARD:
-                MoveForward(transform, isRight, properties.f_Speed, properties.f_DestructionMargin, ref toDestroy);
+
+                MoveForward(transform, isRight, Register.instance.propertiesForward.speed, Register.instance.propertiesForward.destructionMargin, ref toDestroy);
                 break;
             case MovementType.LASERDIAGONAL:
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
                     if (isRight)
                     {
-                        MoveGeometric(ref targetIndex, properties.ld_YMovementSpeed, properties.ld_RightTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesLaserDiagonal.yMovementSpeed, Register.instance.propertiesLaserDiagonal.rightTargets, transform, ref toDestroy);
                     }
                     else
                     {
-                        MoveGeometric(ref targetIndex, properties.ld_YMovementSpeed, properties.ld_LeftTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesLaserDiagonal.yMovementSpeed, Register.instance.propertiesLaserDiagonal.leftTargets, transform, ref toDestroy);
                     }
                 }
                 else
                 {
-                    MoveForward(transform, isRight, properties.ld_XMovementSpeed, properties.ld_DestructionMargin, ref toDestroy);
+                    MoveForward(transform, isRight, Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.destructionMargin, ref toDestroy);
                 }
                 break;
             case MovementType.SPHERICALAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    MoveForward(transform, isRight, properties.sa_XMovementSpeed, properties.sa_DestructionMargin, ref toDestroy);
+                    MoveForward(transform, isRight, Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.destructionMargin, ref toDestroy);
                 }
                 else
                 {
                     if (isRight)
                     {
-                        MoveGeometric(ref targetIndex, properties.sa_ZMovementSpeed, properties.sa_RightTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.rightTargets, transform, ref toDestroy);
                     }
                     else
                     {
-                        MoveGeometric(ref targetIndex, properties.sa_ZMovementSpeed, properties.sa_LeftTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.leftTargets, transform, ref toDestroy);
                     }
                 }
                 break;
             case MovementType.BOMBDROP:
-                MoveForward(transform, isRight, properties.bd_XMovementSpeed, properties.bd_DestructionMargin, ref toDestroy);
+                MoveForward(transform, isRight, Register.instance.propertiesBombDrop.xMovementSpeed, Register.instance.propertiesBombDrop.destructionMargin, ref toDestroy);
                 break;
             case MovementType.TRAIL:
-                MoveBackAndForth(transform, properties.t_XMovementSpeed, properties.t_XReturnSpeed, properties.t_RotationSpeed, properties.t_MovementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
+                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
                 break;
             case MovementType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    MoveForward(transform, isRight, properties.da_XMovementSpeed, properties.da_DestructionMargin, ref toDestroy);
+                    MoveForward(transform, isRight, Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.destructionMargin, ref toDestroy);
                 }
                 else
                 {
                     if (isRight)
                     {
-                        MoveGeometric(ref targetIndex, properties.da_ZMovementSpeed, properties.da_RightTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.rightTargets, transform, ref toDestroy);
                     }
                     else
                     {
-                        MoveGeometric(ref targetIndex, properties.da_ZMovementSpeed, properties.da_LeftTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.leftTargets, transform, ref toDestroy);
                     }
                 }
                 break;
             case MovementType.CIRCULAR:
-                MoveCircular(transform, properties.c_Speed, isRight, properties.c_Radius, originalPos, ref lifeTime, ref toDestroy);
+                MoveCircular(transform, Register.instance.propertiesCircular.speed, isRight, Register.instance.propertiesCircular.radius, originalPos, ref lifeTime, ref toDestroy);
                 break;
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref timer, properties.sq_RightTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.rightTargets, transform, ref toDestroy);
                 }
                 else
                 {
-                    MoveGeometric(ref targetIndex, properties.sq_Speed, properties.sq_WaitingTime, ref timer, properties.sq_LeftTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.leftTargets, transform, ref toDestroy);
                 }
                 break;
         }

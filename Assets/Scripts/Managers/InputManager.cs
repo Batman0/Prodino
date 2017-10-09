@@ -10,11 +10,12 @@ public class InputManager : MonoBehaviour
     private Plane? sidescrollPlane;
     private Plane? topDownPlane;
     private Ray aimRay;
-    public Transform aimTransform;
+    private GameObject aimTransform;
 
     void Start()
     {
-        aimTransform = Register.instance.aimTransform;
+        aimTransform = Instantiate(Register.instance.aimTransform, Vector3.zero, Register.instance.aimTransform.transform.rotation) as GameObject;
+        Register.instance.player.aimTransform = aimTransform;
     }
 
     void Update()
@@ -38,7 +39,7 @@ public class InputManager : MonoBehaviour
             if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
-                aimTransform.position = aimVector;
+                aimTransform.transform.position = aimVector;
             }
         }
         if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -47,7 +48,7 @@ public class InputManager : MonoBehaviour
             if (sidescrollPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
-                aimTransform.position = aimVector;
+                aimTransform.transform.position = aimVector;
             }
         }
     }
