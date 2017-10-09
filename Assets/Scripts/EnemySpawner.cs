@@ -10,33 +10,31 @@ public class EnemySpawner : MonoBehaviour
     public float delay;
     private float delayTimer;
     private GameObject enemyPrefab;
-    private Properties properties;
 
     private void Start()
     {
-        properties = Register.instance.properties;
         switch (shootType)
         {
             case ShotType.FORWARDSHOOTER:
-                enemyPrefab = properties.forwardShooterPrefab;
+                enemyPrefab = Register.instance.propertiesForwardShooter.gameObjectPrefab;
                 break;
             case ShotType.FORWARD:
-                enemyPrefab = properties.forwardPrefab;
+                enemyPrefab = Register.instance.propertiesForward.gameObjectPrefab;
                 break;
             case ShotType.LASERDIAGONAL:
-                enemyPrefab = properties.laserDiagonalPrefab;
+                enemyPrefab = Register.instance.propertiesLaserDiagonal.gameObjectPrefab;
                 break;
             case ShotType.SPHERICALAIMING:
-                enemyPrefab = properties.sphericalAimingPrefab;
+                enemyPrefab = Register.instance.propertiesSphericalAiming.gameObjectPrefab;
                 break;
             case ShotType.BOMBDROP:
-                enemyPrefab = properties.bombDropPrefab;
+                enemyPrefab = Register.instance.propertiesBombDrop.gameObjectPrefab;
                 break;
             case ShotType.TRAIL:
-                enemyPrefab = properties.trailPrefab;
+                enemyPrefab = Register.instance.propertiesTrail.gameObjectPrefab;
                 break;
             case ShotType.DOUBLEAIMING:
-                enemyPrefab = properties.doubleAimingPrefab;
+                enemyPrefab = Register.instance.propertiesDoubleAiming.gameObjectPrefab;
                 break;
         }
         isRight = transform.position.x >= Register.instance.player.transform.position.x ? true : false;

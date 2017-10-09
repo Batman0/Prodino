@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float controllerDeadZone = 0.1f;
     //private float CheckGroundRaycastMargin = 1;
     [HideInInspector]
-    public Transform aimTransform;
+    public GameObject aimTransform;
     public Transform bulletSpawnPoint;
     public float fireRatio = 0.10f;
     private float fireTimer;
@@ -63,12 +63,14 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         //skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
+        Register.instance.player = this;
     }
 
     void Start()
     {
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
+        startPosition = transform.position;
     }
     void Update()
     {
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
                         {
                             transform.rotation = sideScrollerRotation;
                         }
-                        Vector3 aim = aimTransform.position - bulletSpawnPoint.position;
+                        Vector3 aim = aimTransform.transform.position - bulletSpawnPoint.position;
                         float aimAngle = Vector3.Angle(Vector3.right, aim);
                         Vector3 cross = Vector3.Cross(Vector3.right, aim);
                         if (aimAngle <= upRotationAngle && cross.z >= 0)
@@ -244,10 +246,10 @@ public class PlayerController : MonoBehaviour
         switch (GameManager.instance.currentGameMode)
         {
             case GameMode.SIDESCROLL:
-                transform.LookAt(new Vector3(aimTransform.position.x, aimTransform.position.y, transform.position.z));
+                transform.LookAt(new Vector3(aimTransform.transform.position.x, aimTransform.transform.position.y, transform.position.z));
                 break;
             case GameMode.TOPDOWN:
-                transform.LookAt(new Vector3(aimTransform.position.x, transform.position.y, aimTransform.position.z));
+                transform.LookAt(new Vector3(aimTransform.transform.position.x, transform.position.y, aimTransform.transform.position.z));
                 break;
         }
     }
@@ -256,7 +258,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            GameObject bullet = Instantiate(Register.instance.properties.playerBulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
             //bullet.SetActive(true);
             //bullet.tag = playerBulletTag;
         }

@@ -18,8 +18,6 @@ public class Enemy : MonoBehaviour
     private bool canRotate;
     public int enemyLife;
     [HideInInspector]
-    public Properties properties;
-    [HideInInspector]
     public Vector3 originalPos;
     [HideInInspector]
     public Quaternion barrelStartRot;
@@ -27,7 +25,6 @@ public class Enemy : MonoBehaviour
     public Quaternion barrelInvertedRot;
     private float lifeTime;
     public Transform bulletSpawnpoint;
-    public Transform bulletSpawnpointOther;
     private float timeToShoot;
     private float doneRotation;
     public Collider sideCollider;
@@ -37,7 +34,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        properties = Register.instance.properties;
         movementTargetIndex = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
@@ -54,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         if (movementType == MovementType.CIRCULAR)
         {
-            lifeTime = properties.c_LifeTime;
+            lifeTime = Register.instance.propertiesCircular.lifeTime;
         }
 
         if (!isRight)
@@ -98,11 +94,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //void OnDestroy()
+    //{
+    //    Register.instance.numberOfTransitableObjects--;
+    //}
+
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform,bulletSpawnpointOther);
+            Shots.Shoot(shootType, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 
@@ -110,7 +111,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, ref shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy, this);
+            Movements.Move(movementType, transform, isRight, ref shoots, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
         }
     }
 
@@ -145,6 +146,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //GURRA nome dubbio su questo metodo, non fa quello che mi aspettavo quando l'ho letto
+    //Hai ragione mi ero scordato di mettere CheckEnemyLife cambio
     public bool CheckEnemyLife()
     {
         return enemyLife <= 0;
