@@ -58,10 +58,8 @@ MonoBehaviour:
   translatedObjects: 0
   player: {fileID: 0}
   aimTransform: {fileID: 0}
-  enemyProperties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
-  bulletProperties: {fileID: 11400000, guid: 02197e0efab61cf4d85967013fdef267, type: 2}
-  playerBullet: {fileID: 1857389230154406, guid: 9178eddc3cb82534cad355bff7404955,
-    type: 2}
-  enemyBullet: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
-    type: 2}
-  enemyLaser: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4, type: 2}
+  properties: {fileID: 11400000, guid: eb556d8ee67162a4893c8249f15a8f15, type: 2}
+  xMin: 0
+  xMax: 0
+  yMin: 0
+  yMax: 0
