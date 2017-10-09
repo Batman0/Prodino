@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93edda39be858d47bfde7cedc2c51ba, type: 3}
   m_Name: PropertiesScriptable
   m_EditorClassIdentifier: 
-  fs_Speed: 5
+  fs_Speed: 4
   fs_DestructionMargin: 2
-  f_Speed: 1
+  f_Speed: 10
   f_DestructionMargin: 5
   ld_XMovementSpeed: 3
   ld_YMovementSpeed: 3
@@ -82,7 +82,7 @@ MonoBehaviour:
   - {fileID: 4178582690395706, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4412127990732084, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
-  fs_FireRate: 3
+  fs_FireRate: 2
   fs_BulletSpeed: 7
   l_LaserHeight: 3
   l_LaserDepth: 3
@@ -98,9 +98,9 @@ MonoBehaviour:
   t_FadeTime: 5
   da_BulletSpeed: 0
   da_FireRate: 0
-  e_Speed: 15
+  e_Speed: 20
   e_DestructionMargin: 5
-  p_Speed: 15
+  p_Speed: 28
   p_DestructionMargin: 5
   forwardShooterPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
