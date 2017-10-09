@@ -10,6 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: BuildB_Floor_Mid
+    4300002: BuildB_Roof_Mid
   materials:
     importMaterials: 1
     materialName: 0
