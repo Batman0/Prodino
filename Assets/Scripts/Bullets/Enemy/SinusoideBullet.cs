@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class SinusoideBullet : BaseBullet
 {
-
     protected override void Move()
     {
-        transform.Translate(Vector3.right * Mathf.Sin(Time.time * Register.instance.properties.e_Speed),Space.Self);
+        transform.position= new Vector3(Vector3.MoveTowards(transform.position, Register.instance.player.transform.position, 0.5f).x,transform.position.y,Register.instance.propertiesDoubleAiming.arcSin * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed));
     }
 }

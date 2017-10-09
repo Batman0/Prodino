@@ -140,7 +140,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571608488779970}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 4db282e167e735f43b0aa8da3decf6c2, type: 3}
 --- !u!65 &65572497080471554
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -180,7 +180,6 @@ MonoBehaviour:
   movementType: 0
   shootType: 0
   enemyLife: 5
-  properties: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
   barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
