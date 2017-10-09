@@ -159,5 +159,3 @@ MonoBehaviour:
   sideCollider: {fileID: 65562383542620152}
   topCollider: {fileID: 65958224007894580}
   shooterTransform: {fileID: 0}
-  particleTrail: {fileID: 1610792645392690, guid: aa2f87bfb508d9841a48dc3e32da5953,
-    type: 2}
