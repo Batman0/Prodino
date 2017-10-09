@@ -112,15 +112,18 @@ public static class Movements
         return transform.position;
     }
 
-    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy)
+    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy,Enemy enemy)
     {
         if (movementTimer < movementDuration && doneRotation == 0)
         {
             MoveForward(transform, forthSpeed);
             movementTimer += Time.deltaTime;
+            
         }
         else if (movementTimer > 0.0f && doneRotation >= 180)
         {
+            enemy.sideCollider.enabled = true;
+            enemy.topCollider.enabled = false;
             MoveForward(transform, forthSpeed);
             movementTimer -= Time.deltaTime;
         }
@@ -136,6 +139,8 @@ public static class Movements
             }
             if (doneRotation < 180)
             {
+                enemy.sideCollider.enabled = false;
+                enemy.topCollider.enabled = false;
                 transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
@@ -143,7 +148,7 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Properties properties, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy, Enemy enemy)
     {
         switch (movementType)
         {
@@ -191,7 +196,7 @@ public static class Movements
                 MoveForward(transform, isRight, properties.bd_XMovementSpeed, properties.bd_DestructionMargin, ref toDestroy);
                 break;
             case MovementType.TRAIL:
-                MoveBackAndForth(transform, properties.t_XMovementSpeed, properties.t_XReturnSpeed, properties.t_RotationSpeed, properties.t_MovementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
+                MoveBackAndForth(transform, properties.t_XMovementSpeed, properties.t_XReturnSpeed, properties.t_RotationSpeed, properties.t_MovementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy, enemy);
                 break;
             case MovementType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
