@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
                 enemyPrefab = properties.trailPrefab;
                 break;
             case ShotType.DOUBLEAIMING:
-                enemyPrefab = properties.doubleAimingBulletPrefab;
+                enemyPrefab = properties.doubleAimingPrefab;
                 break;
         }
         isRight = transform.position.x >= Register.instance.player.transform.position.x ? true : false;

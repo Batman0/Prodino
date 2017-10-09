@@ -43,14 +43,11 @@ public static class Shots
         if(!gameObjectParticle)
         {
             gameObjectParticle = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
-            Debug.Log(gameObjectParticle);
             ParticleSystem ps = gameObjectParticle.GetComponent<ParticleSystem>();
             var main = ps.main;
             main.startLifetime = properties.t_FadeTime;
             gameObjectParticle.transform.SetParent(spawnpoint);
-            gameObjectParticle.SetActive(false);
-            Debug.Log(canShoot);
-            
+            gameObjectParticle.SetActive(false);           
         }
         
         if(canShoot)
@@ -63,9 +60,13 @@ public static class Shots
         }
     }
 
-    //public static void ShootDouble(GameObject prefab,Transform)
+    public static void ShootDouble(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
+    { 
+       GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, rotTransform.rotation);
+       GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, Quaternion.Inverse(rotTransform.rotation));      
+    }
 
-    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
+    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform, Transform bulletSpawnpointOther)
     {
         switch (shotType)
         {
@@ -201,10 +202,30 @@ public static class Shots
                 ShootTrail(properties.trailBulletPrefab,ref particleTrail, spawnPoint, rotTransform, canShoot, properties);
                 break;
             case ShotType.DOUBLEAIMING:
-               /* if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-
-                }*/
+                    if(timer < properties.da_FireRate)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {   
+                        ShootDouble(properties.doubleAimingBulletPrefab, spawnPoint, rotTransform, bulletSpawnpointOther);
+                        timer = 0.0f;
+                    }
+                }
+                else
+                {
+                    if (timer < properties.da_FireRate)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        ShootDouble(properties.sinusoideBulletPrefab, spawnPoint, rotTransform, bulletSpawnpointOther);
+                        timer = 0.0f;
+                    }
+                }
                 break;
         }
     }

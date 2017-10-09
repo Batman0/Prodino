@@ -54,9 +54,9 @@ MonoBehaviour:
   t_XReturnSpeed: 8
   t_RotationSpeed: 1
   t_MovementDuration: 4
-  da_XMovementSpeed: 0
-  da_ZMovementSpeed: 0
-  da_DestructionMargin: 0
+  da_XMovementSpeed: 5
+  da_ZMovementSpeed: 2
+  da_DestructionMargin: 5
   da_RightTargets:
   - {fileID: 4907130717405562, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
   - {fileID: 4384550156128826, guid: 5fdd18455016aa045b9d1c81b518d88a, type: 2}
@@ -83,7 +83,7 @@ MonoBehaviour:
   - {fileID: 4412127990732084, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   - {fileID: 4025176345235532, guid: bd1918dce69190747a5cf15a34c9b959, type: 2}
   fs_FireRate: 3
-  fs_BulletSpeed: 7
+  fs_BulletSpeed: 2
   l_LaserHeight: 3
   l_LaserDepth: 3
   l_Speed: 5
@@ -96,9 +96,9 @@ MonoBehaviour:
   bd_BombFallSpeed: 0
   bd_LifeTime: 0
   t_FadeTime: 5
-  da_BulletSpeed: 0
-  da_FireRate: 0
-  e_Speed: 15
+  da_BulletSpeed: 2
+  da_FireRate: 3
+  e_Speed: 10
   e_DestructionMargin: 5
   p_Speed: 15
   p_DestructionMargin: 5
@@ -113,7 +113,8 @@ MonoBehaviour:
   bombDropPrefab: {fileID: 0}
   trailPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
-  doubleAimingPrefab: {fileID: 0}
+  doubleAimingPrefab: {fileID: 1571608488779970, guid: cbd5e43a5209e8849980e9e9023ab7f8,
+    type: 2}
   playerBulletPrefab: {fileID: 1857389230154406, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}
   enemyBulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
@@ -123,4 +124,7 @@ MonoBehaviour:
   bombPrefab: {fileID: 0}
   trailBulletPrefab: {fileID: 1610792645392690, guid: aa2f87bfb508d9841a48dc3e32da5953,
     type: 2}
-  doubleAimingBulletPrefab: {fileID: 0}
+  doubleAimingBulletPrefab: {fileID: 1215921225492252, guid: cc0367fa9b754cb43848a88db24b2e95,
+    type: 2}
+  sinusoideBulletPrefab: {fileID: 1889232763993750, guid: 8d4e8a9caa8b48c45a1a389938337d66,
+    type: 2}

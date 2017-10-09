@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     public Quaternion barrelInvertedRot;
     private float lifeTime;
     public Transform bulletSpawnpoint;
+    public Transform bulletSpawnpointOther;
     private float timeToShoot;
     private float doneRotation;
     public Collider sideCollider;
@@ -97,16 +98,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //void OnDestroy()
-    //{
-    //    Register.instance.numberOfTransitableObjects--;
-    //}
-
     public void Shoot()
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform,bulletSpawnpointOther);
         }
     }
 
@@ -149,8 +145,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //GURRA nome dubbio su questo metodo, non fa quello che mi aspettavo quando l'ho letto
-    //Hai ragione mi ero scordato di mettere CheckEnemyLife cambio
     public bool CheckEnemyLife()
     {
         return enemyLife <= 0;

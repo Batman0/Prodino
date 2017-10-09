@@ -100,5 +100,6 @@ public class Properties : ScriptableObject
     public GameObject bombPrefab;
     public GameObject trailBulletPrefab;
     public GameObject doubleAimingBulletPrefab;
+    public GameObject sinusoideBulletPrefab;
 
 }
