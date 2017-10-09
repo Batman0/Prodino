@@ -38,7 +38,7 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void ShootTrail(GameObject prefab,ref GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot, Properties properties)
+    public static void ShootTrail(GameObject prefab,ref GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot)
     {
         if(!gameObjectParticle)
         {
@@ -46,11 +46,10 @@ public static class Shots
             Debug.Log(gameObjectParticle);
             ParticleSystem ps = gameObjectParticle.GetComponent<ParticleSystem>();
             var main = ps.main;
-            main.startLifetime = properties.t_FadeTime;
+            main.startLifetime = Register.instance.propertiesTrail.fadeTime;
             gameObjectParticle.transform.SetParent(spawnpoint);
             gameObjectParticle.SetActive(false);
             Debug.Log(canShoot);
-            
         }
         
         if(canShoot)
@@ -65,31 +64,31 @@ public static class Shots
 
     //public static void ShootDouble(GameObject prefab,Transform)
 
-    public static void Shoot(ShotType shotType, Properties properties, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
+    public static void Shoot(ShotType shotType, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
     {
         switch (shotType)
         {
             case ShotType.FORWARDSHOOTER:
-                if (timer < properties.fs_FireRate)
+                if (timer < Register.instance.propertiesForwardShooter.fireRate)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    ShootForward(properties.enemyBulletPrefab, spawnPoint, rotTransform);
+                    ShootForward(Register.instance.propertiesForwardShooter.bulletPrefab, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
                 break;
             case ShotType.FORWARD:
                 break;
             case ShotType.LASERDIAGONAL:
-                if (timer < properties.l_WaitingTime)
+                if (timer < Register.instance.propertiesLaserDiagonal.waitingTime)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    if (timer < properties.l_WaitingTime + properties.l_LoadingTime)
+                    if (timer < Register.instance.propertiesLaserDiagonal.waitingTime + Register.instance.propertiesLaserDiagonal.loadingTime)
                     {
                         timer += Time.deltaTime;
                     }
@@ -101,10 +100,10 @@ public static class Shots
                         }
                         if (canShoot)
                         {
-                            ShootLaser(properties.enemyLaserPrefab, spawnPoint, rotTransform, properties.l_LaserDepth, properties.l_LaserHeight);
+                            ShootLaser(Register.instance.propertiesLaserDiagonal.laserPrefab, spawnPoint, rotTransform, Register.instance.propertiesLaserDiagonal.laserDepth, Register.instance.propertiesLaserDiagonal.laserHeight);
                             canShoot = false;
                         }
-                        if (timer < properties.l_WaitingTime + properties.l_LoadingTime + properties.l_ShootingTime)
+                        if (timer < Register.instance.propertiesLaserDiagonal.waitingTime + Register.instance.propertiesLaserDiagonal.loadingTime + Register.instance.propertiesLaserDiagonal.shootingTime)
                         {
                             timer += Time.deltaTime;
                         }
@@ -125,25 +124,25 @@ public static class Shots
                     float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
                     Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);
 
-                    if (angle > properties.sa_RotationDeadZone)
+                    if (angle > Register.instance.propertiesSphericalAiming.rotationDeadZone)
                     {
                         if (cross.z >= 0)
                         {
-                            rotTransform.RotateAround(transform.position, Vector3.forward, -properties.sa_RotationSpeed);
+                            rotTransform.RotateAround(transform.position, Vector3.forward, -Register.instance.propertiesSphericalAiming.rotationSpeed);
                         }
                         else
                         {
-                            rotTransform.RotateAround(transform.position, Vector3.forward, properties.sa_RotationSpeed);
+                            rotTransform.RotateAround(transform.position, Vector3.forward, Register.instance.propertiesSphericalAiming.rotationSpeed);
                         }
                     }                  
                     
-                    if (timer < properties.sa_FireRate)
+                    if (timer < Register.instance.propertiesSphericalAiming.fireRate)
                     {
                         timer += Time.deltaTime;
                     }
                     else
                     { 
-                        ShootForward(properties.enemyBulletPrefab, spawnPoint, rotTransform);
+                        ShootForward(Register.instance.propertiesSphericalAiming.bulletPrefab, spawnPoint, rotTransform);
                         timer = 0.0f;
                     }
                 }
@@ -175,30 +174,30 @@ public static class Shots
                         }
                     }
 
-                    if (timer < properties.sa_FireRate)
+                    if (timer < Register.instance.propertiesSphericalAiming.fireRate)
                     {
                         timer += Time.deltaTime;
                     }
                     else
                     {
-                        ShootForward(properties.enemyBulletPrefab, spawnPoint, rotTransform);
+                        ShootForward(Register.instance.propertiesSphericalAiming.bulletPrefab, spawnPoint, rotTransform);
                         timer = 0.0f;
                     }
                 }             
                 break;
             case ShotType.BOMBDROP:
-                if (timer < properties.bd_LoadingTime)
+                if (timer < Register.instance.propertiesBombDrop.loadingTime)
                 {
                     timer += Time.deltaTime;
                 }
                 else
                 {
-                    ShootBomb(properties.bombPrefab, spawnPoint, rotTransform);
+                    ShootBomb(Register.instance.propertiesBombDrop.bombPrefab, spawnPoint, rotTransform);
                     timer = 0.0f;
                 }
                 break;
             case ShotType.TRAIL:
-                ShootTrail(properties.trailBulletPrefab,ref particleTrail, spawnPoint, rotTransform, canShoot, properties);
+                ShootTrail(Register.instance.propertiesTrail.trailPrefab, ref particleTrail, spawnPoint, rotTransform, canShoot);
                 break;
             case ShotType.DOUBLEAIMING:
                /* if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)

@@ -9,7 +9,7 @@ public class Bomb : MonoBehaviour
 
     void Update()
     {
-        rb.AddForce(Vector3.down * Register.instance.properties.bd_BombFallSpeed,ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * Register.instance.propertiesBombDrop.bombFallSpeed,ForceMode.Acceleration);
     }
 
     public void OnCollisionEnter(Collision other)
@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        Destroy(gameObject, Register.instance.properties.bd_LifeTime);
+        Destroy(gameObject, Register.instance.propertiesBombDrop.lifeTime);
     }
 	
 }

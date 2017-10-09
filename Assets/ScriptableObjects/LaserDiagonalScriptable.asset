@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da56b777d047734884b82aaefcb1012, type: 3}
+  m_Name: LaserDiagonalScriptable
+  m_EditorClassIdentifier: 
+  xMovementSpeed: 3
+  yMovementSpeed: 3
+  yMovementSpeedShot: 3
+  destructionMargin: 3
+  rightTargets:
+  - {fileID: 4101385932214528, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4323485275126154, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4275495779890628, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4790329654628278, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 4701270667479660, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  leftTargets:
+  - {fileID: 4624846134210718, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4381871889232844, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4117244941592744, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4181255215374488, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 4558784401294358, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  laserHeight: 3
+  laserDepth: 3
+  speed: 5
+  waitingTime: 2
+  loadingTime: 2
+  shootingTime: 2
+  gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+    type: 2}
+  laserPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
+    type: 2}

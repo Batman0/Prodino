@@ -16,14 +16,23 @@ public class Register : MonoBehaviour
     [HideInInspector]
     public int translatedObjects;
 
-    [Header("Player")]
+    [HideInInspector]
     public PlayerController player;
 
     [Header("Aim")]
-    public Transform aimTransform;
+    public GameObject aimTransform;
 
     [Header("Scriptables")]
-    public Properties properties;
+    public PropertiesPlayer propertiesPlayer;
+    public PropertiesForwardShooter propertiesForwardShooter;
+    public PropertiesForward propertiesForward;
+    public PropertiesLaserDiagonal propertiesLaserDiagonal;
+    public PropertiesSphericalAiming propertiesSphericalAiming;
+    public PropertiesBombDrop propertiesBombDrop;
+    public PropertiesTrail propertiesTrail;
+    public PropertiesDoubleAiming propertiesDoubleAiming;
+    public PropertiesCircular propertiesCircular;
+    public PropertiesSquare propertiesSquare;
 
     [Header("Bounds")]
     [HideInInspector]
