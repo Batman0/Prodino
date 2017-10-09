@@ -18,8 +18,6 @@ public class Enemy : MonoBehaviour
     private bool canRotate;
     public int enemyLife;
     [HideInInspector]
-    public Properties properties;
-    [HideInInspector]
     public Vector3 originalPos;
     [HideInInspector]
     public Quaternion barrelStartRot;
@@ -36,7 +34,6 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        properties = Register.instance.properties;
         movementTargetIndex = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
@@ -53,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         if (movementType == MovementType.CIRCULAR)
         {
-            lifeTime = properties.c_LifeTime;
+            lifeTime = Register.instance.propertiesCircular.lifeTime;
         }
 
         if (!isRight)
@@ -106,7 +103,7 @@ public class Enemy : MonoBehaviour
     {
         if(!GameManager.instance.transitionIsRunning)
         {
-            Shots.Shoot(shootType, properties, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
+            Shots.Shoot(shootType, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform);
         }
     }
 
@@ -114,7 +111,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, ref shoots, properties, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
+            Movements.Move(movementType, transform, isRight, ref shoots, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
         }
     }
 
