@@ -204,14 +204,7 @@ public static class Movements
                 }
                 else
                 {
-                    if (isRight)
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.rightTargets, transform, isRight, ref toDestroy);
-                    }
-                    else
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.leftTargets, transform, isRight, ref toDestroy);
-                    }
+                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, Register.instance.propertiesSphericalAiming.height, time);
                 }
                 break;
             case MovementType.BOMBDROP:
@@ -227,14 +220,7 @@ public static class Movements
                 }
                 else
                 {
-                    if (isRight)
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.rightTargets, transform, isRight, ref toDestroy);
-                    }
-                    else
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.leftTargets, transform, isRight, ref toDestroy);
-                    }
+                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, Register.instance.propertiesDoubleAiming.height, time);
                 }
                 break;
             case MovementType.CIRCULAR:
