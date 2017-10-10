@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
 
 						
-					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive) {
+					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump) {
 							StartCoroutine ("BiteAttack");
 						}
 						
