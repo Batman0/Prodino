@@ -10,8 +10,9 @@ public class EnemySpawner : MonoBehaviour
     public float delay;
     private float delayTimer;
     private GameObject enemyPrefab;
+    private GameObject enemy;
 
-    private void Start()
+    private void Awake()
     {
         switch (shootType)
         {
@@ -38,6 +39,13 @@ public class EnemySpawner : MonoBehaviour
                 break;
         }
         isRight = transform.position.x >= Register.instance.player.transform.position.x ? true : false;
+
+        enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
+        Enemy enemyScript = enemy.GetComponent<Enemy>();
+        enemyScript.movementType = movementType;
+        enemyScript.shotType = shootType;
+        enemyScript.isRight = isRight;
+        enemy.SetActive(false);
     }
 
     private void Update()
@@ -54,13 +62,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            //Quaternion enemyRotation = enemyPrefab.transform.rotation;
-            //Quaternion rotation = isRight ? enemyPrefab.transform.rotation : Quaternion.Euler(enemyRotation.z, enemyRotation.x + 180, enemyRotation.y);
-            GameObject enemy = Instantiate(enemyPrefab, transform.position, enemyPrefab.transform.rotation) as GameObject;
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.movementType = movementType;
-            enemyScript.shotType = shootType;
-            enemyScript.isRight = isRight;
+            enemy.SetActive(true);
             Destroy(gameObject);
         }
     }
