@@ -12,6 +12,8 @@ public class PropertiesDoubleAiming : Properties
     public Transform[] leftTargets;
     public float bulletSpeed;
     public float fireRate;
+    public float arcSin;
     public GameObject gameObjectPrefab;
     public GameObject bulletPrefab;
+    public GameObject bulletSinusoidePrefab;
 }

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4540536457536312}
   - component: {fileID: 33701462672624312}
   - component: {fileID: 23656058244950408}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EnemySphericalAimingCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114877892174573670}
   - component: {fileID: 65275309409808734}
   - component: {fileID: 65804768425011772}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EnemySphericalAimingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4535277292191184}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,8 +221,12 @@ MonoBehaviour:
   movementType: 0
   shootType: 0
   enemyLife: 2
+  properties: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
+  barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
+  barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
   bulletSpawnpoint: {fileID: 4535277292191184}
+  bulletSpawnpointOther: {fileID: 0}
   sideCollider: {fileID: 65275309409808734}
   topCollider: {fileID: 65804768425011772}
   shooterTransform: {fileID: 4540536457536312}

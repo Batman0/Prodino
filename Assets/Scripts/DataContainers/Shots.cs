@@ -62,9 +62,15 @@ public static class Shots
         }
     }
 
-    //public static void ShootDouble(GameObject prefab,Transform)
+    public static void ShootDouble(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
+    {
+        GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, rotTransform.rotation);
+        GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, Quaternion.Inverse(rotTransform.rotation));
+    }
 
-    public static void Shoot(ShotType shotType, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform)
+
+
+    public static void Shoot(ShotType shotType, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform, Transform spawnPointOther)
     {
         switch (shotType)
         {
@@ -200,10 +206,30 @@ public static class Shots
                 ShootTrail(Register.instance.propertiesTrail.trailPrefab, ref particleTrail, spawnPoint, rotTransform, canShoot);
                 break;
             case ShotType.DOUBLEAIMING:
-               /* if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-
-                }*/
+                    if (timer < Register.instance.propertiesDoubleAiming.fireRate)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletSinusoidePrefab, spawnPoint, rotTransform, spawnPointOther);
+                        timer = 0.0f;
+                    }
+                }
+                else
+                {
+                    if (timer < Register.instance.propertiesDoubleAiming.fireRate)
+                    {
+                        timer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletPrefab, spawnPoint, rotTransform, spawnPointOther);
+                        timer = 0.0f;
+                    }
+                }
                 break;
         }
     }
