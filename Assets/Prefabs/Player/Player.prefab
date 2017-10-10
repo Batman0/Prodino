@@ -1861,7 +1861,7 @@ Animator:
   m_GameObject: {fileID: 1758926448620306}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2c5b6cfb879f39c4580c656c398eb144, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6124f08fe138184190d4d5c043b8c9a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1899,7 +1899,7 @@ MonoBehaviour:
     m_Bits: 512
   canShootAndMove: 1
   canJump: 1
-  landmark: {fileID: 0}
+  landmark: {fileID: 4913762895110830, guid: e11bde519ac5dbd4eb24eb5e3a865154, type: 2}
   sideBodyCollider: {fileID: 65660415095524202}
   topBodyCollider: {fileID: 65169831621517012}
   topTailCollider: {fileID: 65505668385684740}
