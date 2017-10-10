@@ -41,7 +41,6 @@ public class BaseBullet : MonoBehaviour
 
     protected virtual void Update()
     {
-        Move();
         ChangePerspective();
     }
 

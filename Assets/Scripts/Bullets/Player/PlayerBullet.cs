@@ -19,6 +19,7 @@ public class PlayerBullet : BaseBullet
     protected override void Update()
     {
         base.Update();
+        Move();
         DestroyGameobject(Register.instance.propertiesPlayer.bulletDestructionMargin);
     }
 

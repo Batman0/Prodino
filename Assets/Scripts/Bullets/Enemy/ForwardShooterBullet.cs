@@ -8,6 +8,7 @@ public class ForwardShooterBullet : BaseBullet
     protected override void Update()
     {
         base.Update();
+        Move();
         DestroyGameobject(Register.instance.propertiesForwardShooter.bulletDestructionMargin);
     }
 
