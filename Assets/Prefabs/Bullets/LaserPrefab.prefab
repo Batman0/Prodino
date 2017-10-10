@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90ecc5522223a24aa578700652734d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideCollider: {fileID: 0}
-  topCollider: {fileID: 0}
+  sideCollider: {fileID: 65483171879026522}
+  topCollider: {fileID: 65855288940644272}
