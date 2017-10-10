@@ -42,6 +42,11 @@ public static class Movements
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
 
+    public static void MoveDiagonal(Transform transform, float speed, float length, float amplitude, float height, float time)
+    {
+        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude /*Mathf.Acos(Mathf.Cos(y * Time.time))*/ + height, transform.position.z);
+    }
+
     public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
     {
         if (isRight)
@@ -63,8 +68,23 @@ public static class Movements
         }
     }
 
-    public static void MoveGeometric(ref int index, float speed, Transform[] targets, Transform transform, ref bool destroy)
+    public static void MoveGeometric(ref int index, float speed, Transform[] targets, Transform transform, bool isRight, ref bool destroy)
     {
+
+        if (isRight)
+        {
+            if (transform.position.x <= targets[index].position.x)
+            {
+                index++;
+            }
+        }
+        else
+        {
+            if (transform.position.x >= targets[index].position.x)
+            {
+                index++;
+            }
+        }
 
         if (transform.position != targets[index].position)
         {
@@ -83,8 +103,22 @@ public static class Movements
         }
     }
 
-    public static Vector3 MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, ref bool destroy)
+    public static Vector3 MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, bool isRight, ref bool destroy)
     {
+        if (isRight)
+        {
+            if (transform.position.x <= targets[index].position.x)
+            {
+                index++;
+            }
+        }
+        else
+        {
+            if (transform.position.x >= targets[index].position.x)
+            {
+                index++;
+            }
+        }
 
         if (transform.position != targets[index].position)
         {
@@ -141,7 +175,7 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy)
     {
         switch (movementType)
         {
@@ -155,14 +189,8 @@ public static class Movements
             case MovementType.LASERDIAGONAL:
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    if (isRight)
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesLaserDiagonal.yMovementSpeed, Register.instance.propertiesLaserDiagonal.rightTargets, transform, ref toDestroy);
-                    }
-                    else
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesLaserDiagonal.yMovementSpeed, Register.instance.propertiesLaserDiagonal.leftTargets, transform, ref toDestroy);
-                    }
+                    time += Time.deltaTime;
+                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, Register.instance.propertiesLaserDiagonal.height, time);
                 }
                 else
                 {
@@ -178,11 +206,11 @@ public static class Movements
                 {
                     if (isRight)
                     {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.rightTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.rightTargets, transform, isRight, ref toDestroy);
                     }
                     else
                     {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.leftTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.leftTargets, transform, isRight, ref toDestroy);
                     }
                 }
                 break;
@@ -201,11 +229,11 @@ public static class Movements
                 {
                     if (isRight)
                     {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.rightTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.rightTargets, transform, isRight, ref toDestroy);
                     }
                     else
                     {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.leftTargets, transform, ref toDestroy);
+                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.leftTargets, transform, isRight, ref toDestroy);
                     }
                 }
                 break;
@@ -215,11 +243,11 @@ public static class Movements
             case MovementType.SQUARE:
                 if (isRight)
                 {
-                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.rightTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.rightTargets, transform, isRight, ref toDestroy);
                 }
                 else
                 {
-                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.leftTargets, transform, ref toDestroy);
+                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.leftTargets, transform, isRight, ref toDestroy);
                 }
                 break;
         }

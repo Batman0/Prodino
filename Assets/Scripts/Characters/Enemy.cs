@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     public Transform bulletSpawnpointOther;
     private float timeToShoot;
     private float doneRotation;
+    private float laserDiagonalTime;
     public Collider sideCollider;
     public Collider topCollider;
     public Transform shooterTransform;
@@ -112,7 +113,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, ref shoots, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref toDestroy);
+            Movements.Move(movementType, transform, isRight, ref shoots, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref laserDiagonalTime, ref toDestroy);
         }
     }
 
