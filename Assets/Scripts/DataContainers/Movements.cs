@@ -6,13 +6,13 @@ public enum MovementType
 {
     FORWARDSHOOTER,
     FORWARD,
-    CIRCULAR,
-    SQUARE,
     LASERDIAGONAL,
     SPHERICALAIMING,
     BOMBDROP,
     TRAIL,
-    DOUBLEAIMING
+    DOUBLEAIMING,
+    CIRCULAR,
+    SQUARE
 }
 public static class Movements
 {
