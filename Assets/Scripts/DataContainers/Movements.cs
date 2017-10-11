@@ -6,13 +6,13 @@ public enum MovementType
 {
     FORWARDSHOOTER,
     FORWARD,
-    CIRCULAR,
-    SQUARE,
     LASERDIAGONAL,
     SPHERICALAIMING,
     BOMBDROP,
     TRAIL,
-    DOUBLEAIMING
+    DOUBLEAIMING,
+    CIRCULAR,
+    SQUARE
 }
 public static class Movements
 {
@@ -144,10 +144,12 @@ public static class Movements
         return transform.position;
     }
 
-    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy)
+    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy, Enemy enemy)
     {
         if (movementTimer < movementDuration && doneRotation == 0)
         {
+            enemy.sideCollider.enabled = true;
+            enemy.topCollider.enabled = false;
             MoveForward(transform, forthSpeed);
             movementTimer += Time.deltaTime;
         }
@@ -168,6 +170,8 @@ public static class Movements
             }
             if (doneRotation < 180)
             {
+                enemy.sideCollider.enabled = false;
+                enemy.topCollider.enabled = true;
                 transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
@@ -175,7 +179,7 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy,Enemy enemyScript)
     {
         switch (movementType)
         {
@@ -204,21 +208,14 @@ public static class Movements
                 }
                 else
                 {
-                    if (isRight)
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.rightTargets, transform, isRight, ref toDestroy);
-                    }
-                    else
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesSphericalAiming.zMovementSpeed, Register.instance.propertiesSphericalAiming.leftTargets, transform, isRight, ref toDestroy);
-                    }
+                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, Register.instance.propertiesSphericalAiming.height, time);
                 }
                 break;
             case MovementType.BOMBDROP:
                 MoveForward(transform, isRight, Register.instance.propertiesBombDrop.xMovementSpeed, Register.instance.propertiesBombDrop.destructionMargin, ref toDestroy);
                 break;
             case MovementType.TRAIL:
-                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
+                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy,enemyScript);
                 break;
             case MovementType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -227,14 +224,7 @@ public static class Movements
                 }
                 else
                 {
-                    if (isRight)
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.rightTargets, transform, isRight, ref toDestroy);
-                    }
-                    else
-                    {
-                        MoveGeometric(ref targetIndex, Register.instance.propertiesDoubleAiming.zMovementSpeed, Register.instance.propertiesDoubleAiming.leftTargets, transform, isRight, ref toDestroy);
-                    }
+                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, Register.instance.propertiesDoubleAiming.height, time);
                 }
                 break;
             case MovementType.CIRCULAR:

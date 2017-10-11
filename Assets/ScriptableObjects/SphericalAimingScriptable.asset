@@ -12,24 +12,27 @@ MonoBehaviour:
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
   xMovementSpeed: 5
-  zMovementSpeed: 5
+  zMovementSpeed: 6
   rotationSpeed: 1.5
   destructionMargin: 0
   rotationDeadZone: 1
+  waveLenght: 0
+  amplitude: 0
+  height: 0
   rightTargets:
-  - {fileID: 4419943865753576, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
-  - {fileID: 4837276631644224, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
-  - {fileID: 4653792970370806, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
-  - {fileID: 4499571619305656, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
-  - {fileID: 4454961948470438, guid: 8d84d321b0144494eaa43fc86db82324, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   leftTargets:
-  - {fileID: 4101456875423478, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  - {fileID: 4285041718058556, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  - {fileID: 4407702014594112, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  - {fileID: 4765357940163226, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  - {fileID: 4034545439923266, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  fireRate: 2.5
-  bulletSpeed: 2
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  fireRate: 1
+  bulletSpeed: 8
   bulletDestructionMargin: 3
   gameObjectPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}

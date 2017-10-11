@@ -125,7 +125,7 @@ public static class Shots
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
 
-                    Vector3 playerTransform = new Vector3(Register.instance.player.transform.position.x - transform.position.x, Register.instance.player.transform.position.y - transform.position.y, 0);
+                    Vector3 playerTransform = new Vector3(Register.instance.player.transform.position.x - transform.position.x, Register.instance.player.transform.position.y + 2 - transform.position.y, 0);
                     Vector3 barrelSpawnpointTransform = new Vector3(spawnPoint.position.x - transform.position.x, spawnPoint.position.y - transform.position.y, 0);
                     float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
                     Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);

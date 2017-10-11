@@ -56,8 +56,15 @@ public class PlayerController : MonoBehaviour
     [Header("Animations")]
     public Animator ani;
 
-    [Header("Meele")]
+    [Header("TailMelee")]
     public float topdownSpeed;
+
+	//bite attack
+	[Header("BiteMelee")]
+	public float biteATKSpeed;
+	public bool biteCoolDownActive;
+	public float biteCoolDown;
+
 
     void Awake()
     {
@@ -83,60 +90,54 @@ public class PlayerController : MonoBehaviour
                 thereIsGround = CheckGround(groundCheckRayLength);
                 switch (GameManager.instance.currentGameMode)
                 {
-                    case GameMode.SIDESCROLL:
-                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone))
-                        {
-                            Move(Vector3.right, speed, "Horizontal");
-                        }
-                        if (Input.GetKeyDown(KeyCode.W) && canJump)
-                        {
-                            Jump();
-                        }
-                        if (thereIsGround && !canJump)
-                        {
-                            ApplyGravity();
-                        }
-                        else if ((thereIsGround && canJump))
-                        {
-                            if (rb.velocity.y < 0)
-                            {
-                                rb.velocity = Vector3.zero;
-                                transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
-                            }
-                        }
-                        if (Input.GetKey(KeyCode.W))
-                        {
-                            if (!canJump && rb.velocity.y < 0.0f)
-                            {
-                                if (rb.velocity.y < -2)
-                                {
-                                    StabilizeAcceleration();
-                                }
-                                else
-                                {
-                                    Glide();
-                                }
-                            }
-                        }
-                        if (transform.rotation != sideScrollerRotation)
-                        {
-                            transform.rotation = sideScrollerRotation;
-                        }
-                        Vector3 aim = aimTransform.transform.position - bulletSpawnPoint.position;
-                        float aimAngle = Vector3.Angle(Vector3.right, aim);
-                        Vector3 cross = Vector3.Cross(Vector3.right, aim);
-                        if (aimAngle <= upRotationAngle && cross.z >= 0)
-                        {
-                            TurnAroundPlayer(bulletSpawnPoint);
-                        }
-                        else if (aimAngle <= downRotationAngle && cross.z < 0)
-                        {
-                            TurnAroundPlayer(bulletSpawnPoint);
-                        }
-                        ClampPosition(GameMode.SIDESCROLL);
+				case GameMode.SIDESCROLL:
+					if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
+						Move (Vector3.right, speed, "Horizontal");
+					}
+					if (Input.GetKeyDown (KeyCode.W) && canJump) {
+						Jump ();
+					}
+					if (thereIsGround && !canJump) {
+						ApplyGravity ();
+					} else if ((thereIsGround && canJump)) {
+						if (rb.velocity.y < 0) {
+							rb.velocity = Vector3.zero;
+							transform.position = new Vector3 (transform.position.x, landmark.position.y, transform.position.z);
+						}
+					}
+					if (Input.GetKey (KeyCode.W)) {
+						if (!canJump && rb.velocity.y < 0.0f) {
+							if (rb.velocity.y < -2) {
+								StabilizeAcceleration ();
+							} else {
+								Glide ();
+							}
+						}
+					}
+					if (transform.rotation != sideScrollerRotation) {
+						transform.rotation = sideScrollerRotation;
+					}
+					Vector3 aim = aimTransform.transform.position - bulletSpawnPoint.position;
+					float aimAngle = Vector3.Angle (Vector3.right, aim);
+					Vector3 cross = Vector3.Cross (Vector3.right, aim);
+					if (aimAngle <= upRotationAngle && cross.z >= 0) {
+						TurnAroundPlayer (bulletSpawnPoint);
+					} else if (aimAngle <= downRotationAngle && cross.z < 0) {
+						TurnAroundPlayer (bulletSpawnPoint);
+					}
+
+					ClampPosition (GameMode.SIDESCROLL);
+
+
+						
+					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump) {
+							StartCoroutine ("BiteAttack");
+						}
+						
+
 
                         break;
-                    case GameMode.TOPDOWN:
+                case GameMode.TOPDOWN:
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
                         if (canShootAndMove && Input.GetMouseButtonDown(1))
                         {
-                            StartCoroutine("MeeleAttack");
+                            StartCoroutine("TailAttack");
                         }
 
                         break;
@@ -178,7 +179,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (!topTailCollider.enabled)
+		if (!topTailCollider.enabled && !biteCoolDownActive)
         {
             if (other.gameObject.layer == enemyLayer && !isDead)
             {
@@ -197,6 +198,13 @@ public class PlayerController : MonoBehaviour
                 Destroy(other.transform.gameObject);
             }
         }
+
+		if (biteCoolDownActive) {
+			if (other.gameObject.layer == enemyLayer && !isDead)
+			{
+				Destroy(other.transform.gameObject);
+			}
+		}
     }
 
     void ApplyGravity()
@@ -314,7 +322,7 @@ public class PlayerController : MonoBehaviour
         ani.SetFloat("horizontal", horizontal);
     }
 
-    IEnumerator MeeleAttack()
+    IEnumerator TailAttack()
     {
         canShootAndMove = false;
         angle = 0;
@@ -342,6 +350,18 @@ public class PlayerController : MonoBehaviour
         topTailCollider.enabled = false;
         canShootAndMove = true;
     }
+
+	IEnumerator BiteAttack()
+	{
+		canShootAndMove = false;
+		rb.velocity = new Vector3(0, biteATKSpeed, 0);
+		biteCoolDownActive = true;
+
+		yield return new WaitForSeconds (biteCoolDown);
+
+		biteCoolDownActive = false;
+		canShootAndMove = true;
+	}
 
     IEnumerator EnableDisableMesh()
     {

@@ -8,6 +8,7 @@ public class SphericalAimingBullet : BaseBullet
     protected override void Update()
     {
         base.Update();
+        Move();
         DestroyGameobject(Register.instance.propertiesSphericalAiming.bulletDestructionMargin);
     }
 
