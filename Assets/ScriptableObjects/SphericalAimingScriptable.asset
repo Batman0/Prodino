@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
   xMovementSpeed: 5
-  zMovementSpeed: 6
+  zMovementSpeed: 5
   rotationSpeed: 1.5
   destructionMargin: 0
   rotationDeadZone: 1
@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 4407702014594112, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
   - {fileID: 4765357940163226, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
   - {fileID: 4034545439923266, guid: 4ffe0264feb4c334c84514a66b3beaa6, type: 2}
-  fireRate: 3
+  fireRate: 2.5
   bulletSpeed: 2
   bulletDestructionMargin: 3
   gameObjectPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
