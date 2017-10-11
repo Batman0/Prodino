@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRight: 0
   movementType: 0
-  shootType: 0
+  shotType: 0
   enemyLife: 2
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
