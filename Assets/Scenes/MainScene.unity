@@ -586,8 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521c8fd9a2dcdbc46a33513d9f9e128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootType: 5
-  movementType: 5
+  shootType: 6
+  movementType: 1
   delay: 1
 --- !u!4 &1194246489
 Transform:

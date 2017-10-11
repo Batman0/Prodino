@@ -214,7 +214,7 @@ public static class Shots
                     }
                     else
                     {
-                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletSinusoidePrefab, spawnPoint, rotTransform, spawnPointOther);
+                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletPrefab, spawnPoint, rotTransform, spawnPointOther);
                         timer = 0.0f;
                     }
                 }
@@ -226,7 +226,7 @@ public static class Shots
                     }
                     else
                     {
-                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletPrefab, spawnPoint, rotTransform, spawnPointOther);
+                        ShootDouble(Register.instance.propertiesDoubleAiming.bulletSinusoidePrefab, spawnPoint, rotTransform, spawnPointOther);
                         timer = 0.0f;
                     }
                 }

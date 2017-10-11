@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class SinusoideBullet : BaseBullet
 {
+    protected override void Start()
+    {
+        base.Start();
+        pos = transform.position;
+        playerTransform = Register.instance.player.transform;
+    }
 
     protected override void Update()
     {
@@ -13,6 +19,8 @@ public class SinusoideBullet : BaseBullet
 
     protected override void Move()
     {
-        transform.position= new Vector3(Vector3.MoveTowards(transform.position, Register.instance.player.transform.position, 0.5f).x,transform.position.y,Register.instance.propertiesDoubleAiming.arcSin * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed));
+        pos += (playerTransform.position - transform.position).normalized * Time.deltaTime * Register.instance.propertiesDoubleAiming.bulletSpeed;
+        transform.position = pos + direction * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
+        //transform.position = new Vector3(Register.instance.player.transform.position.x * Register.instance.propertiesDoubleAiming.bulletSpeed * Time.deltaTime,transform.position.y,(Register.instance.propertiesDoubleAiming.arcSin * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed)));
     }
 }

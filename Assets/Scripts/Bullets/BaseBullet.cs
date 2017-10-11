@@ -16,6 +16,8 @@ public class BaseBullet : MonoBehaviour
     public Collider sideCollider;
     public Collider topCollider;
     protected Vector3 direction;
+    protected Vector3 pos;
+    protected Transform playerTransform;
 
     protected virtual void Start()
     {
