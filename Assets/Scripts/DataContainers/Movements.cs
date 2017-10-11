@@ -42,9 +42,16 @@ public static class Movements
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
 
-    public static void MoveDiagonal(Transform transform, float speed, float length, float amplitude, float height, float time)
+    public static void MoveDiagonalY(Transform transform, float speed, float length, float amplitude, float height, ref float time)
     {
-        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude /*Mathf.Acos(Mathf.Cos(y * Time.time))*/ + height, transform.position.z);
+        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height, transform.position.z);
+        time += Time.deltaTime;
+    }
+
+    public static void MoveDiagonalZ(Transform transform, float speed, float length, float amplitude, float height, ref float time)
+    {
+        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height);
+        time += Time.deltaTime;
     }
 
     public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
@@ -189,8 +196,7 @@ public static class Movements
             case MovementType.LASERDIAGONAL:
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    time += Time.deltaTime;
-                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, Register.instance.propertiesLaserDiagonal.height, time);
+                    MoveDiagonalY(transform, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, originalPos.y, ref time);
                 }
                 else
                 {
@@ -204,7 +210,7 @@ public static class Movements
                 }
                 else
                 {
-                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, Register.instance.propertiesSphericalAiming.height, time);
+                    MoveDiagonalZ(transform, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, originalPos.z, ref time);
                 }
                 break;
             case MovementType.BOMBDROP:
@@ -220,7 +226,7 @@ public static class Movements
                 }
                 else
                 {
-                    MoveDiagonal(transform, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, Register.instance.propertiesDoubleAiming.height, time);
+                    MoveDiagonalZ(transform, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, originalPos.z, ref time);
                 }
                 break;
             case MovementType.CIRCULAR:

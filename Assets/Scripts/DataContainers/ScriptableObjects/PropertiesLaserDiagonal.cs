@@ -11,7 +11,6 @@ public class PropertiesLaserDiagonal : Properties
     public float destructionMargin;
     public float waveLenght;
     public float amplitude;
-    public float height;
     public Transform[] rightTargets;
     public Transform[] leftTargets;
     public float laserHeight;

@@ -10,7 +10,6 @@ public class PropertiesDoubleAiming : Properties
     public float destructionMargin;
     public float waveLenght;
     public float amplitude;
-    public float height;
     public Transform[] rightTargets;
     public Transform[] leftTargets;
     public float bulletSpeed;
