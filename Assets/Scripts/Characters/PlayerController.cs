@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     public Animator ani;
+    private bool sideScroll;
 
     [Header("TailMelee")]
     public float topdownSpeed;
@@ -91,6 +92,7 @@ public class PlayerController : MonoBehaviour
                 switch (GameManager.instance.currentGameMode)
                 {
 				case GameMode.SIDESCROLL:
+                        sideScroll = true;
 					if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
 						Move (Vector3.right, speed, "Horizontal");
 					}
@@ -130,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
 
 						
-					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive) {
+					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump) {
 							StartCoroutine ("BiteAttack");
 						}
 						
@@ -138,6 +140,7 @@ public class PlayerController : MonoBehaviour
 
                         break;
                 case GameMode.TOPDOWN:
+                        sideScroll = false;
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
@@ -320,6 +323,8 @@ public class PlayerController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         ani.SetFloat("horizontal", horizontal);
+        ani.SetBool("sideScroll", sideScroll);
+        
     }
 
     IEnumerator TailAttack()
@@ -331,18 +336,6 @@ public class PlayerController : MonoBehaviour
         while (angle < 360)
         {
             angle += topdownSpeed;
-            //Vector3 initDir = -bulletSpawnPoint.forward;
-            //Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
-            //Vector3 newVector = angleQ * initDir;
-
-            //Ray ray = new Ray(transform.position, newVector);
-
-            //if (Physics.Raycast(ray, out hit, meleeDistance))
-            //{
-            //    Destroy(hit.transform.gameObject);
-            //}
-            //Debug.DrawRay(ray.origin, ray.direction * meleeDistance, Color.magenta);
-
             transform.Rotate(Vector3.up, topdownSpeed, Space.World);
 
             yield return null;

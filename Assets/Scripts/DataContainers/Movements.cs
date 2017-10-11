@@ -151,10 +151,12 @@ public static class Movements
         return transform.position;
     }
 
-    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy)
+    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy, Enemy enemy)
     {
         if (movementTimer < movementDuration && doneRotation == 0)
         {
+            enemy.sideCollider.enabled = true;
+            enemy.topCollider.enabled = false;
             MoveForward(transform, forthSpeed);
             movementTimer += Time.deltaTime;
         }
@@ -175,6 +177,8 @@ public static class Movements
             }
             if (doneRotation < 180)
             {
+                enemy.sideCollider.enabled = false;
+                enemy.topCollider.enabled = true;
                 transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
@@ -182,7 +186,7 @@ public static class Movements
     }
 
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy)
+    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy,Enemy enemyScript)
     {
         switch (movementType)
         {
@@ -217,7 +221,7 @@ public static class Movements
                 MoveForward(transform, isRight, Register.instance.propertiesBombDrop.xMovementSpeed, Register.instance.propertiesBombDrop.destructionMargin, ref toDestroy);
                 break;
             case MovementType.TRAIL:
-                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy);
+                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy,enemyScript);
                 break;
             case MovementType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)

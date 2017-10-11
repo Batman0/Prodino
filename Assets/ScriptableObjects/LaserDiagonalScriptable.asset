@@ -15,9 +15,6 @@ MonoBehaviour:
   yMovementSpeed: 3
   yMovementSpeedShot: 3
   destructionMargin: 3
-  waveLenght: 5
-  amplitude: 5
-  height: 5
   rightTargets:
   - {fileID: 4101385932214528, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
   - {fileID: 4323485275126154, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
@@ -30,11 +27,11 @@ MonoBehaviour:
   - {fileID: 4117244941592744, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
   - {fileID: 4181255215374488, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
   - {fileID: 4558784401294358, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  laserHeight: 3
-  laserDepth: 3
-  speed: 5
-  waitingTime: 2
-  loadingTime: 2
+  laserHeight: 1
+  laserDepth: 2
+  speed: 6
+  waitingTime: 1.5
+  loadingTime: 3
   shootingTime: 2
   gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
