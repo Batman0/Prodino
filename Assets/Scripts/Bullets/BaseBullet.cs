@@ -18,6 +18,7 @@ public class BaseBullet : MonoBehaviour
     protected Vector3 direction;
     protected Vector3 pos;
     protected Transform playerTransform;
+    protected float relativePos;
 
     protected virtual void Start()
     {

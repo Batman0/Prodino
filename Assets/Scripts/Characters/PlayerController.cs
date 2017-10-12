@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine("EnableDisableMesh");
 
-                if (other.transform.tag == "EnemyBullet")
+                if (other.transform.tag.StartsWith("EnemyBullet"))
                 {
                     Destroy(other.transform.gameObject);
                 }
