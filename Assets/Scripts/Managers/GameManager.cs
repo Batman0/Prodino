@@ -7,6 +7,14 @@ public enum GameMode
     SIDESCROLL,
     TOPDOWN
 }
+
+[System.Serializable]
+public struct Background
+{
+    public GameObject background;
+    public float speed;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -14,11 +22,10 @@ public class GameManager : MonoBehaviour
     public GameMode currentGameMode;
     [HideInInspector]
     public bool transitionIsRunning;
-    public float backgroundSpeed;
     private float distanceZSurplus = 20;
     [HideInInspector]
     public float playerBulletSpawnpoointY;
-    public GameObject[] backgrounds;
+    public Background[] backgrounds;
 
     private void Awake()
     {
@@ -46,7 +53,7 @@ public class GameManager : MonoBehaviour
                 Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane + distanceZSurplus)).z;
             }
         }
-        MoveBackgrounds(backgrounds, Vector3.left, backgroundSpeed);
+        MoveBackgrounds(Vector3.left);
         //Debug.Log(Time.time.ToString("#.##"));
     }
 
@@ -59,11 +66,11 @@ public class GameManager : MonoBehaviour
     //    playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
     //}
 
-    void MoveBackgrounds(GameObject[] backgrounds, Vector3 moveVector, float speed)
+    void MoveBackgrounds(Vector3 moveVector)
     {
-        foreach (GameObject background in backgrounds)
+        foreach (Background item in backgrounds)
         {
-            background.transform.Translate(moveVector * speed * Time.deltaTime, Space.World);
+            item.background.transform.Translate(moveVector * item.speed * Time.deltaTime, Space.World);
         }
     }
 }
