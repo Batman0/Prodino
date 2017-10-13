@@ -119,7 +119,8 @@ public class PlayerController : MonoBehaviour
 					if (transform.rotation != sideScrollerRotation) {
 						transform.rotation = sideScrollerRotation;
 					}
-					Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
+
+                    Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
 					float aimAngle = Vector3.Angle (Vector3.right, aim);
 					Vector3 cross = Vector3.Cross (Vector3.right, aim);
 					if (aimAngle <= upRotationAngle && cross.z >= 0) {
@@ -171,9 +172,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation && bulletSpawnPointDx.rotation != bulletSpawnPointStartRotation)
                 {
                     bulletSpawnPointLx.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPointDx.rotation = bulletSpawnPointStartRotation;
                 }
                 ChangePerspective();
             }
@@ -276,9 +278,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
-            //bullet.SetActive(true);
-            //bullet.tag = playerBulletTag;
+            if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+            {
+                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+            }
+            else
+            {
+                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+                GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointDx.position, bulletSpawnPointDx.rotation) as GameObject;
+            }
+             
         }
     }
 
