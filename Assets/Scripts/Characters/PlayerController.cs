@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-    //private float CheckGroundRaycastMargin = 1;
     [HideInInspector]
     public GameObject aimTransform;
-    public Transform bulletSpawnPoint;
+    public Transform bulletSpawnPointLx;
+    public Transform bulletSpawnPointDx;
     public float fireRatio = 0.10f;
     private float fireTimer;
     public float respawnTimer = 0.5f;
@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
     private float angle;
-    //public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
     public bool canShootAndMove = true;
@@ -40,11 +39,11 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     public Transform landmark;
     public Collider sideBodyCollider;
-    //public Collider sideTailCollider;
     public Collider topBodyCollider;
     public Collider topTailCollider;
-
-    //private SkinnedMeshRenderer skinnedMeshRen;
+    private Quaternion sideBodyColliderStartRot;
+    private Quaternion topBodyColliderStartRot;
+    private Quaternion topTailBodyColliderStartRot;
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -66,18 +65,18 @@ public class PlayerController : MonoBehaviour
 	public bool biteCoolDownActive;
 	public float biteCoolDown;
 
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
         Register.instance.player = this;
     }
 
     void Start()
     {
+        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
+        topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
-        bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
+        bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
     }
     void Update()
@@ -89,6 +88,7 @@ public class PlayerController : MonoBehaviour
             {
                 canJump = CheckGround(jumpCheckRayLength);
                 thereIsGround = CheckGround(groundCheckRayLength);
+
                 switch (GameManager.instance.currentGameMode)
                 {
 				case GameMode.SIDESCROLL:
@@ -119,13 +119,13 @@ public class PlayerController : MonoBehaviour
 					if (transform.rotation != sideScrollerRotation) {
 						transform.rotation = sideScrollerRotation;
 					}
-					Vector3 aim = aimTransform.transform.position - bulletSpawnPoint.position;
+					Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
 					float aimAngle = Vector3.Angle (Vector3.right, aim);
 					Vector3 cross = Vector3.Cross (Vector3.right, aim);
 					if (aimAngle <= upRotationAngle && cross.z >= 0) {
-						TurnAroundPlayer (bulletSpawnPoint);
+						TurnAroundPlayer (bulletSpawnPointLx);
 					} else if (aimAngle <= downRotationAngle && cross.z < 0) {
-						TurnAroundPlayer (bulletSpawnPoint);
+						TurnAroundPlayer (bulletSpawnPointLx);
 					}
 
 					ClampPosition (GameMode.SIDESCROLL);
@@ -171,13 +171,20 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPoint.rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation)
                 {
-                    bulletSpawnPoint.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPointLx.rotation = bulletSpawnPointStartRotation;
                 }
                 ChangePerspective();
             }
         }
+    }
+
+    void LateUpdate()
+    {
+        sideBodyCollider.transform.rotation = sideBodyColliderStartRot;
+        topBodyCollider.transform.rotation = topBodyColliderStartRot;
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -269,7 +276,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
+            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
             //bullet.SetActive(true);
             //bullet.tag = playerBulletTag;
         }
@@ -323,8 +330,7 @@ public class PlayerController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         ani.SetFloat("horizontal", horizontal);
-        ani.SetBool("sideScroll", sideScroll);
-        
+        ani.SetBool("sideScroll", sideScroll);    
     }
 
     IEnumerator TailAttack()
