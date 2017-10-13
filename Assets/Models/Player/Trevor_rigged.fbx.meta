@@ -3,7 +3,7 @@ guid: 2c5b6cfb879f39c4580c656c398eb144
 timeCreated: 1506689107
 licenseType: Free
 ModelImporter:
-  serializedVersion: 21
+  serializedVersion: 22
   fileIDToRecycleName:
     100000: Ankle_L
     100002: Ankle_R
@@ -107,6 +107,7 @@ ModelImporter:
     400096: Wing_L_Tip
     400098: Wing_R_Base
     400100: Wing_R_Tip
+    2100000: m_Trevor_Gun
     2300000: Arm_D
     2300002: Arm_S
     2300004: Gun_D
@@ -131,10 +132,23 @@ ModelImporter:
     9500000: //RootNode
     13700000: Trevor_Body
     13700002: Trevor_Tail
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_Trevor_Body
+    second: {fileID: 2100000, guid: 4e31b6f058452504eaffce590b2d699b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: m_Trevor_Gun
+    second: {fileID: 2100000, guid: d0c5da5ca0eacc44e97dd8a4e913a55b, type: 2}
   materials:
     importMaterials: 1
+    autoMapExternalMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -147,6 +161,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
