@@ -10,6 +10,7 @@ public class PropertiesTrail : Properties
     public float rotationSpeed;
     public float movementDuration;
     public float fadeTime;
+    public float trailSpeed;
     public GameObject gameObjectPrefab;
     public GameObject trailPrefab;
 }

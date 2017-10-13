@@ -38,27 +38,30 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void ShootTrail(GameObject prefab,ref GameObject gameObjectParticle,Transform spawnpoint, Transform rotTransform, bool canShoot)
+    public static void ShootTrail(GameObject prefab,ref GameObject trailGo,Transform spawnpoint, Transform rotTransform, ref bool canShoot)
     {
-        if(!gameObjectParticle)
-        {
-            gameObjectParticle = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
-            Debug.Log(gameObjectParticle);
-            ParticleSystem ps = gameObjectParticle.GetComponent<ParticleSystem>();
-            var main = ps.main;
-            main.startLifetime = Register.instance.propertiesTrail.fadeTime;
-            gameObjectParticle.transform.SetParent(spawnpoint);
-            gameObjectParticle.SetActive(false);
-            Debug.Log(canShoot);
-        }
+        //if(!trailGo)
+        //{
+        //    trailGo = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
+        //    //Debug.Log(trailGo);
+        //    //ParticleSystem ps = trailGo.GetComponent<ParticleSystem>();
+        //    //var main = ps.main;
+        //    //main.startLifetime = Register.instance.propertiesTrail.fadeTime;
+        //    //trailGo.transform.SetParent(spawnpoint);
+        //    trailGo.SetActive(false);
+        //    //Debug.Log(canShoot);
+        //}
         
         if(canShoot)
         {
-            gameObjectParticle.SetActive(true);
-        }
-        else
-        {
-            gameObjectParticle.SetActive(false);
+            trailGo = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
+            canShoot = false;
+            //Debug.Log(trailGo);
+            //ParticleSystem ps = trailGo.GetComponent<ParticleSystem>();
+            //var main = ps.main;
+            //main.startLifetime = Register.instance.propertiesTrail.fadeTime;
+            //trailGo.transform.SetParent(spawnpoint);
+            //trailGo.SetActive(true);
         }
     }
 
@@ -208,7 +211,7 @@ public static class Shots
                 }
                 break;
             case ShotType.TRAIL:
-                ShootTrail(Register.instance.propertiesTrail.trailPrefab, ref particleTrail, spawnPoint, rotTransform, canShoot);
+                ShootTrail(Register.instance.propertiesTrail.trailPrefab, ref particleTrail, spawnPoint, rotTransform, ref canShoot);
                 break;
             case ShotType.DOUBLEAIMING:
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
