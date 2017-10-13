@@ -40,40 +40,14 @@ public static class Shots
 
     public static void ShootTrail(GameObject prefab, ref GameObject trailGo,Transform spawnpoint, Transform rotTransform, ref bool canShoot)
     {
-        //if(!trailGo)
-        //{
-        //    trailGo = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
-        //    //Debug.Log(trailGo);
-        //    //ParticleSystem ps = trailGo.GetComponent<ParticleSystem>();
-        //    //var main = ps.main;
-        //    //main.startLifetime = Register.instance.propertiesTrail.fadeTime;
-        //    //trailGo.transform.SetParent(spawnpoint);
-        //    trailGo.SetActive(false);
-        //    //Debug.Log(canShoot);
-        //}
         
         if(canShoot)
         {
             trailGo = Object.Instantiate(prefab, spawnpoint.position, Quaternion.Inverse(rotTransform.rotation));
             trailGo.transform.SetParent(spawnpoint);
             canShoot = false;
-            //Debug.Log(trailGo);
-            //ParticleSystem ps = trailGo.GetComponent<ParticleSystem>();
-            //var main = ps.main;
-            //main.startLifetime = Register.instance.propertiesTrail.fadeTime;
-            //trailGo.SetActive(true);
         }
-        //else if(trailGo)
-        //{
-        //    //if (trailGo && trailGo.transform.parent == null)
-        //    //{
-        //    //    trailGo.transform.SetParent(spawnpoint);
-        //    //}
-        //    if (Vector3.Distance (trailGo.transform.position, spawnpoint.transform.position) > 0.1f)
-        //    {
-        //        trailGo.transform.Translate(Vector3.back * Register.instance.propertiesTrail.xReturnSpeed * Time.deltaTime, Space.Self);
-        //    }
-        //}
+        
     }
 
     public static void ShootDouble(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
@@ -84,8 +58,8 @@ public static class Shots
 
     public static void ShootDoubleSin(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
     {
-        GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, prefab.transform.rotation);
-        GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, Quaternion.Inverse(prefab.transform.rotation));
+        GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, rotTransform.rotation);
+        GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, rotTransform.rotation);
         Bullet.tag = "EnemyBulletInverse";
     }
 
