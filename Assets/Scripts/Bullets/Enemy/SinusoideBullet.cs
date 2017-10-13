@@ -20,10 +20,10 @@ public class SinusoideBullet : BaseBullet
     protected override void Move()
     {
         pos += transform.right * Time.deltaTime * Register.instance.propertiesDoubleAiming.bulletSpeed;
-
+        // to do Da cambiare il seno con un'approssimazione con lerp tra un punto più alto ad un punto più basso
         if(gameObject.tag == "EnemyBulletInverse")
         {
-            transform.position = pos + direction * (Mathf.Pow(Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed), -1f)) * Register.instance.propertiesDoubleAiming.arcSin;
+            transform.position = pos + direction * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
         }
         else
         {
