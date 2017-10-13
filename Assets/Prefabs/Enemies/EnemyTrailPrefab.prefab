@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1481659234827662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: -0, y: 0, z: -1.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4958441338833634}
@@ -149,12 +149,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRight: 0
   movementType: 0
-  shootType: 0
+  shotType: 0
   enemyLife: 5
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
   barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
   bulletSpawnpoint: {fileID: 4184531272177340}
+  bulletSpawnpointOther: {fileID: 0}
   sideCollider: {fileID: 65798314600009978}
   topCollider: {fileID: 65864004444632390}
   shooterTransform: {fileID: 0}

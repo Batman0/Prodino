@@ -38,7 +38,7 @@ public static class Shots
         GameObject bomb = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
     }
 
-    public static void ShootTrail(GameObject prefab,ref GameObject trailGo,Transform spawnpoint, Transform rotTransform, ref bool canShoot)
+    public static void ShootTrail(GameObject prefab, ref GameObject trailGo,Transform spawnpoint, Transform rotTransform, ref bool canShoot)
     {
         //if(!trailGo)
         //{
@@ -54,15 +54,26 @@ public static class Shots
         
         if(canShoot)
         {
-            trailGo = Object.Instantiate(prefab, spawnpoint.position, rotTransform.rotation);
+            trailGo = Object.Instantiate(prefab, spawnpoint.position, Quaternion.Inverse(rotTransform.rotation));
+            trailGo.transform.SetParent(spawnpoint);
             canShoot = false;
             //Debug.Log(trailGo);
             //ParticleSystem ps = trailGo.GetComponent<ParticleSystem>();
             //var main = ps.main;
             //main.startLifetime = Register.instance.propertiesTrail.fadeTime;
-            //trailGo.transform.SetParent(spawnpoint);
             //trailGo.SetActive(true);
         }
+        //else if(trailGo)
+        //{
+        //    //if (trailGo && trailGo.transform.parent == null)
+        //    //{
+        //    //    trailGo.transform.SetParent(spawnpoint);
+        //    //}
+        //    if (Vector3.Distance (trailGo.transform.position, spawnpoint.transform.position) > 0.1f)
+        //    {
+        //        trailGo.transform.Translate(Vector3.back * Register.instance.propertiesTrail.xReturnSpeed * Time.deltaTime, Space.Self);
+        //    }
+        //}
     }
 
     public static void ShootDouble(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)

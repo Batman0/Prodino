@@ -162,7 +162,7 @@ public static class Movements
         }
         else if (movementTimer > 0.0f && doneRotation >= 180)
         {
-            MoveForward(transform, forthSpeed);
+            MoveForward(transform, backSpeed);
             movementTimer -= Time.deltaTime;
         }
         else if (movementTimer <= 0.0f && doneRotation >= 180)
@@ -171,16 +171,16 @@ public static class Movements
         }
         else
         {
-            if (doneRotation == 0 && !canShoot)
-            {
-                canShoot = true;
-            }
             if (doneRotation < 180)
             {
                 enemy.sideCollider.enabled = false;
                 enemy.topCollider.enabled = true;
                 transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
+            }
+            if (doneRotation >= 180 && !canShoot)
+            {
+                canShoot = true;
             }
         }
     }
