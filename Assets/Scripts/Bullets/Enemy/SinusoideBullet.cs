@@ -7,7 +7,7 @@ public class SinusoideBullet : BaseBullet
     protected override void Start()
     {
         base.Start();
-        xDirection = Register.instance.player.transform.position;
+        xDirection = transform.position - Register.instance.player.transform.position;
     }
 
     protected override void Update()
@@ -23,12 +23,12 @@ public class SinusoideBullet : BaseBullet
         if(gameObject.tag == "EnemyBulletInverse")
         {
             //transform.position = new Vector3(xDirection.x * Register.instance.propertiesDoubleAiming.bulletSpeed, transform.position.y, (transform.right * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin).z);
-            transform.position = (xDirection * Register.instance.propertiesDoubleAiming.bulletSpeed) + transform.right * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
+            transform.position = (transform.position + xDirection.normalized * Register.instance.propertiesDoubleAiming.bulletSpeed) + transform.right * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
         }
         else
         {
             //transform.position = new Vector3(xDirection.x * Register.instance.propertiesDoubleAiming.bulletSpeed, transform.position.y, (transform.right * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin).z);
-            transform.position = (xDirection * Register.instance.propertiesDoubleAiming.bulletSpeed) + transform.right * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
+            transform.position = (xDirection.normalized * Register.instance.propertiesDoubleAiming.bulletSpeed) + transform.right * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
         }
     }
 }

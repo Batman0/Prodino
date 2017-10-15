@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public bool transitionIsRunning;
     private float distanceZSurplus = 20;
     [HideInInspector]
-    public float playerBulletSpawnpoointY;
+    public float playerBulletSpawnpointY;
     public Background[] backgrounds;
 
     private void Awake()
@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Register.instance.player.startPosition = Register.instance.player.transform.position;
-        //Register.instance.player.aimTransform = Register.instance.aimTransform;
-        playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
+        Register.instance.player.aimTransform = Register.instance.aimTransform;
+        playerBulletSpawnpointY = Register.instance.player.bulletSpawnPointLx.position.y;
         Register.instance.xMin = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
         Register.instance.xMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
         Register.instance.yMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane + distanceZSurplus)).y;
