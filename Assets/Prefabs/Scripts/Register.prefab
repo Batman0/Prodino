@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1960406211668574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.8187175, y: -37.17813, z: 303.67117}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,8 +57,7 @@ MonoBehaviour:
   numberOfTransitableObjects: 0
   translatedObjects: 0
   player: {fileID: 0}
-  aimTransform: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
-    type: 2}
+  enemyScript: {fileID: 0}
   propertiesPlayer: {fileID: 11400000, guid: 5db68b97bf0ceb64c8a1335b341e1bc4, type: 2}
   propertiesForwardShooter: {fileID: 11400000, guid: 0c4beaaf9d3b41945a56f51dc1116639,
     type: 2}

@@ -607,15 +607,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4472192565285864, guid: 73bd76ced79c1a142b7682a6a8a25db0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7.8187175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4472192565285864, guid: 73bd76ced79c1a142b7682a6a8a25db0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -37.17813
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4472192565285864, guid: 73bd76ced79c1a142b7682a6a8a25db0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 303.67117
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4472192565285864, guid: 73bd76ced79c1a142b7682a6a8a25db0, type: 2}
       propertyPath: m_LocalRotation.x
@@ -686,19 +686,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114211673695857014, guid: 4dff3f28592711e4da910a40d9fe5f7e,
         type: 2}
-      propertyPath: backgrounds.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114211673695857014, guid: 4dff3f28592711e4da910a40d9fe5f7e,
-        type: 2}
       propertyPath: backgrounds.Array.data[0].background
       value: 
       objectReference: {fileID: 425058900}
-    - target: {fileID: 114211673695857014, guid: 4dff3f28592711e4da910a40d9fe5f7e,
-        type: 2}
-      propertyPath: backgrounds.Array.data[0].speed
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dff3f28592711e4da910a40d9fe5f7e, type: 2}
   m_IsPrefabParent: 0
