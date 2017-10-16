@@ -2972,7 +2972,6 @@ MonoBehaviour:
   downRotationAngle: 90
   jumpCheckRayLength: 0.5
   groundCheckRayLength: 25
-  aimTransform: {fileID: 0}
   bulletSpawnPoints: {fileID: 44607379}
   bulletSpawnPointLx: {fileID: 1190319227}
   bulletSpawnPointRx: {fileID: 1908512547}
@@ -2989,6 +2988,8 @@ MonoBehaviour:
   sideBodyCollider: {fileID: 1175709346}
   topBodyCollider: {fileID: 398181526}
   topTailCollider: {fileID: 1857117629}
+  aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
+    type: 2}
   sideXMin: 4
   sideXMax: 4
   sideYMax: 4

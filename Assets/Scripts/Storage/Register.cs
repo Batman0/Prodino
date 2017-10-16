@@ -22,8 +22,8 @@ public class Register : MonoBehaviour
     [HideInInspector]
     public Enemy enemyScript;
 
-    [Header("Aim")]
-    public GameObject aimTransform;
+    //[Header("Aim")]
+    //public GameObject aimTransform;
 
     [Header("Scriptables")]
     public PropertiesPlayer propertiesPlayer;

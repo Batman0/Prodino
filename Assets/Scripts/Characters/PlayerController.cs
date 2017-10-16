@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-    [HideInInspector]
-    public GameObject aimTransform;
     public Transform bulletSpawnPoints;
     public Transform bulletSpawnPointLx;
     public Transform bulletSpawnPointRx;
@@ -45,6 +43,15 @@ public class PlayerController : MonoBehaviour
     private Quaternion sideBodyColliderStartRot;
     private Quaternion topBodyColliderStartRot;
     private Quaternion topTailBodyColliderStartRot;
+
+    [Header("Aim")]
+    private float intersectionPoint;
+    private Vector3 aimVector;
+    private Plane? sidescrollPlane;
+    private Plane? topDownPlane;
+    private Ray aimRay;
+    public GameObject aimTransformPrefab;
+    private GameObject aimTransform;
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -79,6 +86,7 @@ public class PlayerController : MonoBehaviour
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
+        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
     }
     void Update()
     {
@@ -89,6 +97,7 @@ public class PlayerController : MonoBehaviour
             {
                 canJump = CheckGround(jumpCheckRayLength);
                 thereIsGround = CheckGround(groundCheckRayLength);
+                Aim();
 
                 switch (GameManager.instance.currentGameMode)
                 {
@@ -120,7 +129,6 @@ public class PlayerController : MonoBehaviour
 					if (transform.rotation != sideScrollerRotation) {
 						transform.rotation = sideScrollerRotation;
 					}
-
                     Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
 					float aimAngle = Vector3.Angle (Vector3.right, aim);
 					Vector3 cross = Vector3.Cross (Vector3.right, aim);
@@ -263,6 +271,36 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis(moveAxis) < -controllerDeadZone || Input.GetAxis(moveAxis) > controllerDeadZone)
         {
             transform.Translate(moveVector * Input.GetAxis(moveAxis) * speed * Time.deltaTime, Space.World);
+        }
+    }
+
+    void Aim()
+    {
+        if (sidescrollPlane == null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            sidescrollPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane == null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            topDownPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
+            {
+                aimVector = aimRay.GetPoint(intersectionPoint);
+                aimTransform.transform.position = aimVector;
+            }
+        }
+        if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (sidescrollPlane.Value.Raycast(aimRay, out intersectionPoint))
+            {
+                aimVector = aimRay.GetPoint(intersectionPoint);
+                aimTransform.transform.position = aimVector;
+            }
         }
     }
 
