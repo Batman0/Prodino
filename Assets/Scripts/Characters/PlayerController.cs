@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
+    //private bool bulletSpawnPointIsRotated;
+    //private Quaternion bulletSpawnPointStartRot;
     private int enemyLayer = 12;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
@@ -87,6 +89,7 @@ public class PlayerController : MonoBehaviour
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+        //bulletSpawnPointStartRot = bulletSpawnPoints.rotation;
     }
     void Update()
     {
@@ -103,7 +106,11 @@ public class PlayerController : MonoBehaviour
                 {
 				case GameMode.SIDESCROLL:
                         sideScroll = true;
-					if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
+                        //if (bulletSpawnPointIsRotated)
+                        //{
+                        //    bulletSpawnPointIsRotated = false;
+                        //}
+                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
 						Move (Vector3.right, speed, "Horizontal");
 					}
 					if (Input.GetKeyDown (KeyCode.W) && canJump) {
@@ -155,6 +162,12 @@ public class PlayerController : MonoBehaviour
                         break;
                 case GameMode.TOPDOWN:
                         sideScroll = false;
+                        //if (!bulletSpawnPointIsRotated)
+                        //{
+                        //    bulletSpawnPoints.rotation = bulletSpawnPointStartRot;
+                        //    bulletSpawnPointIsRotated = true;
+                        //    Debug.Log("SSSS");
+                        //}
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
