@@ -211,7 +211,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1214670285519748
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -912,7 +912,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4131419845760396}
-  - {fileID: 4110617275544600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -1032,15 +1031,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214670285519748}
-  m_LocalRotation: {x: -0.00000015987122, y: 0.000000119209275, z: -0.00000006651296,
-    w: 1}
-  m_LocalPosition: {x: -0.87918174, y: 1.5492411, z: 2.2960582}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.40645882, y: 0.5908019, z: -0.38852677, w: -0.5786116}
+  m_LocalPosition: {x: 29.9996, y: -187.00089, z: -93.70042}
+  m_LocalScale: {x: 100.000114, y: 100.00002, z: 100.00011}
   m_Children:
   - {fileID: 4295414299896406}
   - {fileID: 4318787980712110}
-  m_Father: {fileID: 4021812952014568}
-  m_RootOrder: 1
+  m_Father: {fileID: 4358772487432108}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4124641574672554
 Transform:
@@ -1230,6 +1228,7 @@ Transform:
   - {fileID: 4413468437094288}
   - {fileID: 4389932364834720}
   - {fileID: 4322268115571888}
+  - {fileID: 4110617275544600}
   m_Father: {fileID: 4259554450083542}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2035,7 +2034,6 @@ MonoBehaviour:
   downRotationAngle: 90
   jumpCheckRayLength: 0.5
   groundCheckRayLength: 25
-  aimTransform: {fileID: 0}
   bulletSpawnPoints: {fileID: 4110617275544600}
   bulletSpawnPointLx: {fileID: 4318787980712110}
   bulletSpawnPointRx: {fileID: 4295414299896406}
@@ -2052,6 +2050,8 @@ MonoBehaviour:
   sideBodyCollider: {fileID: 65969070036458574}
   topBodyCollider: {fileID: 65056165067551748}
   topTailCollider: {fileID: 65153678418553716}
+  aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
+    type: 2}
   sideXMin: 4
   sideXMax: 4
   sideYMax: 4
