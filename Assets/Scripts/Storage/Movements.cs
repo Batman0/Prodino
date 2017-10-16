@@ -42,16 +42,46 @@ public static class Movements
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
 
-    public static void MoveDiagonalY(Transform transform, float speed, float length, float amplitude, float height, ref float time)
+    public static void MoveDiagonalY(Transform transform, bool isRight, ref bool destroy, float destructionMargin, float speed, float length, float amplitude, float height, ref float time)
     {
         transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height, transform.position.z);
         time += Time.deltaTime;
+
+        if (isRight)
+        {
+            if (transform.position.x <= Register.instance.xMin - destructionMargin)
+            {
+                destroy = true;
+            }
+        }
+        else
+        {
+            if (transform.position.x >= Register.instance.xMax + destructionMargin)
+            {
+                destroy = true;
+            }
+        }
     }
 
-    public static void MoveDiagonalZ(Transform transform, float speed, float length, float amplitude, float height, ref float time)
+    public static void MoveDiagonalZ(Transform transform, bool isRight, ref bool destroy, float destructionMargin, float speed, float length, float amplitude, float height, ref float time)
     {
         transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height);
         time += Time.deltaTime;
+
+        if (isRight)
+        {
+            if (transform.position.x <= Register.instance.xMin - destructionMargin)
+            {
+                destroy = true;
+            }
+        }
+        else
+        {
+            if (transform.position.x >= Register.instance.xMax + destructionMargin)
+            {
+                destroy = true;
+            }
+        }
     }
 
     public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
@@ -155,8 +185,6 @@ public static class Movements
     {
         if (movementTimer < movementDuration && doneRotation == 0)
         {
-            enemy.sideCollider.enabled = true;
-            enemy.topCollider.enabled = false;
             MoveForward(transform, forthSpeed);
             movementTimer += Time.deltaTime;
         }
@@ -173,14 +201,22 @@ public static class Movements
         {
             if (doneRotation < 180)
             {
-                enemy.sideCollider.enabled = false;
-                enemy.topCollider.enabled = true;
+                if (enemy.sideCollider.enabled)
+                {
+                    enemy.sideCollider.enabled = false;
+                    enemy.topCollider.enabled = true;
+                }
                 transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
             if (doneRotation >= 180 && !canShoot)
             {
                 canShoot = true;
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
+                {
+                    enemy.sideCollider.enabled = true;
+                    enemy.topCollider.enabled = false;
+                }
             }
         }
     }
@@ -191,7 +227,7 @@ public static class Movements
         switch (movementType)
         {
             case MovementType.FORWARDSHOOTER:
-                MoveForward(transform, isRight, Register.instance.propertiesForwardShooter.speed, Register.instance.propertiesForwardShooter.bulletDestructionMargin, ref toDestroy);
+                MoveForward(transform, isRight, Register.instance.propertiesForwardShooter.speed, Register.instance.propertiesForwardShooter.destructionMargin, ref toDestroy);
                 break;
             case MovementType.FORWARD:
 
@@ -200,7 +236,7 @@ public static class Movements
             case MovementType.LASERDIAGONAL:
                 if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    MoveDiagonalY(transform, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, originalPos.y, ref time);
+                    MoveDiagonalY(transform, isRight, ref toDestroy, Register.instance.propertiesLaserDiagonal.destructionMargin, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, originalPos.y, ref time);
                 }
                 else
                 {
@@ -214,7 +250,7 @@ public static class Movements
                 }
                 else
                 {
-                    MoveDiagonalZ(transform, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, originalPos.z, ref time);
+                    MoveDiagonalZ(transform, isRight, ref toDestroy, Register.instance.propertiesSphericalAiming.destructionMargin, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, originalPos.z, ref time);
                 }
                 break;
             case MovementType.BOMBDROP:
@@ -230,7 +266,7 @@ public static class Movements
                 }
                 else
                 {
-                    MoveDiagonalZ(transform, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, originalPos.z, ref time);
+                    MoveDiagonalZ(transform, isRight, ref toDestroy, Register.instance.propertiesDoubleAiming.destructionMargin, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, originalPos.z, ref time);
                 }
                 break;
             case MovementType.CIRCULAR:

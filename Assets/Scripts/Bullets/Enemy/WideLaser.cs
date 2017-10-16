@@ -7,11 +7,13 @@ public class WideLaser : BaseBullet
 
     protected override void Start()
     {
+        base.Start();
         Destroy(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 
     protected override void Update()
     {
+        base.Update();
         Extend();
     }
 

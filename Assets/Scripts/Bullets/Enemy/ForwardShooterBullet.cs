@@ -5,6 +5,12 @@ using UnityEngine;
 public class ForwardShooterBullet : BaseBullet
 {
 
+    protected override void Start()
+    {
+        direction = transform.forward;
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -14,7 +20,7 @@ public class ForwardShooterBullet : BaseBullet
 
     protected override void Move()
     {
-       transform.Translate(Vector3.forward * Register.instance.propertiesForwardShooter.bulletSpeed * Time.deltaTime, Space.Self);
+       transform.Translate(direction * Register.instance.propertiesForwardShooter.bulletSpeed * Time.deltaTime, Space.World);
     }
 
 }

@@ -7,7 +7,7 @@ public class PropertiesLaserDiagonal : Properties
 {
     public float xMovementSpeed;
     public float yMovementSpeed;
-    public float yMovementSpeedShot;
+    public float yMovementSpeedShooting;
     public float destructionMargin;
     public float waveLenght;
     public float amplitude;

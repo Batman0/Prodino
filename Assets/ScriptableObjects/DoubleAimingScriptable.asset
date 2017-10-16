@@ -16,7 +16,7 @@ MonoBehaviour:
   destructionMargin: 5
   waveLenght: 5
   amplitude: 5
-  xBulletSpeed: 0.74
+  xBulletSpeed: 1.75
   zBulletSpeed: 6.51
   fireRate: 2
   bulletAmplitude: 7

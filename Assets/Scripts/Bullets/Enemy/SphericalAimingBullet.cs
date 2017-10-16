@@ -5,6 +5,12 @@ using UnityEngine;
 public class SphericalAimingBullet : BaseBullet
 {
 
+    protected override void Start()
+    {
+        direction = transform.forward;
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -14,7 +20,7 @@ public class SphericalAimingBullet : BaseBullet
 
     protected override void Move()
     {
-        transform.Translate(Vector3.forward * Register.instance.propertiesSphericalAiming.bulletSpeed * Time.deltaTime, Space.Self);
+        transform.Translate(direction * Register.instance.propertiesSphericalAiming.bulletSpeed * Time.deltaTime, Space.World);
     }
 
 }

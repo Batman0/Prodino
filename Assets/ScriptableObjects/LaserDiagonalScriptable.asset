@@ -13,20 +13,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xMovementSpeed: 3
   yMovementSpeed: 3
-  yMovementSpeedShot: 3
+  yMovementSpeedShooting: 1
   destructionMargin: 3
+  waveLenght: 7.27
+  amplitude: 5.15
   rightTargets:
-  - {fileID: 4101385932214528, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4323485275126154, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4275495779890628, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
-  - {fileID: 4790329654628278, guid: 24ea56b2afcd6e741ba27111c79c1026, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   leftTargets:
-  - {fileID: 4624846134210718, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4381871889232844, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4117244941592744, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4181255215374488, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
-  - {fileID: 4558784401294358, guid: c2e60274053f839458f14699f7dc3af9, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   laserHeight: 1
   laserDepth: 2
   speed: 6

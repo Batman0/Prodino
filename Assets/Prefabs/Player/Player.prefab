@@ -2032,7 +2032,7 @@ MonoBehaviour:
   jumpForce: 28
   upRotationAngle: 60
   downRotationAngle: 90
-  jumpCheckRayLength: 0.5
+  jumpCheckRayLength: 2
   groundCheckRayLength: 25
   bulletSpawnPoints: {fileID: 4110617275544600}
   bulletSpawnPointLx: {fileID: 4318787980712110}

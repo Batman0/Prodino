@@ -117,7 +117,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 363521b2569bc134d8af54a790fa1997, type: 2}
+  - {fileID: 2100000, guid: b91d815fbb2d47b469a25da60ffad0d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,7 +149,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 363521b2569bc134d8af54a790fa1997, type: 2}
+  - {fileID: 2100000, guid: b91d815fbb2d47b469a25da60ffad0d0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,9 +219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRight: 0
   movementType: 0
-  shootType: 0
+  shotType: 0
   enemyLife: 2
-  properties: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
   barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
