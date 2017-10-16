@@ -10,12 +10,15 @@ public class PropertiesDoubleAiming : Properties
     public float destructionMargin;
     public float waveLenght;
     public float amplitude;
-    public Transform[] rightTargets;
-    public Transform[] leftTargets;
-    public float bulletSpeed;
+    ////not used
+    //public Transform[] rightTargets;
+    ////not used
+    //public Transform[] leftTargets;
+    public float xBulletSpeed;
+    public float zBulletSpeed;
     public float fireRate;
-    public float arcSin;
+    public float bulletAmplitude;
     public GameObject gameObjectPrefab;
     public GameObject bulletPrefab;
-    public GameObject bulletSinusoidePrefab;
+    public GameObject doubleAimingBulletPrefab;
 }

@@ -18,8 +18,9 @@ public class PlayerController : MonoBehaviour
     private float controllerDeadZone = 0.1f;
     [HideInInspector]
     public GameObject aimTransform;
+    public Transform bulletSpawnPoints;
     public Transform bulletSpawnPointLx;
-    public Transform bulletSpawnPointDx;
+    public Transform bulletSpawnPointRx;
     public float fireRatio = 0.10f;
     private float fireTimer;
     public float respawnTimer = 0.5f;
@@ -123,19 +124,23 @@ public class PlayerController : MonoBehaviour
                     Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
 					float aimAngle = Vector3.Angle (Vector3.right, aim);
 					Vector3 cross = Vector3.Cross (Vector3.right, aim);
-					if (aimAngle <= upRotationAngle && cross.z >= 0) {
-						TurnAroundPlayer (bulletSpawnPointLx);
-					} else if (aimAngle <= downRotationAngle && cross.z < 0) {
-						TurnAroundPlayer (bulletSpawnPointLx);
-					}
+					if (aimAngle <= upRotationAngle && cross.z >= 0)
+                    {
+						TurnAroundGO(bulletSpawnPoints);
+                    }
+                    else if (aimAngle <= downRotationAngle && cross.z < 0)
+                    {
+                        TurnAroundGO(bulletSpawnPoints);
+                    }
 
 					ClampPosition (GameMode.SIDESCROLL);
 
 
 						
-					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump) {
-							StartCoroutine ("BiteAttack");
-						}
+					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump)
+                    {
+				    StartCoroutine ("BiteAttack");
+				    }
 						
 
 
@@ -146,7 +151,7 @@ public class PlayerController : MonoBehaviour
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
                         {
-                            TurnAroundPlayer(transform);
+                            TurnAroundGO(transform);
                         }
 
                         ClampPosition(GameMode.TOPDOWN);
@@ -172,10 +177,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation && bulletSpawnPointDx.rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation && bulletSpawnPointRx.rotation != bulletSpawnPointStartRotation)
                 {
                     bulletSpawnPointLx.rotation = bulletSpawnPointStartRotation;
-                    bulletSpawnPointDx.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPointRx.rotation = bulletSpawnPointStartRotation;
                 }
                 ChangePerspective();
             }
@@ -261,7 +266,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void TurnAroundPlayer(Transform transform)
+    void TurnAroundGO(Transform transform)
     {
         switch (GameManager.instance.currentGameMode)
         {
@@ -285,7 +290,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
-                GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointDx.position, bulletSpawnPointDx.rotation) as GameObject;
+                GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
             }
              
         }

@@ -53,14 +53,14 @@ public static class Shots
     public static void ShootDouble(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
     {
         GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, rotTransform.rotation);
-        GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position,Quaternion.Inverse(rotTransform.rotation));
+        GameObject secondBullet = Object.Instantiate(prefab, bulletSpawnPointOther.position,Quaternion.Inverse(rotTransform.rotation));
     }
 
     public static void ShootDoubleSin(GameObject prefab, Transform bulletspawnPoint, Transform rotTransform, Transform bulletSpawnPointOther)
     {
         GameObject bullet = Object.Instantiate(prefab, bulletspawnPoint.position, rotTransform.rotation);
-        GameObject Bullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, rotTransform.rotation);
-        Bullet.tag = "EnemyBulletInverse";
+        GameObject secondBullet = Object.Instantiate(prefab, bulletSpawnPointOther.position, rotTransform.rotation);
+        secondBullet.tag = "EnemyBulletInverse";
     }
 
     public static void Shoot(ShotType shotType, Quaternion barrelStartRot, Quaternion barrelInvertedRot, ref float timer, ref bool canShoot, ref bool rotateRight,ref GameObject particleTrail, Transform spawnPoint, Transform rotTransform, Transform transform, Transform spawnPointOther)
@@ -219,7 +219,7 @@ public static class Shots
                     }
                     else
                     {
-                        ShootDoubleSin(Register.instance.propertiesDoubleAiming.bulletSinusoidePrefab, spawnPoint, rotTransform, spawnPointOther);
+                        ShootDoubleSin(Register.instance.propertiesDoubleAiming.doubleAimingBulletPrefab, spawnPoint, rotTransform, spawnPointOther);
                         timer = 0.0f;
                     }
                 }
