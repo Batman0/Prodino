@@ -43,6 +43,13 @@ public class PlayerBullet : BaseBullet
         }
     }
 
+    protected override void DestroyGameobject(float destructionMargin)
+    {
+        if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     protected override void Move()
     {
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -71,5 +78,11 @@ public class PlayerBullet : BaseBullet
         {
             transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
         }
+    }
+
+    void OnDisable()
+    {
+        transform.position = Register.instance.propertiesPlayer.bulletPrefab.transform.position;
+        transform.rotation = Register.instance.propertiesPlayer.bulletPrefab.transform.rotation;
     }
 }
