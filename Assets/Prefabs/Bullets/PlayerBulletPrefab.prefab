@@ -287,8 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093edeccc9755444987a2afb91e92549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destructionMargin: 1
-  speed: 10
   sideCollider: {fileID: 65500761285806874}
   topCollider: {fileID: 65629360401863642}
 --- !u!198 &198457409176121470
@@ -6884,7 +6882,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 792583750
+  randomSeed: 620966458
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10146,7 +10144,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2117066801
+  randomSeed: 961585615
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -9,6 +9,7 @@ public class PlayerBullet : BaseBullet
 
     protected override void Start()
     {
+        direction = transform.forward;
         base.Start();
         if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {

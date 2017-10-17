@@ -12,14 +12,15 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
+    //private bool bulletSpawnPointIsRotated;
+    //private Quaternion bulletSpawnPointStartRot;
     private int enemyLayer = 12;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-    //private float CheckGroundRaycastMargin = 1;
-    [HideInInspector]
-    public GameObject aimTransform;
-    public Transform bulletSpawnPoint;
+    public Transform bulletSpawnPoints;
+    public Transform bulletSpawnPointLx;
+    public Transform bulletSpawnPointRx;
     public float fireRatio = 0.10f;
     private float fireTimer;
     public float respawnTimer = 0.5f;
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
     private float angle;
-    //public float meleeDistance;
     private Rigidbody rb;
     public LayerMask groundMask;
     public bool canShootAndMove = true;
@@ -40,21 +40,31 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     public Transform landmark;
     public Collider sideBodyCollider;
-    //public Collider sideTailCollider;
     public Collider topBodyCollider;
     public Collider topTailCollider;
+    private Quaternion sideBodyColliderStartRot;
+    private Quaternion topBodyColliderStartRot;
+    private Quaternion topTailBodyColliderStartRot;
 
-    //private SkinnedMeshRenderer skinnedMeshRen;
+    [Header("Aim")]
+    private float intersectionPoint;
+    private Vector3 aimVector;
+    private Plane? sidescrollPlane;
+    private Plane? topDownPlane;
+    private Ray aimRay;
+    public GameObject aimTransformPrefab;
+    private GameObject aimTransform;
 
     [Header("Boundaries")]
     public float sideXMin;
     public float sideXMax;
-    private float sideYMin = 3.8f;
+    private float sideYMin = 5.5f;
     public float sideYMax;
     public float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
     public Animator ani;
+    private bool sideScroll;
 
     [Header("TailMelee")]
     public float topdownSpeed;
@@ -65,19 +75,21 @@ public class PlayerController : MonoBehaviour
 	public bool biteCoolDownActive;
 	public float biteCoolDown;
 
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        //skinnedMeshRen = GetComponentInChildren<SkinnedMeshRenderer>();
         Register.instance.player = this;
     }
 
     void Start()
     {
+        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
+        topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
-        bulletSpawnPointStartRotation = bulletSpawnPoint.rotation;
+        bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
+        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+        //bulletSpawnPointStartRot = bulletSpawnPoints.rotation;
     }
     void Update()
     {
@@ -88,10 +100,17 @@ public class PlayerController : MonoBehaviour
             {
                 canJump = CheckGround(jumpCheckRayLength);
                 thereIsGround = CheckGround(groundCheckRayLength);
+                Aim();
+
                 switch (GameManager.instance.currentGameMode)
                 {
 				case GameMode.SIDESCROLL:
-					if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
+                        sideScroll = true;
+                        //if (bulletSpawnPointIsRotated)
+                        //{
+                        //    bulletSpawnPointIsRotated = false;
+                        //}
+                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
 						Move (Vector3.right, speed, "Horizontal");
 					}
 					if (Input.GetKeyDown (KeyCode.W) && canJump) {
@@ -117,32 +136,43 @@ public class PlayerController : MonoBehaviour
 					if (transform.rotation != sideScrollerRotation) {
 						transform.rotation = sideScrollerRotation;
 					}
-					Vector3 aim = aimTransform.transform.position - bulletSpawnPoint.position;
+                    Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
 					float aimAngle = Vector3.Angle (Vector3.right, aim);
 					Vector3 cross = Vector3.Cross (Vector3.right, aim);
-					if (aimAngle <= upRotationAngle && cross.z >= 0) {
-						TurnAroundPlayer (bulletSpawnPoint);
-					} else if (aimAngle <= downRotationAngle && cross.z < 0) {
-						TurnAroundPlayer (bulletSpawnPoint);
-					}
+					if (aimAngle <= upRotationAngle && cross.z >= 0)
+                    {
+						TurnAroundGO(bulletSpawnPoints);
+                    }
+                    else if (aimAngle <= downRotationAngle && cross.z < 0)
+                    {
+                        TurnAroundGO(bulletSpawnPoints);
+                    }
 
 					ClampPosition (GameMode.SIDESCROLL);
 
 
 						
-					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump) {
-							StartCoroutine ("BiteAttack");
-						}
+					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump)
+                    {
+				    StartCoroutine ("BiteAttack");
+				    }
 						
 
 
                         break;
                 case GameMode.TOPDOWN:
+                        sideScroll = false;
+                        //if (!bulletSpawnPointIsRotated)
+                        //{
+                        //    bulletSpawnPoints.rotation = bulletSpawnPointStartRot;
+                        //    bulletSpawnPointIsRotated = true;
+                        //    Debug.Log("SSSS");
+                        //}
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
                         {
-                            TurnAroundPlayer(transform);
+                            TurnAroundGO(transform);
                         }
 
                         ClampPosition(GameMode.TOPDOWN);
@@ -168,13 +198,21 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPoint.rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation && bulletSpawnPointRx.rotation != bulletSpawnPointStartRotation)
                 {
-                    bulletSpawnPoint.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPointLx.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPointRx.rotation = bulletSpawnPointStartRotation;
                 }
                 ChangePerspective();
             }
         }
+    }
+
+    void LateUpdate()
+    {
+        sideBodyCollider.transform.rotation = sideBodyColliderStartRot;
+        topBodyCollider.transform.rotation = topBodyColliderStartRot;
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -185,7 +223,7 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine("EnableDisableMesh");
 
-                if (other.transform.tag == "EnemyBullet")
+                if (other.transform.tag.StartsWith("EnemyBullet"))
                 {
                     Destroy(other.transform.gameObject);
                 }
@@ -249,7 +287,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void TurnAroundPlayer(Transform transform)
+    void Aim()
+    {
+        if (sidescrollPlane == null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            sidescrollPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane == null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            topDownPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
+        }
+        if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
+            {
+                aimVector = aimRay.GetPoint(intersectionPoint);
+                aimTransform.transform.position = aimVector;
+            }
+        }
+        if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        {
+            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (sidescrollPlane.Value.Raycast(aimRay, out intersectionPoint))
+            {
+                aimVector = aimRay.GetPoint(intersectionPoint);
+                aimTransform.transform.position = aimVector;
+            }
+        }
+    }
+
+    void TurnAroundGO(Transform transform)
     {
         switch (GameManager.instance.currentGameMode)
         {
@@ -266,9 +334,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation) as GameObject;
-            //bullet.SetActive(true);
-            //bullet.tag = playerBulletTag;
+            if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+            {
+                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+            }
+            else
+            {
+                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+                GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
+            }
+             
         }
     }
 
@@ -320,6 +395,7 @@ public class PlayerController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         ani.SetFloat("horizontal", horizontal);
+        ani.SetBool("sideScroll", sideScroll);    
     }
 
     IEnumerator TailAttack()
@@ -331,18 +407,6 @@ public class PlayerController : MonoBehaviour
         while (angle < 360)
         {
             angle += topdownSpeed;
-            //Vector3 initDir = -bulletSpawnPoint.forward;
-            //Quaternion angleQ = Quaternion.AngleAxis(angle, Vector3.up);
-            //Vector3 newVector = angleQ * initDir;
-
-            //Ray ray = new Ray(transform.position, newVector);
-
-            //if (Physics.Raycast(ray, out hit, meleeDistance))
-            //{
-            //    Destroy(hit.transform.gameObject);
-            //}
-            //Debug.DrawRay(ray.origin, ray.direction * meleeDistance, Color.magenta);
-
             transform.Rotate(Vector3.up, topdownSpeed, Space.World);
 
             yield return null;

@@ -86,7 +86,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 940bb2662c2b1ce40b844f6c7042b082, type: 2}
+  - {fileID: 2100000, guid: 95d004d130afb4847b2352b7af4c8956, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRight: 0
   movementType: 0
-  shootType: 0
+  shotType: 0
   enemyLife: 1
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}

@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentGameMode: 0
   transitionIsRunning: 0
-  backgroundSpeed: 2
-  playerBulletSpawnpoointY: 0
+  playerBulletSpawnpointY: 0
   backgrounds:
-  - {fileID: 0}
+  - background: {fileID: 0}
+    speed: 3

@@ -17,10 +17,10 @@ public class BaseBullet : MonoBehaviour
     public Collider topCollider;
     protected Vector3 direction;
 
+
     protected virtual void Start()
     {
-        direction = transform.forward;
-
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
