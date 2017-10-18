@@ -7,6 +7,12 @@ public class PlayerBullet : BaseBullet
     private bool? isRight = null;
     private bool? isCenter = null;
 
+    void OnEnable()
+    {
+        transform.position = Register.instance.player.bulletSpawnPointLx.position;
+        transform.rotation = Register.instance.player.bulletSpawnPointLx.rotation;
+    }
+
     protected override void Start()
     {
         direction = transform.forward;
@@ -85,4 +91,5 @@ public class PlayerBullet : BaseBullet
         transform.position = Register.instance.propertiesPlayer.bulletPrefab.transform.position;
         transform.rotation = Register.instance.propertiesPlayer.bulletPrefab.transform.rotation;
     }
+
 }

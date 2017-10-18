@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion topTailBodyColliderStartRot;
 
     [Header("BulletPool")]
-    private int indexOfBullet;
+    private int indexOfBullet=0;
     public float bulletAmmount = 20;
     List<GameObject> playerBullet;
 
@@ -356,18 +356,18 @@ public class PlayerController : MonoBehaviour
         {
             if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             {
-                if (!playerBullet[indexOfBullet].activeInHierarchy)
+                if(!playerBullet[indexOfBullet].activeInHierarchy)
                 {
-                    playerBullet[indexOfBullet].SetActive(true);
                     playerBullet[indexOfBullet].transform.position = bulletSpawnPointLx.position;
                     playerBullet[indexOfBullet].transform.rotation = bulletSpawnPointLx.rotation;
+                    playerBullet[indexOfBullet].SetActive(true);
                     indexOfBullet++;
                 }
-                if(indexOfBullet == bulletAmmount)
+
+                if(indexOfBullet>=playerBullet.Count)
                 {
                     indexOfBullet = 0;
                 }
-                //GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
             }
             else
             {
