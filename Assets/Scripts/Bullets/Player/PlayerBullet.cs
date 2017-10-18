@@ -9,13 +9,11 @@ public class PlayerBullet : BaseBullet
 
     void OnEnable()
     {
-        transform.position = Register.instance.player.bulletSpawnPointLx.position;
-        transform.rotation = Register.instance.player.bulletSpawnPointLx.rotation;
+        direction = transform.forward;
     }
 
     protected override void Start()
     {
-        direction = transform.forward;
         base.Start();
         if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
@@ -88,8 +86,8 @@ public class PlayerBullet : BaseBullet
 
     void OnDisable()
     {
-        transform.position = Register.instance.propertiesPlayer.bulletPrefab.transform.position;
-        transform.rotation = Register.instance.propertiesPlayer.bulletPrefab.transform.rotation;
+        isCenter = null;
+        isRight = null;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
-
 }
