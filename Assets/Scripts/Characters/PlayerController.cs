@@ -7,13 +7,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector3 startPosition;
     [SerializeField]
-    private GameObject meshGO;
+    private GameObject playerModel;
     public float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
-    //private bool bulletSpawnPointIsRotated;
-    //private Quaternion bulletSpawnPointStartRot;
     private int enemyLayer = 12;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
@@ -45,6 +43,20 @@ public class PlayerController : MonoBehaviour
     private Quaternion sideBodyColliderStartRot;
     private Quaternion topBodyColliderStartRot;
     private Quaternion topTailBodyColliderStartRot;
+
+    [Header("BulletPool")]
+    private int indexOfBullet=0;
+    public float bulletAmmount = 20;
+    List<GameObject> playerBullet;
+
+
+    [Header("Guns")]
+    public GameObject armRx;
+    public Transform gunRx;
+    public GameObject armLx;
+    public Transform gunLx;
+    public float maxAngleRotation = 30;
+    private float angleS = 0;
 
     [Header("Aim")]
     private float intersectionPoint;
@@ -83,6 +95,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        playerBullet = new List<GameObject>();
+        for(int i=0;i<bulletAmmount;i++)
+        {
+            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab);
+            bullet.SetActive(false);
+            playerBullet.Add(bullet);
+        }
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
@@ -106,10 +125,6 @@ public class PlayerController : MonoBehaviour
                 {
 				case GameMode.SIDESCROLL:
                         sideScroll = true;
-                        //if (bulletSpawnPointIsRotated)
-                        //{
-                        //    bulletSpawnPointIsRotated = false;
-                        //}
                         if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
 						Move (Vector3.right, speed, "Horizontal");
 					}
@@ -150,24 +165,13 @@ public class PlayerController : MonoBehaviour
 
 					ClampPosition (GameMode.SIDESCROLL);
 
-
-						
 					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump)
                     {
 				    StartCoroutine ("BiteAttack");
 				    }
-						
-
-
                         break;
                 case GameMode.TOPDOWN:
                         sideScroll = false;
-                        //if (!bulletSpawnPointIsRotated)
-                        //{
-                        //    bulletSpawnPoints.rotation = bulletSpawnPointStartRot;
-                        //    bulletSpawnPointIsRotated = true;
-                        //    Debug.Log("SSSS");
-                        //}
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
@@ -265,6 +269,22 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
     }
 
+    //void MoveArms()
+    //{
+    //    Vector3 aimtransform = new Vector3(aimTransform.transform.position.x - gunRx.position.x, aimTransform.transform.position.y - gunRx.position.y, aimTransform.transform.position.z - gunRx.position.z);
+    //    float aimAngle = Vector3.Angle(Vector3.right, aimtransform);
+    //    Vector3 cross = Vector3.Cross(Vector3.right, aimtransform);
+    //    if(cross.z >= 0 && angleS >= -maxAngleRotation)
+    //    {
+    //        gunRx.RotateAround(gunRx.position, gunRx.forward, -2);
+    //        angleS += -2;
+    //    }
+    //    if(cross.z < 0 && angleS < maxAngleRotation)
+    //    {
+    //        gunRx.RotateAround(gunRx.position, gunRx.forward, 2);
+    //        angleS += 2;
+    //    }
+    //}
     bool CheckGround(float rayLength)
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
@@ -336,14 +356,24 @@ public class PlayerController : MonoBehaviour
         {
             if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             {
-                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+                if(!playerBullet[indexOfBullet].activeInHierarchy)
+                {
+                    playerBullet[indexOfBullet].transform.position = bulletSpawnPointLx.position;
+                    playerBullet[indexOfBullet].transform.rotation = bulletSpawnPointLx.rotation;
+                    playerBullet[indexOfBullet].SetActive(true);
+                    indexOfBullet++;
+                }
+
+                if(indexOfBullet>=playerBullet.Count)
+                {
+                    indexOfBullet = 0;
+                }
             }
             else
             {
-                GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
-                GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
-            }
-             
+                //GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+                //GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
+            } 
         }
     }
 
@@ -430,11 +460,11 @@ public class PlayerController : MonoBehaviour
     IEnumerator EnableDisableMesh()
     {
         isDead = true;
-        meshGO.SetActive(false);
+        playerModel.SetActive(false);
 
         yield return new WaitForSeconds(respawnTimer);
 
-        meshGO.SetActive(true);
+        playerModel.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         isDead = false;

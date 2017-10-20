@@ -7,9 +7,13 @@ public class PlayerBullet : BaseBullet
     private bool? isRight = null;
     private bool? isCenter = null;
 
-    protected override void Start()
+    void OnEnable()
     {
         direction = transform.forward;
+    }
+
+    protected override void Start()
+    {
         base.Start();
         if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
@@ -43,6 +47,13 @@ public class PlayerBullet : BaseBullet
         }
     }
 
+    protected override void DestroyGameobject(float destructionMargin)
+    {
+        if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     protected override void Move()
     {
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -71,5 +82,12 @@ public class PlayerBullet : BaseBullet
         {
             transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
         }
+    }
+
+    void OnDisable()
+    {
+        isCenter = null;
+        isRight = null;
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 }

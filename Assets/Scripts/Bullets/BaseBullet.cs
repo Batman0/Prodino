@@ -17,10 +17,9 @@ public class BaseBullet : MonoBehaviour
     public Collider topCollider;
     protected Vector3 direction;
 
-
     protected virtual void Start()
     {
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -44,7 +43,7 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    protected void DestroyGameobject(float destructionMargin)
+    protected virtual void DestroyGameobject(float destructionMargin)
     {
         if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
         {
