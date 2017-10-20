@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesBombDrop : Properties
 {
-    public float xMovementSpeed;
+    //public float xMovementSpeed;
     public float destructionMargin;
     public float loadingTime;
     public float bombFallSpeed;

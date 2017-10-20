@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesSphericalAiming : Properties
 {
-    public float xMovementSpeed;
+    //public float xMovementSpeed;
     public float zMovementSpeed;
     public float rotationSpeed;
     public float destructionMargin;

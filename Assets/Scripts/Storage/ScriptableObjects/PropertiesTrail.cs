@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesTrail : Properties
 {
-    public float xMovementSpeed;
+    //public float xMovementSpeed;
     public float xReturnSpeed;
     public float rotationSpeed;
     public float movementDuration;

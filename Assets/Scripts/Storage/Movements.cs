@@ -14,20 +14,16 @@ public enum MovementType
     CIRCULAR,
     SQUARE
 }
-public static class Movements
+public class Movements
 {
-
-    private static float speed;
-    private static float destructionMargin;
 
     public static void MoveForward(ref Enemy enemy)
     {
-
-        enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+        enemy.transform.Translate(Vector3.forward * enemy.speed * Time.deltaTime, Space.Self);
 
         if (enemy.isRight)
         {
-            if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
+            if (enemy.transform.position.x <= Register.instance.xMin - enemy.destructionMargin)
             {
                 enemy.Destroy(true);
             }
@@ -144,7 +140,7 @@ public static class Movements
         }
     }
 
-    public static Vector3 MoveGeometricAndWait(ref Enemy enemy)
+    public static void MoveGeometricAndWait(ref Enemy enemy)
     {
         if (enemy.isRight)
         {
@@ -182,7 +178,7 @@ public static class Movements
                 enemy.Destroy(true);
             }
         }
-        return enemy.transform.position;
+        //return enemy.transform.position;
     }
 
     public static void MoveBackAndForth(ref Enemy enemy)
@@ -288,8 +284,8 @@ public static class Movements
             case MovementType.SQUARE:
                 //if (enemy.isRight)
                 //{
-                enemy.myMovementSidescroll += MoveGeometric;
-                enemy.myMovementTopdown += MoveGeometric;
+                enemy.myMovementSidescroll += MoveGeometricAndWait;
+                enemy.myMovementTopdown += MoveGeometricAndWait;
                 //}
                 //else
                 //{
