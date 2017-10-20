@@ -19,23 +19,22 @@ public class PoolManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        //playerBullet = Register.instance.propertiesPlayer.bulletPrefab;
+        playerBullet = Register.instance.propertiesPlayer.bulletPrefab;
         playerBulletpool = new List<GameObject>();
-        for(i=0; i< playerBulletpool.Count; i++)
+        for(i=0; i< pooledPlayerBulletAmount; i++)
         {
             GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab) as GameObject;
             bullet.SetActive(false);
             playerBulletpool.Add(bullet);
         }
 	}
-   /* public GameObject GetpooledBullet()
+    public GameObject GetpooledBullet(int i)
     {
          if(!playerBulletpool[i].activeInHierarchy)
          {
-            
-            return playerBulletpool[i];
+            return (playerBulletpool[i]);
          }
 
         return null;
-    }*/
+    }
 }

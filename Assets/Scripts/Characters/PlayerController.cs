@@ -358,15 +358,14 @@ public class PlayerController : MonoBehaviour
             {
                 //if(!playerBullet[indexOfBullet].activeInHierarchy)
                 {
-                    GameObject bullet = PoolManager.instance.playerBulletpool[indexOfBullet];
-
+                    GameObject bullet = PoolManager.instance.GetpooledBullet(indexOfBullet);
                     bullet.transform.position = bulletSpawnPointLx.position;
                     bullet.transform.rotation = bulletSpawnPointLx.rotation;
                     bullet.SetActive(true);
                     indexOfBullet++;
                 }
 
-                if(indexOfBullet>= PoolManager.instance.playerBulletpool.Capacity)
+                if(indexOfBullet>= PoolManager.instance.pooledPlayerBulletAmount)
                 {
                     indexOfBullet = 0;
                 }
