@@ -2,40 +2,94 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public delegate void MyMovement(ref Enemy enemy);
+
+public class Enemy: MonoBehaviour
 {
-    private int movementTargetIndex;
+
+    private bool canRotate;
+    [HideInInspector]
+    public bool shoots;
+    [HideInInspector]
+    public bool toDestroy;
     [HideInInspector]
     public bool isRight;
-    private bool shoots;
-    //private bool canShoot;
-    private float waitingTimer;
-    [HideInInspector]
-    public MovementType movementType;
-    [HideInInspector]
-    public ShotType shotType;
-    private bool toDestroy;
-    private bool canRotate;
+
     public int enemyLife;
     [HideInInspector]
+    public int movementTargetIndex;
+
+    [HideInInspector]
+    public float timeToShoot;
+    [HideInInspector]
+    public float waitingTime;
+    [HideInInspector]
+    public float waitingTimer;
+    [HideInInspector]
+    public float lifeTime;
+    [HideInInspector]
+    public float speed;
+    [HideInInspector]
+    public float backSpeed;
+    [HideInInspector]
+    public float rotationSpeed;
+    [HideInInspector]
+    public float movementDuration;
+    [HideInInspector]
+    public float doneRotation;
+    [HideInInspector]
+    public float destructionMargin;
+    [HideInInspector]
+    public float length;
+    [HideInInspector]
+    public float amplitude;
+    [HideInInspector]
+    public float height;
+    [HideInInspector]
+    public float time;
+    [HideInInspector]
+    public float radius;
+
+    [HideInInspector]
     public Vector3 originalPos;
+
     [HideInInspector]
     public Quaternion barrelStartRot;
     [HideInInspector]
     public Quaternion barrelInvertedRot;
-    private float lifeTime;
+
     public Transform bulletSpawnpoint;
     public Transform bulletSpawnpointOther;
-    private float timeToShoot;
-    private float doneRotation;
-    private float laserDiagonalTime;
+    public Transform shooterTransform;
+    [HideInInspector]
+    public Transform[] targets;
+
     public Collider sideCollider;
     public Collider topCollider;
-    public Transform shooterTransform;
+
     private GameObject particleTrail;
+
+    public MovementType movementType;
+
+    public ShotType shotType;
+
+    public MyMovement myMovementSidescroll;
+    public MyMovement myMovementTopdown;
+
+    private GameManager gameManager;
+
+    private Enemy instance;
+
+    public Properties myMovementProperties;
+    private Properties myShotProperties;
 
     void Start()
     {
+        instance = this;
+        myMovementProperties = Register.instance.enemyProperties[(int)movementType];
+        myShotProperties = Register.instance.enemyProperties[(int)shotType];
+        gameManager = GameManager.instance;
+        Movements.SetMovement(this);
         movementTargetIndex = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
@@ -60,7 +114,7 @@ public class Enemy : MonoBehaviour
             transform.Rotate(Vector3.up, 180, Space.World);
         }
 
-        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+        if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
             {
@@ -84,7 +138,7 @@ public class Enemy : MonoBehaviour
         ChangePerspective();
         Move();
         Shoot();
-        Destroy();
+        Destroy(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -103,7 +157,7 @@ public class Enemy : MonoBehaviour
 
     public void Shoot()
     {
-        if(!GameManager.instance.transitionIsRunning)
+        if(!gameManager.transitionIsRunning)
         {
             Shots.Shoot(shotType, barrelStartRot, barrelInvertedRot, ref timeToShoot, ref shoots, ref canRotate,ref particleTrail,bulletSpawnpoint, shooterTransform!=null ? shooterTransform : transform, transform, bulletSpawnpointOther);
         }
@@ -111,17 +165,25 @@ public class Enemy : MonoBehaviour
 
     public void Move()
     {
-        if (!GameManager.instance.transitionIsRunning)
+        if (!gameManager.transitionIsRunning)
         {
-            Movements.Move(movementType, transform, isRight, ref shoots, originalPos, ref movementTargetIndex, ref lifeTime, ref waitingTimer, ref doneRotation, ref laserDiagonalTime, ref toDestroy,this);
+            if (gameManager.currentGameMode == GameMode.SIDESCROLL)
+            {
+                myMovementSidescroll(ref instance);
+            }
+            else
+            {
+                myMovementTopdown(ref instance);
+            }
         }
+
     }
 
     void ChangePerspective()
     {
-        if (GameManager.instance.transitionIsRunning)
+        if (gameManager.transitionIsRunning)
         {
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            if (gameManager.currentGameMode == GameMode.TOPDOWN)
             {
                 if (!sideCollider.enabled)
                 {
@@ -140,9 +202,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void Destroy(bool destroy)
     {
-        if(CheckEnemyLife() || toDestroy)
+        if(CheckEnemyLife() || toDestroy || destroy)
         {
             Destroy(gameObject);
         }
@@ -152,4 +214,9 @@ public class Enemy : MonoBehaviour
     {
         return enemyLife <= 0;
     }
+
+    //public void AssignProperties()
+    //{
+    //    switch
+    //}
 }

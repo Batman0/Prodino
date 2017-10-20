@@ -36,8 +36,8 @@ public class Register : MonoBehaviour
     public PropertiesDoubleAiming propertiesDoubleAiming;
     public PropertiesCircular propertiesCircular;
     public PropertiesSquare propertiesSquare;
-    [HideInInspector]
-    public Properties[] enemyProperties;
+    //[HideInInspector]
+    //public Dictionary enemyProperties;
 
     [Header("Bounds")]
     [HideInInspector]
@@ -56,6 +56,6 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
-        enemyProperties = new Properties[] { propertiesForwardShooter, propertiesForward, propertiesLaserDiagonal, propertiesSphericalAiming, propertiesBombDrop, propertiesTrail, propertiesDoubleAiming, propertiesCircular, propertiesSquare};
+        //enemyProperties = new Properties[] { propertieseForwardShooter, propertiesForward, propertiesLaserDiagonal, propertiesSphericalAiming, propertiesBombDrop, propertiesTrail, propertiesDoubleAiming, propertiesCircular, propertiesSquare};
     }
 }
