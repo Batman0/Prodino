@@ -16,202 +16,206 @@ public enum MovementType
 }
 public static class Movements
 {
-    public static void MoveForward(Transform transform, bool isRight, float speed, float destructionMargin, ref bool destroy)
+
+    private static float speed;
+    private static float destructionMargin;
+
+    public static void MoveForward(ref Enemy enemy)
     {
 
+        enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+
+        if (enemy.isRight)
+        {
+            if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
+            {
+                enemy.Destroy(true);
+            }
+        }
+        else
+        {
+            if (enemy.transform.position.x >= Register.instance.xMax + enemy.destructionMargin)
+            {
+                enemy.Destroy(true);
+            }
+        }
+    }
+
+    private static void MoveForward(Transform transform, float speed)
+    {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+    }
 
-        if (isRight)
+    public static void MoveDiagonalY(ref Enemy enemy)
+    {
+        enemy.transform.position = new Vector3(enemy.speed * Time.deltaTime + enemy.transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(enemy.length * enemy.time * Mathf.PI / 2)) * enemy.amplitude + enemy.height, enemy.transform.position.z);
+        enemy.time += Time.deltaTime;
+
+        if (enemy.isRight)
         {
-            if (transform.position.x <= Register.instance.xMin - destructionMargin)
+            if (enemy.transform.position.x <= Register.instance.xMin - enemy.destructionMargin)
             {
-                destroy = true;
+                enemy.Destroy(true);
             }
         }
         else
         {
-            if (transform.position.x >= Register.instance.xMax + destructionMargin)
+            if (enemy.transform.position.x >= Register.instance.xMax + enemy.destructionMargin)
             {
-                destroy = true;
+                enemy.Destroy(true);
             }
         }
     }
 
-    public static void MoveForward(Transform transform, float speed)
+    public static void MoveDiagonalZ(ref Enemy enemy)
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-    }
+        enemy.transform.position = new Vector3(enemy.speed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(enemy.length * enemy.time * Mathf.PI / 2)) * enemy.amplitude + enemy.height);
+        enemy.time += Time.deltaTime;
 
-    public static void MoveDiagonalY(Transform transform, bool isRight, ref bool destroy, float destructionMargin, float speed, float length, float amplitude, float height, ref float time)
-    {
-        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height, transform.position.z);
-        time += Time.deltaTime;
-
-        if (isRight)
+        if (enemy.isRight)
         {
-            if (transform.position.x <= Register.instance.xMin - destructionMargin)
+            if (enemy.transform.position.x <= Register.instance.xMin - enemy.destructionMargin)
             {
-                destroy = true;
+                enemy.Destroy(true);
             }
         }
         else
         {
-            if (transform.position.x >= Register.instance.xMax + destructionMargin)
+            if (enemy.transform.position.x >= Register.instance.xMax + enemy.destructionMargin)
             {
-                destroy = true;
+                enemy.Destroy(true);
             }
         }
     }
 
-    public static void MoveDiagonalZ(Transform transform, bool isRight, ref bool destroy, float destructionMargin, float speed, float length, float amplitude, float height, ref float time)
+    public static void MoveCircular(ref Enemy enemy)
     {
-        transform.position = new Vector3(speed * Time.deltaTime + transform.position.x, transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height);
-        time += Time.deltaTime;
-
-        if (isRight)
+        if (enemy.isRight)
         {
-            if (transform.position.x <= Register.instance.xMin - destructionMargin)
-            {
-                destroy = true;
-            }
+            enemy.transform.position = new Vector3(enemy.radius * Mathf.Cos(Time.time * enemy.speed) + enemy.originalPos.x, enemy.radius * Mathf.Sin(Time.time * enemy.speed) + enemy.originalPos.y, enemy.radius * Mathf.Sin(Time.time * enemy.speed) + enemy.originalPos.z);
         }
         else
         {
-            if (transform.position.x >= Register.instance.xMax + destructionMargin)
-            {
-                destroy = true;
-            }
+            enemy.transform.position = new Vector3(-enemy.radius * Mathf.Cos(Time.time * enemy.speed) + enemy.originalPos.x, enemy.radius * Mathf.Sin(Time.time * enemy.speed) + enemy.originalPos.y, enemy.radius * Mathf.Sin(Time.time * enemy.speed) + enemy.originalPos.z);
+        }
+
+        if (enemy.lifeTime > 0.0f)
+        {
+            enemy.lifeTime -= Time.deltaTime;
+        }
+        else if (enemy.lifeTime <= 0.0f && !enemy.toDestroy)
+        {
+            enemy.toDestroy = true;
         }
     }
 
-    public static void MoveCircular(Transform transform, float speed, bool isRight, float radius, Vector3 originalPos, ref float lifeTime, ref bool destroy)
-    {
-        if (isRight)
-        {
-            transform.position = new Vector3(radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
-        }
-        else
-        {
-            transform.position = new Vector3(-radius * Mathf.Cos(Time.time * speed) + originalPos.x, radius * Mathf.Sin(Time.time * speed) + originalPos.y, radius * Mathf.Sin(Time.time * speed) + originalPos.z);
-        }
-
-        if (lifeTime > 0.0f)
-        {
-            lifeTime -= Time.deltaTime;
-        }
-        else if (lifeTime <= 0.0f && !destroy)
-        {
-            destroy = true;
-        }
-    }
-
-    public static void MoveGeometric(ref int index, float speed, Transform[] targets, Transform transform, bool isRight, ref bool destroy)
+    public static void MoveGeometric(ref Enemy enemy)
     {
 
-        if (isRight)
+        if (enemy.isRight)
         {
-            if (transform.position.x <= targets[index].position.x)
+            if (enemy.transform.position.x <= enemy.targets[enemy.movementTargetIndex].position.x)
             {
-                index++;
+                enemy.movementTargetIndex++;
             }
         }
         else
         {
-            if (transform.position.x >= targets[index].position.x)
+            if (enemy.transform.position.x >= enemy.targets[enemy.movementTargetIndex].position.x)
             {
-                index++;
+                enemy.movementTargetIndex++;
             }
         }
 
-        if (transform.position != targets[index].position)
+        if (enemy.transform.position != enemy.targets[enemy.movementTargetIndex].position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.targets[enemy.movementTargetIndex].position, enemy.speed * Time.deltaTime);
         }
         else
         {
-            if (index < targets.Length - 1)
+            if (enemy.movementTargetIndex < enemy.targets.Length - 1)
             {
-                index++;
+                enemy.movementTargetIndex++;
             }
             else
             {
-                destroy = true;
+                enemy.Destroy(true);
             }      
         }
     }
 
-    public static Vector3 MoveGeometric(ref int index, float speed, float waitingTime, ref float waitingTimer, Transform[] targets, Transform transform, bool isRight, ref bool destroy)
+    public static Vector3 MoveGeometricAndWait(ref Enemy enemy)
     {
-        if (isRight)
+        if (enemy.isRight)
         {
-            if (transform.position.x <= targets[index].position.x)
+            if (enemy.transform.position.x <= enemy.targets[enemy.movementTargetIndex].position.x)
             {
-                index++;
+                enemy.movementTargetIndex++;
             }
         }
         else
         {
-            if (transform.position.x >= targets[index].position.x)
+            if (enemy.transform.position.x >= enemy.targets[enemy.movementTargetIndex].position.x)
             {
-                index++;
+                enemy.movementTargetIndex++;
             }
         }
 
-        if (transform.position != targets[index].position)
+        if (enemy.transform.position != enemy.targets[enemy.movementTargetIndex].position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targets[index].position, speed * Time.deltaTime);
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, enemy.targets[enemy.movementTargetIndex].position, enemy.speed * Time.deltaTime);
         }
         else
         {
-            if (waitingTimer < waitingTime && index < targets.Length - 1)
+            if (enemy.waitingTimer < enemy.waitingTime && enemy.movementTargetIndex < enemy.targets.Length - 1)
             {
-                waitingTimer += Time.deltaTime;
+                enemy.waitingTimer += Time.deltaTime;
             }
 
-            if (waitingTimer >= waitingTime && index < targets.Length - 1)
+            if (enemy.waitingTimer >= enemy.waitingTime && enemy.movementTargetIndex < enemy.targets.Length - 1)
             {
-                index++;
-                waitingTimer = 0.0f;
+                enemy.movementTargetIndex++;
+                enemy.waitingTimer = 0.0f;
             }
-            else if (index >= targets.Length - 1)
+            else if (enemy.movementTargetIndex >= enemy.targets.Length - 1)
             {
-                destroy = true;
+                enemy.Destroy(true);
             }
         }
-        return transform.position;
+        return enemy.transform.position;
     }
 
-    public static void MoveBackAndForth(Transform transform, float forthSpeed, float backSpeed, float rotationSpeed, float movementDuration, ref float doneRotation, ref float movementTimer, ref bool canShoot, ref bool destroy, Enemy enemy)
+    public static void MoveBackAndForth(ref Enemy enemy)
     {
-        if (movementTimer < movementDuration && doneRotation == 0)
+        if (enemy.waitingTimer < enemy.movementDuration && enemy.doneRotation == 0)
         {
-            MoveForward(transform, forthSpeed);
-            movementTimer += Time.deltaTime;
+            MoveForward(enemy.transform, enemy.speed);
+            enemy.waitingTimer += Time.deltaTime;
         }
-        else if (movementTimer > 0.0f && doneRotation >= 180)
+        else if (enemy.waitingTimer > 0.0f && enemy.doneRotation >= 180)
         {
-            MoveForward(transform, backSpeed);
-            movementTimer -= Time.deltaTime;
+            MoveForward(enemy.transform, enemy.backSpeed);
+            enemy.waitingTimer -= Time.deltaTime;
         }
-        else if (movementTimer <= 0.0f && doneRotation >= 180)
+        else if (enemy.waitingTimer <= 0.0f && enemy.doneRotation >= 180)
         {
-            destroy = true;
+            enemy.Destroy(true);
         }
         else
         {
-            if (doneRotation < 180)
+            if (enemy.doneRotation < 180)
             {
                 if (enemy.sideCollider.enabled)
                 {
                     enemy.sideCollider.enabled = false;
                     enemy.topCollider.enabled = true;
                 }
-                transform.Rotate(Vector3.up, rotationSpeed);
-                doneRotation += rotationSpeed;
+                enemy.transform.Rotate(Vector3.up, enemy.rotationSpeed);
+                enemy.doneRotation += enemy.rotationSpeed;
             }
-            if (doneRotation >= 180 && !canShoot)
+            if (enemy.doneRotation >= 180 && !enemy.shoots)
             {
-                canShoot = true;
+                enemy.shoots = true;
                 if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
                 {
                     enemy.sideCollider.enabled = true;
@@ -221,66 +225,76 @@ public static class Movements
         }
     }
 
+    //public delegate void MyMovement(Enemy enemy);
 
-    public static void Move(MovementType movementType, Transform transform, bool isRight, ref bool canShoot, Vector3 originalPos, ref int targetIndex, ref float lifeTime, ref float timer, ref float doneRotation, ref float time, ref bool toDestroy,Enemy enemyScript)
+
+    public static void SetMovement(Enemy enemy)
     {
-        switch (movementType)
+        switch (enemy.movementType)
         {
             case MovementType.FORWARDSHOOTER:
-                MoveForward(transform, isRight, Register.instance.propertiesForwardShooter.speed, Register.instance.propertiesForwardShooter.destructionMargin, ref toDestroy);
+                enemy.myMovementSidescroll += MoveForward;
+                enemy.myMovementTopdown += MoveForward;
                 break;
             case MovementType.FORWARD:
-
-                MoveForward(transform, isRight, Register.instance.propertiesForward.speed, Register.instance.propertiesForward.destructionMargin, ref toDestroy);
+                enemy.myMovementSidescroll += MoveForward;
+                enemy.myMovementTopdown += MoveForward;
                 break;
             case MovementType.LASERDIAGONAL:
-                if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-                {
-                    MoveDiagonalY(transform, isRight, ref toDestroy, Register.instance.propertiesLaserDiagonal.destructionMargin, isRight ? -Register.instance.propertiesLaserDiagonal.xMovementSpeed : Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.waveLenght, Register.instance.propertiesLaserDiagonal.amplitude, originalPos.y, ref time);
-                }
-                else
-                {
-                    MoveForward(transform, isRight, Register.instance.propertiesLaserDiagonal.xMovementSpeed, Register.instance.propertiesLaserDiagonal.destructionMargin, ref toDestroy);
-                }
+                //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                //{
+                enemy.myMovementSidescroll += MoveDiagonalY;
+                enemy.myMovementTopdown += MoveForward;
+                //}
+                //else
+                //{
+                //    enemy.myMovementSidescroll += MoveForward;
+                //}
                 break;
             case MovementType.SPHERICALAIMING:
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-                {
-                    MoveForward(transform, isRight, Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.destructionMargin, ref toDestroy);
-                }
-                else
-                {
-                    MoveDiagonalZ(transform, isRight, ref toDestroy, Register.instance.propertiesSphericalAiming.destructionMargin, isRight ? -Register.instance.propertiesSphericalAiming.xMovementSpeed : Register.instance.propertiesSphericalAiming.xMovementSpeed, Register.instance.propertiesSphericalAiming.waveLenght, Register.instance.propertiesSphericalAiming.amplitude, originalPos.z, ref time);
-                }
+                //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                //{
+                enemy.myMovementSidescroll += MoveForward;
+                enemy.myMovementTopdown += MoveDiagonalZ;
+                //}
+                //else
+                //{
+                //    enemy.myMovementSidescroll += MoveDiagonalZ;
+                //}
                 break;
             case MovementType.BOMBDROP:
-                MoveForward(transform, isRight, Register.instance.propertiesBombDrop.xMovementSpeed, Register.instance.propertiesBombDrop.destructionMargin, ref toDestroy);
+                enemy.myMovementSidescroll += MoveForward;
+                enemy.myMovementTopdown += MoveForward;
                 break;
             case MovementType.TRAIL:
-                MoveBackAndForth(transform, Register.instance.propertiesTrail.xMovementSpeed, Register.instance.propertiesTrail.xReturnSpeed, Register.instance.propertiesTrail.rotationSpeed, Register.instance.propertiesTrail.movementDuration, ref doneRotation, ref timer, ref canShoot, ref toDestroy,enemyScript);
+                enemy.myMovementSidescroll += MoveBackAndForth;
+                enemy.myMovementTopdown += MoveBackAndForth;
                 break;
             case MovementType.DOUBLEAIMING:
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-                {
-                    MoveForward(transform, isRight, Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.destructionMargin, ref toDestroy);
-                }
-                else
-                {
-                    MoveDiagonalZ(transform, isRight, ref toDestroy, Register.instance.propertiesDoubleAiming.destructionMargin, isRight ? -Register.instance.propertiesDoubleAiming.xMovementSpeed : Register.instance.propertiesDoubleAiming.xMovementSpeed, Register.instance.propertiesDoubleAiming.waveLenght, Register.instance.propertiesDoubleAiming.amplitude, originalPos.z, ref time);
-                }
+                //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                //{
+                enemy.myMovementSidescroll += MoveForward;
+                enemy.myMovementTopdown += MoveDiagonalZ;
+                //}
+                //else
+                //{
+                //    enemy.myMovementSidescroll += MoveDiagonalZ;
+                //}
                 break;
             case MovementType.CIRCULAR:
-                MoveCircular(transform, Register.instance.propertiesCircular.speed, isRight, Register.instance.propertiesCircular.radius, originalPos, ref lifeTime, ref toDestroy);
+                enemy.myMovementSidescroll += MoveCircular;
+                enemy.myMovementTopdown += MoveCircular;
                 break;
             case MovementType.SQUARE:
-                if (isRight)
-                {
-                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.rightTargets, transform, isRight, ref toDestroy);
-                }
-                else
-                {
-                    MoveGeometric(ref targetIndex, Register.instance.propertiesSquare.speed, Register.instance.propertiesSquare.waitingTime, ref timer, Register.instance.propertiesSquare.leftTargets, transform, isRight, ref toDestroy);
-                }
+                //if (enemy.isRight)
+                //{
+                enemy.myMovementSidescroll += MoveGeometric;
+                enemy.myMovementTopdown += MoveGeometric;
+                //}
+                //else
+                //{
+                //    enemy.myMovementSidescroll += MoveGeometric;
+                //}
                 break;
         }
     }
