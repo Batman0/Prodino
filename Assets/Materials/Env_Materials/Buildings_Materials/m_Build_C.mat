@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m_Build_A
+  m_Name: m_Build_C
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: af00c494903a74e4c9b9bf59f13154cb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9cffd67be2d201e48894e3693ef9da3c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,19 +35,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 7801ead5220ec1c4bb969f510e8d90f5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3e9258ad271923a45bf5a9cd5872ed2a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 79e8f2c0b94dfaa4b83e7585044b1071, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1aa7fef4c1c542e4ba4d4744d26cdb74, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 434345981a3bd6348b70ca19ecfe18be, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1390f45e166f9294b878e8b1cb8023ab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: b6be054b071db6449892f7726fdddc45, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5ebc91bc8567f974eb1bbff1c0f4f01f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -73,4 +73,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.25882354, g: 0.25882354, b: 0.25882354, a: 1}
-    - _EmissionColor: {r: 1, g: 0, b: 0.55862045, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
