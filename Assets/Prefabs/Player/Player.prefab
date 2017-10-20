@@ -1706,7 +1706,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1607591695385448}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -36.322052, y: -87.42122, z: -2.081168}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2027,7 +2027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
-  meshGO: {fileID: 1375617026502066}
+  playerModel: {fileID: 1375617026502066}
   speed: 7
   jumpForce: 28
   upRotationAngle: 60
@@ -2050,6 +2050,11 @@ MonoBehaviour:
   sideBodyCollider: {fileID: 65969070036458574}
   topBodyCollider: {fileID: 65056165067551748}
   topTailCollider: {fileID: 65153678418553716}
+  armRx: {fileID: 1607591695385448}
+  gunRx: {fileID: 4986864173296634}
+  armLx: {fileID: 1498071112663728}
+  gunLx: {fileID: 4847962421143452}
+  maxAngleRotation: 30
   aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
     type: 2}
   sideXMin: 4
@@ -2059,11 +2064,10 @@ MonoBehaviour:
   topXMax: 4
   topZMin: 4
   topZMax: 4
-  ani: {fileID: 95393272320219176}
   topdownSpeed: 5
-  biteATKSpeed: 0
+  biteATKSpeed: 8
   biteCoolDownActive: 0
-  biteCoolDown: 0
+  biteCoolDown: 0.6
 --- !u!137 &137239189092961080
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

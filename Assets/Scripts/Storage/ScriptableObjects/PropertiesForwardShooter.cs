@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesForwardShooter : Properties
 {
-    public float speed;
+    //public float speed;
     public float destructionMargin;
     public float fireRate;
     public float bulletSpeed;

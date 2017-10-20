@@ -5,11 +5,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesDoubleAiming : Properties
 {
-    public float xMovementSpeed;
+    //public float xMovementSpeed;
     public float zMovementSpeed;
     public float destructionMargin;
     public float waveLenght;
     public float amplitude;
+    public float height;
     ////not used
     //public Transform[] rightTargets;
     ////not used

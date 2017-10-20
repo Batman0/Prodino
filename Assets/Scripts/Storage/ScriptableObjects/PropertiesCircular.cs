@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesCircular : Properties
 {
-    public float speed;
+    //public float speed;
     public float radius;
     public float lifeTime;
 }
