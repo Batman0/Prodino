@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8f2d4e991df981b46a904f0376bc5d05
-timeCreated: 1507035266
+guid: 6d7ade0e46ea7f54d972b6700afef36e
+timeCreated: 1508514691
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -135,7 +135,7 @@ ModelImporter:
     4300010: Shoulder_D
     4300012: Arm_D
     4300014: Gun_D
-    7400000: Move_Back_49
+    7400000: Take 001
     9500000: //RootNode
     13700000: Trevor_Body
     13700002: Trevor_Tail

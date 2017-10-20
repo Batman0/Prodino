@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: bdd06410e7359f349ab12b27c195c9b6
-timeCreated: 1507035268
+guid: dc58f5813564ed24d973641c56d0d040
+timeCreated: 1508514270
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -135,7 +135,7 @@ ModelImporter:
     4300010: Shoulder_D
     4300012: Arm_D
     4300014: Gun_D
-    7400000: Move_Forward_48
+    7400000: Take 001
     9500000: //RootNode
     13700000: Trevor_Body
     13700002: Trevor_Tail
@@ -162,35 +162,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Move_Forward_48
-      takeName: Move_Forward_48
-      firstFrame: 1
-      lastFrame: 24
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
