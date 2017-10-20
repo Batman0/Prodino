@@ -39,6 +39,7 @@ public class Register : MonoBehaviour
     //[HideInInspector]
     //public Dictionary enemyProperties;
 
+
     [Header("Bounds")]
     [HideInInspector]
     public float xMin;

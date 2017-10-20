@@ -46,8 +46,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("BulletPool")]
     private int indexOfBullet=0;
-    /*public float bulletAmmount = 20;
-    List<GameObject> playerBullet;*/
 
 
     [Header("Guns")]
@@ -75,13 +73,11 @@ public class PlayerController : MonoBehaviour
     public float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
-    public Animator ani;
     private bool sideScroll;
 
     [Header("TailMelee")]
     public float topdownSpeed;
 
-	//bite attack
 	[Header("BiteMelee")]
 	public float biteATKSpeed;
 	public bool biteCoolDownActive;
@@ -95,20 +91,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        /*playerBullet = new List<GameObject>();
-        for(int i=0;i<bulletAmmount;i++)
-        {
-            GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab);
-            bullet.SetActive(false);
-            playerBullet.Add(bullet);
-        }*/
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
-        //bulletSpawnPointStartRot = bulletSpawnPoints.rotation;
     }
     void Update()
     {
@@ -128,27 +116,38 @@ public class PlayerController : MonoBehaviour
                         if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
 						Move (Vector3.right, speed, "Horizontal");
 					}
-					if (Input.GetKeyDown (KeyCode.W) && canJump) {
+					if (Input.GetKeyDown (KeyCode.W) && canJump)
+                        {
 						Jump ();
 					}
-					if (thereIsGround && !canJump) {
+					if (thereIsGround && !canJump)
+                    {
 						ApplyGravity ();
-					} else if ((thereIsGround && canJump)) {
-						if (rb.velocity.y < 0) {
+					}
+                    else if ((thereIsGround && canJump))
+                    {
+				      if (rb.velocity.y < 0)
+                       {
 							rb.velocity = Vector3.zero;
 							transform.position = new Vector3 (transform.position.x, landmark.position.y, transform.position.z);
-						}
+					   }
 					}
-					if (Input.GetKey (KeyCode.W)) {
-						if (!canJump && rb.velocity.y < 0.0f) {
-							if (rb.velocity.y < -2) {
+					if (Input.GetKey (KeyCode.W))
+                    {
+						if (!canJump && rb.velocity.y < 0.0f)
+                         {
+							if (rb.velocity.y < -2)
+                            {
 								StabilizeAcceleration ();
-							} else {
-								Glide ();
 							}
-						}
+                            else
+                            {
+								Glide ();
+						    }
+					     }
 					}
-					if (transform.rotation != sideScrollerRotation) {
+					if (transform.rotation != sideScrollerRotation)
+                    {
 						transform.rotation = sideScrollerRotation;
 					}
                     Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
@@ -167,9 +166,9 @@ public class PlayerController : MonoBehaviour
 
 					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump)
                     {
-				    StartCoroutine ("BiteAttack");
-				    }
-                        break;
+                            StartCoroutine ("BiteAttack");
+                    }
+                    break;
                 case GameMode.TOPDOWN:
                         sideScroll = false;
                         Move(Vector3.forward, speed, "Vertical");
@@ -198,6 +197,7 @@ public class PlayerController : MonoBehaviour
                     Shoot();
                     fireTimer = 0.00f;
                 }
+
                 PlayAnimation();
             }
             else
@@ -356,14 +356,11 @@ public class PlayerController : MonoBehaviour
         {
             if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             {
-                //if(!playerBullet[indexOfBullet].activeInHierarchy)
-                {
-                    GameObject bullet = PoolManager.instance.GetpooledBullet(indexOfBullet);
-                    bullet.transform.position = bulletSpawnPointLx.position;
-                    bullet.transform.rotation = bulletSpawnPointLx.rotation;
-                    bullet.SetActive(true);
-                    indexOfBullet++;
-                }
+                GameObject bullet = PoolManager.instance.GetpooledBullet(indexOfBullet);
+                bullet.transform.position = bulletSpawnPointLx.position;
+                bullet.transform.rotation = bulletSpawnPointLx.rotation;
+                bullet.SetActive(true);
+                indexOfBullet++;
 
                 if(indexOfBullet>= PoolManager.instance.pooledPlayerBulletAmount)
                 {
@@ -425,8 +422,9 @@ public class PlayerController : MonoBehaviour
     void PlayAnimation()
     {
         horizontal = Input.GetAxis("Horizontal");
-        ani.SetFloat("horizontal", horizontal);
-        ani.SetBool("sideScroll", sideScroll);    
+        AnimationManager.instance.GetAnimation("horizontal", horizontal);
+        AnimationManager.instance.GetAnimation("sideScroll", sideScroll);
+        //AnimationManager.instance.GetAnimation("attack", sideScroll? biteAttack : tailAttack);
     }
 
     IEnumerator TailAttack()
@@ -434,7 +432,7 @@ public class PlayerController : MonoBehaviour
         canShootAndMove = false;
         angle = 0;
         topTailCollider.enabled = true;
-
+      
         while (angle < 360)
         {
             angle += topdownSpeed;
@@ -449,12 +447,11 @@ public class PlayerController : MonoBehaviour
 	IEnumerator BiteAttack()
 	{
 		canShootAndMove = false;
-		rb.velocity = new Vector3(0, biteATKSpeed, 0);
+        rb.velocity = new Vector3(0, biteATKSpeed, 0);
 		biteCoolDownActive = true;
 
-		yield return new WaitForSeconds (biteCoolDown);
-
-		biteCoolDownActive = false;
+        yield return new WaitForSeconds (biteCoolDown);
+        biteCoolDownActive = false;
 		canShootAndMove = true;
 	}
 
