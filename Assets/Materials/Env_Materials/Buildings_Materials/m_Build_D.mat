@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m_Build_A
+  m_Name: m_Build_D
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: af00c494903a74e4c9b9bf59f13154cb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 09b5841dd16e3d74fac09af7b616638b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,19 +35,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 7801ead5220ec1c4bb969f510e8d90f5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 406f0495f45f9a44faeaf020bae3f470, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 79e8f2c0b94dfaa4b83e7585044b1071, type: 3}
+        m_Texture: {fileID: 2800000, guid: da2763a8a52847e4faff337f447546c5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 434345981a3bd6348b70ca19ecfe18be, type: 3}
+        m_Texture: {fileID: 2800000, guid: ff23bb32993eb8542ab18784d90a7260, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: b6be054b071db6449892f7726fdddc45, type: 3}
+        m_Texture: {fileID: 2800000, guid: 95b6c32d201bb02489788c0af659cde1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -73,4 +73,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.25882354, g: 0.25882354, b: 0.25882354, a: 1}
-    - _EmissionColor: {r: 1, g: 0, b: 0.55862045, a: 1}
+    - _EmissionColor: {r: 0.095371954, g: 0.5825675, b: 0.9264706, a: 1}
