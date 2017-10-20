@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("BulletPool")]
     private int indexOfBullet=0;
-    public float bulletAmmount = 20;
-    List<GameObject> playerBullet;
+    /*public float bulletAmmount = 20;
+    List<GameObject> playerBullet;*/
 
 
     [Header("Guns")]
@@ -95,13 +95,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        playerBullet = new List<GameObject>();
+        /*playerBullet = new List<GameObject>();
         for(int i=0;i<bulletAmmount;i++)
         {
             GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab);
             bullet.SetActive(false);
             playerBullet.Add(bullet);
-        }
+        }*/
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
@@ -356,15 +356,17 @@ public class PlayerController : MonoBehaviour
         {
             if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             {
-                if(!playerBullet[indexOfBullet].activeInHierarchy)
+                //if(!playerBullet[indexOfBullet].activeInHierarchy)
                 {
-                    playerBullet[indexOfBullet].transform.position = bulletSpawnPointLx.position;
-                    playerBullet[indexOfBullet].transform.rotation = bulletSpawnPointLx.rotation;
-                    playerBullet[indexOfBullet].SetActive(true);
+                    GameObject bullet = PoolManager.instance.playerBulletpool[indexOfBullet];
+
+                    bullet.transform.position = bulletSpawnPointLx.position;
+                    bullet.transform.rotation = bulletSpawnPointLx.rotation;
+                    bullet.SetActive(true);
                     indexOfBullet++;
                 }
 
-                if(indexOfBullet>=playerBullet.Count)
+                if(indexOfBullet>= PoolManager.instance.playerBulletpool.Capacity)
                 {
                     indexOfBullet = 0;
                 }
