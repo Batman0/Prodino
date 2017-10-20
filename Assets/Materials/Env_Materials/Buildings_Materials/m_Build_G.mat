@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m_Build_B
+  m_Name: m_Build_G
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP
   m_LightmapFlags: 1
@@ -19,7 +19,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 633f1197d999e124eb8359ea257e5bb0, type: 3}
+        m_Texture: {fileID: 2800000, guid: e53df1af3d4aa0d488e816a221d62c77, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -35,19 +35,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: afed72b8182902246b15cf5ef882704a, type: 3}
+        m_Texture: {fileID: 2800000, guid: d88bd75187de16e409958a2600fa5108, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d867668279fc14f4c9b608da8198056c, type: 3}
+        m_Texture: {fileID: 2800000, guid: ec56f71a9df26454fa4254c24cff976f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 6b957f384d50bef488f092db7f9aa7bd, type: 3}
+        m_Texture: {fileID: 2800000, guid: dc44d8bdd92e04e488c0d25334f2bdec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 15e98ceaf28f7a24a8b0becc8c313315, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59e3abc21c5a06047b894f52b35b1982, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -73,4 +73,4 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.2205882, g: 0.2205882, b: 0.2205882, a: 1}
-    - _EmissionColor: {r: 0, g: 0.43534485, b: 0.74264705, a: 1}
+    - _EmissionColor: {r: 1, g: 0.13235295, b: 0.9401628, a: 1}
