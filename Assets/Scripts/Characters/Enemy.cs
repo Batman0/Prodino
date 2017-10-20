@@ -86,8 +86,8 @@ public class Enemy: MonoBehaviour
     void Start()
     {
         instance = this;
-        myMovementProperties = Register.instance.enemyProperties[(int)movementType];
-        myShotProperties = Register.instance.enemyProperties[(int)shotType];
+        //myMovementProperties = Register.instance.enemyProperties[(int)movementType];
+        //myShotProperties = Register.instance.enemyProperties[(int)shotType];
         gameManager = GameManager.instance;
         Movements.SetMovement(this);
         movementTargetIndex = 0;
