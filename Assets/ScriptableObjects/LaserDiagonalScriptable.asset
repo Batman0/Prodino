@@ -11,12 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da56b777d047734884b82aaefcb1012, type: 3}
   m_Name: LaserDiagonalScriptable
   m_EditorClassIdentifier: 
-  xMovementSpeed: 3
+  xSpeed: 6.8
   yMovementSpeed: 3
   yMovementSpeedShooting: 1
   destructionMargin: 3
   waveLenght: 7.27
   amplitude: 5.15
+  height: 0
   rightTargets:
   - {fileID: 0}
   - {fileID: 0}
@@ -31,7 +32,6 @@ MonoBehaviour:
   - {fileID: 0}
   laserHeight: 1
   laserDepth: 2
-  speed: 6
   waitingTime: 1.5
   loadingTime: 3
   shootingTime: 2

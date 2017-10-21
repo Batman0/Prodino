@@ -11,11 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed25b7a4cd8af0f43b1aabc6d31a7d0c, type: 3}
   m_Name: DoubleAimingScriptable
   m_EditorClassIdentifier: 
-  xMovementSpeed: 4
+  xSpeed: 5.59
   zMovementSpeed: 2
   destructionMargin: 5
   waveLenght: 5
   amplitude: 5
+  height: 0
   xBulletSpeed: 1.75
   zBulletSpeed: 6.51
   fireRate: 2

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa27a02b75f25264d9e9ee34b6f80c42, type: 3}
   m_Name: BombDropScriptable
   m_EditorClassIdentifier: 
-  xMovementSpeed: 3
+  xSpeed: 7.43
   destructionMargin: 3
   loadingTime: 2
   bombFallSpeed: 7.62

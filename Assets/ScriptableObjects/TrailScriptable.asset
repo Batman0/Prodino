@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df25c2b8408822a42b648007d5cdb90a, type: 3}
   m_Name: TrailScriptable
   m_EditorClassIdentifier: 
-  xMovementSpeed: 5
+  xSpeed: 10.65
   xReturnSpeed: 3
   rotationSpeed: 1
   movementDuration: 4
