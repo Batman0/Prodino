@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d511d1c4d8b6e1249913ea0da8f810c2, type: 3}
   m_Name: CircularScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 11.12
+  speed: 3
   radius: 3
   lifeTime: 3

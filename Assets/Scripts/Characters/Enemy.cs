@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void MyMovement(Enemy enemy);
+public delegate void MyMovement(ref Enemy enemy);
 
 public class Enemy: MonoBehaviour
 {
@@ -78,8 +78,6 @@ public class Enemy: MonoBehaviour
 
     private GameManager gameManager;
 
-    private EnemyMovement myEnemyMovement;
-
     private Enemy instance;
 
     public Properties myMovementProperties;
@@ -88,41 +86,10 @@ public class Enemy: MonoBehaviour
     void Start()
     {
         instance = this;
-        if (movementType == MovementType.FORWARDSHOOTER)
-        {
-            myEnemyMovement = new MovementForwardShooter();
-        }
-        else if (movementType == MovementType.FORWARD)
-        {
-            myEnemyMovement = new MovementForward();
-        }
-        else if (movementType == MovementType.LASERDIAGONAL)
-        {
-            myEnemyMovement = new MovementLaserDiagonal();
-        }
-        else if (movementType == MovementType.SPHERICALAIMING)
-        {
-            myEnemyMovement = new MovementSphericalAiming();
-        }
-        else if (movementType == MovementType.BOMBDROP)
-        {
-            myEnemyMovement = new MovementBombDrop();
-        }
-        else if (movementType == MovementType.TRAIL)
-        {
-            myEnemyMovement = new MovementTrail();
-        }
-        else if (movementType == MovementType.DOUBLEAIMING)
-        {
-            myEnemyMovement = new MovementDoubleAiming();
-        }
-        myEnemyMovement.Init(this);
-        myMovementSidescroll += myEnemyMovement.MoveSidescroll;
-        myMovementTopdown += myEnemyMovement.MoveTopdown;
         //myMovementProperties = Register.instance.enemyProperties[(int)movementType];
         //myShotProperties = Register.instance.enemyProperties[(int)shotType];
         gameManager = GameManager.instance;
-        //Movements.SetMovement(this);
+        Movements.SetMovement(this);
         movementTargetIndex = 0;
         //Register.instance.numberOfTransitableObjects++;
         originalPos = transform.position;
@@ -171,7 +138,7 @@ public class Enemy: MonoBehaviour
         ChangePerspective();
         Move();
         Shoot();
-        Destroy();
+        Destroy(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -202,11 +169,11 @@ public class Enemy: MonoBehaviour
         {
             if (gameManager.currentGameMode == GameMode.SIDESCROLL)
             {
-                myMovementSidescroll(instance);
+                myMovementSidescroll(ref instance);
             }
             else
             {
-                myMovementTopdown(instance);
+                myMovementTopdown(ref instance);
             }
         }
 
@@ -235,9 +202,9 @@ public class Enemy: MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void Destroy(bool destroy)
     {
-        if(CheckEnemyLife() || toDestroy)
+        if(CheckEnemyLife() || toDestroy || destroy)
         {
             Destroy(gameObject);
         }
