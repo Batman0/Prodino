@@ -22,9 +22,6 @@ public class Register : MonoBehaviour
     [HideInInspector]
     public Enemy enemyScript;
 
-    //[Header("Aim")]
-    //public GameObject aimTransform;
-
     [Header("Scriptables")]
     public PropertiesPlayer propertiesPlayer;
     public PropertiesForwardShooter propertiesForwardShooter;
@@ -36,9 +33,6 @@ public class Register : MonoBehaviour
     public PropertiesDoubleAiming propertiesDoubleAiming;
     public PropertiesCircular propertiesCircular;
     public PropertiesSquare propertiesSquare;
-    //[HideInInspector]
-    //public Dictionary enemyProperties;
-
 
     [Header("Bounds")]
     [HideInInspector]
@@ -57,6 +51,5 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
-        //enemyProperties = new Properties[] { propertieseForwardShooter, propertiesForward, propertiesLaserDiagonal, propertiesSphericalAiming, propertiesBombDrop, propertiesTrail, propertiesDoubleAiming, propertiesCircular, propertiesSquare};
     }
 }

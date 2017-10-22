@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcea303b96c55c444b7520406f66ce2a, type: 3}
   m_Name: ForwardShooterScriptable
   m_EditorClassIdentifier: 
-  speed: 4
+  xSpeed: 4.5
   destructionMargin: 2
   fireRate: 2
   bulletSpeed: 7

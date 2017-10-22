@@ -15,7 +15,7 @@ public class PropertiesLaserDiagonal : Properties
     public Transform[] rightTargets;
     public Transform[] leftTargets;
     public float laserHeight;
-    public float laserDepth;
+    public float laserWidth;
     //public float speed;
     public float waitingTime;
     public float loadingTime;

@@ -2028,7 +2028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   playerModel: {fileID: 1375617026502066}
-  speed: 7
+  speed: 15
   jumpForce: 28
   upRotationAngle: 60
   downRotationAngle: 90
@@ -2050,7 +2050,7 @@ MonoBehaviour:
   sideBodyCollider: {fileID: 65969070036458574}
   topBodyCollider: {fileID: 65056165067551748}
   topTailCollider: {fileID: 65153678418553716}
-  armRx: {fileID: 1607591695385448}
+  armRx: {fileID: 1308515360800564}
   gunRx: {fileID: 4986864173296634}
   armLx: {fileID: 1498071112663728}
   gunLx: {fileID: 4847962421143452}
@@ -2059,6 +2059,7 @@ MonoBehaviour:
     type: 2}
   sideXMin: 4
   sideXMax: 4
+  sideYMin: 5.5
   sideYMax: 4
   topXMin: 4
   topXMax: 4

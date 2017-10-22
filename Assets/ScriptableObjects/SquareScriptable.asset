@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b9ceb745299f0449c868ddf038edca, type: 3}
   m_Name: SquareScriptable
   m_EditorClassIdentifier: 
-  speed: 5
+  xSpeed: 3.58
   waitingTime: 2.04
   rightTargets:
   - {fileID: 4623819927551784, guid: 0946a069396452b40937a5130ec487b9, type: 2}
