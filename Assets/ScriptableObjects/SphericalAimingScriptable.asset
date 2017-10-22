@@ -11,14 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14625e80e1f81c145b51fc93c3c7ba00, type: 3}
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
-  xMovementSpeed: 5
+  xSpeed: 11.66
   zMovementSpeed: 6
   rotationSpeed: 1.5
   destructionMargin: 0
   rotationDeadZone: 1
-  waveLenght: 0
-  amplitude: 0
-  height: 0
+  waveLenght: 3.31
+  amplitude: 4.11
   rightTargets:
   - {fileID: 0}
   - {fileID: 0}

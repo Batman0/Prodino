@@ -20,6 +20,6 @@ public class PropertiesDoubleAiming : Properties
     public float fireRate;
     public float bulletAmplitude;
     public GameObject gameObjectPrefab;
-    public GameObject bulletPrefab;
-    public GameObject doubleAimingBulletPrefab;
+    public GameObject sidescrollBulletPrefab;
+    public GameObject topdownBulletPrefab;
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 public class Laser : BaseBullet
 {
 
-    private void Start()
-    {
-        Destroy(gameObject, Register.instance.propertiesLaserDiagonal.shootingTime);
-    }
+    //private void Start()
+    //{
+    //    Destroy(gameObject, Register.instance.propertiesLaserDiagonal.shootingTime);
+    //}
 
     //private void Update()
     //{
