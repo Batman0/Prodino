@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14625e80e1f81c145b51fc93c3c7ba00, type: 3}
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 11.66
+  xSpeed: 4.71
   zMovementSpeed: 6
   rotationSpeed: 1.5
   destructionMargin: 0

@@ -11,16 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed25b7a4cd8af0f43b1aabc6d31a7d0c, type: 3}
   m_Name: DoubleAimingScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 3.86
+  xSpeed: 3.34
   zMovementSpeed: 2
   destructionMargin: 5
   waveLenght: 5
   amplitude: 5
   height: 0
-  xBulletSpeed: 1.75
-  zBulletSpeed: 6.51
+  xBulletSpeed: 4.01
+  zBulletSpeed: 1.68
   fireRate: 2
-  bulletAmplitude: 7
+  bulletAmplitude: 4.35
   gameObjectPrefab: {fileID: 1571608488779970, guid: cbd5e43a5209e8849980e9e9023ab7f8,
     type: 2}
   sidescrollBulletPrefab: {fileID: 1215921225492252, guid: cc0367fa9b754cb43848a88db24b2e95,
