@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animations")]
     private bool sideScroll;
+    private bool glide = false;
 
     [Header("TailMelee")]
     public float topdownSpeed;
@@ -112,12 +113,14 @@ public class PlayerController : MonoBehaviour
                 switch (GameManager.instance.currentGameMode)
                 {
 				case GameMode.SIDESCROLL:
-                        sideScroll = true;
-                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone)) {
+                    sideScroll = true;
+
+                    if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone))
+                    {
 						Move (Vector3.right, speed, "Horizontal");
 					}
 					if (Input.GetKeyDown (KeyCode.W) && canJump)
-                        {
+                    {
 						Jump ();
 					}
 					if (thereIsGround && !canJump)
@@ -145,7 +148,7 @@ public class PlayerController : MonoBehaviour
 								Glide ();
 						    }
 					     }
-					}
+                    }
 					if (transform.rotation != sideScrollerRotation)
                     {
 						transform.rotation = sideScrollerRotation;
@@ -267,6 +270,7 @@ public class PlayerController : MonoBehaviour
     void Glide()
     {
         rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
+        glide = false;
     }
 
     //void MoveArms()
@@ -424,6 +428,7 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxis("Horizontal");
         AnimationManager.instance.GetAnimation("horizontal", horizontal);
         AnimationManager.instance.GetAnimation("sideScroll", sideScroll);
+        AnimationManager.instance.GetAnimation("glide", glide);
         //AnimationManager.instance.GetAnimation("attack", sideScroll? biteAttack : tailAttack);
     }
 
