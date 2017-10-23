@@ -7,11 +7,6 @@ public class PlayerBullet : BaseBullet
     private bool? isRight = null;
     private bool? isCenter = null;
 
-    void OnEnable()
-    {
-        direction = transform.forward;
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -84,10 +79,10 @@ public class PlayerBullet : BaseBullet
         }
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         isCenter = null;
         isRight = null;
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 }

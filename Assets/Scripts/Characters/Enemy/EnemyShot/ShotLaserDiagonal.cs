@@ -11,7 +11,7 @@ public class ShotLaserDiagonal : EnemyShot
     private float width;
     private float height;
     private float timer;
-    private GameObject prefab;
+    //private GameObject prefab;
     private GameObject laser;
     private PropertiesLaserDiagonal properties;
 
@@ -19,7 +19,6 @@ public class ShotLaserDiagonal : EnemyShot
     {
         base.Init();
         properties = Register.instance.propertiesLaserDiagonal;
-        //bulletSpeed = properties.bulletSpeed;
         waitingTime = properties.waitingTime;
         loadingTime = properties.loadingTime;
         shootingTime = properties.shootingTime;
@@ -43,15 +42,10 @@ public class ShotLaserDiagonal : EnemyShot
             }
             else
             {
-                //if (!laser && enemy.shotType != ShotType.TRAIL)
-                //{
-                //    enemy.canShoot = true;
-                //    Debug.Log(enemy.canShoot);
-                //}
                 if (!laser)
                 {
-                    laser = Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
-                    Object.Destroy(laser, shootingTime);
+                    laser = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletLaserPool);//Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
+                    laser.SetActive(true);
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     //enemy.canShoot = false;
@@ -62,6 +56,7 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 else
                 {
+                    laser.SetActive(false);
                     timer = 0.0f;
                     //canShoot = true;
                 }
@@ -89,8 +84,8 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 if (enemy.canShoot)
                 {
-                    GameObject laser = Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
-                    Object.Destroy(laser, shootingTime);
+                    GameObject laser = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletLaserPool);//Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
+                    laser.SetActive(true);
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     enemy.canShoot = false;
@@ -101,6 +96,7 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 else
                 {
+                    laser.SetActive(false);
                     timer = 0.0f;
                     //canShoot = true;
                 }
