@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
-    //[HideInInspector]
-    /// <summary>
-    /// How much far must the bullet be from the near clipping plane to be destroyed?
-    /// </summary>
-    //public float destructionMargin;
-    //[HideInInspector]
-    //public float speed;
-    //[HideInInspector]
-    //public Vector3 originalPos;
     public Collider sideCollider;
     public Collider topCollider;
     protected Vector3 direction;
+
+    protected virtual void OnEnable()
+    {
+        direction = transform.forward;
+    }
 
     protected virtual void Start()
     {
@@ -47,7 +43,7 @@ public class BaseBullet : MonoBehaviour
     {
         if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -77,5 +73,10 @@ public class BaseBullet : MonoBehaviour
     protected virtual void Move()
     {
 
+    }
+
+    protected virtual void OnDisable()
+    {
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 }
