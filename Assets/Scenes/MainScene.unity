@@ -1567,7 +1567,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1709817964}
-  - component: {fileID: 620428074}
   m_Layer: 0
   m_Name: Trevor_RIG_2(-x)
   m_TagString: Untagged
@@ -1575,24 +1574,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &620428074
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 04fae94decab69d47abf552babd35686,
-    type: 3}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620428073}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 04fae94decab69d47abf552babd35686, type: 3}
-  m_Controller: {fileID: 9100000, guid: c6124f08fe138184190d4d5c043b8c9a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &628986446
 GameObject:
   m_ObjectHideFlags: 0
@@ -4244,7 +4225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
-  playerModel: {fileID: 0}
+  playerModel: {fileID: 620428073}
   speed: 15
   jumpForce: 28
   upRotationAngle: 60
@@ -4267,10 +4248,10 @@ MonoBehaviour:
   sideBodyCollider: {fileID: 489382919}
   topBodyCollider: {fileID: 736889223}
   topTailCollider: {fileID: 566518103}
-  armRx: {fileID: 0}
-  gunRx: {fileID: 0}
-  armLx: {fileID: 0}
-  gunLx: {fileID: 0}
+  armRx: {fileID: 639461579}
+  gunRx: {fileID: 2000123758}
+  armLx: {fileID: 1329672960}
+  gunLx: {fileID: 69904955}
   maxAngleRotation: 30
   aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
     type: 2}
@@ -5837,7 +5818,13 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 95393272320219176, guid: 39df20cfb02b81140806e2025c8f177c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 95393272320219176, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &2141968597

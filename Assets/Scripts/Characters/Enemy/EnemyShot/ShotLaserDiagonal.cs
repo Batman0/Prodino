@@ -25,7 +25,7 @@ public class ShotLaserDiagonal : EnemyShot
         width = properties.laserWidth;
         height = properties.laserHeight;
         timer = 0;
-        prefab = properties.laserPrefab;
+        //prefab = properties.laserPrefab;
     }
 
     public override void ShootSidescroll(Enemy enemy)
