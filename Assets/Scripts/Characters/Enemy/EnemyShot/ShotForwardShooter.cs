@@ -17,7 +17,7 @@ public class ShotForwardShooter : EnemyShot
         properties = Register.instance.propertiesForwardShooter;
         fireRate = properties.fireRate;
         timer = 0;
-        prefab = properties.bulletPrefab;
+        //prefab = properties.bulletPrefab;
     }
 
     public override void ShootSidescroll(Enemy enemy)
