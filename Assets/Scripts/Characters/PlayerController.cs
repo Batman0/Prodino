@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private Ray aimRay;
     public GameObject aimTransformPrefab;
     private GameObject aimTransform;
+	public GameObject armsAim;
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -101,6 +102,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+		
         //Debug.Log(rb.velocity);
         if (!isDead)
         {
@@ -148,21 +150,6 @@ public class PlayerController : MonoBehaviour
 								Glide ();
 						    }
 					     }
-                    }
-					if (transform.rotation != sideScrollerRotation)
-                    {
-						transform.rotation = sideScrollerRotation;
-					}
-                    Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
-					float aimAngle = Vector3.Angle (Vector3.right, aim);
-					Vector3 cross = Vector3.Cross (Vector3.right, aim);
-					if (aimAngle <= upRotationAngle && cross.z >= 0)
-                    {
-						TurnAroundGO(bulletSpawnPoints);
-                    }
-                    else if (aimAngle <= downRotationAngle && cross.z < 0)
-                    {
-                        TurnAroundGO(bulletSpawnPoints);
                     }
 
 					ClampPosition (GameMode.SIDESCROLL);
@@ -338,6 +325,19 @@ public class PlayerController : MonoBehaviour
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.transform.position = aimVector;
             }
+
+			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
+			float aimAngle = Vector3.Angle (Vector3.right, aim);
+			Vector3 cross = Vector3.Cross (Vector3.right, aim);
+			if (aimAngle <= upRotationAngle && cross.z >= 0)
+			{
+				TurnAroundGO(armsAim.transform);
+			}
+			else if (aimAngle <= downRotationAngle && cross.z < 0)
+			{
+				TurnAroundGO(armsAim.transform);
+			}
+
         }
     }
 
