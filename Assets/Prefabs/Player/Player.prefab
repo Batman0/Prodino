@@ -2028,7 +2028,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   playerModel: {fileID: 1375617026502066}
-  speed: 15
   jumpForce: 28
   upRotationAngle: 60
   downRotationAngle: 90
@@ -2065,6 +2064,7 @@ MonoBehaviour:
   topXMax: 4
   topZMin: 4
   topZMax: 4
+  animator: {fileID: 95393272320219176}
   topdownSpeed: 5
   biteATKSpeed: 8
   biteCoolDownActive: 0

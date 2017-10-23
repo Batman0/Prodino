@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private PropertiesPlayer properties;
     [HideInInspector]
     public Vector3 startPosition;
     [SerializeField]
     private GameObject playerModel;
-    public float speed = 5.0f;
+    private float speed = 5.0f;
     public float jumpForce = 5.0f;
     public float upRotationAngle;
     public float downRotationAngle;
     private int enemyLayer = 12;
+    private float playerBackwardsAnimationLimit = 25;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
@@ -73,8 +75,16 @@ public class PlayerController : MonoBehaviour
     public float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
-    private bool sideScroll;
-    private bool glide = false;
+    private bool anim_isSidescroll;
+    private bool anim_isRunning;
+    private bool anim_isFlying;
+    private bool anim_isMovingBackwards;
+    private bool anim_isGliding;
+    private bool anim_isJumping;
+    private Vector3 inverseDirection;
+    private Vector3 playerForward;
+    private float anglePlayerDirection;
+    public Animator animator;
 
     [Header("TailMelee")]
     public float topdownSpeed;
@@ -92,12 +102,22 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        properties = Register.instance.propertiesPlayer;
+        speed = properties.xSpeed;
+        jumpForce = properties.jumpForce;
+        glideSpeed = properties.glideSpeed;
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollerRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+        //animator.SetBool("sidescroll", anim_isSidescroll);
+        //animator.SetBool("isRunning", anim_isRunning);
+        //animator.SetBool("isJumping", anim_isJumping);
+        //animator.SetBool("isGliding", anim_isGliding);
+        //animator.SetBool("isFlying", anim_isFlying);
+        //animator.SetBool("isMovingBackwards", anim_isSidescroll);
     }
     void Update()
     {
@@ -112,68 +132,159 @@ public class PlayerController : MonoBehaviour
 
                 switch (GameManager.instance.currentGameMode)
                 {
-				case GameMode.SIDESCROLL:
-                    sideScroll = true;
-
-                    if ((transform.position.x > Register.instance.xMin && Input.GetAxis ("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis ("Horizontal") > controllerDeadZone))
-                    {
-						Move (Vector3.right, speed, "Horizontal");
-					}
-					if (Input.GetKeyDown (KeyCode.W) && canJump)
-                    {
-						Jump ();
-					}
-					if (thereIsGround && !canJump)
-                    {
-						ApplyGravity ();
-					}
-                    else if ((thereIsGround && canJump))
-                    {
-				      if (rb.velocity.y < 0)
-                       {
-							rb.velocity = Vector3.zero;
-							transform.position = new Vector3 (transform.position.x, landmark.position.y, transform.position.z);
-					   }
-					}
-					if (Input.GetKey (KeyCode.W))
-                    {
-						if (!canJump && rb.velocity.y < 0.0f)
-                         {
-							if (rb.velocity.y < -2)
+                    case GameMode.SIDESCROLL:
+                        
+                        if (!anim_isSidescroll)
+                        {
+                            anim_isSidescroll = true;
+                            animator.SetBool("sidescroll", anim_isSidescroll);
+                        }
+                        inverseDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+                        //animator.SetFloat("horizontal", direction.x);
+                        //animator.SetFloat("vertical", direction.y);
+                        //if (direction.x > controllerDeadZone)
+                        //{
+                        //    if(!anim_isRunning)
+                        //    {
+                        //        anim_isRunning = true;
+                        //        anim_isMovingBackwards = false;
+                        //        anim
+                        //    }
+                        //}
+                        //else if (direction.x < -controllerDeadZone)
+                        //{
+                        //    if (!anim_isRunning)
+                        //    {
+                        //        anim_isRunning = false;
+                        //        anim_isMovingBackwards = true;
+                        //    }
+                        //}
+                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone))
+                        {
+                            Move(Vector3.right, speed, "Horizontal");
+                        }
+                        if (Input.GetKeyDown(KeyCode.W) && canJump)
+                        {
+                            if (!anim_isJumping)
                             {
-								StabilizeAcceleration ();
-							}
-                            else
+                                anim_isRunning = false;
+                                anim_isJumping = true;
+                                animator.SetBool("isRunning", anim_isRunning);
+                                animator.SetBool("isJumping", anim_isJumping);
+                            }
+                            Jump();
+                            //if (anim_isFlying)
+                            //{
+
+                            //}
+                        }
+                        if (thereIsGround && !canJump)
+                        {
+                            ApplyGravity();
+                        }
+                        else if ((thereIsGround && canJump))
+                        {
+                            if (rb.velocity.y < 0)
                             {
-								Glide ();
-						    }
-					     }
-                    }
-					if (transform.rotation != sideScrollerRotation)
-                    {
-						transform.rotation = sideScrollerRotation;
-					}
-                    Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
-					float aimAngle = Vector3.Angle (Vector3.right, aim);
-					Vector3 cross = Vector3.Cross (Vector3.right, aim);
-					if (aimAngle <= upRotationAngle && cross.z >= 0)
-                    {
-						TurnAroundGO(bulletSpawnPoints);
-                    }
-                    else if (aimAngle <= downRotationAngle && cross.z < 0)
-                    {
-                        TurnAroundGO(bulletSpawnPoints);
-                    }
+                                if (!anim_isRunning)
+                                {
+                                    //Debug.Log("SSSSSSS");
+                                    anim_isJumping = false;
+                                    anim_isGliding = false;
+                                    anim_isRunning = true;
+                                    animator.SetBool("isJumping", anim_isJumping);
+                                    animator.SetBool("isGliding", anim_isGliding);
+                                    animator.SetBool("isRunning", anim_isRunning);
+                                }
+                                rb.velocity = Vector3.zero;
+                                transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
+                            }
+                        }
+                        if (Input.GetKey(KeyCode.W))
+                        {
+                            if (!canJump && rb.velocity.y < -0.5f)
+                            {
+                                if (!anim_isGliding)
+                                {
+                                    //Debug.Log("SSSSS");
+                                    anim_isJumping = false;
+                                    anim_isGliding = true;
+                                    animator.SetBool("isJumping", anim_isJumping);
+                                    animator.SetBool("isGliding", anim_isGliding);
+                                }
+                                //if (!canGlide)
+                                //{
+                                //    canGlide = true;
+                                //    animator.SetBool("canGlide", canGlide);
+                                //}
+                                if (rb.velocity.y < -2)
+                                {
+                                    StabilizeAcceleration();
+                                }
+                                else
+                                {
+                                    Glide();
+                                }
+                            }
+                        }
+                        if (transform.rotation != sideScrollerRotation)
+                        {
+                            transform.rotation = sideScrollerRotation;
+                        }
+                        Vector3 aim = aimTransform.transform.position - bulletSpawnPointLx.position;
+                        float aimAngle = Vector3.Angle(Vector3.right, aim);
+                        Vector3 cross = Vector3.Cross(Vector3.right, aim);
+                        if (aimAngle <= upRotationAngle && cross.z >= 0)
+                        {
+                            TurnAroundGO(bulletSpawnPoints);
+                        }
+                        else if (aimAngle <= downRotationAngle && cross.z < 0)
+                        {
+                            TurnAroundGO(bulletSpawnPoints);
+                        }
 
-					ClampPosition (GameMode.SIDESCROLL);
+                        ClampPosition(GameMode.SIDESCROLL);
 
-					if (canShootAndMove && Input.GetMouseButtonDown (1) && !biteCoolDownActive && canJump)
-                    {
-                            StartCoroutine ("BiteAttack");
-                    }
-                    break;
-                case GameMode.TOPDOWN:
-                        sideScroll = false;
+                        if (canShootAndMove && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
+                        {
+                            StartCoroutine("BiteAttack");
+                        }
+                        break;
+                    case GameMode.TOPDOWN:
+                        if (anim_isSidescroll)
+                        {
+                            anim_isSidescroll = false;
+                            anim_isFlying = true;
+                            animator.SetBool("sidescroll", anim_isSidescroll);
+                            animator.SetBool("isFlying", anim_isFlying);
+                        }
+                        inverseDirection = new Vector3(-Input.GetAxis("Horizontal"), 0, -Input.GetAxis("Vertical"));
+                        Debug.Log(transform.forward);
+                        playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
+                        anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
+                        if (anglePlayerDirection <= playerBackwardsAnimationLimit)
+                        {
+                            if (!anim_isMovingBackwards)
+                            {
+                                anim_isFlying = false;
+                                anim_isMovingBackwards = true;
+                                animator.SetBool("isFlying", anim_isFlying);
+                                animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
+                            }
+                        }
+                        if (anglePlayerDirection > playerBackwardsAnimationLimit)
+                        {
+                            if (!anim_isFlying)
+                            {
+                                anim_isMovingBackwards = false;
+                                anim_isFlying = true;                                
+                                animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
+                                animator.SetBool("isFlying", anim_isFlying);
+                            }
+                        }
+                        //animator.SetFloat("anglePlayerDirection", anglePlayerDirection);
+                        //animator.SetFloat("horizontal", direction.x);
+                        //animator.SetFloat("vertical", direction.z);
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
                         if (canShootAndMove)
@@ -200,8 +311,6 @@ public class PlayerController : MonoBehaviour
                     Shoot();
                     fireTimer = 0.00f;
                 }
-
-                PlayAnimation();
             }
             else
             {
@@ -252,6 +361,11 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
+    //void SetAnimationBools()
+    //{
+    //    if (direction.x)
+    //}
+
     void ApplyGravity()
     {
         rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
@@ -270,7 +384,7 @@ public class PlayerController : MonoBehaviour
     void Glide()
     {
         rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
-        glide = false;
+        //glide = false;
     }
 
     //void MoveArms()
@@ -423,14 +537,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PlayAnimation()
-    {
-        horizontal = Input.GetAxis("Horizontal");
-        AnimationManager.instance.GetAnimation("horizontal", horizontal);
-        AnimationManager.instance.GetAnimation("sideScroll", sideScroll);
-        AnimationManager.instance.GetAnimation("glide", glide);
-        //AnimationManager.instance.GetAnimation("attack", sideScroll? biteAttack : tailAttack);
-    }
+    //void PlayAnimation()
+    //{
+    //    //horizontal = Input.GetAxis("Horizontal");
+    //    //animator.SetFloat("horizontal", horizontal);
+    //    //animator.SetBool("sideScroll", anim_isSidescroll);
+    //    //animator.SetBool("glide", glide);
+    //    //AnimationManager.instance.GetAnimation("attack", sideScroll? biteAttack : tailAttack);
+    //}
 
     IEnumerator TailAttack()
     {
