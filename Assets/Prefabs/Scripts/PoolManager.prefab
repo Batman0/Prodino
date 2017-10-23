@@ -52,4 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledPlayerBulletAmount: 20
+  pooledDoubleAimingBulletAmount: 20
   playerBulletpool: []
+  bulletDoubleAimingPool: []
+  bulletDoubleAimingSinusoidePool: []
+  bulletForwardShooterPool: []
+  bulletSphericalAimingPool: []
+  bulletTrailPool: []
