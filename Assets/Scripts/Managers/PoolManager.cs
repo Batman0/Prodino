@@ -13,10 +13,15 @@ public class PoolManager : MonoBehaviour
     public static PoolManager instance;
     public int pooledPlayerBulletAmount = 15;
     public int pooledBulletAmount = 10;
+    public int pooledEnemiesAmount = 10;
     private int i = 0;
-    private int indexOfBullet;
 
     public listStruct playerBulletpool;
+
+    //Enemies'list
+    public listStruct enemyShooterForwardPool;
+
+    //Bullet Enemies' list
     public listStruct bulletDoubleAimingPool;
     public listStruct bulletDoubleAimingSinusoidePool;
     public listStruct bulletForwardShooterPool;
@@ -27,13 +32,8 @@ public class PoolManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        playerBulletpool.pooledItems = new List<GameObject>();
-        bulletDoubleAimingPool.pooledItems = new List<GameObject>();
-        bulletDoubleAimingSinusoidePool.pooledItems = new List<GameObject>();
-        bulletForwardShooterPool.pooledItems = new List<GameObject>();
-        bulletSphericalAimingPool.pooledItems = new List<GameObject>();
-        bulletTrailPool.pooledItems = new List<GameObject>();
-        bulletLaserPool.pooledItems = new List<GameObject>();
+
+        ListInitialization();
 
         for (i = 0; i < pooledPlayerBulletAmount; i++)
         {
@@ -79,5 +79,28 @@ public class PoolManager : MonoBehaviour
         bulletSphericalAimingPool.pooledItems.Add(sphericalAimingBullet);
         bulletTrailPool.pooledItems.Add(trailBullet);
         bulletLaserPool.pooledItems.Add(laserBullet);
+    }
+
+    void InstantiateEnemy()
+    {
+        GameObject forwardShooterEnemy = Instantiate(Register.instance.propertiesForwardShooter.gameObjectPrefab);
+        forwardShooterEnemy.SetActive(false);
+        enemyShooterForwardPool.pooledItems.Add(forwardShooterEnemy);
+    }
+
+    void ListInitialization()
+    {
+        playerBulletpool.pooledItems = new List<GameObject>();
+
+        enemyShooterForwardPool.pooledItems = new List<GameObject>();
+
+        bulletDoubleAimingPool.pooledItems = new List<GameObject>();
+        bulletDoubleAimingSinusoidePool.pooledItems = new List<GameObject>();
+        bulletForwardShooterPool.pooledItems = new List<GameObject>();
+        bulletSphericalAimingPool.pooledItems = new List<GameObject>();
+        bulletTrailPool.pooledItems = new List<GameObject>();
+        bulletLaserPool.pooledItems = new List<GameObject>();
+
+
     }
 }
