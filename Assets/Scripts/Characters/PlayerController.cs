@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunRx;
     public GameObject armLx;
     public Transform gunLx;
-    public float maxAngleRotation = 30;
+    public float maxArmsRotation = 30;
     private float angleS = 0;
 
     [Header("Aim")]
@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
     public GameObject aimTransformPrefab;
     private GameObject aimTransform;
 	public GameObject armsAim;
+	public GameObject gunsAimR;
+	public GameObject gunsAimL;
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -203,6 +205,11 @@ public class PlayerController : MonoBehaviour
                             }
                         }
 
+						if (transform.rotation != sideScrollRotation)
+						{
+							transform.rotation = sideScrollRotation;
+						}
+
                         ClampPosition(GameMode.SIDESCROLL);
 
                         if (canShootAndMove && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
@@ -247,6 +254,9 @@ public class PlayerController : MonoBehaviour
                         if (canShootAndMove)
                         {
                             TurnAroundGO(transform);
+							TurnAroundGO(armsAim.transform);
+							TurnAroundGO(gunsAimL.transform);
+							TurnAroundGO(gunsAimR.transform);
                         }
 
                         ClampPosition(GameMode.TOPDOWN);
@@ -410,15 +420,30 @@ public class PlayerController : MonoBehaviour
 			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
 			float aimAngle = Vector3.Angle (Vector3.right, aim);
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
-			if (aimAngle <= upRotationAngle && cross.z >= 0)
+
+			if (aimAngle <= maxArmsRotation && cross.z >= 0)
 			{
 				TurnAroundGO(armsAim.transform);
+				TurnAroundGO(gunsAimR.transform);
+				TurnAroundGO(gunsAimL.transform);
+			}
+			else if (aimAngle <= maxArmsRotation && cross.z < 0)
+			{
+				TurnAroundGO(armsAim.transform);
+				TurnAroundGO(gunsAimR.transform);
+				TurnAroundGO(gunsAimL.transform);
+			}
+
+			if (aimAngle <= upRotationAngle && cross.z >= 0)
+			{
+				TurnAroundGO(gunsAimR.transform);
+				TurnAroundGO(gunsAimL.transform);
 			}
 			else if (aimAngle <= downRotationAngle && cross.z < 0)
 			{
-				TurnAroundGO(armsAim.transform);
+				TurnAroundGO(gunsAimR.transform);
+				TurnAroundGO(gunsAimL.transform);
 			}
-
         }
     }
 
