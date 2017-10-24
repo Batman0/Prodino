@@ -7,9 +7,7 @@ public class ShotForwardShooter : EnemyShot
 
     private float fireRate;
     private float timer;
-    //private GameObject prefab;
     private PropertiesForwardShooter properties;
-    private int indexOfBullet;
 
     public override void Init()
     {
@@ -17,7 +15,6 @@ public class ShotForwardShooter : EnemyShot
         properties = Register.instance.propertiesForwardShooter;
         fireRate = properties.fireRate;
         timer = 0;
-        //prefab = properties.bulletPrefab;
     }
 
     public override void ShootSidescroll(Enemy enemy)
@@ -28,16 +25,11 @@ public class ShotForwardShooter : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletForwardShooterPool);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletForwardShooterPool,ref PoolManager.instance.forwardShooterBulletAmount);
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            PoolManager.instance.bulletForwardShooterPool.index++;
             timer = 0.0f;
-        }
-        if (PoolManager.instance.bulletForwardShooterPool.index >= PoolManager.instance.pooledBulletAmount)
-        {
-            PoolManager.instance.bulletForwardShooterPool.index = 0;
         }
     }
 
@@ -49,16 +41,11 @@ public class ShotForwardShooter : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletForwardShooterPool);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletForwardShooterPool, ref PoolManager.instance.forwardShooterBulletAmount);
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            PoolManager.instance.bulletForwardShooterPool.index++;
             timer = 0.0f;
-        }
-        if (PoolManager.instance.bulletForwardShooterPool.index >= PoolManager.instance.pooledBulletAmount)
-        {
-            PoolManager.instance.bulletForwardShooterPool.index = 0;
         }
     }
 }

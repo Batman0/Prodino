@@ -13,7 +13,7 @@ public class ShotTrail : EnemyShot
     public override void Init()
     {
         base.Init();
-        //properties = Register.instance. propertiesTrail;
+        properties = Register.instance. propertiesTrail;
         //prefab = properties.trailPrefab;
     }
 
@@ -21,17 +21,12 @@ public class ShotTrail : EnemyShot
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletTrailPool);
+            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool,ref PoolManager.instance.trailBulletAmount);
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);
             trail.transform.SetParent(enemy.bulletSpawnpoint);
             enemy.canShoot = false;
-            PoolManager.instance.bulletTrailPool.index++;
-        }
-        if (PoolManager.instance.bulletTrailPool.index >= PoolManager.instance.pooledBulletAmount)
-        {
-            PoolManager.instance.bulletTrailPool.index = 0;
         }
     }
 

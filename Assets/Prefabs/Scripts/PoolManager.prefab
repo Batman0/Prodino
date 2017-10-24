@@ -52,10 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledPlayerBulletAmount: 20
-  pooledDoubleAimingBulletAmount: 20
-  playerBulletpool: []
-  bulletDoubleAimingPool: []
-  bulletDoubleAimingSinusoidePool: []
-  bulletForwardShooterPool: []
-  bulletSphericalAimingPool: []
-  bulletTrailPool: []
+  doubleAimingBulletAmount: 50
+  doubleAimingSinusoideBulletAmount: 40
+  forwardShooterBulletAmount: 20
+  sphericalAimingBulletAmount: 20
+  trailBulletAmount: 5
+  laserBulletAmount: 5
+  pooledEnemiesAmount: 10

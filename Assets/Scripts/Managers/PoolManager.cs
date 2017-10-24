@@ -11,11 +11,22 @@ public struct listStruct
 public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
-    public int pooledPlayerBulletAmount = 15;
-    public int pooledBulletAmount = 10;
-    public int pooledEnemiesAmount = 10;
-    private int i = 0;
+    private int pooledBulletAmount;
 
+    [Header("Bullets")]
+    public int pooledPlayerBulletAmount = 15;
+    public int doubleAimingBulletAmount = 10;
+    public int doubleAimingSinusoideBulletAmount = 10;
+    public int forwardShooterBulletAmount = 10;
+    public int sphericalAimingBulletAmount = 10;
+    public int trailBulletAmount = 10;
+    public int laserBulletAmount = 10;
+
+    [Header("Enemies")]
+    public int pooledEnemiesAmount = 10;
+
+
+    private int i = 0;
     public listStruct playerBulletpool;
 
     //Enemies'list
@@ -32,7 +43,7 @@ public class PoolManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-
+        pooledBulletAmount = doubleAimingBulletAmount + doubleAimingSinusoideBulletAmount + forwardShooterBulletAmount + trailBulletAmount + laserBulletAmount;
         ListInitialization();
 
         for (i = 0; i < pooledPlayerBulletAmount; i++)
@@ -47,38 +58,69 @@ public class PoolManager : MonoBehaviour
             InstantiateBulletEnemy();
         }
     }
-
-    public GameObject GetpooledBullet(listStruct items)
+    
+    public GameObject GetpooledBullet(ref listStruct items, ref int pooledBullet)
     {
         if(!items.pooledItems[items.index].activeInHierarchy)
         {
-           return (items.pooledItems[items.index]);
+            if(items.index < pooledBullet-1)
+            {
+               
+                items.index++;
+                return (items.pooledItems[items.index - 1]);
+            }
+            else
+            {
+                items.index = 0;
+                return (items.pooledItems[pooledBullet - 1]);
+            }  
         }
         return null;
     }
 
     void InstantiateBulletEnemy()
     {
-        GameObject doubleAimingBullet = Instantiate(Register.instance.propertiesDoubleAiming.sidescrollBulletPrefab) as GameObject;
-        GameObject doubleAimingSinusoideBullet = Instantiate(Register.instance.propertiesDoubleAiming.topdownBulletPrefab) as GameObject;
-        GameObject forwardShooterBullet = Instantiate(Register.instance.propertiesForwardShooter.bulletPrefab) as GameObject;
-        GameObject sphericalAimingBullet = Instantiate(Register.instance.propertiesSphericalAiming.bulletPrefab) as GameObject;
-        GameObject trailBullet = Instantiate(Register.instance.propertiesTrail.trailPrefab) as GameObject;
-        GameObject laserBullet = Instantiate(Register.instance.propertiesLaserDiagonal.laserPrefab);
+        if(i < doubleAimingBulletAmount)
+        {
+            GameObject doubleAimingBullet = Instantiate(Register.instance.propertiesDoubleAiming.sidescrollBulletPrefab) as GameObject;
+            doubleAimingBullet.SetActive(false);
+            bulletDoubleAimingPool.pooledItems.Add(doubleAimingBullet);
+        }
 
-        doubleAimingBullet.SetActive(false);
-        doubleAimingSinusoideBullet.SetActive(false);
-        forwardShooterBullet.SetActive(false);
-        sphericalAimingBullet.SetActive(false);
-        trailBullet.SetActive(false);
-        laserBullet.SetActive(false);
+        if(i < doubleAimingSinusoideBulletAmount)
+        {
+            GameObject doubleAimingSinusoideBullet = Instantiate(Register.instance.propertiesDoubleAiming.topdownBulletPrefab) as GameObject;
+            doubleAimingSinusoideBullet.SetActive(false);
+            bulletDoubleAimingSinusoidePool.pooledItems.Add(doubleAimingSinusoideBullet);
+        }
 
-        bulletDoubleAimingPool.pooledItems.Add(doubleAimingBullet);
-        bulletDoubleAimingSinusoidePool.pooledItems.Add(doubleAimingSinusoideBullet);
-        bulletForwardShooterPool.pooledItems.Add(forwardShooterBullet);
-        bulletSphericalAimingPool.pooledItems.Add(sphericalAimingBullet);
-        bulletTrailPool.pooledItems.Add(trailBullet);
-        bulletLaserPool.pooledItems.Add(laserBullet);
+        if(i < forwardShooterBulletAmount)
+        {
+            GameObject forwardShooterBullet = Instantiate(Register.instance.propertiesForwardShooter.bulletPrefab) as GameObject;
+            forwardShooterBullet.SetActive(false);
+            bulletForwardShooterPool.pooledItems.Add(forwardShooterBullet);
+        }
+        
+        if(i < sphericalAimingBulletAmount)
+        {
+            GameObject sphericalAimingBullet = Instantiate(Register.instance.propertiesSphericalAiming.bulletPrefab) as GameObject;
+            sphericalAimingBullet.SetActive(false);
+            bulletSphericalAimingPool.pooledItems.Add(sphericalAimingBullet);
+        }
+        
+        if(i < trailBulletAmount)
+        {
+            GameObject trailBullet = Instantiate(Register.instance.propertiesTrail.trailPrefab) as GameObject;
+            trailBullet.SetActive(false);
+            bulletTrailPool.pooledItems.Add(trailBullet);
+        }
+
+        if(i < laserBulletAmount)
+        {
+            GameObject laserBullet = Instantiate(Register.instance.propertiesLaserDiagonal.laserPrefab) as GameObject;
+            laserBullet.SetActive(false);
+            bulletLaserPool.pooledItems.Add(laserBullet);
+        }
     }
 
     void InstantiateEnemy()
@@ -94,6 +136,7 @@ public class PoolManager : MonoBehaviour
 
         enemyShooterForwardPool.pooledItems = new List<GameObject>();
 
+        //Enemies Bullet list
         bulletDoubleAimingPool.pooledItems = new List<GameObject>();
         bulletDoubleAimingSinusoidePool.pooledItems = new List<GameObject>();
         bulletForwardShooterPool.pooledItems = new List<GameObject>();
