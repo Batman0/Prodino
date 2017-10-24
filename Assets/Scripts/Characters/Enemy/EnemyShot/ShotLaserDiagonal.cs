@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class ShotLaserDiagonal : EnemyShot
 {
-
     private float waitingTime;
     private float loadingTime;
     private float shootingTime;
     private float width;
     private float height;
     private float timer;
-    //private GameObject prefab;
     private GameObject laser;
     private PropertiesLaserDiagonal properties;
 
@@ -44,8 +42,9 @@ public class ShotLaserDiagonal : EnemyShot
             {
                 if (!laser)
                 {
-                    laser = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletLaserPool);//Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
+                    laser = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletLaserPool, ref PoolManager.instance.laserBulletAmount);                   
                     laser.SetActive(true);
+                    laser.transform.position = enemy.bulletSpawnpoint.position;
                     laser.transform.rotation = enemy.bulletSpawnpoint.parent.rotation;
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
@@ -85,12 +84,14 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 if (enemy.canShoot)
                 {
-                    GameObject laser = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletLaserPool);//Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
+                    GameObject laser = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletLaserPool, ref PoolManager.instance.laserBulletAmount);
                     laser.SetActive(true);
+                    PoolManager.instance.bulletLaserPool.index++;
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     enemy.canShoot = false;
                 }
+
                 if (timer < waitingTime + loadingTime + shootingTime)
                 {
                     timer += Time.deltaTime;

@@ -441,16 +441,16 @@ public class PlayerController : MonoBehaviour
         {
             //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             //{
-               GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.playerBulletpool);
+               GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, ref PoolManager.instance.pooledPlayerBulletAmount);
                bullet.transform.position = bulletSpawnPointLx.position;
                bullet.transform.rotation = bulletSpawnPointLx.rotation;
                bullet.SetActive(true);
-               PoolManager.instance.playerBulletpool.index++;
+               /*PoolManager.instance.playerBulletpool.index++;
 
                if(PoolManager.instance.playerBulletpool.index >= PoolManager.instance.pooledPlayerBulletAmount)
                {
                   PoolManager.instance.playerBulletpool.index = 0;
-               }
+               }*/
             //}
             //else
             //{

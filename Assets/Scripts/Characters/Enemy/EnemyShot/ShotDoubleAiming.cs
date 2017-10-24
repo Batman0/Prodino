@@ -7,18 +7,12 @@ public class ShotDoubleAiming : EnemyShot
 
     private float fireRate;
     private float timer;
-    //private GameObject sidescrollPrefab;
-    //private GameObject topdownPrefab;
     private PropertiesDoubleAiming properties;
-    private int indexOfBullet;
-    private int indexOfSinusoideBullet;
 
     public override void Init()
     {
         base.Init();
-        //properties = Register.instance.propertiesDoubleAiming;
-        //sidescrollPrefab = properties.sidescrollBulletPrefab;
-        //topdownPrefab = properties.topdownBulletPrefab;
+        properties = Register.instance.propertiesDoubleAiming;
         fireRate = properties.fireRate;
         timer = 0;
     }
@@ -31,21 +25,15 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletDoubleAimingPool);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingPool, ref PoolManager.instance.doubleAimingBulletAmount);
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            indexOfBullet++;
-            GameObject secondBullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletDoubleAimingPool); 
+            GameObject secondBullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingPool, ref PoolManager.instance.doubleAimingBulletAmount); 
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             secondBullet.SetActive(true);
-            PoolManager.instance.bulletDoubleAimingPool.index++;
             timer = 0.0f;
-        }
-        if (PoolManager.instance.bulletDoubleAimingPool.index >= PoolManager.instance.pooledBulletAmount)
-        {
-            PoolManager.instance.bulletDoubleAimingPool.index = 0;
         }
     }
 
@@ -57,23 +45,16 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletDoubleAimingSinusoidePool);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingSinusoidePool, ref PoolManager.instance.doubleAimingSinusoideBulletAmount);
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            indexOfSinusoideBullet++;
-            GameObject secondBullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletDoubleAimingSinusoidePool);
+            GameObject secondBullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingSinusoidePool, ref PoolManager.instance.doubleAimingSinusoideBulletAmount);
             secondBullet.tag = "EnemyBulletInverse";
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = enemy.transform.rotation;
             secondBullet.SetActive(true);
-            PoolManager.instance.bulletDoubleAimingSinusoidePool.index++;
             timer = 0.0f;
-        }
-
-        if (PoolManager.instance.bulletDoubleAimingSinusoidePool.index >= PoolManager.instance.pooledBulletAmount)
-        {
-            PoolManager.instance.bulletDoubleAimingSinusoidePool.index = 0;
         }
     }
 }
