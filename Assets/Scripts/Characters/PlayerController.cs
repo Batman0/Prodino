@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float respawnTimer = 0.5f;
     public float gravity;
     public float glideSpeed;
-    private Quaternion sideScrollerRotation;
+    private Quaternion sideScrollRotation;
     private Quaternion bulletSpawnPointStartRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         glideSpeed = properties.glideSpeed;
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
-        sideScrollerRotation = transform.rotation;
+        sideScrollRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
@@ -134,6 +134,10 @@ public class PlayerController : MonoBehaviour
                         {
                             anim_isSidescroll = true;
                             animator.SetBool("sidescroll", anim_isSidescroll);
+                        }
+                        if (transform.rotation != sideScrollRotation)
+                        {
+                            transform.rotation = sideScrollRotation;
                         }
                         inverseDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
 
