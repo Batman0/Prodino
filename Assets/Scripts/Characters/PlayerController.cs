@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public float respawnTimer = 0.5f;
     public float gravity;
     public float glideSpeed;
+    [SerializeField]
+    private float topdownPlayerHeight;
     private Quaternion sideScrollRotation;
     private Quaternion bulletSpawnPointStartRotation;
     private const string playerBulletTag = "PlayerBullet";
@@ -117,7 +119,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-		
+        Debug.Log(rb.velocity);
         //Debug.Log(rb.velocity);
         if (!isDead)
         {
@@ -148,6 +150,10 @@ public class PlayerController : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.W) && canJump)
                         {
+                            Jump();
+                        }
+                        if (thereIsGround && !canJump)
+                        {
                             if (!anim_isJumping)
                             {
                                 anim_isRunning = false;
@@ -155,13 +161,9 @@ public class PlayerController : MonoBehaviour
                                 animator.SetBool("isRunning", anim_isRunning);
                                 animator.SetBool("isJumping", anim_isJumping);
                             }
-                            Jump();
-                        }
-                        if (/*GameManager.instance.currentGameMode == GameMode.SIDESCROLL && */thereIsGround && !canJump)
-                        {
                             ApplyGravity();
                         }
-                        else if (/*GameManager.instance.currentGameMode == GameMode.SIDESCROLL && */thereIsGround && canJump)
+                        else if (thereIsGround && canJump)
                         {
                             if (rb.velocity.y < 0)
                             {
@@ -203,7 +205,7 @@ public class PlayerController : MonoBehaviour
                             }
                         }
 
-                        ClampPosition(GameMode.SIDESCROLL);
+                        ClampPositionSidescroll();
 
                         if (canShootAndMove && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
                         {
@@ -217,6 +219,10 @@ public class PlayerController : MonoBehaviour
                             anim_isFlying = true;
                             animator.SetBool("sidescroll", anim_isSidescroll);
                             animator.SetBool("isFlying", anim_isFlying);
+                        }
+                        if(rb.velocity != Vector3.zero)
+                        {
+                            rb.velocity = Vector3.zero;
                         }
                         inverseDirection = new Vector3(-Input.GetAxis("Horizontal"), 0, -Input.GetAxis("Vertical"));
                         Debug.Log(transform.forward);
@@ -249,7 +255,7 @@ public class PlayerController : MonoBehaviour
                             TurnAroundGO(transform);
                         }
 
-                        ClampPosition(GameMode.TOPDOWN);
+                        ClampPositionTopdown();
 
                         if (canShootAndMove && Input.GetMouseButtonDown(1))
                         {
@@ -460,25 +466,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ClampPosition(GameMode state)
+    public void ClampPositionSidescroll()
     {
-        switch (state)
-        {
-            case (GameMode.SIDESCROLL):
-                transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
-                Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
-                0.0f
-                );
-                break;
-            case (GameMode.TOPDOWN):
-                transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
-                transform.position.y,
-                Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
-                );
-                break;
-        }
+        transform.position = new Vector3(
+        Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
+        Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
+        0.0f
+        );
+    }
+
+    public void ClampPositionTopdown()
+    {
+        transform.position = new Vector3(
+        Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
+        landmark.position.y + topdownPlayerHeight,
+        Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
+        );
     }
 
     void ChangePerspective()

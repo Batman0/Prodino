@@ -52,10 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+  - enemyPrefab: {fileID: 1739066919629530, guid: 6aefd4ff2d44d3143b59509903bde628,
       type: 2}
     delay: 0
-  - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+  - enemyPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
       type: 2}
     delay: 5
   - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
