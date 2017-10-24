@@ -2267,7 +2267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &879369306
 Animator:
   serializedVersion: 3
@@ -4178,11 +4178,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1574072807 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1214670285519748, guid: 39df20cfb02b81140806e2025c8f177c,
-    type: 2}
-  m_PrefabInternal: {fileID: 2118790503}
 --- !u!1 &1580021708
 GameObject:
   m_ObjectHideFlags: 0
@@ -5350,7 +5345,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.size
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4792418871269510, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -5735,15 +5730,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1758926448620306, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
-        type: 2}
-      propertyPath: armsAim
-      value: 
-      objectReference: {fileID: 1574072807}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
   m_IsPrefabParent: 0
