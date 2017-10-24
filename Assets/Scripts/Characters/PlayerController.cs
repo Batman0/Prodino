@@ -254,6 +254,9 @@ public class PlayerController : MonoBehaviour
                         if (canShootAndMove)
                         {
                             TurnAroundGO(transform);
+							TurnAroundGO(armsAim.transform);
+							TurnAroundGO(gunsAimL.transform);
+							TurnAroundGO(gunsAimR.transform);
                         }
 
                         ClampPosition(GameMode.TOPDOWN);
