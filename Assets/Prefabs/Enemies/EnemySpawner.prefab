@@ -52,24 +52,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - enemyPrefab: {fileID: 1739066919629530, guid: 6aefd4ff2d44d3143b59509903bde628,
-      type: 2}
-    delay: 0
-  - enemyPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
-      type: 2}
-    delay: 10
   - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
       type: 2}
-    delay: 20
+    delay: 0
+  - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+      type: 2}
+    delay: 5
+  - enemyPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
+      type: 2}
+    delay: 10
   - enemyPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
       type: 2}
-    delay: 30
+    delay: 15
   - enemyPrefab: {fileID: 1476885846380338, guid: a72ef70ed7f9a544796b4287f34b9dde,
       type: 2}
-    delay: 40
+    delay: 20
   - enemyPrefab: {fileID: 1706383022464380, guid: 4b2e466300699434b9cc14acc1950bc0,
       type: 2}
-    delay: 50
+    delay: 25
   - enemyPrefab: {fileID: 1571608488779970, guid: cbd5e43a5209e8849980e9e9023ab7f8,
       type: 2}
-    delay: 60
+    delay: 30
