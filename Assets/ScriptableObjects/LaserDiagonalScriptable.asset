@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: LaserDiagonalScriptable
   m_EditorClassIdentifier: 
   xSpeed: 5.49
-  yMovementSpeed: 3
-  yMovementSpeedShooting: 0
+  yMovementSpeed: 1.17
+  yMovementSpeedShooting: 0.91
   destructionMargin: 3
-  waveLenght: 7.27
+  waveLenght: 4.12
   amplitude: 5.15
   height: 0
   rightTargets:

@@ -46,6 +46,7 @@ public class ShotLaserDiagonal : EnemyShot
                 {
                     laser = PoolManager.instance.GetpooledBullet(PoolManager.instance.bulletLaserPool);//Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation) as GameObject;
                     laser.SetActive(true);
+                    laser.transform.rotation = enemy.bulletSpawnpoint.parent.rotation;
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     //enemy.canShoot = false;

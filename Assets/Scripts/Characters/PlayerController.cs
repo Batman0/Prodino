@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollRotation = transform.rotation;
         bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
+        transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
     }
@@ -156,11 +157,11 @@ public class PlayerController : MonoBehaviour
                             }
                             Jump();
                         }
-                        if (thereIsGround && !canJump)
+                        if (/*GameManager.instance.currentGameMode == GameMode.SIDESCROLL && */thereIsGround && !canJump)
                         {
                             ApplyGravity();
                         }
-                        else if ((thereIsGround && canJump))
+                        else if (/*GameManager.instance.currentGameMode == GameMode.SIDESCROLL && */thereIsGround && canJump)
                         {
                             if (rb.velocity.y < 0)
                             {
@@ -438,8 +439,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-            {
+            //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+            //{
                GameObject bullet = PoolManager.instance.GetpooledBullet(PoolManager.instance.playerBulletpool);
                bullet.transform.position = bulletSpawnPointLx.position;
                bullet.transform.rotation = bulletSpawnPointLx.rotation;
@@ -450,12 +451,12 @@ public class PlayerController : MonoBehaviour
                {
                   PoolManager.instance.playerBulletpool.index = 0;
                }
-            }
-            else
-            {
-                //GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
-                //GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
-            } 
+            //}
+            //else
+            //{
+            //    //GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
+            //    //GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
+            //} 
         }
     }
 
@@ -473,7 +474,7 @@ public class PlayerController : MonoBehaviour
             case (GameMode.TOPDOWN):
                 transform.position = new Vector3(
                 Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
-                startPosition.y,
+                transform.position.y,
                 Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
                 );
                 break;
