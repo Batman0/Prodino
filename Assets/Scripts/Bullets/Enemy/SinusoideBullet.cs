@@ -7,9 +7,9 @@ public class SinusoideBullet : BaseBullet
 
     private float xStartPosition;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         direction = transform.position.x - Register.instance.player.transform.position.x >= 0 ? new Vector3(-1, 0, 0) : new Vector3(1, 0, 0);
     }
 

@@ -221,7 +221,7 @@ MonoBehaviour:
   canShoot: 0
   toDestroy: 0
   isRight: 0
-  enemyLife: 2
+  enemyLife: 3
   movementTargetIndex: 0
   lifeTime: 0
   originalPos: {x: 0, y: 0, z: 0}

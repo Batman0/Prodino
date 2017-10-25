@@ -99,8 +99,8 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         Register.instance.player = this;
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
                             rb.velocity = Vector3.zero;
                         }
                         inverseDirection = new Vector3(-Input.GetAxis("Horizontal"), 0, -Input.GetAxis("Vertical"));
-                        Debug.Log(transform.forward);
+                        //Debug.Log(transform.forward);
                         playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
                         anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
                         if (anglePlayerDirection <= playerBackwardsAnimationLimit)
@@ -477,6 +477,7 @@ public class PlayerController : MonoBehaviour
 
     public void ClampPositionTopdown()
     {
+        if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
         transform.position = new Vector3(
         Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
         landmark.position.y + topdownPlayerHeight,

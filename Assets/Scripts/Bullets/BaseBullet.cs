@@ -7,16 +7,12 @@ public class BaseBullet : MonoBehaviour
     public Collider sideCollider;
     public Collider topCollider;
     protected Vector3 direction;
+    protected Quaternion? sidescrollRotation;
 
     protected virtual void OnEnable()
     {
         direction = transform.forward;
-        transform.rotation = Quaternion.identity;
-    }
 
-    protected virtual void Start()
-    {
-        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -35,8 +31,17 @@ public class BaseBullet : MonoBehaviour
         }
     }
 
+    //protected virtual void Start()
+    //{
+    //    //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+    //}
+
     protected virtual void Update()
     {
+        if (!sidescrollRotation.HasValue)
+            if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+                sidescrollRotation = transform.rotation;
         ChangePerspective();
     }
 
@@ -58,6 +63,8 @@ public class BaseBullet : MonoBehaviour
                 {
                     topCollider.enabled = false;
                     sideCollider.enabled = true;
+                    if (sidescrollRotation.HasValue)
+                        transform.rotation = sidescrollRotation.Value;
                 }
             }
             else
@@ -66,6 +73,7 @@ public class BaseBullet : MonoBehaviour
                 {
                     sideCollider.enabled = false;
                     topCollider.enabled = true;
+                    transform.rotation = Quaternion.identity;
                 }
             }
         }

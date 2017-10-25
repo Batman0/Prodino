@@ -5,9 +5,9 @@ using UnityEngine;
 public class WideLaser : BaseBullet
 {
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         Destroy(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 

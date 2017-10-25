@@ -5,10 +5,10 @@ using UnityEngine;
 public class ForwardShooterBullet : BaseBullet
 {
 
-    protected override void Start()
+    protected override void OnEnable()
     {
         direction = transform.forward;
-        base.Start();
+        base.OnEnable();
     }
 
     protected override void Update()
