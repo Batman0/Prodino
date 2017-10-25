@@ -7,9 +7,9 @@ public class PlayerBullet : BaseBullet
     private bool? isRight = null;
     private bool? isCenter = null;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
             AssignDirection();

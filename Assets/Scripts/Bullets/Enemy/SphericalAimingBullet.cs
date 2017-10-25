@@ -5,9 +5,9 @@ using UnityEngine;
 public class SphericalAimingBullet : BaseBullet
 {
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
     }
 
     protected override void Update()

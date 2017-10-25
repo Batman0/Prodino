@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public struct EnemyCreationData
 {
-    public MovementType movement;
-    public ShotType shot;
+    //public MovementType movement;
+    //public ShotType shot;
     public ShotType prefab;
     public float delay;
 }
@@ -39,8 +39,8 @@ public class EnemySpawner : MonoBehaviour
             GameObject prefab = register.properties[enemyCreationData[dataIndex].prefab.ToString()].gameObjectPrefab;
             GameObject enemy = Instantiate(prefab, transform.position, prefab.transform.rotation) as GameObject;
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.movementType = enemyCreationData[dataIndex].movement;
-            enemyScript.shotType = enemyCreationData[dataIndex].shot;
+            //enemyScript.movementType = enemyCreationData[dataIndex].movement;
+            //enemyScript.shotType = enemyCreationData[dataIndex].shot;
             enemyScript.isRight = isRight;
             dataIndex++;
         }
