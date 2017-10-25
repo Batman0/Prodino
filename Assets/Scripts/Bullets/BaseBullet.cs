@@ -11,6 +11,7 @@ public class BaseBullet : MonoBehaviour
     protected virtual void OnEnable()
     {
         direction = transform.forward;
+        transform.rotation = Quaternion.identity;
     }
 
     protected virtual void Start()

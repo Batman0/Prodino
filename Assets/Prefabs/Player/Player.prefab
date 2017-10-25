@@ -908,7 +908,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1758926448620306}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -9.77, y: -6.25, z: 0}
+  m_LocalPosition: {x: -9.77, y: -5.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4131419845760396}
@@ -2028,6 +2028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
   playerModel: {fileID: 1375617026502066}
+  speed: 5
   jumpForce: 28
   upRotationAngle: 60
   downRotationAngle: 90
@@ -2040,6 +2041,7 @@ MonoBehaviour:
   respawnTimer: 0.5
   gravity: 30
   glideSpeed: 4
+  topdownPlayerHeight: 7
   groundMask:
     serializedVersion: 2
     m_Bits: 512
@@ -2056,6 +2058,7 @@ MonoBehaviour:
   maxAngleRotation: 30
   aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
     type: 2}
+  armsAim: {fileID: 1214670285519748}
   sideXMin: 4
   sideXMax: 4
   sideYMin: 5.5

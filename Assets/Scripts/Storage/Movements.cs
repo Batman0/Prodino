@@ -4,15 +4,15 @@ using UnityEngine;
 
 public enum MovementType
 {
-    FORWARDSHOOTER,
-    FORWARD,
-    LASERDIAGONAL,
-    SPHERICALAIMING,
-    BOMBDROP,
-    TRAIL,
-    DOUBLEAIMING,
-    CIRCULAR,
-    SQUARE
+    ForwardShooter,
+    Forward,
+    LaserDiagonal,
+    SphericalAiming,
+    BombDrop,
+    Trail,
+    DoubleAiming,
+    Circular,
+    Square
 }
 public class Movements
 {

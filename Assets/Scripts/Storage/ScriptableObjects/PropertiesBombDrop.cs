@@ -10,6 +10,5 @@ public class PropertiesBombDrop : Properties
     public float loadingTime;
     public float bombFallSpeed;
     public float lifeTime;
-    public GameObject gameObjectPrefab;
     public GameObject bombPrefab;
 }

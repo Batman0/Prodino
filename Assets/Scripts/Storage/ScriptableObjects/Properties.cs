@@ -6,5 +6,6 @@ public class Properties : ScriptableObject
 {
 
     public float xSpeed;
+    public GameObject gameObjectPrefab;
 
 }

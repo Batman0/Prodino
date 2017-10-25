@@ -11,12 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcea303b96c55c444b7520406f66ce2a, type: 3}
   m_Name: ForwardShooterScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 4.5
+  xSpeed: 4
+  gameObjectPrefab: {fileID: 1739066919629530, guid: 6aefd4ff2d44d3143b59509903bde628,
+    type: 2}
   destructionMargin: 2
   fireRate: 2
   bulletSpeed: 7
   bulletDestructionMargin: 3
-  gameObjectPrefab: {fileID: 1739066919629530, guid: 6aefd4ff2d44d3143b59509903bde628,
-    type: 2}
   bulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}

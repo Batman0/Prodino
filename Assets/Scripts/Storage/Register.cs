@@ -34,6 +34,8 @@ public class Register : MonoBehaviour
     public PropertiesCircular propertiesCircular;
     public PropertiesSquare propertiesSquare;
 
+    public Dictionary<string, Properties> properties;
+
     [Header("Bounds")]
     [HideInInspector]
     public float xMin;
@@ -51,5 +53,13 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
+        properties = new Dictionary<string, Properties>();
+        properties.Add("ForwardShooter", propertiesForwardShooter);
+        properties.Add("Forward", propertiesForward);
+        properties.Add("LaserDiagonal", propertiesLaserDiagonal);
+        properties.Add("SphericalAiming", propertiesSphericalAiming);
+        properties.Add("BombDrop", propertiesBombDrop);
+        properties.Add("Trail", propertiesTrail);
+        properties.Add("DoubleAiming", propertiesDoubleAiming);
     }
 }

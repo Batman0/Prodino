@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df25c2b8408822a42b648007d5cdb90a, type: 3}
   m_Name: TrailScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 4.2
+  xSpeed: 5
+  gameObjectPrefab: {fileID: 1706383022464380, guid: 4b2e466300699434b9cc14acc1950bc0,
+    type: 2}
   xReturnSpeed: 3
   rotationSpeed: 1
   movementDuration: 4
   fadeTime: 5
   trailSpeed: 10
-  gameObjectPrefab: {fileID: 1706383022464380, guid: 4b2e466300699434b9cc14acc1950bc0,
-    type: 2}
   trailPrefab: {fileID: 1047232896709052, guid: b5ff0752424c99a43aa54799e3068775,
     type: 2}

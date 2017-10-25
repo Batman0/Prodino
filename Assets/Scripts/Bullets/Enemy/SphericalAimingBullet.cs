@@ -7,7 +7,6 @@ public class SphericalAimingBullet : BaseBullet
 
     protected override void Start()
     {
-        direction = transform.forward;
         base.Start();
     }
 

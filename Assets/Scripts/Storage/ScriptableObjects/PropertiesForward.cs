@@ -7,5 +7,4 @@ public class PropertiesForward : Properties
 {
     //public float speed;
     public float destructionMargin;
-    public GameObject gameObjectPrefab;
 }

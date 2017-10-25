@@ -78,7 +78,7 @@ public class ShotLaserDiagonal : EnemyShot
             }
             else
             {
-                if (!enemy.canShoot && enemy.shotType != ShotType.TRAIL)
+                if (!enemy.canShoot && enemy.shotType != ShotType.Trail)
                 {
                     enemy.canShoot = true;
                 }

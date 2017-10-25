@@ -103,7 +103,7 @@ public class Enemy: MonoBehaviour
         myMovementClass.Init(instance);
         myMovementSidescroll += myMovementClass.MoveSidescroll;
         myMovementTopdown += myMovementClass.MoveTopdown;
-        if (shotType != ShotType.FORWARD)
+        if (shotType != ShotType.Forward)
         {
             InitShot();
             myShotClass.Init();
@@ -119,7 +119,7 @@ public class Enemy: MonoBehaviour
         //    barrelInvertedRot = shooterTransform.rotation;
         //    shooterTransform.rotation = barrelStartRot;
         //}
-        if (movementType == MovementType.CIRCULAR)
+        if (movementType == MovementType.Circular)
         {
             lifeTime = Register.instance.propertiesCircular.lifeTime;
         }
@@ -152,7 +152,7 @@ public class Enemy: MonoBehaviour
     {
         ChangePerspective();
         Move();
-        if (shotType != ShotType.FORWARD)
+        if (shotType != ShotType.Forward)
             Shoot();
         Destroy();
     }
@@ -170,25 +170,25 @@ public class Enemy: MonoBehaviour
     {
         switch (movementType)
         {
-            case MovementType.FORWARDSHOOTER:
+            case MovementType.ForwardShooter:
                 myMovementClass = new MovementForwardShooter();
                 break;
-            case MovementType.FORWARD:
+            case MovementType.Forward:
                 myMovementClass = new MovementForward();
                 break;
-            case MovementType.LASERDIAGONAL:
+            case MovementType.LaserDiagonal:
                 myMovementClass = new MovementLaserDiagonal();
                 break;
-            case MovementType.SPHERICALAIMING:
-                myMovementClass = new MovementSphericlaAiming();
+            case MovementType.SphericalAiming:
+                myMovementClass = new MovementSphericalAiming();
                 break;
-            case MovementType.BOMBDROP:
+            case MovementType.BombDrop:
                 myMovementClass = new MovementBombDrop();
                 break;
-            case MovementType.TRAIL:
+            case MovementType.Trail:
                 myMovementClass = new MovementTrail();
                 break;
-            case MovementType.DOUBLEAIMING:
+            case MovementType.DoubleAiming:
                 myMovementClass = new MovementDoubleAiming();
                 break;
         }
@@ -198,22 +198,22 @@ public class Enemy: MonoBehaviour
     {
         switch (shotType)
         {
-            case ShotType.FORWARDSHOOTER:
+            case ShotType.ForwardShooter:
                 myShotClass = new ShotForwardShooter();
                 break;
-            case ShotType.LASERDIAGONAL:
+            case ShotType.LaserDiagonal:
                 myShotClass = new ShotLaserDiagonal();
                 break;
-            case ShotType.SPHERICALAIMING:
+            case ShotType.SphericalAiming:
                 myShotClass = new ShotSphericalAiming();
                 break;
-            case ShotType.BOMBDROP:
+            case ShotType.BombDrop:
                 myShotClass = new ShotBombDrop();
                 break;
-            case ShotType.TRAIL:
+            case ShotType.Trail:
                 myShotClass = new ShotTrail();
                 break;
-            case ShotType.DOUBLEAIMING:
+            case ShotType.DoubleAiming:
                 myShotClass = new ShotDoubleAiming();
                 break;
         }

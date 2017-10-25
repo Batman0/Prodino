@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum ShotType
 {
-    FORWARDSHOOTER,
-    FORWARD,
-    LASERDIAGONAL,
-    SPHERICALAIMING,
-    BOMBDROP,
-    TRAIL,
-    DOUBLEAIMING
+    ForwardShooter,
+    Forward,
+    LaserDiagonal,
+    SphericalAiming,
+    BombDrop,
+    Trail,
+    DoubleAiming
     
 }
 public static class Shots

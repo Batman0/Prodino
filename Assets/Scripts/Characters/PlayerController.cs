@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         //Debug.Log(rb.velocity);
         if (!isDead)
         {

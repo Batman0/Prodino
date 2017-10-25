@@ -17,6 +17,5 @@ public class PropertiesSphericalAiming : Properties
     public float fireRate;
     public float bulletSpeed;
     public float bulletDestructionMargin;
-    public GameObject gameObjectPrefab;
     public GameObject bulletPrefab;
 }

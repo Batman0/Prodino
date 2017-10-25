@@ -20,6 +20,5 @@ public class PropertiesLaserDiagonal : Properties
     public float waitingTime;
     public float loadingTime;
     public float shootingTime;
-    public GameObject gameObjectPrefab;
     public GameObject laserPrefab;
 }
