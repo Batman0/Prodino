@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunRx;
     public GameObject armLx;
     public Transform gunLx;
-    public float maxAngleRotation = 30;
+    public float maxArmsRotation = 30;
     private float angleS = 0;
 
     [Header("Aim")]
@@ -69,6 +69,11 @@ public class PlayerController : MonoBehaviour
     public GameObject aimTransformPrefab;
     private GameObject aimTransform;
 	public GameObject armsAim;
+	public GameObject gunsAimR;
+	public GameObject gunsAimL;
+	public GameObject shoulderAimR;
+	public GameObject shoulderAimL;
+
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -205,6 +210,11 @@ public class PlayerController : MonoBehaviour
                             }
                         }
 
+						if (transform.rotation != sideScrollRotation)
+						{
+							transform.rotation = sideScrollRotation;
+						}
+
                         ClampPositionSidescroll();
 
                         if (canShootAndMove && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
@@ -253,6 +263,10 @@ public class PlayerController : MonoBehaviour
                         if (canShootAndMove)
                         {
                             TurnAroundGO(transform);
+							TurnAroundGO(armsAim.transform);
+							TurnAroundGO(gunsAimR.transform);
+							TurnAroundGO(gunsAimL.transform);
+							
                         }
 
                         ClampPositionTopdown();
@@ -416,15 +430,51 @@ public class PlayerController : MonoBehaviour
 			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
 			float aimAngle = Vector3.Angle (Vector3.right, aim);
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
-			if (aimAngle <= upRotationAngle && cross.z >= 0)
-			{
-				TurnAroundGO(armsAim.transform);
-			}
-			else if (aimAngle <= downRotationAngle && cross.z < 0)
-			{
-				TurnAroundGO(armsAim.transform);
-			}
+			Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
+			Debug.DrawRay (cross, cross, Color.green);
+			Debug.Log ("aim.x =" + aim.x);
 
+			//Max aim of upper body
+			if (aimAngle <= 90 && cross.z >= 0)
+			{
+				
+				TurnAroundGO(armsAim.transform);
+
+			}
+			else if (aimAngle <= 90 && cross.z < 0 )
+			{
+				
+				TurnAroundGO(armsAim.transform);
+
+			}  
+
+			//Movement of Arms
+			if (aimAngle <= maxArmsRotation && cross.z >= 0 )
+			{
+				
+				TurnAroundGO(shoulderAimL.transform);
+				TurnAroundGO(shoulderAimR.transform);
+			}
+			else if (aimAngle <= maxArmsRotation && cross.z < 0 )
+			{
+
+				TurnAroundGO(shoulderAimL.transform);
+				TurnAroundGO(shoulderAimR.transform);
+			} 
+
+			//Aim of Guns
+			if (aimAngle <= upRotationAngle && cross.z >= 0 && aim.x >= 1 )
+			{
+
+				TurnAroundGO(gunsAimL.transform);
+				TurnAroundGO(gunsAimR.transform);
+			}
+			else if (aimAngle <= downRotationAngle && cross.z < 0 && aim.x >= 1 )
+			{
+
+				TurnAroundGO(gunsAimL.transform);
+				TurnAroundGO(gunsAimR.transform);
+			}  
         }
     }
 
