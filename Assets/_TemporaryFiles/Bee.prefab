@@ -313,7 +313,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456719874137364}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.047, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2, y: -0, z: 0}
   m_LocalScale: {x: 0.9999998, y: 1.0000012, z: 1.0000008}
   m_Children:
   - {fileID: 4780565784435044}
@@ -330,8 +330,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1107617778968354}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 2.17, z: 0.15}
-  m_LocalScale: {x: 0.20000118, y: 0.2000008, z: 0.20000076}
+  m_LocalPosition: {x: -0.18778269, y: 2.1700006, z: 0.15}
+  m_LocalScale: {x: 0.20000137, y: 0.20000097, z: 0.20000076}
   m_Children:
   - {fileID: 4878104547080434}
   m_Father: {fileID: 4341409077989114}
@@ -383,8 +383,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077253201635722}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.050000068, y: 2.1700006, z: -0.15}
-  m_LocalScale: {x: 0.20000118, y: 0.2000008, z: 0.20000076}
+  m_LocalPosition: {x: -0.18778269, y: 2.170001, z: -0.15}
+  m_LocalScale: {x: 0.20000137, y: 0.20000097, z: 0.20000076}
   m_Children:
   - {fileID: 4838080054064228}
   m_Father: {fileID: 4341409077989114}
@@ -426,8 +426,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732017995193510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 1.8, z: 0.48}
-  m_LocalScale: {x: 0.20000118, y: 0.2000008, z: 0.20000076}
+  m_LocalPosition: {x: -0.18778269, y: 1.8000003, z: 0.48000002}
+  m_LocalScale: {x: 0.20000137, y: 0.20000097, z: 0.20000076}
   m_Children:
   - {fileID: 4434345182277012}
   m_Father: {fileID: 4341409077989114}
@@ -440,8 +440,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637883416546356}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 1.8, z: -0.48}
-  m_LocalScale: {x: 0.20000127, y: 0.20000088, z: 0.20000073}
+  m_LocalPosition: {x: -0.18778269, y: 1.8000003, z: -0.48000002}
+  m_LocalScale: {x: 0.20000146, y: 0.20000108, z: 0.20000073}
   m_Children:
   - {fileID: 4534807838157866}
   m_Father: {fileID: 4341409077989114}
@@ -1081,37 +1081,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lasers:
   - laserEmitter: {fileID: 1637883416546356}
+    fluctuationAmplitude: 0.2
+    fluctuationSpeed: 1
     waitingTime: 2
     loadingTime: 1
     shootingTime: 1
     offset: 0
     state: 0
   - laserEmitter: {fileID: 1732017995193510}
+    fluctuationAmplitude: -0.2
+    fluctuationSpeed: 1
     waitingTime: 2
     loadingTime: 1
     shootingTime: 1
     offset: 1
     state: 0
   - laserEmitter: {fileID: 1107617778968354}
+    fluctuationAmplitude: 0
+    fluctuationSpeed: 0
     waitingTime: 2
     loadingTime: 1
     shootingTime: 1
     offset: 2
     state: 0
   - laserEmitter: {fileID: 1077253201635722}
+    fluctuationAmplitude: 0
+    fluctuationSpeed: 0
     waitingTime: 2
     loadingTime: 1
     shootingTime: 1
     offset: 3
     state: 0
-  yFluctuationSpeed: 0
+  yFluctuationSpeed: 1
+  yFluctuationAmplitude: 1
   gunRotationSpeed: 0
   gunFireRate: 0
   laserWidth: 0
   laserHeight: 0
-  switchPositionTime: 0
-  switchPositionSpeed: 0
-  fluctuationSpeed: 0
   triggerHealthPoints: 0
   healthPoints: 50
   maxCycles: 3

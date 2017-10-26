@@ -8,7 +8,7 @@ public class AracnoidWeakSpot : MonoBehaviour
     AracnoidEnemy aracnoid;
     Material headMaterial;
     Material weakSpotMaterial;
-    float blinkTime = 0.5f;
+    float blinkTime = 0.25f;
     void Awake()
     {
         Transform father = transform.parent;
