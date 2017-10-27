@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerBullet : BaseBullet
 {
-    private bool? isRight = null;
-    private bool? isCenter = null;
+    //private bool? isRight = null;
+    //private bool? isCenter = null;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-        {
-            AssignDirection();
-        }
+        //if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        //{
+        //    AssignDirection();
+        //}
     }
 
     protected override void Update()
@@ -23,24 +23,24 @@ public class PlayerBullet : BaseBullet
         DestroyGameobject(Register.instance.propertiesPlayer.bulletDestructionMargin);
     }
 
-    protected void AssignDirection()
-    {
-        if (transform.position.x > Register.instance.player.transform.position.x)
-        {
-            isRight = true;
-            isCenter = false;
-        }
-        else if (transform.position.x < Register.instance.player.transform.position.x)
-        {
-            isRight = false;
-            isCenter = false;
-        }
-        else if (transform.position.x == Register.instance.player.transform.position.x)
-        {
-            isRight = false;
-            isCenter = true;
-        }
-    }
+    //protected void AssignDirection()
+    //{
+    //    if (transform.position.x > Register.instance.player.transform.position.x)
+    //    {
+    //        isRight = true;
+    //        isCenter = false;
+    //    }
+    //    else if (transform.position.x < Register.instance.player.transform.position.x)
+    //    {
+    //        isRight = false;
+    //        isCenter = false;
+    //    }
+    //    else if (transform.position.x == Register.instance.player.transform.position.x)
+    //    {
+    //        isRight = false;
+    //        isCenter = true;
+    //    }
+    //}
 
     protected override void DestroyGameobject(float destructionMargin)
     {
@@ -51,38 +51,13 @@ public class PlayerBullet : BaseBullet
     }
     protected override void Move()
     {
-        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-        {
-            if ((isRight == null))
-            {
-                transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
-            }
-            else
-            {
-                if (isRight.Value && !isCenter.Value)
-                {
-                    transform.Translate(Vector3.right * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
-                }
-                else if (!isRight.Value && !isCenter.Value)
-                {
-                    transform.Translate(Vector3.left * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
-                }
-                else if (!isRight.Value && isCenter.Value)
-                {
-                    transform.Translate(Vector3.forward * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
-                }
-            }
-        }
-        else if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-        {
-            transform.Translate(direction * Register.instance.propertiesPlayer.bulletpeed * Time.deltaTime, Space.World);
-        }
+        transform.Translate(direction * Register.instance.propertiesPlayer.bulletSpeed * Time.deltaTime, Space.World);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        isCenter = null;
-        isRight = null;
+        //isCenter = null;
+        //isRight = null;
     }
 }

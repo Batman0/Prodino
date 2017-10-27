@@ -34,7 +34,7 @@ public class Register : MonoBehaviour
     public PropertiesCircular propertiesCircular;
     public PropertiesSquare propertiesSquare;
 
-    public Dictionary<string, Properties> properties;
+    public Dictionary<string, EnemyProperties> enemyProperties;
 
     [Header("Bounds")]
     [HideInInspector]
@@ -53,13 +53,13 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
-        properties = new Dictionary<string, Properties>();
-        properties.Add("ForwardShooter", propertiesForwardShooter);
-        properties.Add("Forward", propertiesForward);
-        properties.Add("LaserDiagonal", propertiesLaserDiagonal);
-        properties.Add("SphericalAiming", propertiesSphericalAiming);
-        properties.Add("BombDrop", propertiesBombDrop);
-        properties.Add("Trail", propertiesTrail);
-        properties.Add("DoubleAiming", propertiesDoubleAiming);
+        enemyProperties = new Dictionary<string, EnemyProperties>();
+        enemyProperties.Add("ForwardShooter", propertiesForwardShooter);
+        enemyProperties.Add("Forward", propertiesForward);
+        enemyProperties.Add("LaserDiagonal", propertiesLaserDiagonal);
+        enemyProperties.Add("SphericalAiming", propertiesSphericalAiming);
+        enemyProperties.Add("BombDrop", propertiesBombDrop);
+        enemyProperties.Add("Trail", propertiesTrail);
+        enemyProperties.Add("DoubleAiming", propertiesDoubleAiming);
     }
 }

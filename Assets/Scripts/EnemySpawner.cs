@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         if (dataIndex < enemyCreationData.Length && Time.time >= enemyCreationData[dataIndex].delay)
         {
             //Debug.Log(enemyCreationData[dataIndex].prefab.ToString());
-            GameObject prefab = register.properties[enemyCreationData[dataIndex].prefab.ToString()].gameObjectPrefab;
+            GameObject prefab = register.enemyProperties[enemyCreationData[dataIndex].prefab.ToString()].gameObjectPrefab;
             GameObject enemy = Instantiate(prefab, transform.position, prefab.transform.rotation) as GameObject;
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             //enemyScript.movementType = enemyCreationData[dataIndex].movement;

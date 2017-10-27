@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesSphericalAiming : Properties
+public class PropertiesSphericalAiming : EnemyProperties
 {
     //public float xMovementSpeed;
     public float zMovementSpeed;

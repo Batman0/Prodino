@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesDoubleAiming : Properties
+public class PropertiesDoubleAiming : EnemyProperties
 {
     //public float xMovementSpeed;
     public float zMovementSpeed;

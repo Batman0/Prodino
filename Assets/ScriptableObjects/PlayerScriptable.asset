@@ -11,10 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf63d0c2cb039d4db7acbbeb5eb45e4, type: 3}
   m_Name: PlayerScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 10
+  xSpeed: 5
   jumpForce: 28
   bulletpeed: 28
   glideSpeed: 4
+  upRotationAngle: 60
+  downRotationAngle: 80
+  fireRatio: 0.2
+  respawnTimer: 0.5
+  gravity: 30
   bulletDestructionMargin: 5
+  maxArmsRotation: 30
+  tailMeleeSpeed: 5
+  biteATKSpeed: 8
+  biteCoolDownActive: 0
+  biteCoolDown: 0.6
+  topdownPlayerHeight: 7.09
   bulletPrefab: {fileID: 1857389230154406, guid: 9178eddc3cb82534cad355bff7404955,
     type: 2}

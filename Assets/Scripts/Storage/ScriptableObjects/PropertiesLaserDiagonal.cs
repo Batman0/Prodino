@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesLaserDiagonal : Properties
+public class PropertiesLaserDiagonal : EnemyProperties
 {
     //public float xMovementSpeed;
     public float yMovementSpeed;
