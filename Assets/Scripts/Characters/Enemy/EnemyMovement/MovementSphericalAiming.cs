@@ -6,6 +6,7 @@ public class MovementSphericalAiming : EnemyMovement
 {
 
     private float topdownXSpeed;
+    private float zMovementSpeed;
     private float destructionMargin;
     private float amplitude;
     private float length;
@@ -23,6 +24,7 @@ public class MovementSphericalAiming : EnemyMovement
         properties = register.propertiesSphericalAiming;
         speed = properties.xSpeed;
         topdownXSpeed = enemy.isRight ? -speed : speed;
+        zMovementSpeed = properties.zMovementSpeed;
         destructionMargin = properties.destructionMargin;
         amplitude = properties.amplitude;
         length = properties.waveLenght;
@@ -52,7 +54,7 @@ public class MovementSphericalAiming : EnemyMovement
 
     public override void MoveTopdown(Enemy enemy)
     {
-        enemy.transform.position = new Vector3(topdownXSpeed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height);
+        enemy.transform.position = new Vector3(topdownXSpeed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(zMovementSpeed * time * Mathf.PI / 2)) * amplitude + height);
         time += Time.deltaTime;
 
         if (enemy.isRight)
