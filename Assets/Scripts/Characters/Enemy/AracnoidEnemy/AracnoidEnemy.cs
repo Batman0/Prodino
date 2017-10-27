@@ -68,7 +68,7 @@ public class AracnoidEnemy : MonoBehaviour
                     {
                         fracJourney += stepLength;
                         laserEmitter.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-                        if (laserEmitter.transform.localPosition.z >= targetPosition.z - stepLength)
+                        if (laserEmitter.transform.localPosition.z >= targetPosition.z)
                         {
                             movingUp = false;
                             laserEmitter.transform.localPosition = targetPosition;
@@ -79,7 +79,7 @@ public class AracnoidEnemy : MonoBehaviour
                     {
                         fracJourney += stepLength;
                         laserEmitter.transform.localPosition = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-                        if (laserEmitter.transform.localPosition.z >= initialPosition.z - stepLength)
+                        if (laserEmitter.transform.localPosition.z >= initialPosition.z)
                         {
                             laserEmitter.transform.localPosition = initialPosition;
                             targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + Mathf.Abs(fluctuationAmplitude));
@@ -93,7 +93,7 @@ public class AracnoidEnemy : MonoBehaviour
                     {
                         fracJourney += stepLength;
                         laserEmitter.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-                        if (laserEmitter.transform.localPosition.z <= targetPosition.z + stepLength)
+                        if (laserEmitter.transform.localPosition.z <= targetPosition.z)
                         {
                             movingUp = true;
                             laserEmitter.transform.localPosition = targetPosition;
@@ -104,7 +104,7 @@ public class AracnoidEnemy : MonoBehaviour
                     {
                         fracJourney += stepLength;
                         laserEmitter.transform.localPosition = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-                        if (laserEmitter.transform.localPosition.z <= initialPosition.z + stepLength)
+                        if (laserEmitter.transform.localPosition.z <= initialPosition.z)
                         {
                             laserEmitter.transform.localPosition = initialPosition;
                             targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z - Mathf.Abs(fluctuationAmplitude));
@@ -281,7 +281,7 @@ public class AracnoidEnemy : MonoBehaviour
             }
             for (int i = 0; i < lasers.Length; i++)
             {
-                lasers[i].Fluctuate(Time.deltaTime);
+                lasers[i].Fluctuate(Time.fixedDeltaTime);
             }
             Fluctuate();
 
@@ -401,7 +401,7 @@ public class AracnoidEnemy : MonoBehaviour
     {
         healthPoints--;
         currentWoundDamage++;
-        Debug.Log("Aracnoid HP: " + healthPoints);
+        Debug.LogWarning("Aracnoid HP: " + healthPoints);
         if (healthPoints <= 0)
         {
             gameObject.SetActive(false);
@@ -414,8 +414,7 @@ public class AracnoidEnemy : MonoBehaviour
     }
     public void Fluctuate()
     {
-        float stepLength = Time.deltaTime * yFluctuationSpeed;
-
+        float stepLength = Time.fixedDeltaTime * yFluctuationSpeed;
         if (yFluctuationSpeed != 0)
         {
             if (movingUp)
@@ -424,7 +423,7 @@ public class AracnoidEnemy : MonoBehaviour
                 {
                     fracJourney += stepLength;
                      transform.position = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-                    if ( transform.position.y >= targetPosition.y - stepLength)
+                    if ( transform.position.y >= targetPosition.y)
                     {
                         movingUp = false;
                          transform.position = targetPosition;
@@ -435,7 +434,7 @@ public class AracnoidEnemy : MonoBehaviour
                 {
                     fracJourney += stepLength;
                      transform.position = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-                    if ( transform.position.y >= initialPosition.y - stepLength)
+                    if ( transform.position.y >= initialPosition.y)
                     {
                          transform.position = initialPosition;
                         targetPosition = new Vector3(initialPosition.x, initialPosition.y + Mathf.Abs(yFluctuationAmplitude), initialPosition.z);
@@ -449,7 +448,7 @@ public class AracnoidEnemy : MonoBehaviour
                 {
                     fracJourney += stepLength;
                      transform.position = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-                    if ( transform.position.y <= targetPosition.y + stepLength)
+                    if ( transform.position.y <= targetPosition.y)
                     {
                         movingUp = true;
                          transform.position = targetPosition;
@@ -460,7 +459,7 @@ public class AracnoidEnemy : MonoBehaviour
                 {
                     fracJourney += stepLength;
                      transform.position = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-                    if ( transform.position.y <= initialPosition.y + stepLength)
+                    if ( transform.position.y <= initialPosition.y)
                     {
                          transform.position = initialPosition;
                         targetPosition = new Vector3(initialPosition.x, initialPosition.y - Mathf.Abs(yFluctuationAmplitude), initialPosition.z);
