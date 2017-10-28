@@ -12,8 +12,8 @@ public class PropertiesSphericalAiming : EnemyProperties
     public float forwardDistance;
     public float backDistance;
     public float rotationDeadZone;
-    public float waveLenght;
-    public float amplitude;
+    //public float waveLenght;
+    //public float amplitude;
     public Transform[] rightTargets;
     public Transform[] leftTargets;
     public float fireRate;

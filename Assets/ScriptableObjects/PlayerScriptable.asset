@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSpeed: 5
   jumpForce: 28
-  bulletpeed: 28
+  bulletSpeed: 3
   glideSpeed: 4
   upRotationAngle: 60
   downRotationAngle: 80

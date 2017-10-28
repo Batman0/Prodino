@@ -15,14 +15,12 @@ MonoBehaviour:
   lives: 0
   gameObjectPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}
-  zMovementSpeed: 7.68
+  zMovementSpeed: 5
   rotationSpeed: 1.5
   destructionMargin: 0
-  forwardDistance: 7.36
-  backDistance: 2.42
+  forwardDistance: 4
+  backDistance: 4
   rotationDeadZone: 1
-  waveLenght: 0
-  amplitude: 4.33
   rightTargets:
   - {fileID: 0}
   - {fileID: 0}

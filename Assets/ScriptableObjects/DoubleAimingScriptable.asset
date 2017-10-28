@@ -17,8 +17,8 @@ MonoBehaviour:
     type: 2}
   zMovementSpeed: 2
   destructionMargin: 5
-  forwardDistance: 1.42
-  backDistance: 7.28
+  forwardDistance: 4
+  backDistance: 4
   xBulletSpeed: 1.75
   zBulletSpeed: 6.51
   fireRate: 2
