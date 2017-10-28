@@ -3335,6 +3335,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[0].prefab
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[1].prefab
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
   m_IsPrefabParent: 0

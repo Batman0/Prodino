@@ -8,9 +8,11 @@ public class PropertiesDoubleAiming : EnemyProperties
     //public float xMovementSpeed;
     public float zMovementSpeed;
     public float destructionMargin;
-    public float waveLenght;
-    public float amplitude;
-    public float height;
+    public float forwardDistance;
+    public float backDistance;
+    //public float waveLenght;
+    //public float amplitude;
+    //public float height;
     ////not used
     //public Transform[] rightTargets;
     ////not used

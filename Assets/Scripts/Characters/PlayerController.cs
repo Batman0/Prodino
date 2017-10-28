@@ -444,7 +444,7 @@ public class PlayerController : MonoBehaviour
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
 			Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
 			Debug.DrawRay (cross, cross, Color.green);
-			Debug.Log ("aim.x =" + aim.x);
+			//Debug.Log ("aim.x =" + aim.x);
 
 			//Max aim of upper body
 			if (aimAngle <= 90 && cross.z >= 0)

@@ -5,12 +5,19 @@ using UnityEngine;
 public class MovementLaserDiagonal : EnemyMovement
 {
 
+    private bool moveUp;
     private float sidescrollXSpeed;
+    private float yMovementSpeed;
+    private float yMovementSpeedShooting;
     private float destructionMargin;
-    private float amplitude;
-    private float length;
-    private float height;
-    private float time;
+    private float upDistance;
+    private float downDistance;
+    private float targetPlayerDeltaDistance;
+    private Vector3 sidescrollTarget;
+    //private float amplitude;
+    //private float length;
+    //private float height;
+    //private float time;
     private PropertiesLaserDiagonal properties;
 
     public override void Init(Enemy enemy)
@@ -19,17 +26,35 @@ public class MovementLaserDiagonal : EnemyMovement
         properties = Register.instance.propertiesLaserDiagonal;
         speed = properties.xSpeed;
         sidescrollXSpeed = enemy.isRight ? -speed : speed;
+        moveUp = true;
+        yMovementSpeed = properties.yMovementSpeed;
+        yMovementSpeedShooting = properties.yMovementSpeedShooting;
+        targetPlayerDeltaDistance = Mathf.Max(yMovementSpeed, yMovementSpeedShooting) / 10;
         destructionMargin = properties.destructionMargin;
-        amplitude = properties.amplitude;
-        length = properties.waveLenght;
-        height = enemy.transform.position.y;
-        time = 0;
+        upDistance = properties.upDistance;
+        downDistance = properties.downDistance;
+        sidescrollTarget = new Vector3(enemy.transform.position.x, enemy.originalPos.y + upDistance, enemy.transform.position.z);
+        //amplitude = properties.amplitude;
+        //length = properties.waveLenght;
+        //height = enemy.transform.position.y;
+        //time = 0;
     }
 
     public override void MoveSidescroll(Enemy enemy)
     {
-        enemy.transform.position = new Vector3(sidescrollXSpeed * Time.deltaTime + enemy.transform.position.x, 1 - (2 / Mathf.PI) * Mathf.Acos(Mathf.Cos(length * time * Mathf.PI / 2)) * amplitude + height, enemy.transform.position.z);
-        time += Time.deltaTime;
+        if (Vector3.Distance(enemy.transform.position, sidescrollTarget) > targetPlayerDeltaDistance)
+        {
+            sidescrollTarget = new Vector3(enemy.transform.position.x, sidescrollTarget.y, enemy.transform.position.z);
+        }
+        else
+        {
+            moveUp = !moveUp;
+            yMovementSpeed = moveUp ? Mathf.Abs(yMovementSpeed) : -Mathf.Abs(yMovementSpeed);
+            yMovementSpeedShooting = moveUp ? Mathf.Abs(yMovementSpeedShooting) : -Mathf.Abs(yMovementSpeedShooting);
+            sidescrollTarget = moveUp ? new Vector3(enemy.transform.position.x, enemy.originalPos.y + upDistance, enemy.transform.position.z) : new Vector3(enemy.transform.position.x, enemy.originalPos.y - downDistance, enemy.transform.position.z);
+        }
+
+        enemy.transform.position = new Vector3(sidescrollXSpeed * Time.deltaTime + enemy.transform.position.x, (!enemy.isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.deltaTime + enemy.transform.position.y, enemy.transform.position.z);
 
         if (enemy.isRight)
         {

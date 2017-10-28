@@ -9,6 +9,8 @@ public class PropertiesSphericalAiming : EnemyProperties
     public float zMovementSpeed;
     public float rotationSpeed;
     public float destructionMargin;
+    public float forwardDistance;
+    public float backDistance;
     public float rotationDeadZone;
     public float waveLenght;
     public float amplitude;
