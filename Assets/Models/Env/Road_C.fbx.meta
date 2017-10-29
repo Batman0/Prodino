@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ab27e84cdcec4c6489005f4dff63b096
+guid: fe940151dd4731148805e296939b4c5f
 timeCreated: 1509284342
 licenseType: Free
 ModelImporter:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Road_B
+    4300000: Road_C
     9500000: //RootNode
   materials:
     importMaterials: 1
