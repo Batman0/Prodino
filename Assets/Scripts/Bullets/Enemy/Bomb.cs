@@ -24,7 +24,7 @@ public class Bomb : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        Destroy(gameObject, Register.instance.propertiesBombDrop.lifeTime);
+        Destroy(gameObject, Register.instance.propertiesBombDrop.bombLifeTime);
     }
 	
 }

@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 startPosition;
     [SerializeField]
     private GameObject playerModel;
-    public float speed = 5.0f;
-    public float jumpForce = 5.0f;
-    public float upRotationAngle;
-    public float downRotationAngle;
+    private float speed;
+    private float jumpForce;
+    private float upRotationAngle;
+    private float downRotationAngle;
     private int enemyLayer = 12;
     private float playerBackwardsAnimationLimit = 25;
     public float jumpCheckRayLength;
@@ -21,12 +21,11 @@ public class PlayerController : MonoBehaviour
     public Transform bulletSpawnPoints;
     public Transform bulletSpawnPointLx;
     public Transform bulletSpawnPointRx;
-    public float fireRatio = 0.10f;
+    private float fireRatio;
     private float fireTimer;
-    public float respawnTimer = 0.5f;
-    public float gravity;
-    public float glideSpeed;
-    [SerializeField]
+    private float respawnTimer;
+    private float gravity;
+    private float glideSpeed;
     private float topdownPlayerHeight;
     private Quaternion sideScrollRotation;
     private Quaternion bulletSpawnPointStartRotation;
@@ -35,12 +34,14 @@ public class PlayerController : MonoBehaviour
     private float angle;
     private Rigidbody rb;
     public LayerMask groundMask;
+    [HideInInspector]
     public bool canShootAndMove = true;
-    public bool canJump = true;
+    private bool canJump = true;
     private bool thereIsGround;
     private bool isDead;
     private float horizontal;
-    public Transform landmark;
+    [SerializeField]
+    private Transform landmark;
     public Collider sideBodyCollider;
     public Collider topBodyCollider;
     public Collider topTailCollider;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunRx;
     public GameObject armLx;
     public Transform gunLx;
-    public float maxArmsRotation = 30;
+    private float maxArmsRotation;
     private float angleS = 0;
 
     [Header("Aim")]
@@ -95,12 +96,12 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     [Header("TailMelee")]
-    public float topdownSpeed;
+    private float tailMeleeSpeed;
 
 	[Header("BiteMelee")]
-	public float biteATKSpeed;
-	public bool biteCoolDownActive;
-	public float biteCoolDown;
+    private float biteATKSpeed;
+    private bool biteCoolDownActive;
+    private float biteCoolDown;
 
     void Awake()
     {
@@ -114,6 +115,17 @@ public class PlayerController : MonoBehaviour
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
         glideSpeed = properties.glideSpeed;
+        upRotationAngle = properties.upRotationAngle;
+        downRotationAngle = properties.downRotationAngle;
+        fireRatio = properties.fireRatio;
+        respawnTimer = properties.respawnTimer;
+        gravity = properties.gravity;
+        maxArmsRotation = properties.maxArmsRotation;
+        tailMeleeSpeed = properties.tailMeleeSpeed;
+        biteATKSpeed = properties.biteATKSpeed;
+        biteCoolDownActive = properties.biteCoolDownActive;
+        biteCoolDown = properties.biteCoolDown;
+        topdownPlayerHeight = properties.topdownPlayerHeight;
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollRotation = transform.rotation;
@@ -432,6 +444,7 @@ public class PlayerController : MonoBehaviour
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
 			Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
 			Debug.DrawRay (cross, cross, Color.green);
+			//Debug.Log ("aim.x =" + aim.x);
 
 			//Max aim of upper body
 			if (aimAngle <= 90 && cross.z >= 0)
@@ -496,10 +509,16 @@ public class PlayerController : MonoBehaviour
         {
             //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             //{
-               GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, PoolManager.instance.pooledPlayerBulletAmount);
-               bullet.transform.position = bulletSpawnPointLx.position;
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, ref PoolManager.instance.pooledPlayerBulletAmount);
+            bullet.transform.position = bulletSpawnPointLx.position;
                bullet.transform.rotation = bulletSpawnPointLx.rotation;
                bullet.SetActive(true);
+               PoolManager.instance.playerBulletpool.index++;
+
+               if(PoolManager.instance.playerBulletpool.index >= PoolManager.instance.pooledPlayerBulletAmount)
+               {
+                  PoolManager.instance.playerBulletpool.index = 0;
+               }
             //}
             //else
             //{
@@ -568,8 +587,8 @@ public class PlayerController : MonoBehaviour
       
         while (angle < 360)
         {
-            angle += topdownSpeed;
-            transform.Rotate(Vector3.up, topdownSpeed, Space.World);
+            angle += tailMeleeSpeed;
+            transform.Rotate(Vector3.up, tailMeleeSpeed, Space.World);
 
             yield return null;
         }

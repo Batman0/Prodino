@@ -12,26 +12,14 @@ MonoBehaviour:
   m_Name: LaserDiagonalScriptable
   m_EditorClassIdentifier: 
   xSpeed: 3
+  lives: 0
   gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
   yMovementSpeed: 3
   yMovementSpeedShooting: 1
   destructionMargin: 3
-  waveLenght: 1
-  amplitude: 4
-  height: 0
-  rightTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  leftTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  upDistance: 4
+  downDistance: 4
   laserHeight: 1
   laserWidth: 2
   waitingTime: 2

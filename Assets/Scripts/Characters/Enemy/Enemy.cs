@@ -10,8 +10,8 @@ public class Enemy: MonoBehaviour
 
     [HideInInspector]
     public bool rotateRight;
-    [HideInInspector]
     public bool canShoot;
+    public bool isShooting;
     [HideInInspector]
     public bool toDestroy;
     //[HideInInspector]

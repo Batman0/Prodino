@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesSquare : Properties
+public class PropertiesSquare : EnemyProperties
 {
     //public float speed;
     public float waitingTime;

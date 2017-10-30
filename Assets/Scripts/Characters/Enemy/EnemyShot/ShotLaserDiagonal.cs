@@ -49,6 +49,7 @@ public class ShotLaserDiagonal : EnemyShot
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     //enemy.canShoot = false;
+                    enemy.isShooting = true;
                 }
                 if (timer < waitingTime + loadingTime + shootingTime)
                 {
@@ -58,6 +59,7 @@ public class ShotLaserDiagonal : EnemyShot
                 {
                     laser.SetActive(false);
                     timer = 0.0f;
+                    enemy.isShooting = false;
                     //canShoot = true;
                 }
             }
@@ -91,6 +93,7 @@ public class ShotLaserDiagonal : EnemyShot
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     enemy.canShoot = false;
+                    enemy.isShooting = true;
                 }
 
                 if (timer < waitingTime + loadingTime + shootingTime)
@@ -101,6 +104,7 @@ public class ShotLaserDiagonal : EnemyShot
                 {
                     laser.SetActive(false);
                     timer = 0.0f;
+                    enemy.isShooting = false;
                     //canShoot = true;
                 }
             }

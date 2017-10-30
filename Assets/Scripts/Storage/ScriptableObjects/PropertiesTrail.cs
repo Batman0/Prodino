@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesTrail : Properties
+public class PropertiesTrail : EnemyProperties
 {
     //public float xMovementSpeed;
     public float xReturnSpeed;
