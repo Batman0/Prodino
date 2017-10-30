@@ -16,7 +16,6 @@ public class ShotBombDrop : EnemyShot
         properties = Register.instance.propertiesBombDrop;
         loadingTime = properties.loadingTime;
         timer = 0;
-        prefab = properties.bombPrefab;
     }
 
     public override void ShootSidescroll(Enemy enemy)
@@ -27,7 +26,10 @@ public class ShotBombDrop : EnemyShot
         }
         else
         {
-            GameObject bomb = Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletBombDropPool, PoolManager.instance.bombDropBulletAmount);
+            bullet.transform.position = enemy.bulletSpawnpoint.position;
+            bullet.transform.rotation = enemy.transform.rotation;
+            bullet.SetActive(true);
             timer = 0.0f;
         }
     }
@@ -40,7 +42,10 @@ public class ShotBombDrop : EnemyShot
         }
         else
         {
-            GameObject bomb = Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, enemy.transform.rotation);
+            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletBombDropPool, PoolManager.instance.bombDropBulletAmount);
+            bullet.transform.position = enemy.bulletSpawnpoint.position;
+            bullet.transform.rotation = enemy.transform.rotation;
+            bullet.SetActive(true);
             timer = 0.0f;
         }
     }

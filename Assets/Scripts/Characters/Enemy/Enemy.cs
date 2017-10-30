@@ -89,46 +89,13 @@ public class Enemy: MonoBehaviour
 
     private EnemyShot myShotClass;
 
-    void Start()
+    void OnEnable()
     {
         instance = this;
-        //myMovementProperties = Register.instance.enemyProperties[(int)movementType];
-        //myShotProperties = Register.instance.enemyProperties[(int)shotType];
         gameManager = GameManager.instance;
         originalPos = transform.position;
-        //timeToShoot = 0.0f;
         canShoot = false;
         rotateRight = isRight ? true : false;
-        InitMovement();
-        myMovementClass.Init(instance);
-        myMovementSidescroll += myMovementClass.MoveSidescroll;
-        myMovementTopdown += myMovementClass.MoveTopdown;
-        if (shotType != ShotType.Forward)
-        {
-            InitShot();
-            myShotClass.Init();
-            myShotSidescroll += myShotClass.ShootSidescroll;
-            myShotTopdown += myShotClass.ShootTopdown;
-        }
-        //movementTargetIndex = 0;
-        //Register.instance.numberOfTransitableObjects++;
-        //if (shooterTransform != null)
-        //{
-        //    barrelStartRot = shooterTransform.rotation;
-        //    shooterTransform.RotateAround(transform.position, Vector3.forward, 180);
-        //    barrelInvertedRot = shooterTransform.rotation;
-        //    shooterTransform.rotation = barrelStartRot;
-        //}
-        if (movementType == MovementType.Circular)
-        {
-            lifeTime = Register.instance.propertiesCircular.lifeTime;
-        }
-
-        if (!isRight)
-        {
-            transform.Rotate(Vector3.up, 180, Space.World);
-        }
-
         if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -145,7 +112,32 @@ public class Enemy: MonoBehaviour
                 topCollider.enabled = true;
             }
         }
+    }
 
+    void Start()
+    {
+         gameManager = GameManager.instance;
+        InitMovement();
+        myMovementClass.Init(instance);
+        myMovementSidescroll += myMovementClass.MoveSidescroll;
+        myMovementTopdown += myMovementClass.MoveTopdown;
+        if (shotType != ShotType.Forward)
+        {
+            InitShot();
+            myShotClass.Init();
+            myShotSidescroll += myShotClass.ShootSidescroll;
+            myShotTopdown += myShotClass.ShootTopdown;
+        }
+
+        if (movementType == MovementType.Circular)
+        {
+            lifeTime = Register.instance.propertiesCircular.lifeTime;
+        }
+
+        if (!isRight)
+        {
+            transform.Rotate(Vector3.up, 180, Space.World);
+        }
     }
 
     void Update()
@@ -153,7 +145,10 @@ public class Enemy: MonoBehaviour
         ChangePerspective();
         Move();
         if (shotType != ShotType.Forward)
+        {
             Shoot();
+        }
+            
         Destroy();
     }
 
@@ -277,7 +272,7 @@ public class Enemy: MonoBehaviour
     {
         if(CheckEnemyLife() || toDestroy)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -285,7 +280,6 @@ public class Enemy: MonoBehaviour
     {
         return enemyLife <= 0;
     }
-
     //public void AssignProperties()
     //{
     //    switch

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -852,7 +852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &628986447
 Transform:
   m_ObjectHideFlags: 0
@@ -1201,6 +1201,15 @@ Prefab:
       value: 
       objectReference: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
         type: 2}
+    - target: {fileID: 1856856336038400, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[0].prefab
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
   m_IsPrefabParent: 0
@@ -1591,7 +1600,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4538087065242292, guid: 79345f38799ec0348b832c7a85596c42, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 79345f38799ec0348b832c7a85596c42, type: 2}
@@ -1688,7 +1697,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1758926448620306, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_Name
@@ -1837,45 +1846,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: pooledPlayerBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: doubleAimingBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: doubleAimingSinusoideBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: forwardShooterBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: sphericalAimingBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: trailBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: laserBulletAmount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052702260011086, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: pooledEnemiesAmount
-      value: 200
+    - target: {fileID: 1337026861292496, guid: 481c4283532168247b5f2db9016a44fc, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 481c4283532168247b5f2db9016a44fc, type: 2}
@@ -2699,7 +2672,7 @@ Transform:
   - {fileID: 120606921}
   - {fileID: 628986447}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1668112911 stripped
 Transform:
@@ -2833,7 +2806,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &1716196624 stripped
 Transform:
@@ -3348,7 +3321,12 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[1].prefab
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}

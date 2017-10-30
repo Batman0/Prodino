@@ -5,8 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public struct EnemyCreationData
 {
-    //public MovementType movement;
-    //public ShotType shot;
     public ShotType prefab;
     public float delay;
 }
@@ -22,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     {
         register = Register.instance;
         dataIndex = 0;
-        isRight = transform.position.x >= register.player.transform.position.x ? true : false;
+        isRight = transform.position.x >= register.player.transform.position.x ? true : false;      
     }
 
     private void Update()
@@ -35,13 +33,11 @@ public class EnemySpawner : MonoBehaviour
     {
         if (dataIndex < enemyCreationData.Length && Time.time >= enemyCreationData[dataIndex].delay)
         {
-            //Debug.Log(enemyCreationData[dataIndex].prefab.ToString());
-            GameObject prefab = register.properties[enemyCreationData[dataIndex].prefab.ToString()].gameObjectPrefab;
-            GameObject enemy = Instantiate(prefab, transform.position, prefab.transform.rotation) as GameObject;
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            //enemyScript.movementType = enemyCreationData[dataIndex].movement;
-            //enemyScript.shotType = enemyCreationData[dataIndex].shot;
+            GameObject enemyObject = PoolManager.instance.GetpooledEnemies(PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()]);
+            enemyObject.transform.position = transform.position;
+            Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             enemyScript.isRight = isRight;
+            enemyObject.SetActive(true);
             dataIndex++;
         }
         else if (dataIndex >= enemyCreationData.Length)

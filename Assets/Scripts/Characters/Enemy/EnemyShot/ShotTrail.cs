@@ -21,7 +21,7 @@ public class ShotTrail : EnemyShot
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool,ref PoolManager.instance.trailBulletAmount);
+            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool, PoolManager.instance.trailBulletAmount);
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);
@@ -32,12 +32,15 @@ public class ShotTrail : EnemyShot
 
     public override void ShootTopdown(Enemy enemy)
     {
-        /*if (enemy.canShoot && !trail)
+        if (enemy.canShoot && !trail)
         {
-            trail = //Object.Instantiate(prefab, enemy.bulletSpawnpoint.position, Quaternion.Inverse(enemy.transform.rotation));
+            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool, PoolManager.instance.trailBulletAmount);
+            trail.transform.position = enemy.bulletSpawnpoint.position;
+            trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
+            trail.SetActive(true);
             trail.transform.SetParent(enemy.bulletSpawnpoint);
             enemy.canShoot = false;
-        }*/
+        }
     }
 
 }

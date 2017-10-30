@@ -40,8 +40,12 @@ public class BaseBullet : MonoBehaviour
     protected virtual void Update()
     {
         if (!sidescrollRotation.HasValue)
+        {
             if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
+            {
                 sidescrollRotation = transform.rotation;
+            }       
+        }
         ChangePerspective();
     }
 

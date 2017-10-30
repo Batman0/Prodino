@@ -432,7 +432,6 @@ public class PlayerController : MonoBehaviour
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
 			Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
 			Debug.DrawRay (cross, cross, Color.green);
-			Debug.Log ("aim.x =" + aim.x);
 
 			//Max aim of upper body
 			if (aimAngle <= 90 && cross.z >= 0)
@@ -497,16 +496,10 @@ public class PlayerController : MonoBehaviour
         {
             //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
             //{
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, ref PoolManager.instance.pooledPlayerBulletAmount);
-            bullet.transform.position = bulletSpawnPointLx.position;
+               GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, PoolManager.instance.pooledPlayerBulletAmount);
+               bullet.transform.position = bulletSpawnPointLx.position;
                bullet.transform.rotation = bulletSpawnPointLx.rotation;
                bullet.SetActive(true);
-               PoolManager.instance.playerBulletpool.index++;
-
-               if(PoolManager.instance.playerBulletpool.index >= PoolManager.instance.pooledPlayerBulletAmount)
-               {
-                  PoolManager.instance.playerBulletpool.index = 0;
-               }
             //}
             //else
             //{
