@@ -24,14 +24,14 @@ public class MovementBombDrop : EnemyMovement
         {
             if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
         else
         {
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
     }
@@ -44,14 +44,14 @@ public class MovementBombDrop : EnemyMovement
         {
             if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
         else
         {
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
     }

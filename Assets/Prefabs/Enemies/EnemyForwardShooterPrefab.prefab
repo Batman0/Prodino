@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204234812890524}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20, y: 8, z: 6}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4284051299973656}
@@ -149,8 +149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateRight: 0
   canShoot: 0
+  isShooting: 0
   toDestroy: 0
-  isRight: 0
+  isRight: 1
   enemyLife: 1
   movementTargetIndex: 0
   lifeTime: 0

@@ -37,7 +37,7 @@ public class MovementTrail : EnemyMovement
         }
         else if (waitingTimer <= 0.0f && doneRotation >= 180)
         {
-            Object.Destroy(enemy.gameObject);
+            enemy.gameObject.SetActive(false);
         }
         else
         {
@@ -77,7 +77,7 @@ public class MovementTrail : EnemyMovement
         }
         else if (waitingTimer <= 0.0f && doneRotation >= 180)
         {
-            Object.Destroy(enemy.gameObject);
+            enemy.gameObject.SetActive(false);
         }
         else
         {

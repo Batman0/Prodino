@@ -34,10 +34,6 @@ public class MovementLaserDiagonal : EnemyMovement
         upDistance = properties.upDistance;
         downDistance = properties.downDistance;
         sidescrollTarget = new Vector3(enemy.transform.position.x, enemy.originalPos.y + upDistance, enemy.transform.position.z);
-        //amplitude = properties.amplitude;
-        //length = properties.waveLenght;
-        //height = enemy.transform.position.y;
-        //time = 0;
     }
 
     public override void MoveSidescroll(Enemy enemy)
@@ -60,14 +56,14 @@ public class MovementLaserDiagonal : EnemyMovement
         {
             if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
         else
         {
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
     }
@@ -80,14 +76,14 @@ public class MovementLaserDiagonal : EnemyMovement
         {
             if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
         else
         {
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
-                Object.Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
         }
     }

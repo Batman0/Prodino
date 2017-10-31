@@ -32,8 +32,8 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemy()
     {
         if (dataIndex < enemyCreationData.Length && Time.time >= enemyCreationData[dataIndex].delay)
-        {
-            GameObject enemyObject = PoolManager.instance.GetpooledEnemies(PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()]);
+        {     
+            GameObject enemyObject = PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             enemyScript.isRight = isRight;
