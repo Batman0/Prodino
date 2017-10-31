@@ -8,21 +8,57 @@ public struct listStruct
     public int index;
 }
 
-public class PoolEnemy
-{
-    public List<GameObject> pooledItems;
-    public int index;
-}
-
 
 public class PoolManager : MonoBehaviour
 {
+    public class PoolEnemy
+    {
+        public string enemyName;
+        public int enemyAmount;
+        public List<GameObject> pooledItems;
+        public int index;
+        public GameObject enemyTypeObject;
+
+        public PoolEnemy(string _enemyName, GameObject _enemyTypeObject, int _enemyAmount)
+        {
+            enemyTypeObject = _enemyTypeObject;
+            enemyAmount = _enemyAmount;
+            enemyName = _enemyName;
+
+            pooledItems = new List<GameObject>();
+            
+            for (int i = 0; i < enemyAmount; i++)
+            {
+                GameObject enemy = Instantiate(_enemyTypeObject) as GameObject;
+                enemy.SetActive(false);
+                pooledItems.Add(_enemyTypeObject);
+            }
+        }
+
+        public GameObject GetpooledEnemy(PoolEnemy classEnemy)
+        {
+            if (!classEnemy.pooledItems[classEnemy.index].activeInHierarchy)
+            {
+                if (classEnemy.index < classEnemy.pooledItems.Count - 1)
+                {
+                    classEnemy.index++;
+                    classEnemy.pooledItems[classEnemy.index].SetActive(true);
+                    return (classEnemy.pooledItems[classEnemy.index - 1]);
+                }
+                else
+                {
+                    classEnemy.index = 0;
+                    return (classEnemy.pooledItems[classEnemy.pooledItems.Count - 1]);
+                }
+            }
+            return null;
+        }
+    }
+
     public static PoolManager instance;
     private int pooledBulletAmount;
     private int pooledEnemiesAmount;
     public Dictionary<string, PoolEnemy> pooledEnemyClass;
-    //public Dictionary<string, listStruct> enemyListDictionary;
-    //public Dictionary<string, int> bulletAmountDictionary;
 
     [Header("Bullets")]
     public int pooledPlayerBulletAmount = 15;
@@ -42,15 +78,6 @@ public class PoolManager : MonoBehaviour
     public int trailEnemyAmount = 10;
     public int laserEnemyAmount = 10;
     public int bombDropEnemyAmount = 10;
-
-    //Enemies'list
-    public PoolEnemy enemyForwardPool;
-    public PoolEnemy enemyShooterForwardPool;
-    public PoolEnemy enemyDoubleAimingPool;
-    public PoolEnemy enemySphericalAimingPool;
-    public PoolEnemy enemyTrailPool;
-    public PoolEnemy enemyLaserPool;
-    public PoolEnemy enemyBombDropPool;
 
     private int i = 0;
 
@@ -85,11 +112,6 @@ public class PoolManager : MonoBehaviour
             playerBulletpool.pooledItems.Add(bullet);
         }
 
-        for(i = 0; i < pooledEnemiesAmount; i++)
-        {
-            InstantiateEnemy();
-        }
-
         for(i = 0; i < pooledBulletAmount; i++)
         {
             InstantiateBulletEnemy();
@@ -115,23 +137,7 @@ public class PoolManager : MonoBehaviour
         return null;
     }
 
-    public GameObject GetpooledEnemies(PoolEnemy classEnemy)
-    {
-        if(!classEnemy.pooledItems[classEnemy.index].activeInHierarchy)
-        {
-            if(classEnemy.index < classEnemy.pooledItems.Count - 1)
-            {
-                classEnemy.index++;
-                return (classEnemy.pooledItems[classEnemy.index - 1]);
-            }
-            else
-            {
-                classEnemy.index = 0;
-                return (classEnemy.pooledItems[classEnemy.pooledItems.Count - 1]);
-            }
-        }
-        return null;
-    }
+   
 
     void InstantiateBulletEnemy()
     {
@@ -183,78 +189,10 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    void InstantiateEnemy()
-    {
-        if(i < forwardEnemyAmount)
-        {
-            GameObject forwardEnemy = Instantiate(Register.instance.propertiesForward.gameObjectPrefab);
-            forwardEnemy.SetActive(false);
-            enemyForwardPool.pooledItems.Add(forwardEnemy);
-        }
-
-        if(i < shooterForwardEnemyAmount)
-        {
-            GameObject forwardShooterEnemy = Instantiate(Register.instance.propertiesForwardShooter.gameObjectPrefab) as GameObject;
-            forwardShooterEnemy.SetActive(false);
-            enemyShooterForwardPool.pooledItems.Add(forwardShooterEnemy);
-        }
-
-        if(i < doubleAimingEnemyAmount)
-        {
-            GameObject doubleAimingEnemy = Instantiate(Register.instance.propertiesDoubleAiming.gameObjectPrefab) as GameObject;
-            doubleAimingEnemy.SetActive(false);
-            enemyDoubleAimingPool.pooledItems.Add(doubleAimingEnemy);
-        }
-        if(i < bombDropEnemyAmount)
-        {
-            GameObject bombDropEnemy = Instantiate(Register.instance.propertiesBombDrop.gameObjectPrefab)as GameObject;
-            bombDropEnemy.SetActive(false);
-            enemyBombDropPool.pooledItems.Add(bombDropEnemy);
-        }
-
-        if(i < sphericalAimingEnemyAmount)
-        {
-            GameObject sphericalAimingEnemy = Instantiate(Register.instance.propertiesSphericalAiming.gameObjectPrefab) as GameObject;
-            sphericalAimingEnemy.SetActive(false);
-            enemySphericalAimingPool.pooledItems.Add(sphericalAimingEnemy);
-        }
-
-        if(i < trailEnemyAmount)
-        {
-            GameObject trailEnemy = Instantiate(Register.instance.propertiesTrail.gameObjectPrefab) as GameObject;
-            trailEnemy.SetActive(false);
-            enemyTrailPool.pooledItems.Add(trailEnemy);
-        }
-
-        if(i < laserEnemyAmount)
-        {
-            GameObject laserEnemy = Instantiate(Register.instance.propertiesLaserDiagonal.gameObjectPrefab) as GameObject;
-            laserEnemy.SetActive(false);
-            enemyLaserPool.pooledItems.Add(laserEnemy);
-        }
-    }
-
     void ListInitialization()
     {
         playerBulletpool.pooledItems = new List<GameObject>();
-
-        //Enemeis list
-        enemyForwardPool = new PoolEnemy();
-        enemyShooterForwardPool = new PoolEnemy();
-        enemyDoubleAimingPool = new PoolEnemy();
-        enemySphericalAimingPool = new PoolEnemy();
-        enemyTrailPool = new PoolEnemy();
-        enemyLaserPool = new PoolEnemy();
-        enemyBombDropPool = new PoolEnemy();
-
-        enemyForwardPool.pooledItems = new List<GameObject>();
-        enemyShooterForwardPool.pooledItems = new List<GameObject>();
-        enemyDoubleAimingPool.pooledItems = new List<GameObject>();
-        enemySphericalAimingPool.pooledItems = new List<GameObject>();
-        enemyTrailPool.pooledItems = new List<GameObject>();
-        enemyLaserPool.pooledItems = new List<GameObject>();
-        enemyBombDropPool.pooledItems = new List<GameObject>();
-
+        
         //Enemies Bullet list
         bulletDoubleAimingPool.pooledItems = new List<GameObject>();
         bulletDoubleAimingSinusoidePool.pooledItems = new List<GameObject>();
@@ -267,12 +205,20 @@ public class PoolManager : MonoBehaviour
 
     void DictionaryInitialization()
     {
-        pooledEnemyClass.Add("ForwardShooter", enemyShooterForwardPool);
-        pooledEnemyClass.Add("Forward", enemyForwardPool);
-        pooledEnemyClass.Add("LaserDiagonal", enemyLaserPool);
-        pooledEnemyClass.Add("SphericalAiming", enemySphericalAimingPool);
-        pooledEnemyClass.Add("BombDrop", enemyBombDropPool);
-        pooledEnemyClass.Add("Trail", enemyTrailPool);
-        pooledEnemyClass.Add("DoubleAiming", enemyDoubleAimingPool);
+        PoolEnemy ForwardShooter = new PoolEnemy(Register.instance.enemyProperties["ForwardShooter"].ToString(), Register.instance.enemyProperties["ForwardShooter"].gameObjectPrefab, shooterForwardEnemyAmount);
+        PoolEnemy Forward = new PoolEnemy(Register.instance.enemyProperties["Forward"].ToString(), Register.instance.enemyProperties["Forward"].gameObjectPrefab, forwardEnemyAmount);
+        PoolEnemy LaserDiagonal = new PoolEnemy(Register.instance.enemyProperties["LaserDiagonal"].ToString(), Register.instance.enemyProperties["LaserDiagonal"].gameObjectPrefab, laserEnemyAmount);
+        PoolEnemy SphericalAiming = new PoolEnemy(Register.instance.enemyProperties["SphericalAiming"].ToString(), Register.instance.enemyProperties["SphericalAiming"].gameObjectPrefab, sphericalAimingEnemyAmount);
+        PoolEnemy BombDrop = new PoolEnemy(Register.instance.enemyProperties["BombDrop"].ToString(), Register.instance.enemyProperties["BombDrop"].gameObjectPrefab, bombDropEnemyAmount);
+        PoolEnemy Trail = new PoolEnemy(Register.instance.enemyProperties["Trail"].ToString(), Register.instance.enemyProperties["Trail"].gameObjectPrefab, trailEnemyAmount);
+        PoolEnemy DoubleAiming = new PoolEnemy(Register.instance.enemyProperties["DoubleAiming"].ToString(), Register.instance.enemyProperties["DoubleAiming"].gameObjectPrefab, doubleAimingEnemyAmount);
+
+        pooledEnemyClass.Add("ForwardShooter", ForwardShooter);
+        pooledEnemyClass.Add("Forward", Forward);
+        pooledEnemyClass.Add("LaserDiagonal", LaserDiagonal);
+        pooledEnemyClass.Add("SphericalAiming", SphericalAiming);
+        pooledEnemyClass.Add("BombDrop", BombDrop);
+        pooledEnemyClass.Add("Trail", Trail);
+        pooledEnemyClass.Add("DoubleAiming", DoubleAiming);
     }
 }

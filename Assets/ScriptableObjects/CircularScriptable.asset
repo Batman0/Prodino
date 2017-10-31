@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: CircularScriptable
   m_EditorClassIdentifier: 
   xSpeed: 3
+  lives: 1
   gameObjectPrefab: {fileID: 0}
   radius: 3
   lifeTime: 3

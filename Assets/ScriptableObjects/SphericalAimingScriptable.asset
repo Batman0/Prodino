@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
   xSpeed: 5
-  lives: 0
+  lives: 1
   gameObjectPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}
   zMovementSpeed: 5

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: LaserDiagonalScriptable
   m_EditorClassIdentifier: 
   xSpeed: 3
-  lives: 0
+  lives: 1
   gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}
   yMovementSpeed: 3

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: BombDropScriptable
   m_EditorClassIdentifier: 
   xSpeed: 3
-  lives: 0
+  lives: 1
   gameObjectPrefab: {fileID: 1476885846380338, guid: a72ef70ed7f9a544796b4287f34b9dde,
     type: 2}
   destructionMargin: 3

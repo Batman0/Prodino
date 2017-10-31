@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: SquareScriptable
   m_EditorClassIdentifier: 
   xSpeed: 5
+  lives: 1
   gameObjectPrefab: {fileID: 0}
   waitingTime: 2.04
   rightTargets:
