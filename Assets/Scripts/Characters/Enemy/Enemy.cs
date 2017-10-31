@@ -14,43 +14,13 @@ public class Enemy: MonoBehaviour
     public bool isShooting;
     [HideInInspector]
     public bool toDestroy;
-    //[HideInInspector]
     public bool isRight;
 
     public int enemyLife;
     [HideInInspector]
     public int movementTargetIndex;
-
-    //[HideInInspector]
-    //public float timeToShoot;
-    //[HideInInspector]
-    //public float waitingTime;
-    //[HideInInspector]
-    //public float waitingTimer;
-    //[HideInInspector]
     public float lifeTime;
-    //[HideInInspector]
-    //public float speed;
-    //[HideInInspector]
-    //public float backSpeed;
-    //[HideInInspector]
-    //public float rotationSpeed;
-    //[HideInInspector]
-    //public float movementDuration;
-    //[HideInInspector]
-    //public float doneRotation;
-    //[HideInInspector]
-    //public float destructionMargin;
-    //[HideInInspector]
-    //public float length;
-    //[HideInInspector]
-    //public float amplitude;
-    //[HideInInspector]
-    //public float height;
-    //[HideInInspector]
-    //public float time;
-    //[HideInInspector]
-    //public float radius;
+
 
     [HideInInspector]
     public Vector3 originalPos;
@@ -94,8 +64,12 @@ public class Enemy: MonoBehaviour
         instance = this;
         gameManager = GameManager.instance;
         originalPos = transform.position;
-        canShoot = false;
         rotateRight = isRight ? true : false;
+        if (!isRight)
+        {
+            transform.Rotate(Vector3.up, 180, Space.World);
+        }
+
         if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -116,7 +90,7 @@ public class Enemy: MonoBehaviour
 
     void Start()
     {
-         gameManager = GameManager.instance;
+        gameManager = GameManager.instance;
         InitMovement();
         myMovementClass.Init(instance);
         myMovementSidescroll += myMovementClass.MoveSidescroll;
@@ -132,11 +106,6 @@ public class Enemy: MonoBehaviour
         if (movementType == MovementType.Circular)
         {
             lifeTime = Register.instance.propertiesCircular.lifeTime;
-        }
-
-        if (!isRight)
-        {
-            transform.Rotate(Vector3.up, 180, Space.World);
         }
     }
 
@@ -280,8 +249,9 @@ public class Enemy: MonoBehaviour
     {
         return enemyLife <= 0;
     }
-    //public void AssignProperties()
-    //{
-    //    switch
-    //}
+
+    void OnDisable()
+    {
+        canShoot = false;
+    }
 }

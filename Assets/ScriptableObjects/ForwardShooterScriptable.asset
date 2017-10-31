@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: ForwardShooterScriptable
   m_EditorClassIdentifier: 
   xSpeed: 6
+  lives: 1
   gameObjectPrefab: {fileID: 1204234812890524, guid: 8884d51cfc0062d41a5dcf7eaa77ac02,
     type: 2}
   destructionMargin: 2

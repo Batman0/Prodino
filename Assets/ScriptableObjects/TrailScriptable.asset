@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: TrailScriptable
   m_EditorClassIdentifier: 
   xSpeed: 5
+  lives: 1
   gameObjectPrefab: {fileID: 1706383022464380, guid: 4b2e466300699434b9cc14acc1950bc0,
     type: 2}
   xReturnSpeed: 3

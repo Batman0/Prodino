@@ -53,7 +53,9 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
+
         enemyProperties = new Dictionary<string, EnemyProperties>();
+
         enemyProperties.Add("ForwardShooter", propertiesForwardShooter);
         enemyProperties.Add("Forward", propertiesForward);
         enemyProperties.Add("LaserDiagonal", propertiesLaserDiagonal);
