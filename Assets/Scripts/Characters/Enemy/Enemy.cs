@@ -65,6 +65,11 @@ public class Enemy: MonoBehaviour
         gameManager = GameManager.instance;
         originalPos = transform.position;
         rotateRight = isRight ? true : false;
+        if (!isRight)
+        {
+            transform.Rotate(Vector3.up, 180, Space.World);
+        }
+
         if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -101,11 +106,6 @@ public class Enemy: MonoBehaviour
         if (movementType == MovementType.Circular)
         {
             lifeTime = Register.instance.propertiesCircular.lifeTime;
-        }
-
-        if (!isRight)
-        {
-            transform.Rotate(Vector3.up, 180, Space.World);
         }
     }
 

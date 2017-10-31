@@ -60,7 +60,7 @@ MonoBehaviour:
   laserBulletAmount: 100
   bombDropBulletAmount: 50
   forwardEnemyAmount: 10
-  shooterForwardEnemyAmount: 10
+  shooterForwardEnemyAmount: 30
   doubleAimingEnemyAmount: 10
   sphericalAimingEnemyAmount: 10
   trailEnemyAmount: 10

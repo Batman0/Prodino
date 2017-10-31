@@ -31,27 +31,21 @@ public class PoolManager : MonoBehaviour
             {
                 GameObject enemy = Instantiate(_enemyTypeObject) as GameObject;
                 enemy.SetActive(false);
-                pooledItems.Add(_enemyTypeObject);
+                pooledItems.Add(enemy);
             }
         }
 
-        public GameObject GetpooledEnemy(PoolEnemy classEnemy)
+        public GameObject GetpooledEnemy()
         {
-            if (!classEnemy.pooledItems[classEnemy.index].activeInHierarchy)
+            int currentIndex = index;
+
+            if(currentIndex > pooledItems.Count)
             {
-                if (classEnemy.index < classEnemy.pooledItems.Count - 1)
-                {
-                    classEnemy.index++;
-                    classEnemy.pooledItems[classEnemy.index].SetActive(true);
-                    return (classEnemy.pooledItems[classEnemy.index - 1]);
-                }
-                else
-                {
-                    classEnemy.index = 0;
-                    return (classEnemy.pooledItems[classEnemy.pooledItems.Count - 1]);
-                }
+                 index = 0;
             }
-            return null;
+
+            index++;
+            return (pooledItems[currentIndex]);
         }
     }
 

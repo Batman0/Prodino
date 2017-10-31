@@ -33,12 +33,11 @@ public class EnemySpawner : MonoBehaviour
     {
         if (dataIndex < enemyCreationData.Length && Time.time >= enemyCreationData[dataIndex].delay)
         {     
-            GameObject enemyObject = PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()].GetpooledEnemy(PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()]);
+            GameObject enemyObject = PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             enemyScript.isRight = isRight;
             enemyObject.SetActive(true);
-            Debug.Log(enemyObject.activeInHierarchy);
             dataIndex++;
         }
         else if (dataIndex >= enemyCreationData.Length)
