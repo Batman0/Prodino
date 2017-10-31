@@ -10,6 +10,9 @@ public class PropertiesDoubleAiming : EnemyProperties
     public float destructionMargin;
     public float forwardDistance;
     public float backDistance;
+    public float bulletForwardDistance;
+    public float bulletBackDistance;
+    public float bulletSpeedDecrease;
     //public float waveLenght;
     //public float amplitude;
     //public float height;

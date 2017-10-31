@@ -5,12 +5,33 @@ using UnityEngine;
 public class SinusoideBullet : BaseBullet
 {
 
-    private float xStartPosition;
+    private bool moveForward;
+    private float xSpeed;
+    private float zSpeed;
+    private float forwardDistance;
+    private float backDistance;
+    private float transformTargetDeltaDistance;
+    private Vector3 originalPos;
+    private Vector3 target;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        direction = transform.position.x - Register.instance.player.transform.position.x >= 0 ? new Vector3(-1, 0, 0) : new Vector3(1, 0, 0);
+        originalPos = transform.position;
+        xSpeed = Register.instance.propertiesDoubleAiming.xBulletSpeed;
+        transformTargetDeltaDistance = 0.5f;
+        forwardDistance = Register.instance.propertiesDoubleAiming.bulletForwardDistance;
+        backDistance = Register.instance.propertiesDoubleAiming.bulletBackDistance;
+        if (transform.tag == "EnemyBulletInverse")
+        {
+            moveForward = false;
+        }
+        else
+        {
+            moveForward = true;
+        }
+        zSpeed = Register.instance.propertiesDoubleAiming.zBulletSpeed;
+        target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
     }
 
     protected override void Update()
@@ -21,18 +42,11 @@ public class SinusoideBullet : BaseBullet
 
     protected override void Move()
     {
-        //xDirection += direction * Time.deltaTime * Register.instance.propertiesDoubleAiming.bulletSpeed;
-        // to do Da cambiare il seno con un'approssimazione con lerp tra un punto più alto ad un punto più basso
-        if(gameObject.tag == "EnemyBulletInverse")
+        if (Vector3.Distance(transform.position, new Vector3(transform.position.x, transform.position.y, target.z)) < transformTargetDeltaDistance)
         {
-            //transform.position = new Vector3(xDirection.x * Register.instance.propertiesDoubleAiming.bulletSpeed, transform.position.y, (transform.right * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin).z);
-            //transform.position = (transform.position + direction.normalized * Register.instance.propertiesDoubleAiming.bulletSpeed) + transform.right * -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin;
-            transform.position = new Vector3(Register.instance.propertiesDoubleAiming.xBulletSpeed * direction.x * Time.deltaTime + transform.position.x, transform.position.y, -Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.zBulletSpeed) * Register.instance.propertiesDoubleAiming.bulletAmplitude);
+            moveForward = !moveForward;
+            target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
         }
-        else
-        {
-            //transform.position = new Vector3(xDirection.x * Register.instance.propertiesDoubleAiming.bulletSpeed, transform.position.y, (transform.right * Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.bulletSpeed) * Register.instance.propertiesDoubleAiming.arcSin).z);
-            transform.position = new Vector3(Register.instance.propertiesDoubleAiming.xBulletSpeed * direction.x * Time.deltaTime + transform.position.x, transform.position.y, Mathf.Sin(Time.time * Register.instance.propertiesDoubleAiming.zBulletSpeed) * Register.instance.propertiesDoubleAiming.bulletAmplitude);
-        }
+        transform.position = new Vector3(transform.position.x + xSpeed * Time.deltaTime, transform.position.y, Mathfx.Hermite(transform.position.z, target.z, zSpeed * Time.deltaTime));
     }
 }

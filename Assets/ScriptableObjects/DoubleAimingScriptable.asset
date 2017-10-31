@@ -19,8 +19,11 @@ MonoBehaviour:
   destructionMargin: 5
   forwardDistance: 4
   backDistance: 4
-  xBulletSpeed: 1.75
-  zBulletSpeed: 6.51
+  bulletForwardDistance: 4
+  bulletBackDistance: 4
+  bulletSpeedDecrease: 1
+  xBulletSpeed: 3
+  zBulletSpeed: 10
   fireRate: 2
   bulletAmplitude: 7
   sidescrollBulletPrefab: {fileID: 1215921225492252, guid: cc0367fa9b754cb43848a88db24b2e95,
