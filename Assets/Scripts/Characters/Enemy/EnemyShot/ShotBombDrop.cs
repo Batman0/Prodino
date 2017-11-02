@@ -26,7 +26,7 @@ public class ShotBombDrop : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletBombDropPool, PoolManager.instance.bombDropBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["BombDropBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
@@ -42,7 +42,7 @@ public class ShotBombDrop : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletBombDropPool, PoolManager.instance.bombDropBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["BombDropBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);

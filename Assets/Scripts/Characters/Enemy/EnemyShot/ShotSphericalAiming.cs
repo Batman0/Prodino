@@ -39,7 +39,7 @@ public class ShotSphericalAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletSphericalAimingPool, PoolManager.instance.sphericalAimingBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["SphericalAimingBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.shooterTransform.rotation;
             bullet.SetActive(true);
@@ -71,7 +71,7 @@ public class ShotSphericalAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletSphericalAimingPool, PoolManager.instance.sphericalAimingBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["SphericalAimingBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.shooterTransform.rotation;
             bullet.SetActive(true);

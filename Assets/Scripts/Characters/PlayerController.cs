@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion topTailBodyColliderStartRot;
 
     [Header("BulletPool")]
-    private int indexOfBullet=0;
+    private PoolManager.PoolBullet bulletPool;
 
 
     [Header("Guns")]
@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
     {
         Register.instance.player = this;
         rb = GetComponent<Rigidbody>();
+        bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
     }
 
     void Start()
@@ -136,8 +137,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        //Debug.Log(rb.velocity);
-        //Debug.Log(rb.velocity);
+       
         if (!isDead)
         {
             if (!GameManager.instance.transitionIsRunning)
@@ -507,19 +507,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && canShootAndMove)
         {
-            //if(GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
-            //{
-               GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.playerBulletpool, PoolManager.instance.pooledPlayerBulletAmount);
-               bullet.transform.position = bulletSpawnPointLx.position;
-               bullet.transform.rotation = bulletSpawnPointLx.rotation;
-               bullet.SetActive(true);
-
-            //}
-            //else
-            //{
-            //    //GameObject bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointLx.position, bulletSpawnPointLx.rotation) as GameObject;
-            //    //GameObject Bullet = Instantiate(Register.instance.propertiesPlayer.bulletPrefab, bulletSpawnPointRx.position, bulletSpawnPointRx.rotation) as GameObject;
-            //} 
+              GameObject bullet = bulletPool.GetpooledBullet();
+              bullet.transform.position = bulletSpawnPointLx.position;
+              bullet.transform.rotation = bulletSpawnPointLx.rotation;
+              bullet.SetActive(true);
         }
     }
 

@@ -25,7 +25,7 @@ public class ShotForwardShooter : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletForwardShooterPool, PoolManager.instance.forwardShooterBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["ForwardShooterBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
@@ -41,7 +41,7 @@ public class ShotForwardShooter : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletForwardShooterPool, PoolManager.instance.forwardShooterBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["ForwardShooterBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);

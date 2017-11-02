@@ -25,11 +25,11 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingPool, PoolManager.instance.doubleAimingBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["DoubleAimingBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            GameObject secondBullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingPool, PoolManager.instance.doubleAimingBulletAmount); 
+            GameObject secondBullet = PoolManager.instance.pooledBulletClass["DoubleAimingBullet"].GetpooledBullet();
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             secondBullet.SetActive(true);
@@ -45,11 +45,11 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingSinusoidePool, PoolManager.instance.doubleAimingSinusoideBulletAmount);
+            GameObject bullet = PoolManager.instance.pooledBulletClass["DoubleAimingSinusoideBullet"].GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            GameObject secondBullet = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletDoubleAimingSinusoidePool, PoolManager.instance.doubleAimingSinusoideBulletAmount);
+            GameObject secondBullet = PoolManager.instance.pooledBulletClass["DoubleAimingSinusoideBullet"].GetpooledBullet();
             secondBullet.tag = "EnemyBulletInverse";
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = enemy.transform.rotation;

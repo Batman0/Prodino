@@ -42,7 +42,7 @@ public class ShotLaserDiagonal : EnemyShot
             {
                 if (!laser)
                 {
-                    laser = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletLaserPool, PoolManager.instance.laserBulletAmount);                   
+                    laser = PoolManager.instance.pooledBulletClass["LaserBullet"].GetpooledBullet();
                     laser.SetActive(true);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     laser.transform.position = enemy.bulletSpawnpoint.position;
@@ -86,7 +86,7 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 if (enemy.canShoot)
                 {
-                    GameObject laser = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletLaserPool, PoolManager.instance.laserBulletAmount);
+                    GameObject laser = PoolManager.instance.pooledBulletClass["LaserBullet"].GetpooledBullet();
                     laser.SetActive(true);
                     laser.transform.position = enemy.bulletSpawnpoint.position;
                     laser.transform.rotation = enemy.bulletSpawnpoint.parent.rotation;

@@ -21,7 +21,7 @@ public class ShotTrail : EnemyShot
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool, PoolManager.instance.trailBulletAmount);
+            trail = PoolManager.instance.pooledBulletClass["TrailBullet"].GetpooledBullet();
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);
@@ -34,7 +34,7 @@ public class ShotTrail : EnemyShot
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.GetpooledBullet(ref PoolManager.instance.bulletTrailPool, PoolManager.instance.trailBulletAmount);
+            trail = PoolManager.instance.pooledBulletClass["TrailBullet"].GetpooledBullet();
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);

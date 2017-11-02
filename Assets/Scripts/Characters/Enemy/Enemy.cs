@@ -15,6 +15,7 @@ public class Enemy: MonoBehaviour
     [HideInInspector]
     public bool toDestroy;
     public bool isRight;
+    private PoolManager.PoolBullet bulletPool;
 
     public int enemyLife;
     [HideInInspector]
@@ -65,6 +66,7 @@ public class Enemy: MonoBehaviour
         gameManager = GameManager.instance;
         originalPos = transform.position;
         rotateRight = isRight ? true : false;
+
         if (!isRight)
         {
             transform.Rotate(Vector3.up, 180, Space.World);
@@ -95,6 +97,7 @@ public class Enemy: MonoBehaviour
         myMovementClass.Init(instance);
         myMovementSidescroll += myMovementClass.MoveSidescroll;
         myMovementTopdown += myMovementClass.MoveTopdown;
+
         if (shotType != ShotType.Forward)
         {
             InitShot();
