@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct listStruct
-{
-    public List<GameObject> pooledItems;
-    public int index;
-}
-
 
 public class PoolManager : MonoBehaviour
 {
