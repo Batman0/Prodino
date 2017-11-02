@@ -12,11 +12,13 @@ public class ShotLaserDiagonal : EnemyShot
     private float timer;
     private GameObject laser;
     private PropertiesLaserDiagonal properties;
+    private PoolManager.PoolBullet bulletPool;
 
     public override void Init()
     {
         base.Init();
         properties = Register.instance.propertiesLaserDiagonal;
+        bulletPool = PoolManager.instance.pooledBulletClass["LaserBullet"];
         waitingTime = properties.waitingTime;
         loadingTime = properties.loadingTime;
         shootingTime = properties.shootingTime;
@@ -42,7 +44,7 @@ public class ShotLaserDiagonal : EnemyShot
             {
                 if (!laser)
                 {
-                    laser = PoolManager.instance.pooledBulletClass["LaserBullet"].GetpooledBullet();
+                    laser = bulletPool.GetpooledBullet();
                     laser.SetActive(true);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
                     laser.transform.position = enemy.bulletSpawnpoint.position;
@@ -86,7 +88,7 @@ public class ShotLaserDiagonal : EnemyShot
                 }
                 if (enemy.canShoot)
                 {
-                    GameObject laser = PoolManager.instance.pooledBulletClass["LaserBullet"].GetpooledBullet();
+                    GameObject laser = bulletPool.GetpooledBullet();
                     laser.SetActive(true);
                     laser.transform.position = enemy.bulletSpawnpoint.position;
                     laser.transform.rotation = enemy.bulletSpawnpoint.parent.rotation;

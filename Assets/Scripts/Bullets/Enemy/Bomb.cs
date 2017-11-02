@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public SphereCollider explosionCollider;
+    public CapsuleCollider explosionCollider;
     public Rigidbody rb;
 
     void Update()
@@ -24,7 +24,12 @@ public class Bomb : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        Destroy(gameObject, Register.instance.propertiesBombDrop.bombLifeTime);
+        StartCoroutine("Destroy", Register.instance.propertiesBombDrop.bombLifeTime);
     }
 	
+    IEnumerator Destroy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
+    }
 }

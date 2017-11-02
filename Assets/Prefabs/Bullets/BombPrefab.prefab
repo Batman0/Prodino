@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4758789199509044}
   - component: {fileID: 33973435051643894}
-  - component: {fileID: 135083534160794430}
   - component: {fileID: 23046999104650858}
   - component: {fileID: 65858234139008040}
   - component: {fileID: 114813301702638966}
   - component: {fileID: 54014682950675450}
+  - component: {fileID: 136824951470486596}
   m_Layer: 12
   m_Name: BombPrefab
   m_TagString: Untagged
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1846936218991036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.34, y: -1.9520434, z: -11.061596}
+  m_LocalPosition: {x: -6.34, y: -5.64, z: 7.06}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -122,10 +122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef8ebe4395661e48aed3872e71c13b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionCollider: {fileID: 135083534160794430}
+  explosionCollider: {fileID: 136824951470486596}
   rb: {fileID: 54014682950675450}
---- !u!135 &135083534160794430
-SphereCollider:
+--- !u!136 &136824951470486596
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -133,6 +133,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.8351046
+  m_Height: 14.193693
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.6179563, z: -0.54352283}

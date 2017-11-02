@@ -8,11 +8,14 @@ public class ShotDoubleAiming : EnemyShot
     private float fireRate;
     private float timer;
     private PropertiesDoubleAiming properties;
+    private PoolManager.PoolBullet bulletPool,bulletPoolSin;
 
     public override void Init()
     {
         base.Init();
         properties = Register.instance.propertiesDoubleAiming;
+        bulletPool = PoolManager.instance.pooledBulletClass["DoubleAimingBullet"];
+        bulletPoolSin = PoolManager.instance.pooledBulletClass["DoubleAimingSinusoideBullet"];
         fireRate = properties.fireRate;
         timer = 0;
     }
@@ -25,11 +28,11 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass["DoubleAimingBullet"].GetpooledBullet();
+            GameObject bullet = bulletPool.GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            GameObject secondBullet = PoolManager.instance.pooledBulletClass["DoubleAimingBullet"].GetpooledBullet();
+            GameObject secondBullet =bulletPool.GetpooledBullet();
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             secondBullet.SetActive(true);
@@ -45,11 +48,11 @@ public class ShotDoubleAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass["DoubleAimingSinusoideBullet"].GetpooledBullet();
+            GameObject bullet = bulletPoolSin.GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
-            GameObject secondBullet = PoolManager.instance.pooledBulletClass["DoubleAimingSinusoideBullet"].GetpooledBullet();
+            GameObject secondBullet = bulletPoolSin.GetpooledBullet();
             secondBullet.tag = "EnemyBulletInverse";
             secondBullet.transform.position = enemy.bulletSpawnpointOther.position;
             secondBullet.transform.rotation = enemy.transform.rotation;

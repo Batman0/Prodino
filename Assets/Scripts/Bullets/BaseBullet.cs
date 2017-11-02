@@ -31,11 +31,6 @@ public class BaseBullet : MonoBehaviour
         }
     }
 
-    //protected virtual void Start()
-    //{
-    //    //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-
-    //}
 
     protected virtual void Update()
     {

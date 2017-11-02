@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShotTrail : EnemyShot
 {
 
-    //private GameObject prefab;
+    private PoolManager.PoolBullet bulletPool;
     private GameObject trail;
     private PropertiesTrail properties;
     private int indexOfBullet;
@@ -13,15 +13,15 @@ public class ShotTrail : EnemyShot
     public override void Init()
     {
         base.Init();
-        properties = Register.instance. propertiesTrail;
-        //prefab = properties.trailPrefab;
+        properties = Register.instance.propertiesTrail;
+        bulletPool = PoolManager.instance.pooledBulletClass["TrailBullet"];
     }
 
     public override void ShootSidescroll(Enemy enemy)
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.pooledBulletClass["TrailBullet"].GetpooledBullet();
+            trail = bulletPool.GetpooledBullet();
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);
@@ -34,7 +34,7 @@ public class ShotTrail : EnemyShot
     {
         if (enemy.canShoot && !trail)
         {
-            trail = PoolManager.instance.pooledBulletClass["TrailBullet"].GetpooledBullet();
+            trail = bulletPool.GetpooledBullet();
             trail.transform.position = enemy.bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(enemy.transform.rotation);
             trail.SetActive(true);

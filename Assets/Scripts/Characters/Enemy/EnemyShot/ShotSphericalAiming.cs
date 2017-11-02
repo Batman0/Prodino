@@ -13,9 +13,9 @@ public class ShotSphericalAiming : EnemyShot
     private Quaternion barrelInverseRotation;
     private Transform playerTr;
     private Collider playerCl;
-    //private GameObject prefab;
     private Register register;
     private PropertiesSphericalAiming properties;
+    private PoolManager.PoolBullet bulletPool;
 
     public override void Init()
     {
@@ -29,6 +29,7 @@ public class ShotSphericalAiming : EnemyShot
         barrelStartRotation = Quaternion.identity;
         playerTr = register.player.transform;
         playerCl = register.player.sideBodyCollider;
+        bulletPool = PoolManager.instance.pooledBulletClass["SphericalAimingBullet"];
     }
 
     public override void ShootSidescroll(Enemy enemy)
@@ -39,7 +40,7 @@ public class ShotSphericalAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass["SphericalAimingBullet"].GetpooledBullet();
+            GameObject bullet = bulletPool.GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.shooterTransform.rotation;
             bullet.SetActive(true);
@@ -71,7 +72,7 @@ public class ShotSphericalAiming : EnemyShot
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass["SphericalAimingBullet"].GetpooledBullet();
+            GameObject bullet = bulletPool.GetpooledBullet();
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.shooterTransform.rotation;
             bullet.SetActive(true);

@@ -45,7 +45,6 @@ public class PoolManager : MonoBehaviour
 
     public class PoolBullet
     {
-        public string bulletName;
         public int bulletAmount;
         public List<GameObject> pooledItems;
         public int index;
@@ -144,7 +143,7 @@ public class PoolManager : MonoBehaviour
 
     void DictionaryBulletInitialization()
     {
-        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, pooledBulletAmount);
+        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, pooledPlayerBulletAmount);
         PoolBullet DoubleAimingBullet = new PoolBullet(Register.instance.propertiesDoubleAiming.sidescrollBulletPrefab, doubleAimingBulletAmount);
         PoolBullet DoubleAimingSinusoideBullet = new PoolBullet(Register.instance.propertiesDoubleAiming.topdownBulletPrefab, doubleAimingSinusoideBulletAmount);
         PoolBullet ForwardShooterBullet = new PoolBullet(Register.instance.propertiesForwardShooter.bulletPrefab, forwardShooterBulletAmount);

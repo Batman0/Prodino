@@ -8,7 +8,8 @@ public class WideLaser : BaseBullet
     protected override void OnEnable()
     {
         base.OnEnable();
-        Destroy(gameObject, Register.instance.propertiesTrail.fadeTime);
+        StartCoroutine("Fade", Register.instance.propertiesTrail.fadeTime);
+        //gameObject.SetActive(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 
     protected override void Update()
@@ -25,4 +26,9 @@ public class WideLaser : BaseBullet
         }
     }
 
+    IEnumerator Fade(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
+    }
 }

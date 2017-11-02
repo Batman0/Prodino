@@ -1166,7 +1166,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.size
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4792418871269510, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -1213,37 +1213,57 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[1].delay
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[2].delay
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[3].delay
-      value: 15
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[4].delay
-      value: 20
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[5].delay
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[6].delay
-      value: 30
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[1].prefab
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[2].prefab
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[3].prefab
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[4].prefab
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
@@ -1880,6 +1900,46 @@ Prefab:
     - target: {fileID: 4047294297342454, guid: 481c4283532168247b5f2db9016a44fc, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: pooledPlayerBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: doubleAimingBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: doubleAimingSinusoideBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: forwardShooterBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: sphericalAimingBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: trailBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: laserBulletAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
+        type: 2}
+      propertyPath: bombDropBulletAmount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 481c4283532168247b5f2db9016a44fc, type: 2}
@@ -2689,7 +2749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1665334173
 Transform:
   m_ObjectHideFlags: 0
@@ -3310,7 +3370,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4792418871269510, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
       propertyPath: m_LocalPosition.x
@@ -3357,7 +3417,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
@@ -3367,22 +3427,22 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[1].delay
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[2].delay
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[3].delay
-      value: 15
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[4].delay
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
@@ -3393,6 +3453,21 @@ Prefab:
         type: 2}
       propertyPath: enemyCreationData.Array.data[6].delay
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[2].prefab
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[3].prefab
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[4].prefab
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a536ae13b3621714fb5590411a92c89c, type: 2}
