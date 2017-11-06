@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public enum PlayerState { CanMove, CanShoot, CanMoveAndShoot, CantMoveOrShoot }
+
+    //[HideInInspector]
+    //public bool canShootAndMove = true;
+    private bool canJump = true;
+    private bool thereIsGround;
+    private bool isDead;
+    [HideInInspector]
+    public PlayerState currentPlayerState;
     private PropertiesPlayer properties;
     [HideInInspector]
     public Vector3 startPosition;
@@ -18,9 +28,9 @@ public class PlayerController : MonoBehaviour
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-    public Transform bulletSpawnPoints;
-    public Transform bulletSpawnPointLx;
-    public Transform bulletSpawnPointRx;
+    public Transform[] bulletSpawnPoints;
+    //public Transform bulletSpawnPointLx;
+    //public Transform bulletSpawnPointRx;
     private float fireRatio;
     private float fireTimer;
     private float respawnTimer;
@@ -34,11 +44,6 @@ public class PlayerController : MonoBehaviour
     private float angle;
     private Rigidbody rb;
     public LayerMask groundMask;
-    [HideInInspector]
-    public bool canShootAndMove = true;
-    private bool canJump = true;
-    private bool thereIsGround;
-    private bool isDead;
     private float horizontal;
     [SerializeField]
     private Transform landmark;
@@ -130,10 +135,11 @@ public class PlayerController : MonoBehaviour
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollRotation = transform.rotation;
-        bulletSpawnPointStartRotation = bulletSpawnPointLx.rotation;
+        bulletSpawnPointStartRotation = bulletSpawnPoints[0].rotation;
         transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+        currentPlayerState = PlayerState.CanMoveAndShoot;
     }
     void Update()
     {
@@ -142,6 +148,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!GameManager.instance.transitionIsRunning)
             {
+                float horizontalAxis = Input.GetAxis("Horizontal");
+                float verticalAxis = Input.GetAxis("Vertical");
                 canJump = CheckGround(jumpCheckRayLength);
                 thereIsGround = CheckGround(groundCheckRayLength);
                 Aim();
@@ -159,9 +167,9 @@ public class PlayerController : MonoBehaviour
                         {
                             transform.rotation = sideScrollRotation;
                         }
-                        inverseDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+                        inverseDirection = new Vector3(horizontalAxis, verticalAxis, 0);
 
-                        if ((transform.position.x > Register.instance.xMin && Input.GetAxis("Horizontal") < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && Input.GetAxis("Horizontal") > controllerDeadZone))
+                        if ((transform.position.x > Register.instance.xMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && horizontalAxis > controllerDeadZone))
                         {
                             Move(Vector3.right, speed, "Horizontal");
                         }
@@ -229,7 +237,7 @@ public class PlayerController : MonoBehaviour
 
                         ClampPositionSidescroll();
 
-                        if (canShootAndMove && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
+                        if (currentPlayerState == PlayerState.CanMoveAndShoot && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
                         {
                             StartCoroutine("BiteAttack");
                         }
@@ -246,7 +254,7 @@ public class PlayerController : MonoBehaviour
                         {
                             rb.velocity = Vector3.zero;
                         }
-                        inverseDirection = new Vector3(-Input.GetAxis("Horizontal"), 0, -Input.GetAxis("Vertical"));
+                        inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
                         //Debug.Log(transform.forward);
                         playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
                         anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
@@ -272,7 +280,7 @@ public class PlayerController : MonoBehaviour
                         }
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
-                        if (canShootAndMove)
+                        if (currentPlayerState == PlayerState.CanMoveAndShoot)
                         {
                             TurnAroundGO(transform);
 							TurnAroundGO(armsAim.transform);
@@ -283,7 +291,7 @@ public class PlayerController : MonoBehaviour
 
                         ClampPositionTopdown();
 
-                        if (canShootAndMove && Input.GetMouseButtonDown(1))
+                        if (currentPlayerState == PlayerState.CanMoveAndShoot && Input.GetMouseButtonDown(1))
                         {
                             StartCoroutine("TailAttack");
                         }
@@ -295,7 +303,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
                 }
-                else if (Input.GetMouseButton(0) && canShootAndMove)
+                else if (Input.GetMouseButton(0) && currentPlayerState == PlayerState.CanMoveAndShoot)
                 {
                     Shoot();
                     fireTimer = 0.00f;
@@ -305,10 +313,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPointLx.rotation != bulletSpawnPointStartRotation && bulletSpawnPointRx.rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPoints[0].rotation != bulletSpawnPointStartRotation && bulletSpawnPoints[1].rotation != bulletSpawnPointStartRotation)
                 {
-                    bulletSpawnPointLx.rotation = bulletSpawnPointStartRotation;
-                    bulletSpawnPointRx.rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPoints[0].rotation = bulletSpawnPointStartRotation;
+                    bulletSpawnPoints[1].rotation = bulletSpawnPointStartRotation;
                 }
                 ChangePerspective();
             }
@@ -328,7 +336,9 @@ public class PlayerController : MonoBehaviour
         {
             if (other.gameObject.layer == enemyLayer && !isDead)
             {
-                StartCoroutine("EnableDisableMesh");
+                isDead = true;
+                playerModel.SetActive(false);
+                StartCoroutine("EnablePlayerAfterTime");
 
                 if (other.transform.tag.StartsWith("EnemyBullet"))
                 {
@@ -506,8 +516,8 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = bulletPool.GetpooledBullet();
-        bullet.transform.position = bulletSpawnPointLx.position;
-        bullet.transform.rotation = bulletSpawnPointLx.rotation;
+        bullet.transform.position = bulletSpawnPoints[0].position;
+        bullet.transform.rotation = bulletSpawnPoints[0].rotation;
         bullet.SetActive(true);
     }
 
@@ -564,7 +574,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator TailAttack()
     {
-        canShootAndMove = false;
+        currentPlayerState = PlayerState.CantMoveOrShoot;
+        //canShootAndMove = false;
         angle = 0;
         topTailCollider.enabled = true;
       
@@ -576,25 +587,25 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         topTailCollider.enabled = false;
-        canShootAndMove = true;
+        currentPlayerState = PlayerState.CanMoveAndShoot;
+        //canShootAndMove = true;
     }
 
 	IEnumerator BiteAttack()
 	{
-		canShootAndMove = false;
+        currentPlayerState = PlayerState.CantMoveOrShoot;
+        //canShootAndMove = false;
         rb.velocity = new Vector3(0, biteATKSpeed, 0);
 		biteCoolDownActive = true;
 
         yield return new WaitForSeconds (biteCoolDown);
         biteCoolDownActive = false;
-		canShootAndMove = true;
+        currentPlayerState = PlayerState.CanMoveAndShoot;
+        //canShootAndMove = true;
 	}
 
-    IEnumerator EnableDisableMesh()
+    IEnumerator EnablePlayerAfterTime()
     {
-        isDead = true;
-        playerModel.SetActive(false);
-
         yield return new WaitForSeconds(respawnTimer);
 
         playerModel.SetActive(true);

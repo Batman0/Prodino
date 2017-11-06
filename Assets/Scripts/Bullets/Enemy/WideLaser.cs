@@ -10,6 +10,7 @@ public class WideLaser : BaseBullet
 
     private void Awake()
     {
+        Debug.Log("SSSSSS");
         speed = Register.instance.propertiesTrail.trailSpeed;
         xMax = Register.instance.xMax;
         fadeTime = Register.instance.propertiesTrail.fadeTime;
@@ -58,6 +59,8 @@ public class WideLaser : BaseBullet
 
     private void Extend()
     {
+        //Debug.Log("xMax: " + xMax);
+        //Debug.Log("Mathf.Abs(transform.position.x): " + Mathf.Abs(transform.position.x));
         if (transform.localScale.z - Mathf.Abs(transform.position.x) < xMax)
         {
             transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);

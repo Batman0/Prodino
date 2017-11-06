@@ -2176,27 +2176,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7da0903a1a1d684b966a5623874482e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPlayerState: 0
   startPosition: {x: 0, y: 0, z: 0}
   playerModel: {fileID: 1375617026502066}
-  speed: 5
-  jumpForce: 28
-  upRotationAngle: 60
-  downRotationAngle: 80
   jumpCheckRayLength: 2
   groundCheckRayLength: 25
-  bulletSpawnPoints: {fileID: 4110617275544600}
+  bulletSpawnPoints:
+  - {fileID: 4318787980712110}
+  - {fileID: 4295414299896406}
   bulletSpawnPointLx: {fileID: 4318787980712110}
   bulletSpawnPointRx: {fileID: 4295414299896406}
-  fireRatio: 0.2
-  respawnTimer: 0.5
-  gravity: 30
-  glideSpeed: 4
-  topdownPlayerHeight: 7
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  canShootAndMove: 1
-  canJump: 1
   landmark: {fileID: 4913762895110830, guid: e11bde519ac5dbd4eb24eb5e3a865154, type: 2}
   sideBodyCollider: {fileID: 65969070036458574}
   topBodyCollider: {fileID: 65056165067551748}
@@ -2205,7 +2197,6 @@ MonoBehaviour:
   gunRx: {fileID: 4986864173296634}
   armLx: {fileID: 1498071112663728}
   gunLx: {fileID: 4847962421143452}
-  maxArmsRotation: 30
   aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
     type: 2}
   armsAim: {fileID: 1519844189728682}
@@ -2222,10 +2213,6 @@ MonoBehaviour:
   topZMin: 4
   topZMax: 4
   animator: {fileID: 95393272320219176}
-  topdownSpeed: 5
-  biteATKSpeed: 8
-  biteCoolDownActive: 0
-  biteCoolDown: 0.6
 --- !u!137 &137239189092961080
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
