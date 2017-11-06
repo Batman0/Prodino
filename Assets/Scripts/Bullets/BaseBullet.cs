@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour
 {
+    protected float speed;
     public Collider sideCollider;
     public Collider topCollider;
-    protected Vector3 direction;
     protected Quaternion? sidescrollRotation;
 
     protected virtual void OnEnable()
     {
-        direction = transform.forward;
-
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             if (!sideCollider.enabled || topCollider.enabled)
@@ -44,14 +42,6 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    protected virtual void DestroyGameobject(float destructionMargin)
-    {
-        if (transform.position.x < Register.instance.xMin - destructionMargin || transform.position.x > Register.instance.xMax + destructionMargin || transform.position.y < Register.instance.yMin - destructionMargin || transform.position.y > Register.instance.yMax + destructionMargin)
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
     void ChangePerspective()
     {
         if (GameManager.instance.transitionIsRunning)
@@ -63,7 +53,9 @@ public class BaseBullet : MonoBehaviour
                     topCollider.enabled = false;
                     sideCollider.enabled = true;
                     if (sidescrollRotation.HasValue)
+                    {
                         transform.rotation = sidescrollRotation.Value;
+                    }
                 }
             }
             else

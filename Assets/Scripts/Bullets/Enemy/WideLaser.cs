@@ -5,10 +5,20 @@ using UnityEngine;
 public class WideLaser : BaseBullet
 {
 
+    private float xMax;
+    private float fadeTime;
+
+    private void Awake()
+    {
+        speed = Register.instance.propertiesTrail.trailSpeed;
+        xMax = Register.instance.xMax;
+        fadeTime = Register.instance.propertiesTrail.fadeTime;
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine("Fade", Register.instance.propertiesTrail.fadeTime);
+        StartCoroutine("Fade", fadeTime);
         //gameObject.SetActive(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 
@@ -20,9 +30,9 @@ public class WideLaser : BaseBullet
 
     private void Extend()
     {
-        if (transform.localScale.z - Mathf.Abs(transform.position.x) < Register.instance.xMax)
+        if (transform.localScale.z - Mathf.Abs(transform.position.x) < xMax)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + Register.instance.propertiesTrail.trailSpeed * Time.deltaTime);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);
         }
     }
 

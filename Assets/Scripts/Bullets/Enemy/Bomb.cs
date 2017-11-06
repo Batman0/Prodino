@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    public float speed;
+    public float lifeTime;
     public CapsuleCollider explosionCollider;
     public Rigidbody rb;
 
+    private void Awake()
+    {
+        speed = Register.instance.propertiesBombDrop.bombFallSpeed;
+        lifeTime = Register.instance.propertiesBombDrop.bombLifeTime;
+    }
+
     void Update()
     {
-        rb.AddForce(Vector3.down * Register.instance.propertiesBombDrop.bombFallSpeed,ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * speed, ForceMode.Acceleration);
     }
 
     public void OnCollisionEnter(Collision other)
@@ -24,7 +32,7 @@ public class Bomb : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        StartCoroutine("Destroy", Register.instance.propertiesBombDrop.bombLifeTime);
+        StartCoroutine("Destroy", lifeTime);
     }
 	
     IEnumerator Destroy(float time)

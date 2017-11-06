@@ -34,6 +34,7 @@ public class Enemy: MonoBehaviour
     public Transform bulletSpawnpoint;
     public Transform bulletSpawnpointOther;
     public Transform shooterTransform;
+    private Transform meshTransform;
     [HideInInspector]
     public Transform[] targets;
 

@@ -9,6 +9,7 @@ public class MovementTrail : EnemyMovement
     private float movementDuration;
     private float waitingTimer;
     private float doneRotation;
+    private Transform enemyTransform;
     private PropertiesTrail properties;
 
     public override void Init(Enemy enemy)
@@ -21,6 +22,7 @@ public class MovementTrail : EnemyMovement
         movementDuration = properties.movementDuration;
         waitingTimer = 0;
         doneRotation = 0;
+        //enemyTransform = 
     }
 
     public override void MoveSidescroll(Enemy enemy)
@@ -43,22 +45,22 @@ public class MovementTrail : EnemyMovement
         {
             if (doneRotation < 180)
             {
-                if (enemy.sideCollider.enabled)
-                {
-                    enemy.sideCollider.enabled = false;
-                    enemy.topCollider.enabled = true;
-                }
+                //if (enemy.sideCollider.enabled)
+                //{
+                //    enemy.sideCollider.enabled = false;
+                //    enemy.topCollider.enabled = true;
+                //}
                 enemy.transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
             if (doneRotation >= 180 && !enemy.canShoot)
             {
                 enemy.canShoot = true;
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
-                {
-                    enemy.sideCollider.enabled = true;
-                    enemy.topCollider.enabled = false;
-                }
+                //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
+                //{
+                //    enemy.sideCollider.enabled = true;
+                //    enemy.topCollider.enabled = false;
+                //}
             }
         }
     }
@@ -83,22 +85,22 @@ public class MovementTrail : EnemyMovement
         {
             if (doneRotation < 180)
             {
-                if (enemy.sideCollider.enabled)
-                {
-                    enemy.sideCollider.enabled = false;
-                    enemy.topCollider.enabled = true;
-                }
+                //if (enemy.sideCollider.enabled)
+                //{
+                //    enemy.sideCollider.enabled = false;
+                //    enemy.topCollider.enabled = true;
+                //}
                 enemy.transform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
             if (doneRotation >= 180 && !enemy.canShoot)
             {
                 enemy.canShoot = true;
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
-                {
-                    enemy.sideCollider.enabled = true;
-                    enemy.topCollider.enabled = false;
-                }
+                //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
+                //{
+                //    enemy.sideCollider.enabled = true;
+                //    enemy.topCollider.enabled = false;
+                //}
             }
         }
     }

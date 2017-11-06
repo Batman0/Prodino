@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForwardShooterBullet : BaseBullet
+public class ForwardShooterBullet : NormalBullet
 {
+
+    protected override void Awake()
+    {
+        base.Awake();
+        speed = Register.instance.propertiesForwardShooter.bulletSpeed;
+        destructionMargin = Register.instance.propertiesForwardShooter.bulletDestructionMargin;
+    }
 
     protected override void OnEnable()
     {
@@ -15,12 +22,12 @@ public class ForwardShooterBullet : BaseBullet
     {
         base.Update();
         Move();
-        DestroyGameobject(Register.instance.propertiesForwardShooter.bulletDestructionMargin);
+        DisableGameobject();
     }
 
     protected override void Move()
     {
-       transform.Translate(direction * Register.instance.propertiesForwardShooter.bulletSpeed * Time.deltaTime, Space.World);
+       transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }
 
 }

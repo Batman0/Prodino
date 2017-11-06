@@ -12,7 +12,12 @@ public class MovementSphericalAiming : EnemyMovement
     private float forwardDistance;
     private float backDistance;
     private float targetPlayerDeltaDistance = 0.1f;
+    private float rotationDeadZone;
+    private float rotationSpeed;
     private Vector3 topdownTarget;
+    private Quaternion barrelStartRotation;
+    private Quaternion barrelInverseRotation;
+    private Collider playerCl;
     //private float amplitude;
     //private float length;
     //private float height;
@@ -35,6 +40,11 @@ public class MovementSphericalAiming : EnemyMovement
         backDistance = properties.backDistance;
         topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + forwardDistance);
         moveForward = true;
+        playerCl = register.player.sideBodyCollider;
+        rotationDeadZone = properties.rotationDeadZone;
+        rotationSpeed = properties.rotationSpeed;
+        barrelStartRotation = enemy.shooterTransform.rotation;
+        barrelInverseRotation = Quaternion.Inverse(barrelStartRotation);
         //zMovementSpeed = moveForward ? Mathf.Abs(zMovementSpeed) : -Mathf.Abs(zMovementSpeed);
         //amplitude = properties.amplitude;
         //length = properties.waveLenght;
@@ -58,6 +68,23 @@ public class MovementSphericalAiming : EnemyMovement
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
                 Object.Destroy(enemy.gameObject);
+            }
+        }
+
+        Vector3 playerTransform = new Vector3(playerCl.bounds.center.x - enemy.transform.position.x, playerCl.bounds.center.y - enemy.transform.position.y, 0);
+        Vector3 barrelSpawnpointTransform = new Vector3(enemy.bulletSpawnpoint.position.x - enemy.transform.position.x, enemy.bulletSpawnpoint.position.y - enemy.transform.position.y, 0);
+        float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
+        Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);
+
+        if (angle > rotationDeadZone)
+        {
+            if (cross.z >= 0)
+            {
+                enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, -rotationSpeed);
+            }
+            else
+            {
+                enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, rotationSpeed);
             }
         }
     }
@@ -90,6 +117,38 @@ public class MovementSphericalAiming : EnemyMovement
             if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
             {
                 enemy.gameObject.SetActive(false);
+            }
+        }
+
+        //if (barrelStartRotation != enemy.shooterTransform.rotation)
+        //{
+        //    barrelStartRotation = enemy.shooterTransform.rotation;
+        //    barrelInverseRotation = Quaternion.Inverse(barrelStartRotation);
+        //}
+
+        if (enemy.rotateRight && enemy.shooterTransform.rotation != barrelStartRotation)
+        {
+            enemy.shooterTransform.rotation = barrelStartRotation;
+        }
+        else if (!enemy.rotateRight && enemy.shooterTransform.rotation != barrelInverseRotation)
+        {
+            enemy.shooterTransform.rotation = barrelInverseRotation;
+        }
+
+        if (playerTr.position.x >= enemy.transform.position.x)
+        {
+            if (enemy.rotateRight)
+            {
+                enemy.shooterTransform.rotation = barrelInverseRotation;
+                enemy.rotateRight = false;
+            }
+        }
+        else
+        {
+            if (!enemy.rotateRight)
+            {
+                enemy.shooterTransform.rotation = barrelStartRotation;
+                enemy.rotateRight = true;
             }
         }
     }

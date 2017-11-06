@@ -295,7 +295,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
                 }
-                else
+                else if (Input.GetMouseButton(0) && canShootAndMove)
                 {
                     Shoot();
                     fireTimer = 0.00f;
@@ -505,13 +505,10 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (Input.GetMouseButton(0) && canShootAndMove)
-        {
-              GameObject bullet = bulletPool.GetpooledBullet();
-              bullet.transform.position = bulletSpawnPointLx.position;
-              bullet.transform.rotation = bulletSpawnPointLx.rotation;
-              bullet.SetActive(true);
-        }
+        GameObject bullet = bulletPool.GetpooledBullet();
+        bullet.transform.position = bulletSpawnPointLx.position;
+        bullet.transform.rotation = bulletSpawnPointLx.rotation;
+        bullet.SetActive(true);
     }
 
     public void ClampPositionSidescroll()
