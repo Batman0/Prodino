@@ -31,6 +31,34 @@ public class NormalBullet : BaseBullet
         base.Update();	
 	}
 
+    protected override void ChangePerspective()
+    {
+        if (GameManager.instance.transitionIsRunning)
+        {
+            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            {
+                if (!sideCollider.enabled)
+                {
+                    topCollider.enabled = false;
+                    sideCollider.enabled = true;
+                    if (sidescrollRotation.HasValue)
+                    {
+                        transform.rotation = sidescrollRotation.Value;
+                    }
+                }
+            }
+            else
+            {
+                if (!topCollider.enabled)
+                {
+                    sideCollider.enabled = false;
+                    topCollider.enabled = true;
+                    transform.rotation = Quaternion.identity;
+                }
+            }
+        }
+    }
+
     protected virtual void DisableGameobject()
     {
         if (transform.position.x < xMin - destructionMargin || transform.position.x > xMax + destructionMargin || transform.position.y < yMin - destructionMargin || transform.position.y > yMax + destructionMargin)

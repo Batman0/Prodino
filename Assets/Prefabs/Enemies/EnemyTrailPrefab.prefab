@@ -190,6 +190,7 @@ MonoBehaviour:
   bulletSpawnpoint: {fileID: 4184531272177340}
   bulletSpawnpointOther: {fileID: 0}
   shooterTransform: {fileID: 0}
+  meshTransform: {fileID: 0}
   targets: []
   sideCollider: {fileID: 65798314600009978}
   topCollider: {fileID: 65864004444632390}

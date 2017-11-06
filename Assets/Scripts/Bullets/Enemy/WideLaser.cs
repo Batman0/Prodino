@@ -28,6 +28,34 @@ public class WideLaser : BaseBullet
         Extend();
     }
 
+    protected override void ChangePerspective()
+    {
+        //Debug.Log("SSSS");
+        if (GameManager.instance.transitionIsRunning)
+        {
+            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            {
+                if (!sideCollider.enabled)
+                {
+                    topCollider.enabled = false;
+                    sideCollider.enabled = true;
+                    if (sidescrollRotation.HasValue)
+                    {
+                        transform.rotation = sidescrollRotation.Value;
+                    }
+                }
+            }
+            else
+            {
+                if (!topCollider.enabled)
+                {
+                    sideCollider.enabled = false;
+                    topCollider.enabled = true;
+                }
+            }
+        }
+    }
+
     private void Extend()
     {
         if (transform.localScale.z - Mathf.Abs(transform.position.x) < xMax)

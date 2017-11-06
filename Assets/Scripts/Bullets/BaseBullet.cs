@@ -42,32 +42,9 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    void ChangePerspective()
+    protected virtual void ChangePerspective()
     {
-        if (GameManager.instance.transitionIsRunning)
-        {
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-            {
-                if (!sideCollider.enabled)
-                {
-                    topCollider.enabled = false;
-                    sideCollider.enabled = true;
-                    if (sidescrollRotation.HasValue)
-                    {
-                        transform.rotation = sidescrollRotation.Value;
-                    }
-                }
-            }
-            else
-            {
-                if (!topCollider.enabled)
-                {
-                    sideCollider.enabled = false;
-                    topCollider.enabled = true;
-                    transform.rotation = Quaternion.identity;
-                }
-            }
-        }
+
     }
 
     protected virtual void Move()
