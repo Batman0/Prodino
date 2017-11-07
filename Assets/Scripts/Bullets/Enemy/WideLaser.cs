@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WideLaser : BaseBullet
+public class WideLaser : SpecialBullet
 {
 
     private float xMax;
@@ -10,7 +10,6 @@ public class WideLaser : BaseBullet
 
     private void Awake()
     {
-        Debug.Log("SSSSSS");
         speed = Register.instance.propertiesTrail.trailSpeed;
         xMax = Register.instance.xMax;
         fadeTime = Register.instance.propertiesTrail.fadeTime;
@@ -19,42 +18,20 @@ public class WideLaser : BaseBullet
     protected override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine("Fade", fadeTime);
+        fadeTime = Register.instance.propertiesTrail.fadeTime;
+        //StartCoroutine("Fade", fadeTime);
         //gameObject.SetActive(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 
     protected override void Update()
     {
         base.Update();
-        Extend();
-    }
-
-    protected override void ChangePerspective()
-    {
-        //Debug.Log("SSSS");
-        if (GameManager.instance.transitionIsRunning)
+        fadeTime -= Time.deltaTime;
+        if (fadeTime <= 0.0f)
         {
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-            {
-                if (!sideCollider.enabled)
-                {
-                    topCollider.enabled = false;
-                    sideCollider.enabled = true;
-                    if (sidescrollRotation.HasValue)
-                    {
-                        transform.rotation = sidescrollRotation.Value;
-                    }
-                }
-            }
-            else
-            {
-                if (!topCollider.enabled)
-                {
-                    sideCollider.enabled = false;
-                    topCollider.enabled = true;
-                }
-            }
+            gameObject.SetActive(false);
         }
+        Extend();
     }
 
     private void Extend()
@@ -67,9 +44,9 @@ public class WideLaser : BaseBullet
         }
     }
 
-    IEnumerator Fade(float time)
-    {
-        yield return new WaitForSeconds(time);
-        gameObject.SetActive(false);
-    }
+    //IEnumerator Fade(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    gameObject.SetActive(false);
+    //}
 }

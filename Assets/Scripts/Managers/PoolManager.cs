@@ -33,7 +33,7 @@ public class PoolManager : MonoBehaviour
         {
             int currentIndex = index;
 
-            if(currentIndex > pooledItems.Count)
+            if(currentIndex >= pooledItems.Count - 1)
             {
                  index = 0;
             }
@@ -69,7 +69,7 @@ public class PoolManager : MonoBehaviour
         {
             int currentIndex = index;
 
-            if (currentIndex > pooledItems.Count)
+            if (currentIndex >= pooledItems.Count - 1)
             {
                 index = 0;
             }

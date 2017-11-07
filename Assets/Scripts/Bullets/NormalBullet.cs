@@ -25,12 +25,6 @@ public class NormalBullet : BaseBullet
         direction = transform.forward;
     }
 
-    // Update is called once per frame
-    protected override void Update ()
-    {
-        base.Update();	
-	}
-
     protected override void ChangePerspective()
     {
         if (GameManager.instance.transitionIsRunning)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : BaseBullet
+public class Laser : SpecialBullet
 {
 
     //private void Start()
