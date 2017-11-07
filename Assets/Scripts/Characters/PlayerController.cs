@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private float upRotationAngle;
     private float downRotationAngle;
     private int enemyLayer = 12;
+    private int gunIndex;
     private float playerBackwardsAnimationLimit = 25;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private float glideSpeed;
     private float topdownPlayerHeight;
     private Quaternion sideScrollRotation;
-    private Quaternion bulletSpawnPointStartRotation;
+    private Quaternion armsAimStartRotation;
     private const string playerBulletTag = "PlayerBullet";
     private RaycastHit hit;
     private float angle;
@@ -135,11 +136,12 @@ public class PlayerController : MonoBehaviour
         sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollRotation = transform.rotation;
-        bulletSpawnPointStartRotation = bulletSpawnPoints[0].rotation;
+        armsAimStartRotation = armsAim.transform.rotation;
         transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
         currentPlayerState = PlayerState.CanMoveAndShoot;
+        gunIndex = 0;
     }
     void Update()
     {
@@ -313,10 +315,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && bulletSpawnPoints[0].rotation != bulletSpawnPointStartRotation && bulletSpawnPoints[1].rotation != bulletSpawnPointStartRotation)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
                 {
-                    bulletSpawnPoints[0].rotation = bulletSpawnPointStartRotation;
-                    bulletSpawnPoints[1].rotation = bulletSpawnPointStartRotation;
+                    armsAim.transform.rotation = armsAimStartRotation;
                 }
                 ChangePerspective();
             }
@@ -401,7 +402,7 @@ public class PlayerController : MonoBehaviour
     //}
     bool CheckGround(float rayLength)
     {
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
+        //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         if (Physics.Raycast(ray, rayLength, groundMask))
         {
@@ -452,8 +453,8 @@ public class PlayerController : MonoBehaviour
 			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
 			float aimAngle = Vector3.Angle (Vector3.right, aim);
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
-			Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
-			Debug.DrawRay (cross, cross, Color.green);
+			//Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
+			//Debug.DrawRay (cross, cross, Color.green);
 			//Debug.Log ("aim.x =" + aim.x);
 
 			//Max aim of upper body
@@ -516,9 +517,10 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         GameObject bullet = bulletPool.GetpooledBullet();
-        bullet.transform.position = bulletSpawnPoints[0].position;
-        bullet.transform.rotation = bulletSpawnPoints[0].rotation;
+        bullet.transform.position = bulletSpawnPoints[gunIndex].position;
+        bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
         bullet.SetActive(true);
+        gunIndex = gunIndex >= bulletSpawnPoints.Length - 1 ? 0 : gunIndex += 1;
     }
 
     public void ClampPositionSidescroll()
