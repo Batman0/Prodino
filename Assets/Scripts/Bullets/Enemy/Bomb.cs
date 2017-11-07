@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public float speed;
-    public float lifeTime;
+    private float speed;
+    private float lifeTime;
     public CapsuleCollider explosionCollider;
     public Rigidbody rb;
 
-    private void Awake()
+    private void Start()
     {
         speed = Register.instance.propertiesBombDrop.bombFallSpeed;
         lifeTime = Register.instance.propertiesBombDrop.bombLifeTime;
@@ -30,6 +30,7 @@ public class Bomb : MonoBehaviour
         if(other.gameObject.tag =="Player")
         {
             Destroy(other.gameObject);
+            explosionCollider.enabled = false;
         }
 
         StartCoroutine("Destroy", lifeTime);
@@ -39,5 +40,10 @@ public class Bomb : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
+    }
+
+    void OnDisable()
+    {
+        explosionCollider.enabled = false;
     }
 }

@@ -3437,7 +3437,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
