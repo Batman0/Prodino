@@ -60,6 +60,7 @@ public class ShotLaserDiagonal : EnemyShot
                 else
                 {
                     laser.SetActive(false);
+                    laser = null;
                     timer = 0.0f;
                     enemy.isShooting = false;
                     //canShoot = true;
@@ -82,22 +83,17 @@ public class ShotLaserDiagonal : EnemyShot
             }
             else
             {
-                if (!enemy.canShoot && enemy.shotType != ShotType.Trail)
+                if (!laser)
                 {
-                    enemy.canShoot = true;
-                }
-                if (enemy.canShoot)
-                {
-                    GameObject laser = bulletPool.GetpooledBullet();
+                    laser = bulletPool.GetpooledBullet();
                     laser.SetActive(true);
-                    laser.transform.position = enemy.bulletSpawnpoint.position;
-                    laser.transform.rotation = enemy.bulletSpawnpoint.parent.rotation;
-                    laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     laser.transform.SetParent(enemy.bulletSpawnpoint.parent);
-                    enemy.canShoot = false;
+                    laser.transform.position = enemy.bulletSpawnpoint.position;
+                    laser.transform.rotation = enemy.transform.rotation;
+                    laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
+                    //enemy.canShoot = false;
                     enemy.isShooting = true;
                 }
-
                 if (timer < waitingTime + loadingTime + shootingTime)
                 {
                     timer += Time.deltaTime;
@@ -105,6 +101,7 @@ public class ShotLaserDiagonal : EnemyShot
                 else
                 {
                     laser.SetActive(false);
+                    laser = null;
                     timer = 0.0f;
                     enemy.isShooting = false;
                     //canShoot = true;
