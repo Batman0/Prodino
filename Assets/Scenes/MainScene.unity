@@ -1906,46 +1906,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: pooledPlayerBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: doubleAimingBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: doubleAimingSinusoideBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: forwardShooterBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: sphericalAimingBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: trailBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: laserBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114200402477963478, guid: 481c4283532168247b5f2db9016a44fc,
-        type: 2}
-      propertyPath: bombDropBulletAmount
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 481c4283532168247b5f2db9016a44fc, type: 2}
   m_IsPrefabParent: 0
@@ -3437,7 +3397,7 @@ Prefab:
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114436530746348722, guid: a536ae13b3621714fb5590411a92c89c,
         type: 2}

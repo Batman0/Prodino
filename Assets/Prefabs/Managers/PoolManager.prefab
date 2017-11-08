@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4047294297342454}
-  - component: {fileID: 114354859599782132}
+  - component: {fileID: 114523148472512344}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114354859599782132
+--- !u!114 &114523148472512344
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -51,16 +51,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856b81137a0cf0c49b0cbe9bc3b1aac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledPlayerBulletAmount: 30
-  doubleAimingBulletAmount: 100
-  doubleAimingSinusoideBulletAmount: 50
-  forwardShooterBulletAmount: 150
-  sphericalAimingBulletAmount: 50
-  trailBulletAmount: 20
-  laserBulletAmount: 100
-  bombDropBulletAmount: 50
+  pooledPlayerBulletAmount: 15
+  doubleAimingBulletAmount: 10
+  doubleAimingSinusoideBulletAmount: 10
+  forwardShooterBulletAmount: 10
+  sphericalAimingBulletAmount: 10
+  trailBulletAmount: 10
+  laserBulletAmount: 10
+  bombDropBulletAmount: 10
   forwardEnemyAmount: 10
-  shooterForwardEnemyAmount: 30
+  shooterForwardEnemyAmount: 10
   doubleAimingEnemyAmount: 10
   sphericalAimingEnemyAmount: 10
   trailEnemyAmount: 10
