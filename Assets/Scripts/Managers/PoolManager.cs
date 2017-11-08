@@ -33,7 +33,7 @@ public class PoolManager : MonoBehaviour
         {
             int currentIndex = index;
 
-            if(currentIndex > pooledItems.Count)
+            if(currentIndex >= pooledItems.Count - 1)
             {
                  index = 0;
             }
@@ -69,7 +69,7 @@ public class PoolManager : MonoBehaviour
         {
             int currentIndex = index;
 
-            if (currentIndex > pooledItems.Count)
+            if (currentIndex >= pooledItems.Count - 1)
             {
                 index = 0;
             }
@@ -104,14 +104,9 @@ public class PoolManager : MonoBehaviour
     public int laserEnemyAmount = 10;
     public int bombDropEnemyAmount = 10;
 
-    private int i = 0;
-
     void Awake()
     {
         instance = this;
-
-        pooledEnemiesAmount = forwardEnemyAmount + shooterForwardEnemyAmount + doubleAimingEnemyAmount + sphericalAimingEnemyAmount + trailEnemyAmount + laserEnemyAmount + bombDropEnemyAmount;
-        pooledBulletAmount = doubleAimingBulletAmount + doubleAimingSinusoideBulletAmount + forwardShooterBulletAmount + trailBulletAmount + laserBulletAmount + bombDropBulletAmount;
 
         pooledEnemyClass = new Dictionary<string, PoolEnemy>();
         pooledBulletClass = new Dictionary<string, PoolBullet>();

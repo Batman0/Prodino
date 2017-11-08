@@ -22,7 +22,7 @@ public class CamerasController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning && Register.instance.player.canShootAndMove)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning && Register.instance.player.currentPlayerState == PlayerController.PlayerState.CanMoveAndShoot)
         {
             GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartTransitions = true;

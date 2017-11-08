@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SphericalAimingBullet : BaseBullet
+public class SphericalAimingBullet : NormalBullet
 {
+
+    protected override void Awake()
+    {
+        base.Awake();
+        speed = Register.instance.propertiesSphericalAiming.bulletSpeed;
+        destructionMargin = Register.instance.propertiesSphericalAiming.bulletDestructionMargin;
+    }
 
     protected override void OnEnable()
     {
@@ -14,12 +21,12 @@ public class SphericalAimingBullet : BaseBullet
     {
         base.Update();
         Move();
-        DestroyGameobject(Register.instance.propertiesSphericalAiming.bulletDestructionMargin);
+        DisableGameobject();
     }
 
     protected override void Move()
     {
-        transform.Translate(direction * Register.instance.propertiesSphericalAiming.bulletSpeed * Time.deltaTime, Space.World);
+        transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }
 
 }

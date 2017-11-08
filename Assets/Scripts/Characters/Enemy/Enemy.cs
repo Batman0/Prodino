@@ -35,6 +35,8 @@ public class Enemy: MonoBehaviour
     public Transform bulletSpawnpointOther;
     public Transform shooterTransform;
     [HideInInspector]
+    public Transform meshTransform;
+    [HideInInspector]
     public Transform[] targets;
 
     public Collider sideCollider;
@@ -92,7 +94,10 @@ public class Enemy: MonoBehaviour
 
     void Start()
     {
-        gameManager = GameManager.instance;
+        if (movementType == MovementType.Trail)
+        {
+            meshTransform = transform.GetChild(0);
+        }
         InitMovement();
         myMovementClass.Init(instance);
         myMovementSidescroll += myMovementClass.MoveSidescroll;
