@@ -286,9 +286,6 @@ public class PlayerController : MonoBehaviour
                         {
                             TurnAroundGO(transform);
 							TurnAroundGO(armsAim.transform);
-							TurnAroundGO(gunsAimR.transform);
-							TurnAroundGO(gunsAimL.transform);
-							
                         }
 
                         ClampPositionTopdown();

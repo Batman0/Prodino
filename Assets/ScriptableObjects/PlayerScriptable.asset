@@ -21,7 +21,7 @@ MonoBehaviour:
   respawnTimer: 0.5
   gravity: 30
   bulletDestructionMargin: 5
-  maxArmsRotation: 30
+  maxArmsRotation: 60
   tailMeleeSpeed: 5
   biteATKSpeed: 8
   biteCoolDownActive: 0
