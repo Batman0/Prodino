@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
                         ClampPositionSidescroll();
 
-                        if (currentPlayerState == PlayerState.CanMoveAndShoot && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
+                        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
                         {
                             StartCoroutine("BiteAttack");
                         }
@@ -282,7 +282,7 @@ public class PlayerController : MonoBehaviour
                         }
                         Move(Vector3.forward, speed, "Vertical");
                         Move(Vector3.right, speed, "Horizontal");
-                        if (currentPlayerState == PlayerState.CanMoveAndShoot)
+                        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
                         {
                             TurnAroundGO(transform);
 							TurnAroundGO(armsAim.transform);
@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour
 
                         ClampPositionTopdown();
 
-                        if (currentPlayerState == PlayerState.CanMoveAndShoot && Input.GetMouseButtonDown(1))
+                        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1))
                         {
                             StartCoroutine("TailAttack");
                         }
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
                 }
-                else if (Input.GetMouseButton(0) && currentPlayerState == PlayerState.CanMoveAndShoot)
+                else if (Input.GetMouseButton(0) && (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot))
                 {
                     Shoot();
                     fireTimer = 0.00f;
@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour
 
                 if (other.transform.tag.StartsWith("EnemyBullet"))
                 {
-                    Destroy(other.transform.gameObject);
+                    other.transform.gameObject.SetActive(false);
                 }
             }
         }
@@ -348,15 +348,15 @@ public class PlayerController : MonoBehaviour
         {
             if (other.gameObject.layer == enemyLayer && !isDead)
             {
-                Destroy(other.transform.gameObject);
+                other.transform.gameObject.SetActive(false);
             }
         }
 
 		if (biteCoolDownActive) {
 			if (other.gameObject.layer == enemyLayer && !isDead)
 			{
-				Destroy(other.transform.gameObject);
-			}
+                other.transform.gameObject.SetActive(false);
+            }
 		}
     }
 

@@ -9,7 +9,7 @@ public class Enemy: MonoBehaviour
 {
 
     [HideInInspector]
-    public bool rotateRight;
+    public bool barrelRight;
     public bool canShoot;
     public bool isShooting;
     [HideInInspector]
@@ -48,8 +48,7 @@ public class Enemy: MonoBehaviour
 
     public ShotType shotType;
 
-    public MyMovement myMovementSidescroll;
-    public MyMovement myMovementTopdown;
+    public MyMovement myMovement;
 
     public MyShot myShotSidescroll;
     public MyShot myShotTopdown;
@@ -67,7 +66,7 @@ public class Enemy: MonoBehaviour
         instance = this;
         gameManager = GameManager.instance;
         originalPos = transform.position;
-        rotateRight = isRight ? true : false;
+        barrelRight = isRight ? false : true;
 
         if (!isRight)
         {
@@ -100,8 +99,8 @@ public class Enemy: MonoBehaviour
         }
         InitMovement();
         myMovementClass.Init(instance);
-        myMovementSidescroll += myMovementClass.MoveSidescroll;
-        myMovementTopdown += myMovementClass.MoveTopdown;
+        myMovement += myMovementClass.Movement;
+        //myMovementTopdown += myMovementClass.MoveTopdown;
 
         if (shotType != ShotType.Forward)
         {
@@ -210,14 +209,7 @@ public class Enemy: MonoBehaviour
     {
         if (!gameManager.transitionIsRunning)
         {
-            if (gameManager.currentGameMode == GameMode.SIDESCROLL)
-            {
-                myMovementSidescroll(instance);
-            }
-            else
-            {
-                myMovementTopdown(instance);
-            }
+            myMovement(instance);
         }
 
     }

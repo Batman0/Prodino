@@ -17,8 +17,7 @@ MonoBehaviour:
     type: 2}
   zMovementSpeed: 2
   destructionMargin: 5
-  forwardDistance: 4
-  backDistance: 4
+  amplitude: 4
   bulletForwardDistance: 4
   bulletBackDistance: 4
   bulletSpeedDecrease: 1

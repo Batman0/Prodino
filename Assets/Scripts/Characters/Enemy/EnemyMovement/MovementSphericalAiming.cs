@@ -6,7 +6,7 @@ public class MovementSphericalAiming : EnemyMovement
 {
 
     private bool moveForward;
-    private float topdownXSpeed;
+    //private float topdownXSpeed;
     private float zMovementSpeed;
     private float destructionMargin;
     private float forwardDistance;
@@ -14,9 +14,11 @@ public class MovementSphericalAiming : EnemyMovement
     private float targetPlayerDeltaDistance = 0.1f;
     private float rotationDeadZone;
     private float rotationSpeed;
+    private float xMin;
+    private float xMax;
     private Vector3 topdownTarget;
-    private Quaternion barrelStartRotation;
-    private Quaternion barrelInverseRotation;
+    private Quaternion shooterTransformStartRotation;
+    private Quaternion shooterTransformInverseRotation;
     private Collider playerCl;
     //private float amplitude;
     //private float length;
@@ -24,16 +26,18 @@ public class MovementSphericalAiming : EnemyMovement
     //private float time;
     private Transform playerTr;
     private Register register;
+    private GameManager gameManager;
     private PropertiesSphericalAiming properties;
 
     public override void Init(Enemy enemy)
     {
         base.Init(enemy);
         register = Register.instance;
+        gameManager = GameManager.instance;
         playerTr = register.player.transform;
         properties = register.propertiesSphericalAiming;
-        speed = properties.xSpeed;
-        topdownXSpeed = enemy.isRight ? -speed : speed;
+        speed = enemy.isRight ? -properties.xSpeed : properties.xSpeed;
+        //topdownXSpeed = enemy.isRight ? -speed : speed;
         zMovementSpeed = properties.zMovementSpeed;
         destructionMargin = properties.destructionMargin;
         forwardDistance = properties.forwardDistance;
@@ -43,8 +47,10 @@ public class MovementSphericalAiming : EnemyMovement
         playerCl = register.player.sideBodyCollider;
         rotationDeadZone = properties.rotationDeadZone;
         rotationSpeed = properties.rotationSpeed;
-        barrelStartRotation = enemy.shooterTransform.rotation;
-        barrelInverseRotation = Quaternion.Inverse(barrelStartRotation);
+        shooterTransformStartRotation = enemy.shooterTransform.rotation;
+        shooterTransformInverseRotation = Quaternion.Inverse(shooterTransformStartRotation);
+        xMin = register.xMin;
+        xMax = register.xMax;
         //zMovementSpeed = moveForward ? Mathf.Abs(zMovementSpeed) : -Mathf.Abs(zMovementSpeed);
         //amplitude = properties.amplitude;
         //length = properties.waveLenght;
@@ -52,46 +58,9 @@ public class MovementSphericalAiming : EnemyMovement
         //time = 0;
     }
 
-    public override void MoveSidescroll(Enemy enemy)
+    public override void Movement(Enemy enemy)
     {
-        enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-
-        if (enemy.isRight)
-        {
-            if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
-            {
-                enemy.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
-            {
-                Object.Destroy(enemy.gameObject);
-            }
-        }
-
-        Vector3 playerTransform = new Vector3(playerCl.bounds.center.x - enemy.transform.position.x, playerCl.bounds.center.y - enemy.transform.position.y, 0);
-        Vector3 barrelSpawnpointTransform = new Vector3(enemy.bulletSpawnpoint.position.x - enemy.transform.position.x, enemy.bulletSpawnpoint.position.y - enemy.transform.position.y, 0);
-        float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
-        Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);
-
-        if (angle > rotationDeadZone)
-        {
-            if (cross.z >= 0)
-            {
-                enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, -rotationSpeed);
-            }
-            else
-            {
-                enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, rotationSpeed);
-            }
-        }
-    }
-
-    public override void MoveTopdown(Enemy enemy)
-    {
-        if(Vector3.Distance(enemy.transform.position, topdownTarget) > targetPlayerDeltaDistance)
+        if (Vector3.Distance(enemy.transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
             topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, topdownTarget.z);
         }
@@ -102,54 +71,83 @@ public class MovementSphericalAiming : EnemyMovement
             topdownTarget = moveForward ? new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + forwardDistance) : new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z - backDistance);
         }
 
-        enemy.transform.position = new Vector3(topdownXSpeed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, zMovementSpeed * Time.deltaTime + enemy.transform.position.z);
-        //time += Time.deltaTime;
+        enemy.transform.position = new Vector3(speed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, zMovementSpeed * Time.deltaTime + enemy.transform.position.z);
 
         if (enemy.isRight)
         {
-            if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
+            if (enemy.transform.position.x <= xMin - destructionMargin)
             {
                 enemy.gameObject.SetActive(false);
             }
         }
         else
         {
-            if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
+            if (enemy.transform.position.x >= xMax + destructionMargin)
             {
-                enemy.gameObject.SetActive(false);
+                Object.Destroy(enemy.gameObject);
             }
         }
 
-        //if (barrelStartRotation != enemy.shooterTransform.rotation)
-        //{
-        //    barrelStartRotation = enemy.shooterTransform.rotation;
-        //    barrelInverseRotation = Quaternion.Inverse(barrelStartRotation);
-        //}
+        if (gameManager.currentGameMode == GameMode.SIDESCROLL)
+        {
+            Vector3 playerTransform = new Vector3(playerCl.bounds.center.x - enemy.transform.position.x, playerCl.bounds.center.y - enemy.transform.position.y, 0);
+            Vector3 barrelSpawnpointTransform = new Vector3(enemy.bulletSpawnpoint.position.x - enemy.transform.position.x, enemy.bulletSpawnpoint.position.y - enemy.transform.position.y, 0);
+            float angle = Vector3.Angle(barrelSpawnpointTransform, playerTransform);
+            Vector3 cross = Vector3.Cross(playerTransform, barrelSpawnpointTransform);
 
-        if (enemy.rotateRight && enemy.shooterTransform.rotation != barrelStartRotation)
-        {
-            enemy.shooterTransform.rotation = barrelStartRotation;
-        }
-        else if (!enemy.rotateRight && enemy.shooterTransform.rotation != barrelInverseRotation)
-        {
-            enemy.shooterTransform.rotation = barrelInverseRotation;
-        }
-
-        if (playerTr.position.x >= enemy.transform.position.x)
-        {
-            if (enemy.rotateRight)
+            if (angle > rotationDeadZone)
             {
-                enemy.shooterTransform.rotation = barrelInverseRotation;
-                enemy.rotateRight = false;
+                if (cross.z >= 0)
+                {
+                    enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, -rotationSpeed);
+                }
+                else
+                {
+                    enemy.shooterTransform.RotateAround(enemy.transform.position, Vector3.forward, rotationSpeed);
+                }
             }
         }
         else
         {
-            if (!enemy.rotateRight)
+            //if (enemy.rotateRight && enemy.shooterTransform.rotation != barrelStartRotation)
+            //{
+            //    enemy.shooterTransform.rotation = barrelStartRotation;
+            //}
+            //else if (!enemy.rotateRight && enemy.shooterTransform.rotation != barrelInverseRotation)
+            //{
+            //    enemy.shooterTransform.rotation = barrelInverseRotation;
+            //}
+
+            if (enemy.transform.position.x < playerTr.position.x)
             {
-                enemy.shooterTransform.rotation = barrelStartRotation;
-                enemy.rotateRight = true;
+                if (enemy.barrelRight)
+                {
+                    Debug.Log("right");
+                    enemy.shooterTransform.rotation = enemy.isRight ? shooterTransformInverseRotation : shooterTransformStartRotation;
+                    enemy.barrelRight = false;
+                }
+            }
+            else
+            {
+                if (!enemy.barrelRight)
+                {
+                    Debug.Log("LERFT");
+                    enemy.shooterTransform.rotation = enemy.isRight ? shooterTransformStartRotation : shooterTransformInverseRotation;
+                    enemy.barrelRight = true;
+                }
             }
         }
     }
+
+    //public override void MoveTopdown(Enemy enemy)
+    //{
+
+    //    if (barrelStartRotation != enemy.shooterTransform.rotation)
+    //    {
+    //        barrelStartRotation = enemy.shooterTransform.rotation;
+    //        barrelInverseRotation = Quaternion.Inverse(barrelStartRotation);
+    //    }
+
+
+    //}
 }

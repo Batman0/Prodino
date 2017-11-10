@@ -15,7 +15,7 @@ public class MovementForward : EnemyMovement {
         destructionMargin = properties.destructionMargin;
     }
 
-    public override void MoveSidescroll(Enemy enemy)
+    public override void Movement(Enemy enemy)
     {
         enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
 
@@ -35,23 +35,23 @@ public class MovementForward : EnemyMovement {
         }
     }
 
-    public override void MoveTopdown(Enemy enemy)
-    {
-        enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+    //public override void MoveTopdown(Enemy enemy)
+    //{
+    //    enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
 
-        if (enemy.isRight)
-        {
-            if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
-            {
-                enemy.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
-            {
-                enemy.gameObject.SetActive(false);
-            }
-        }
-    }
+    //    if (enemy.isRight)
+    //    {
+    //        if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
+    //        {
+    //            enemy.gameObject.SetActive(false);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
+    //        {
+    //            enemy.gameObject.SetActive(false);
+    //        }
+    //    }
+    //}
 }

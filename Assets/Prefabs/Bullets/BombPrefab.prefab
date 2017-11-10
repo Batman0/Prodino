@@ -21,10 +21,11 @@ GameObject:
   - component: {fileID: 4758789199509044}
   - component: {fileID: 33973435051643894}
   - component: {fileID: 23046999104650858}
-  - component: {fileID: 65858234139008040}
   - component: {fileID: 114813301702638966}
   - component: {fileID: 54014682950675450}
+  - component: {fileID: 65777839111721650}
   - component: {fileID: 136824951470486596}
+  - component: {fileID: 136647782903394288}
   m_Layer: 12
   m_Name: BombPrefab
   m_TagString: Untagged
@@ -98,8 +99,8 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
---- !u!65 &65858234139008040
+  m_CollisionDetection: 2
+--- !u!65 &65777839111721650
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,7 +110,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114813301702638966
 MonoBehaviour:
@@ -122,8 +123,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef8ebe4395661e48aed3872e71c13b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionCollider: {fileID: 136824951470486596}
+  explosionSidescrollCollider: {fileID: 136824951470486596}
+  explosionTopdownCollider: {fileID: 136647782903394288}
   rb: {fileID: 54014682950675450}
+--- !u!136 &136647782903394288
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1846936218991036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 15
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136824951470486596
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -133,7 +148,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 0
-  m_Radius: 0.8351046
-  m_Height: 14.193693
+  m_Radius: 0.5
+  m_Height: 15
   m_Direction: 0
-  m_Center: {x: 0, y: 0.6179563, z: -0.06}
+  m_Center: {x: 0, y: 0, z: 0}

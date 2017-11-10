@@ -8,8 +8,8 @@ public class PropertiesDoubleAiming : EnemyProperties
     //public float xMovementSpeed;
     public float zMovementSpeed;
     public float destructionMargin;
-    public float forwardDistance;
-    public float backDistance;
+    public float amplitude;
+    //public float backDistance;
     public float bulletForwardDistance;
     public float bulletBackDistance;
     public float bulletSpeedDecrease;

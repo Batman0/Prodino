@@ -4,47 +4,93 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    private bool blownUp;
     private float speed;
     private float lifeTime;
-    public CapsuleCollider explosionCollider;
+    public CapsuleCollider explosionSidescrollCollider;
+    public CapsuleCollider explosionTopdownCollider;
     public Rigidbody rb;
+    private Register register;
+    private GameManager gameManager;
+    private GameMode currentGameMode;
 
-    private void Start()
+    private void Awake()
     {
-        speed = Register.instance.propertiesBombDrop.bombFallSpeed;
-        lifeTime = Register.instance.propertiesBombDrop.bombLifeTime;
+        register = Register.instance;
+        gameManager = GameManager.instance;
+        speed = register.propertiesBombDrop.bombFallSpeed;
+        lifeTime = register.propertiesBombDrop.bombLifeTime;
+    }
+
+    private void OnEnable()
+    {
+        currentGameMode = gameManager.currentGameMode;
+        blownUp = false;
     }
 
     void Update()
     {
-        rb.AddForce(Vector3.down * speed, ForceMode.Acceleration);
+        Move();
+        ChangePerspective();
     }
 
     public void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag =="Env")
+        if (other.gameObject.tag == "Env")
         {
-            explosionCollider.enabled = true;
+            Debug.Log("SSSS");
+            blownUp = true;
         }
 
         if(other.gameObject.tag =="Player")
         {
             gameObject.SetActive(false);
             Destroy(other.gameObject);
-            explosionCollider.enabled = false;
+            blownUp = false;
+            //explosionSidescrollCollider.enabled = false;
+            //explosionTopdownCollider.enabled = false;
         }
 
         StartCoroutine("Destroy", lifeTime);
     }
-	
+
+    void OnDisable()
+    {
+        explosionSidescrollCollider.enabled = false;
+        explosionTopdownCollider.enabled = false;
+    }
+
+    void Move()
+    {
+        rb.AddForce(Vector3.down * speed, ForceMode.Acceleration);
+    }
+
+    void ChangePerspective()
+    {
+        if (blownUp)
+        {
+            if (gameManager.currentGameMode == GameMode.SIDESCROLL)
+            {
+                if (!explosionSidescrollCollider.enabled)
+                {
+                    explosionSidescrollCollider.enabled = true;
+                    explosionTopdownCollider.enabled = false;
+                }
+            }
+            else
+            {
+                if (!explosionTopdownCollider.enabled)
+                {
+                    explosionSidescrollCollider.enabled = false;
+                    explosionTopdownCollider.enabled = true;
+                }
+            }
+        }
+    }
+
     IEnumerator Destroy(float time)
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
-    }
-
-    void OnDisable()
-    {
-        explosionCollider.enabled = false;
     }
 }

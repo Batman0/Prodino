@@ -13,7 +13,7 @@ public class EnemyMovement
         enemyInstance = enemy;
     }
 
-    public virtual void MoveSidescroll(Enemy enemy)
+    public virtual void Movement(Enemy enemy)
     {
 
     }

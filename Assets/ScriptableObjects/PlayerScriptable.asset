@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf63d0c2cb039d4db7acbbeb5eb45e4, type: 3}
   m_Name: PlayerScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 5
+  xSpeed: 15
   jumpForce: 28
   bulletSpeed: 20
   glideSpeed: 4

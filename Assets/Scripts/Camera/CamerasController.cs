@@ -11,6 +11,7 @@ public class CamerasController : MonoBehaviour
     public Transform topDownCameraPosition;
     public Transform sideScrollCameraPosition;
     public GameObject cameras;
+    public PlayerController player;
     /// <summary>
     /// The lerp speed. Increase to make it faster, decrease to make it slower.
     /// </summary>
@@ -18,11 +19,15 @@ public class CamerasController : MonoBehaviour
     public float lerpSpeed = 1.0f;
     public float lerpDistance = 0.01f;
 
+    private void Awake()
+    {
+        player = Register.instance.player;
+    }
 
     // Update is called once per frame
     void LateUpdate ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning && Register.instance.player.currentPlayerState == PlayerController.PlayerState.CanMoveAndShoot)
+        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning/* && player.currentPlayerState == PlayerController.PlayerState.CanMoveAndShoot*/)
         {
             GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartTransitions = true;

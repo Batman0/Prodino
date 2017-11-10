@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else if (dataIndex >= enemyCreationData.Length)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
