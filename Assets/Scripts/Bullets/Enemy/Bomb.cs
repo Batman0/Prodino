@@ -29,6 +29,7 @@ public class Bomb : MonoBehaviour
 
         if(other.gameObject.tag =="Player")
         {
+            gameObject.SetActive(false);
             Destroy(other.gameObject);
             explosionCollider.enabled = false;
         }
