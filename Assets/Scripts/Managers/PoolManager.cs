@@ -86,14 +86,22 @@ public class PoolManager : MonoBehaviour
     public Dictionary<string, PoolBullet> pooledBulletClass;
 
     [Header("Bullets")]
-    public int pooledPlayerBulletAmount = 15;
-    public int doubleAimingBulletAmount = 10;
-    public int doubleAimingSinusoideBulletAmount = 10;
-    public int forwardShooterBulletAmount = 10;
-    public int sphericalAimingBulletAmount = 10;
-    public int trailBulletAmount = 10;
-    public int laserBulletAmount = 10;
-    public int bombDropBulletAmount = 10;
+
+	public int pooledPlayerBulletAmount;
+
+	private int doubleAimingBulletAmount;
+
+	private int doubleAimingSinusoideBulletAmount;
+	
+	private int forwardShooterBulletAmount;
+	
+	private int sphericalAimingBulletAmount;
+
+	private int trailBulletAmount;
+	
+	private int laserBulletAmount;
+	
+	private int bombDropBulletAmount;
 
     [Header("Enemies")]
     public int forwardEnemyAmount = 10;
@@ -107,6 +115,8 @@ public class PoolManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+
+		MaxBulletSetter ();
 
         pooledEnemyClass = new Dictionary<string, PoolEnemy>();
         pooledBulletClass = new Dictionary<string, PoolBullet>();
@@ -156,4 +166,76 @@ public class PoolManager : MonoBehaviour
         pooledBulletClass.Add("LaserBullet", LaserBullet);
         pooledBulletClass.Add("BombDropBullet", BombDropBullet);
     }
+
+	public int MaxBulletsCalculator(int enemyAmount, float enemySpeed, float enemyRateOfFire, float minLimit, float maxLimit)
+	{
+		float maxBulletAmount;
+		float enemyLifeTime;
+		float maxDistance;
+		float totalLifeTime;
+		float enemyBulletAmount;
+		maxDistance = Mathf.Abs( maxLimit - minLimit);
+		enemyLifeTime = Mathf.Round (maxDistance / enemySpeed);
+		enemyBulletAmount = enemyLifeTime / enemyRateOfFire;
+		maxBulletAmount = enemyBulletAmount * enemyAmount;
+		return (int)maxBulletAmount;
+	}
+
+	public void MaxBulletSetter()
+	{
+		float xMax = Register.instance.xMax;
+		float xMin = Register.instance.xMin;
+
+		forwardShooterBulletAmount = MaxBulletsCalculator(
+			shooterForwardEnemyAmount,
+			Register.instance.propertiesForwardShooter.xSpeed,
+			Register.instance.propertiesForwardShooter.fireRate,
+			xMax,
+			xMin);
+
+		doubleAimingBulletAmount = MaxBulletsCalculator (
+			doubleAimingEnemyAmount,
+			Register.instance.propertiesDoubleAiming.xSpeed,
+			Register.instance.propertiesDoubleAiming.fireRate,
+			xMax,
+			xMin);
+
+		doubleAimingSinusoideBulletAmount = MaxBulletsCalculator (
+			doubleAimingEnemyAmount,
+			Register.instance.propertiesDoubleAiming.xSpeed,
+			Register.instance.propertiesDoubleAiming.fireRate,
+			xMax,
+			xMin);
+
+		sphericalAimingBulletAmount = MaxBulletsCalculator (
+			sphericalAimingEnemyAmount,
+			Register.instance.propertiesSphericalAiming.xSpeed,
+			Register.instance.propertiesSphericalAiming.fireRate,
+			xMax,
+			xMin);
+
+		trailBulletAmount = trailEnemyAmount;
+
+		laserBulletAmount = MaxBulletsCalculator (
+			laserEnemyAmount,
+			Register.instance.propertiesLaserDiagonal.xSpeed,
+			Register.instance.propertiesLaserDiagonal.loadingTime + Register.instance.propertiesLaserDiagonal.shootingTime + Register.instance.propertiesLaserDiagonal.waitingTime,
+			xMax,
+			xMin);
+
+		bombDropBulletAmount = MaxBulletsCalculator (
+			bombDropEnemyAmount,
+			Register.instance.propertiesBombDrop.xSpeed,
+			Register.instance.propertiesBombDrop.loadingTime + Register.instance.propertiesBombDrop.bombLifeTime,
+			xMax,
+			xMin);
+		
+//		Debug.Log ("Forward" + forwardShooterBulletAmount);
+//		Debug.Log ("DoubleAiming" + doubleAimingBulletAmount);
+//		Debug.Log ("DoubleAimingSin" + doubleAimingSinusoideBulletAmount);
+//		Debug.Log ("SphericalAiming" + sphericalAimingBulletAmount);
+//		Debug.Log ("Trail" + trailBulletAmount);
+//		Debug.Log ("Laser" + laserBulletAmount);
+//		Debug.Log ("BombDrop" + bombDropBulletAmount);
+	}
 }

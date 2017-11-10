@@ -14,7 +14,7 @@ public class ShotForwardShooter : EnemyShot
         base.Init();
         properties = Register.instance.propertiesForwardShooter;
         fireRate = properties.fireRate;
-        timer = 0;
+		timer = properties.fireRate;
     }
 
     public override void ShootSidescroll(Enemy enemy)
