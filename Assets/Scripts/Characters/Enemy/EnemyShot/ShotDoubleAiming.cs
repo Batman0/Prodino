@@ -49,6 +49,7 @@ public class ShotDoubleAiming : EnemyShot
         else
         {
             GameObject bullet = bulletPoolSin.GetpooledBullet();
+            bullet.tag = "EnemyBullet";
             bullet.transform.position = enemy.bulletSpawnpoint.position;
             bullet.transform.rotation = enemy.transform.rotation;
             bullet.SetActive(true);
