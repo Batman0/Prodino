@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 81255572016835928}
   m_Layer: 0
   m_Name: Main Camera (1)
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4261685910513842}
   - component: {fileID: 114261192250372820}
+  - component: {fileID: 111799904735687770}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -84,7 +85,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464347433569160}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -206,6 +207,22 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1154277403332762}
   m_Enabled: 1
+--- !u!111 &111799904735687770
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464347433569160}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 05ec835297a9ec440aa4789ef9d75aab, type: 2}
+  - {fileID: 7400000, guid: e83cfa96e93e88c4ba0fcaa0601deb5f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &114261192250372820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,15 +234,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScaleValueLerping: 0
-  timeScaleValueNotLerping: 1
-  topDownCameraPosition: {fileID: 4672071831452116, guid: 03cee211e2616b44e9f58a5539c9a290,
-    type: 2}
-  sideScrollCameraPosition: {fileID: 4763452341732512, guid: 03cee211e2616b44e9f58a5539c9a290,
-    type: 2}
+  anim_duration: 3
   cameras: {fileID: 1464347433569160}
-  lerpSpeed: 0.12
-  lerpDistance: 0.1
+  player: {fileID: 0}
+  anim_animation: {fileID: 111799904735687770}
 --- !u!124 &124175412790337104
 Behaviour:
   m_ObjectHideFlags: 1

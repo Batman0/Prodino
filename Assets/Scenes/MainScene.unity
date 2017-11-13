@@ -148,49 +148,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: topDownCameraPosition
-      value: 
-      objectReference: {fileID: 353557677}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: sideScrollCameraPosition
-      value: 
-      objectReference: {fileID: 652420205}
-    - target: {fileID: 1154277403332762, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac, type: 2}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 4261685910513842, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: anim_movement
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: anim_sideToTopMovement
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: anim_animator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: anim_animation
-      value: 
-      objectReference: {fileID: 1301766624}
-    - target: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-        type: 2}
-      propertyPath: anim_duration
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac, type: 2}
   m_IsPrefabParent: 0
@@ -2135,27 +2092,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4792418871269510, guid: a536ae13b3621714fb5590411a92c89c,
     type: 2}
   m_PrefabInternal: {fileID: 1017582740}
---- !u!1 &1301766620 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1464347433569160, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
-    type: 2}
-  m_PrefabInternal: {fileID: 292208}
---- !u!111 &1301766624
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1301766620}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 05ec835297a9ec440aa4789ef9d75aab, type: 2}
-  - {fileID: 7400000, guid: e83cfa96e93e88c4ba0fcaa0601deb5f, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!4 &1324113027 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4792418871269510, guid: a536ae13b3621714fb5590411a92c89c,
@@ -3693,11 +3629,6 @@ Prefab:
     - target: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
       propertyPath: m_RootOrder
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 54978495014258954, guid: 39df20cfb02b81140806e2025c8f177c,
-        type: 2}
-      propertyPath: m_CollisionDetection
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
