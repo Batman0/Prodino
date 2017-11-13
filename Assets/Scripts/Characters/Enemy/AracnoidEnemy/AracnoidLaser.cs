@@ -59,7 +59,7 @@ public class AracnoidLaser : MonoBehaviour
     private int particleChildIndex = 1;
     private int targetPositionChildIndex = 2;
     private float baseLoadingParticleTime = 2.5f;
-
+    private Quaternion initialRotation;
     public void Awake()
     {
         laserEmitter = gameObject;
@@ -71,6 +71,7 @@ public class AracnoidLaser : MonoBehaviour
         laserEmitterMaterial = laserEmitter.GetComponent<MeshRenderer>().material;
         initialPosition = laserEmitter.transform.position;
         targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + fluctuationAmplitude);
+        initialRotation = transform.rotation;
         if (fluctuationAmplitude > 0)
         {
             movingUp = true;
@@ -298,6 +299,10 @@ public class AracnoidLaser : MonoBehaviour
         {
             CloseWeakSpot();
         }
+    }
+    void LateUpdate()
+    {
+        transform.rotation = initialRotation;
     }
 }
 

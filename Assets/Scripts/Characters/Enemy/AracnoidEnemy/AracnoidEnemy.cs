@@ -156,8 +156,13 @@ public class AracnoidEnemy : MonoBehaviour
         }
         else if (state == AracnoidState.wounded)
         {
-            externalLasers.Rotate(0, externalLaserRotationSpeed*Time.fixedDeltaTime, 0);
-            internalLasers.Rotate(0, internalLaserRotationSpeed*Time.fixedDeltaTime, 0);
+            externalLasers.Rotate(0, externalLaserRotationSpeed * Time.fixedDeltaTime, 0);
+            //for (int i = 0; i < lasers.Length; i++)
+            //{
+            //    lasers[i].transform.RotateAroundLocal(externalLasers.position, externalLaserRotationSpeed * Time.fixedDeltaTime) ;
+            //    lasers[i].transform.Rotate()
+            //}
+            internalLasers.Rotate(0, internalLaserRotationSpeed * Time.fixedDeltaTime, 0);
             if (Time.time > currentStateEnterTime + maxWoundedTime)
             {
                 EnterRecoveryState();
@@ -165,7 +170,7 @@ public class AracnoidEnemy : MonoBehaviour
         }
         else if (state == AracnoidState.recovery)
         {
-            internalLasers.Rotate(internalLaserRotationSpeed * Time.fixedDeltaTime, 0, 0);
+            //internalLasers.Rotate(internalLaserRotationSpeed * Time.fixedDeltaTime, 0, 0);
             if (Time.time > currentStateEnterTime + maxWoundedTime)
             {
                 EnterRecoveryState();
