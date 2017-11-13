@@ -7,10 +7,10 @@ public class PlayerBullet : NormalBullet
     //private bool? isRight = null;
     //private bool? isCenter = null;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
+    //protected override void OnEnable()
+    //{
+    //    base.OnEnable();
+    //}
 
     protected override void Awake()
     {
