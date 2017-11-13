@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class NormalBullet : BaseBullet
 {
-
+    
     protected float destructionMargin;
     protected float xMin, xMax, yMin, yMax, zMin, zMax;
     protected Vector3 direction;
+    private Register register;
 
     protected virtual void Awake()
     {
-        xMin = Register.instance.xMin;
-        xMax = Register.instance.xMax;
-        yMin = Register.instance.yMin;
-        yMax = Register.instance.yMax;
-        //zMin = Register.instance.zMin.Value;
-        //zMax = Register.instance.zMax.Value;
+        register = Register.instance;
+        xMin = register.xMin;
+        xMax = register.xMax;
+        yMin = register.yMin;
+        yMax = register.yMax;
+        zMin = register.zMin.Value;
+        zMax = register.zMax.Value;
     }
 
     protected override void OnEnable()
@@ -55,7 +57,7 @@ public class NormalBullet : BaseBullet
 
     protected virtual void DisableGameobject()
     {
-        if (transform.position.x < xMin - destructionMargin || transform.position.x > xMax + destructionMargin || transform.position.y < yMin - destructionMargin || transform.position.y > yMax + destructionMargin)
+        if (transform.position.x < xMin - destructionMargin || transform.position.x > xMax + destructionMargin || transform.position.y < yMin - destructionMargin || transform.position.y > yMax + destructionMargin || transform.position.z < zMin - destructionMargin || transform.position.z > zMax + destructionMargin)
         {
             gameObject.SetActive(false);
         }

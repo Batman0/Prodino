@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     private Quaternion sideBodyColliderStartRot;
     private Quaternion topBodyColliderStartRot;
     private Quaternion topTailBodyColliderStartRot;
+    private float horizontalAxis;
+    private float verticalAxis;
 
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
@@ -150,8 +152,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!GameManager.instance.transitionIsRunning)
             {
-                float horizontalAxis = Input.GetAxis("Horizontal");
-                float verticalAxis = Input.GetAxis("Vertical");
+                horizontalAxis = Input.GetAxis("Horizontal");
+                verticalAxis = Input.GetAxis("Vertical");
                 canJump = CheckGround(jumpCheckRayLength);
                 thereIsGround = CheckGround(groundCheckRayLength);
                 Aim();
@@ -501,7 +503,12 @@ public class PlayerController : MonoBehaviour
         bullet.transform.position = bulletSpawnPoints[gunIndex].position;
         bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
         bullet.SetActive(true);
-        gunIndex = gunIndex >= bulletSpawnPoints.Length - 1 ? 0 : gunIndex += 1;
+        gunIndex++;
+        if (gunIndex >= bulletSpawnPoints.Length)
+        {
+            gunIndex = 0;
+        }
+        //gunIndex = gunIndex >= bulletSpawnPoints.Length - 1 ? 0 : gunIndex += 1;
     }
 
     public void ClampPositionSidescroll()
