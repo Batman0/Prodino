@@ -381,22 +381,6 @@ public class PlayerController : MonoBehaviour
         //glide = false;
     }
 
-    //void MoveArms()
-    //{
-    //    Vector3 aimtransform = new Vector3(aimTransform.transform.position.x - gunRx.position.x, aimTransform.transform.position.y - gunRx.position.y, aimTransform.transform.position.z - gunRx.position.z);
-    //    float aimAngle = Vector3.Angle(Vector3.right, aimtransform);
-    //    Vector3 cross = Vector3.Cross(Vector3.right, aimtransform);
-    //    if(cross.z >= 0 && angleS >= -maxAngleRotation)
-    //    {
-    //        gunRx.RotateAround(gunRx.position, gunRx.forward, -2);
-    //        angleS += -2;
-    //    }
-    //    if(cross.z < 0 && angleS < maxAngleRotation)
-    //    {
-    //        gunRx.RotateAround(gunRx.position, gunRx.forward, 2);
-    //        angleS += 2;
-    //    }
-    //}
     bool CheckGround(float rayLength)
     {
         //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
