@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState { CanMove, CanShoot, CanMoveAndShoot, CantMoveOrShoot }
 
-    public int numBlink = 4;
     private bool canJump = true;
     private bool thereIsGround;
     [HideInInspector]
@@ -30,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public Transform[] bulletSpawnPoints;
     private float fireRatio;
     private float fireTimer;
-    private float blinkTime;
+    private float RespawnTimer;
     private float gravity;
     private float glideSpeed;
     private float topdownPlayerHeight;
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private float horizontalAxis;
     private float verticalAxis;
     private int life;
+    
 
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         upRotationAngle = properties.upRotationAngle;
         downRotationAngle = properties.downRotationAngle;
         fireRatio = properties.fireRatio;
-        blinkTime = properties.respawnTimer;
+        RespawnTimer = properties.respawnTimer;
         gravity = properties.gravity;
         maxArmsRotation = properties.maxArmsRotation;
         tailMeleeSpeed = properties.tailMeleeSpeed;
@@ -336,11 +336,12 @@ public class PlayerController : MonoBehaviour
             if (other.gameObject.layer == enemyLayer && !IsDead())
             {
                 life--;
+                playerModel.SetActive(false);
                 Debug.Log(life);
-                StartCoroutine("BlinkMesh");
+                StartCoroutine("EnablePlayer");
                 if (IsDead())
                 {
-                    //alla morte fa qualcosa
+                    life = 45;
                 }
                 
                 if (other.transform.tag.StartsWith("EnemyBullet"))
@@ -588,15 +589,12 @@ public class PlayerController : MonoBehaviour
         return life <= 0;
     }
 
-    IEnumerator BlinkMesh()
+    IEnumerator EnablePlayer()
     {
-        for (int i=0;i<numBlink; i++)
-        {
-            playerModel.SetActive(false);
-            playerModel.SetActive(true);
-            yield return new WaitForSeconds(blinkTime);
-        }
-
+        yield return new WaitForSeconds(RespawnTimer);
+        playerModel.SetActive(true);
+        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
+        rb.velocity = Vector3.zero;
     }
 
     //void EnableCollider(bool activate)

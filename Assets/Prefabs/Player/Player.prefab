@@ -2184,8 +2184,6 @@ MonoBehaviour:
   bulletSpawnPoints:
   - {fileID: 4318787980712110}
   - {fileID: 4295414299896406}
-  bulletSpawnPointLx: {fileID: 4318787980712110}
-  bulletSpawnPointRx: {fileID: 4295414299896406}
   groundMask:
     serializedVersion: 2
     m_Bits: 512
@@ -2207,7 +2205,7 @@ MonoBehaviour:
   sideXMin: 4
   sideXMax: 4
   sideYMin: 5.5
-  sideYMax: 4
+  sideYMax: 2
   topXMin: 4
   topXMax: 4
   topZMin: 4
