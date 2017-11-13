@@ -18,7 +18,7 @@ public class AracnoidWeakSpot : MonoBehaviour
     }
     void OnTriggerEnter(Collider coll)
     {
-        if (coll.tag == "PlayerBullet" && GameManager.instance.currentGameMode == GameMode.TOPDOWN && aracnoid.CanBeWounded())
+        if (coll.tag == "PlayerBullet" && GameManager.instance.currentGameMode == GameMode.TOPDOWN && aracnoid.state== AracnoidEnemy.AracnoidState.vulnerable)
         {
             coll.gameObject.SetActive(false);
             aracnoid.WeakSpotHit();
@@ -40,7 +40,7 @@ public class AracnoidWeakSpot : MonoBehaviour
     {
         yield return new WaitForSeconds(blinkTime);
         StopAllCoroutines();
-        if (aracnoid.CanBeWounded())
+        if (aracnoid.state==AracnoidEnemy.AracnoidState.vulnerable)
         {
             if (on)
             {
