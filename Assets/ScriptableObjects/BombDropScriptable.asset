@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa27a02b75f25264d9e9ee34b6f80c42, type: 3}
   m_Name: BombDropScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 3
   lives: 1
+  xSpeed: 3
   gameObjectPrefab: {fileID: 1476885846380338, guid: a72ef70ed7f9a544796b4287f34b9dde,
     type: 2}
   destructionMargin: 3
