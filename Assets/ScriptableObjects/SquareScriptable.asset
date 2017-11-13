@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b9ceb745299f0449c868ddf038edca, type: 3}
   m_Name: SquareScriptable
   m_EditorClassIdentifier: 
-  xSpeed: 5
   lives: 1
+  xSpeed: 5
   gameObjectPrefab: {fileID: 0}
   waitingTime: 2.04
   rightTargets:

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProperties : Properties
+[CreateAssetMenu]
+public class PropertiesAracnoidBoss : EnemyProperties
 {
-
-    public GameObject gameObjectPrefab;
 
 }

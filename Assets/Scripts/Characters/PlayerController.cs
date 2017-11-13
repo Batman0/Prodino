@@ -7,11 +7,8 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState { CanMove, CanShoot, CanMoveAndShoot, CantMoveOrShoot }
 
-    //[HideInInspector]
-    //public bool canShootAndMove = true;
     private bool canJump = true;
     private bool thereIsGround;
-    private bool isDead;
     [HideInInspector]
     public PlayerState currentPlayerState;
     private PropertiesPlayer properties;
@@ -30,11 +27,9 @@ public class PlayerController : MonoBehaviour
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
     public Transform[] bulletSpawnPoints;
-    //public Transform bulletSpawnPointLx;
-    //public Transform bulletSpawnPointRx;
     private float fireRatio;
     private float fireTimer;
-    private float respawnTimer;
+    private float RespawnTimer;
     private float gravity;
     private float glideSpeed;
     private float topdownPlayerHeight;
@@ -56,6 +51,8 @@ public class PlayerController : MonoBehaviour
     private Quaternion topTailBodyColliderStartRot;
     private float horizontalAxis;
     private float verticalAxis;
+    private int life;
+    
 
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
@@ -115,11 +112,12 @@ public class PlayerController : MonoBehaviour
     {
         Register.instance.player = this;
         rb = GetComponent<Rigidbody>();
-        bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
     }
 
     void Start()
     {
+        
+        bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
         properties = Register.instance.propertiesPlayer;
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
@@ -127,7 +125,7 @@ public class PlayerController : MonoBehaviour
         upRotationAngle = properties.upRotationAngle;
         downRotationAngle = properties.downRotationAngle;
         fireRatio = properties.fireRatio;
-        respawnTimer = properties.respawnTimer;
+        RespawnTimer = properties.respawnTimer;
         gravity = properties.gravity;
         maxArmsRotation = properties.maxArmsRotation;
         tailMeleeSpeed = properties.tailMeleeSpeed;
@@ -139,16 +137,18 @@ public class PlayerController : MonoBehaviour
         topBodyColliderStartRot = topBodyCollider.transform.rotation;
         sideScrollRotation = transform.rotation;
         armsAimStartRotation = armsAim.transform.rotation;
+        life = properties.lives;
         transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
         startPosition = transform.position;
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
         currentPlayerState = PlayerState.CanMoveAndShoot;
         gunIndex = 0;
     }
+
     void Update()
     {
        
-        if (!isDead)
+        if (!IsDead())
         {
             if (!GameManager.instance.transitionIsRunning)
             {
@@ -310,7 +310,6 @@ public class PlayerController : MonoBehaviour
                     fireTimer = 0.00f;
                 }
 
-                //PlayAnimation();
             }
             else
             {
@@ -334,12 +333,17 @@ public class PlayerController : MonoBehaviour
     {
 		if (!topTailCollider.enabled && !biteCoolDownActive)
         {
-            if (other.gameObject.layer == enemyLayer && !isDead)
+            if (other.gameObject.layer == enemyLayer && !IsDead())
             {
-                isDead = true;
+                life--;
                 playerModel.SetActive(false);
-                StartCoroutine("EnablePlayerAfterTime");
-
+                Debug.Log(life);
+                StartCoroutine("EnablePlayer");
+                if (IsDead())
+                {
+                    life = 45;
+                }
+                
                 if (other.transform.tag.StartsWith("EnemyBullet"))
                 {
                     other.transform.gameObject.SetActive(false);
@@ -348,14 +352,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (topTailCollider.enabled)
         {
-            if (other.gameObject.layer == enemyLayer && !isDead)
+            if (other.gameObject.layer == enemyLayer && !IsDead())
             {
                 other.transform.gameObject.SetActive(false);
             }
         }
 
 		if (biteCoolDownActive) {
-			if (other.gameObject.layer == enemyLayer && !isDead)
+			if (other.gameObject.layer == enemyLayer && !IsDead())
 			{
                 other.transform.gameObject.SetActive(false);
             }
@@ -380,12 +384,10 @@ public class PlayerController : MonoBehaviour
     void Glide()
     {
         rb.AddForce(Vector3.up * glideSpeed, ForceMode.Force);
-        //glide = false;
     }
 
     bool CheckGround(float rayLength)
     {
-        //Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y, transform.position.z), Vector3.down);
         if (Physics.Raycast(ray, rayLength, groundMask))
         {
@@ -432,13 +434,10 @@ public class PlayerController : MonoBehaviour
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.transform.position = aimVector;
             }
-
+                
 			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
 			float aimAngle = Vector3.Angle (Vector3.right, aim);
 			Vector3 cross = Vector3.Cross (Vector3.right, aim);
-			//Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
-			//Debug.DrawRay (cross, cross, Color.green);
-			//Debug.Log ("aim.x =" + aim.x);
 
 			//Max aim of upper body
 			if (aimAngle <= 90 && cross.z >= 0)
@@ -516,8 +515,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(
         Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
         Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
-        0.0f
-        );
+        0.0f);
     }
 
     public void ClampPositionTopdown()
@@ -553,14 +551,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //void PlayAnimation()
-    //{
-    //    horizontal = Input.GetAxis("Horizontal");
-    //    AnimationManager.instance.GetAnimation("horizontal", horizontal);
-    //    AnimationManager.instance.GetAnimation("sideScroll", sideScroll);
-    //    AnimationManager.instance.GetAnimation("glide", glide);
-    //    //AnimationManager.instance.GetAnimation("attack", sideScroll? biteAttack : tailAttack);
-    //}
 
     IEnumerator TailAttack()
     {
@@ -594,13 +584,22 @@ public class PlayerController : MonoBehaviour
         //canShootAndMove = true;
 	}
 
-    IEnumerator EnablePlayerAfterTime()
+    public bool IsDead()
     {
-        yield return new WaitForSeconds(respawnTimer);
+        return life <= 0;
+    }
 
+    IEnumerator EnablePlayer()
+    {
+        yield return new WaitForSeconds(RespawnTimer);
         playerModel.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
-        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
-        isDead = false;
+        rb.velocity = Vector3.zero;
     }
+
+    //void EnableCollider(bool activate)
+    //{
+    //    topBodyCollider.enabled = activate;
+    //    sideBodyCollider.enabled = activate;
+    //}
 }
