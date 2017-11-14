@@ -750,7 +750,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1739247237918244}
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -450, y: 0, z: 0}
+  m_LocalPosition: {x: -450, y: 0, z: 150}
   m_LocalScale: {x: 105.12659, y: 105.1268, z: 105.126724}
   m_Children: []
   m_Father: {fileID: 4185361907281480}
@@ -1084,7 +1084,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1166635493182194}
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -450, y: 0, z: 0}
+  m_LocalPosition: {x: -450, y: 0, z: -150}
   m_LocalScale: {x: 105.1266, y: 105.1268, z: 105.126724}
   m_Children: []
   m_Father: {fileID: 4647494503643136}
@@ -1225,7 +1225,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  - {fileID: 2100000, guid: e45df00322e18bb49ac97fb8090701d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1293,7 +1293,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  - {fileID: 2100000, guid: e45df00322e18bb49ac97fb8090701d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1395,7 +1395,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  - {fileID: 2100000, guid: e45df00322e18bb49ac97fb8090701d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1463,7 +1463,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  - {fileID: 2100000, guid: e45df00322e18bb49ac97fb8090701d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1531,7 +1531,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  - {fileID: 2100000, guid: e45df00322e18bb49ac97fb8090701d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1625,7 +1625,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1233227405638388}
-  m_Mesh: {fileID: 4300002, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  m_Mesh: {fileID: 4300002, guid: ad29719e74f286545abb4ef61c3b8365, type: 3}
 --- !u!33 &33051756423574130
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1667,21 +1667,21 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714793265158466}
-  m_Mesh: {fileID: 4300006, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  m_Mesh: {fileID: 4300002, guid: ad29719e74f286545abb4ef61c3b8365, type: 3}
 --- !u!33 &33416026822533352
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534508798288882}
-  m_Mesh: {fileID: 4300000, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  m_Mesh: {fileID: 4300000, guid: ad29719e74f286545abb4ef61c3b8365, type: 3}
 --- !u!33 &33739601539121236
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1915520166864832}
-  m_Mesh: {fileID: 4300004, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  m_Mesh: {fileID: 4300002, guid: ad29719e74f286545abb4ef61c3b8365, type: 3}
 --- !u!33 &33775082917972526
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1709,7 +1709,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192132870580914}
-  m_Mesh: {fileID: 4300008, guid: 16c575e62442e244eb26c68325242dd0, type: 3}
+  m_Mesh: {fileID: 4300002, guid: ad29719e74f286545abb4ef61c3b8365, type: 3}
 --- !u!65 &65071042469933920
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1766,10 +1766,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233227405638388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2ae78f073f3284a81f2d3b2fc3f048, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: 0.2
+  fluctuationAmplitude: 1
   fluctuationSpeed: 1
   waitingTime: 1
   loadingTime: 1
@@ -1777,7 +1777,7 @@ MonoBehaviour:
   offset: 0
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 1
+  woundedFloatingSpeed: 0
   state: 2
 --- !u!114 &114346668301240824
 MonoBehaviour:
@@ -1798,18 +1798,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714793265158466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2ae78f073f3284a81f2d3b2fc3f048, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: -0.05
-  fluctuationSpeed: 1
+  fluctuationAmplitude: 0
+  fluctuationSpeed: 0
   waitingTime: 1
   loadingTime: 1
-  shootingTime: 1
-  offset: 1
+  shootingTime: 1.5
+  offset: 0
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 1
+  woundedFloatingSpeed: 0
   state: 2
 --- !u!114 &114513572754995708
 MonoBehaviour:
@@ -1819,18 +1819,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192132870580914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2ae78f073f3284a81f2d3b2fc3f048, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: 0.05
+  fluctuationAmplitude: -1
   fluctuationSpeed: 1
   waitingTime: 1
   loadingTime: 1
   shootingTime: 1
-  offset: 1.5
+  offset: 0.5
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 1
+  woundedFloatingSpeed: 0
   state: 2
 --- !u!114 &114696768431289786
 MonoBehaviour:
@@ -1840,18 +1840,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1915520166864832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2ae78f073f3284a81f2d3b2fc3f048, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: -0.2
-  fluctuationSpeed: 1
+  fluctuationAmplitude: 0
+  fluctuationSpeed: 0
   waitingTime: 1
   loadingTime: 1
   shootingTime: 1
-  offset: 0.5
+  offset: 1
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 1
+  woundedFloatingSpeed: 0
   state: 2
 --- !u!114 &114938528681812658
 MonoBehaviour:
@@ -1878,15 +1878,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lasers:
   - {fileID: 114229374389789662}
+  - {fileID: 114513572754995708}
   - {fileID: 114696768431289786}
   - {fileID: 114402582017024810}
-  - {fileID: 114513572754995708}
   yFluctuationSpeed: 1
   yFluctuationAmplitude: 1
   gunRotationSpeed: 0
   gunFireRate: 0
   externalLaserRotationSpeed: 200
-  internalLaserRotationSpeed: 100
+  internalLaserRotationSpeed: -100
   triggerHealthPoints: 0
   healthPoints: 50
   maxCycles: 2
@@ -15363,7 +15363,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1214021426
+  randomSeed: 1526388915
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -35529,7 +35529,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2005559144
+  randomSeed: -1401681762
   InitialModule:
     serializedVersion: 3
     enabled: 1
