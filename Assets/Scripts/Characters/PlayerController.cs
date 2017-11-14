@@ -7,56 +7,58 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState { CanMove, CanShoot, CanMoveAndShoot, CantMoveOrShoot }
 
+	[Header("Utility")]
+	[HideInInspector]
+	public PlayerState currentPlayerState;
+	[HideInInspector]
+	public Vector3 startPosition;
+	[SerializeField]
+	private GameObject playerModel;
+	private PropertiesPlayer properties;
+	private int enemyLayer = 12;
+	private float playerBackwardsAnimationLimit = 25;
+	private RaycastHit hit;
+	private Rigidbody rb;
+	public LayerMask groundMask;
+	[SerializeField]
+	private Transform landmark;
+	public Collider sideBodyCollider;
+	public Collider topBodyCollider;
+	public Collider topTailCollider;
+	private int life;
+
+	[Header("Movement")]
     private bool canJump = true;
     private bool thereIsGround;
-    [HideInInspector]
-    public PlayerState currentPlayerState;
-    private PropertiesPlayer properties;
-    [HideInInspector]
-    public Vector3 startPosition;
-    [SerializeField]
-    private GameObject playerModel;
     private float speed;
     private float jumpForce;
     private float upRotationAngle;
     private float downRotationAngle;
-    private int enemyLayer = 12;
-    private int gunIndex;
-    private float playerBackwardsAnimationLimit = 25;
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-    public Transform[] bulletSpawnPoints;
+	private float gravity;
+	private float glideSpeed;
+	private float topdownPlayerHeight;
+	private float angle;
+	private float horizontal;
+	private float horizontalAxis;
+	private float verticalAxis;
+	private Quaternion sideScrollRotation;
+	private Quaternion armsAimStartRotation;
+	private Quaternion sideBodyColliderStartRot;
+	private Quaternion topBodyColliderStartRot;
+	private Quaternion topTailBodyColliderStartRot;
+
+	[Header("Shooting")]
     private float fireRatio;
     private float fireTimer;
+	public Transform[] bulletSpawnPoints;
     private float RespawnTimer;
-    private float gravity;
-    private float glideSpeed;
-    private float topdownPlayerHeight;
-    private Quaternion sideScrollRotation;
-    private Quaternion armsAimStartRotation;
     private const string playerBulletTag = "PlayerBullet";
-    private RaycastHit hit;
-    private float angle;
-    private Rigidbody rb;
-    public LayerMask groundMask;
-    private float horizontal;
-    [SerializeField]
-    private Transform landmark;
-    public Collider sideBodyCollider;
-    public Collider topBodyCollider;
-    public Collider topTailCollider;
-    private Quaternion sideBodyColliderStartRot;
-    private Quaternion topBodyColliderStartRot;
-    private Quaternion topTailBodyColliderStartRot;
-    private float horizontalAxis;
-    private float verticalAxis;
-    private int life;
     
-
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
-
 
     [Header("Guns")]
     public GameObject armRx;
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunLx;
     private float maxArmsRotation;
     private float angleS = 0;
+	private int gunIndex;
 
     [Header("Aim")]
     private float intersectionPoint;
@@ -79,7 +82,6 @@ public class PlayerController : MonoBehaviour
 	public GameObject gunsAimL;
 	public GameObject shoulderAimR;
 	public GameObject shoulderAimL;
-
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -147,7 +149,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-       
         if (!IsDead())
         {
             if (!GameManager.instance.transitionIsRunning)
@@ -198,7 +199,6 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (!anim_isRunning)
                                 {
-                                    //Debug.Log("SSSSSSS");
                                     anim_isJumping = false;
                                     anim_isGliding = false;
                                     anim_isRunning = true;
@@ -216,7 +216,6 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (!anim_isGliding)
                                 {
-                                    //Debug.Log("SSSSS");
                                     anim_isJumping = false;
                                     anim_isGliding = true;
                                     animator.SetBool("isJumping", anim_isJumping);
@@ -259,7 +258,6 @@ public class PlayerController : MonoBehaviour
                             rb.velocity = Vector3.zero;
                         }
                         inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
-                        //Debug.Log(transform.forward);
                         playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
                         anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
                         if (anglePlayerDirection <= playerBackwardsAnimationLimit)
@@ -287,7 +285,6 @@ public class PlayerController : MonoBehaviour
                         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
                         {
                             TurnAroundGO(transform);
-							TurnAroundGO(armsAim.transform);
                         }
 
                         ClampPositionTopdown();
@@ -326,7 +323,6 @@ public class PlayerController : MonoBehaviour
     {
         sideBodyCollider.transform.rotation = sideBodyColliderStartRot;
         topBodyCollider.transform.rotation = topBodyColliderStartRot;
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -341,6 +337,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("EnablePlayer");
                 if (IsDead())
                 {
+					
                     life = 45;
                 }
                 
@@ -417,6 +414,8 @@ public class PlayerController : MonoBehaviour
         {
             topDownPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
         }
+
+
         if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
             aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -425,7 +424,15 @@ public class PlayerController : MonoBehaviour
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.transform.position = aimVector;
             }
+
+			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
+			if (aim.x >= 1)
+			{
+				TurnAroundGO(armsAim.transform);
+			}
+
         }
+
         if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
             aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -507,7 +514,6 @@ public class PlayerController : MonoBehaviour
         {
             gunIndex = 0;
         }
-        //gunIndex = gunIndex >= bulletSpawnPoints.Length - 1 ? 0 : gunIndex += 1;
     }
 
     public void ClampPositionSidescroll()
@@ -551,11 +557,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	public bool IsDead()
+	{
+		return life <= 0;
+	}
 
     IEnumerator TailAttack()
     {
         currentPlayerState = PlayerState.CantMoveOrShoot;
-        //canShootAndMove = false;
         angle = 0;
         topTailCollider.enabled = true;
       
@@ -568,38 +577,26 @@ public class PlayerController : MonoBehaviour
         }
         topTailCollider.enabled = false;
         currentPlayerState = PlayerState.CanMoveAndShoot;
-        //canShootAndMove = true;
     }
 
 	IEnumerator BiteAttack()
 	{
         currentPlayerState = PlayerState.CantMoveOrShoot;
-        //canShootAndMove = false;
         rb.velocity = new Vector3(0, biteATKSpeed, 0);
 		biteCoolDownActive = true;
 
         yield return new WaitForSeconds (biteCoolDown);
         biteCoolDownActive = false;
         currentPlayerState = PlayerState.CanMoveAndShoot;
-        //canShootAndMove = true;
 	}
-
-    public bool IsDead()
-    {
-        return life <= 0;
-    }
 
     IEnumerator EnablePlayer()
     {
+		currentPlayerState = PlayerState.CantMoveOrShoot;
         yield return new WaitForSeconds(RespawnTimer);
+		currentPlayerState = PlayerState.CanMoveAndShoot;
         playerModel.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = Vector3.zero;
     }
-
-    //void EnableCollider(bool activate)
-    //{
-    //    topBodyCollider.enabled = activate;
-    //    sideBodyCollider.enabled = activate;
-    //}
 }
