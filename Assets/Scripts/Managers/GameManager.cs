@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public float playerBulletSpawnpointY;
     public Background[] backgrounds;
+    public bool Isbossfight = false;
 
     private void Awake()
     {
@@ -75,6 +76,14 @@ public class GameManager : MonoBehaviour
         foreach (Background item in backgrounds)
         {
             item.background.transform.Translate(moveVector * item.speed * Time.deltaTime, Space.World);
+        }
+    }
+
+    public void BossFight()
+    {
+        if(Isbossfight)
+        {
+            Time.timeScale = 0.0f;
         }
     }
 }

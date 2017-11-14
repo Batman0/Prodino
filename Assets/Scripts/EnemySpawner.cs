@@ -25,7 +25,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        SpawnEnemy();
+        if(!GameManager.instance.Isbossfight)
+        {
+            SpawnEnemy();
+        }
     }
 
 
