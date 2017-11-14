@@ -102,6 +102,10 @@ public class PlayerController : MonoBehaviour
     private float anglePlayerDirection;
     public Animator animator;
 
+    [Header("Particles")]
+    public ParticleSystemManager jetpackStrongerParticle;
+    public ParticleSystemManager jetpackRegularParticle;
+
     [Header("TailMelee")]
     private float tailMeleeSpeed;
 
@@ -598,5 +602,21 @@ public class PlayerController : MonoBehaviour
         playerModel.SetActive(true);
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         rb.velocity = Vector3.zero;
+    }
+
+    private void ActivateStrongerJetpack()
+    {
+        jetpackStrongerParticle.PlayAll(true);
+        jetpackRegularParticle.StopAll(true);
+    }
+    private void ActivateRegularJetpack()
+    {
+        jetpackStrongerParticle.StopAll(true);
+        jetpackRegularParticle.PlayAll(true);
+    }
+    private void DeactivateJetpack()
+    {
+        jetpackRegularParticle.StopAll(true);
+        jetpackStrongerParticle.StopAll(true);
     }
 }
