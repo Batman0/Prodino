@@ -7,29 +7,30 @@ public delegate void MyShot(Enemy enemy);
 
 public class Enemy : MonoBehaviour
 {
-
-    [HideInInspector]
-    public bool barrelRight;
-    public bool canShoot;
-    public bool isShooting;
-    [HideInInspector]
-    public bool toDestroy;
-    public bool isRight;
+    [Header("References")]
+    private Enemy instance;
+    private GameManager gameManager;
+    private EnemyMovement myMovementClass;
+    private EnemyShot myShotClass;
     private PoolManager.PoolBullet bulletPool;
 
-    public int enemyLife;
-    [HideInInspector]
-    public int movementTargetIndex;
-    public float lifeTime;
+    [Header("Statistics")]
+    private int enemyLives;
+    private float lifeTime;
 
+    public bool canShoot;
+    public bool isShooting;
+    //[HideInInspector]
+    //public bool toDeactivate;
+    public bool isRight;
 
-    [HideInInspector]
-    public Vector3 originalPos;
+    //[HideInInspector]
+    //public int movementTargetIndex;
 
-    [HideInInspector]
-    public Quaternion barrelStartRot;
-    [HideInInspector]
-    public Quaternion barrelInvertedRot;
+    //[HideInInspector]
+    //public Quaternion barrelStartRot;
+    //[HideInInspector]
+    //public Quaternion barrelInvertedRot;
     public ParticleSystemManager explosionParticleManager;
 
     public Transform bulletSpawnpoint;
@@ -37,13 +38,13 @@ public class Enemy : MonoBehaviour
     public Transform shooterTransform;
     [HideInInspector]
     public Transform meshTransform;
-    [HideInInspector]
-    public Transform[] targets;
+    //[HideInInspector]
+    //public Transform[] targets;
 
     public Collider sideCollider;
     public Collider topCollider;
 
-    private GameObject particleTrail;
+    //private GameObject particleTrail;
 
     public MovementType movementType;
 
@@ -54,13 +55,6 @@ public class Enemy : MonoBehaviour
     public MyShot myShotSidescroll;
     public MyShot myShotTopdown;
 
-    private GameManager gameManager;
-
-    private Enemy instance;
-
-    private EnemyMovement myMovementClass;
-
-    private EnemyShot myShotClass;
     protected float enemyDeactivationDelay = 0.5f;
     private bool isDying = false;
 
@@ -68,9 +62,8 @@ public class Enemy : MonoBehaviour
     {
         instance = this;
         gameManager = GameManager.instance;
-        originalPos = transform.position;
-        barrelRight = isRight ? false : true;
-
+        enemyLives = Register.instance.enemyProperties[movementType.ToString()].lives;
+        //Debug.Log(enemyLives + " - " + name);
         if (!isRight)
         {
             transform.Rotate(Vector3.up, 180, Space.World);
@@ -127,15 +120,17 @@ public class Enemy : MonoBehaviour
         {
             Shoot();
         }
-
-        Destroy();
+        if (CheckEnemyDead() /*|| toDeactivate*/)
+        {
+            Deactivate();
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PlayerBullet")
         {
-            enemyLife--;
+            enemyLives--;
             other.gameObject.SetActive(false);
         }
     }
@@ -240,17 +235,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void Deactivate()
     {
-        if (CheckEnemyLife() || toDestroy)
+        if (explosionParticleManager != null)
         {
-            if (explosionParticleManager != null)
-            {
-                explosionParticleManager.PlayAll();
-            }
-            isDying = true;
-            StartCoroutine(DeactivateObject());
+            explosionParticleManager.PlayAll();
         }
+        isDying = true;
+        StartCoroutine(DeactivateObject());
     }
 
     protected IEnumerator DeactivateObject()
@@ -260,9 +252,9 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool CheckEnemyLife()
+    public bool CheckEnemyDead()
     {
-        return enemyLife <= 0;
+        return enemyLives <= 0;
     }
 
     void OnDisable()

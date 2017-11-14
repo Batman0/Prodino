@@ -15,6 +15,7 @@ public class MovementLaserDiagonal : EnemyMovement
     private float targetPlayerDeltaDistance;
     private float xMin;
     private float xMax;
+    private Vector3 originalPos;
     private Vector3 sidescrollTarget;
     //private float amplitude;
     //private float length;
@@ -28,6 +29,7 @@ public class MovementLaserDiagonal : EnemyMovement
         base.Init(enemy);
         register = Register.instance;
         properties = register.propertiesLaserDiagonal;
+        originalPos = enemy.transform.position;
         speed = enemy.isRight ? -properties.xSpeed : properties.xSpeed;
         //sidescrollXSpeed = enemy.isRight ? -speed : speed;
         moveUp = true;
@@ -37,7 +39,7 @@ public class MovementLaserDiagonal : EnemyMovement
         destructionMargin = properties.destructionMargin;
         upDistance = properties.upDistance;
         downDistance = properties.downDistance;
-        sidescrollTarget = new Vector3(enemy.transform.position.x, enemy.originalPos.y + upDistance, enemy.transform.position.z);
+        sidescrollTarget = new Vector3(enemy.transform.position.x, originalPos.y + upDistance, enemy.transform.position.z);
         xMin = register.xMin;
         xMax = register.xMax;
     }
@@ -53,7 +55,7 @@ public class MovementLaserDiagonal : EnemyMovement
             moveUp = !moveUp;
             yMovementSpeed = moveUp ? Mathf.Abs(yMovementSpeed) : -Mathf.Abs(yMovementSpeed);
             yMovementSpeedShooting = moveUp ? Mathf.Abs(yMovementSpeedShooting) : -Mathf.Abs(yMovementSpeedShooting);
-            sidescrollTarget = moveUp ? new Vector3(enemy.transform.position.x, enemy.originalPos.y + upDistance, enemy.transform.position.z) : new Vector3(enemy.transform.position.x, enemy.originalPos.y - downDistance, enemy.transform.position.z);
+            sidescrollTarget = moveUp ? new Vector3(enemy.transform.position.x, originalPos.y + upDistance, enemy.transform.position.z) : new Vector3(enemy.transform.position.x, originalPos.y - downDistance, enemy.transform.position.z);
         }
 
         enemy.transform.position = new Vector3(speed * Time.deltaTime + enemy.transform.position.x, (!enemy.isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.deltaTime + enemy.transform.position.y, enemy.transform.position.z);

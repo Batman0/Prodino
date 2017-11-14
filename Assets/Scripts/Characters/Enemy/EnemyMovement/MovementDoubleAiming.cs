@@ -14,6 +14,7 @@ public class MovementDoubleAiming : EnemyMovement
     private float targetPlayerDeltaDistance = 0.1f;
     private float xMin;
     private float xMax;
+    private Vector3 originalPos;
     private Vector3 topdownTarget;
     //private float amplitude;
     //private float length;
@@ -26,6 +27,7 @@ public class MovementDoubleAiming : EnemyMovement
     {
         base.Init(enemy);
         register = Register.instance;
+        originalPos = enemy.transform.position;
         properties = register.propertiesDoubleAiming;
         speed = enemy.isRight ? -properties.xSpeed : properties.xSpeed;
         //topdownXSpeed = enemy.isRight ? -speed : speed;
@@ -33,7 +35,7 @@ public class MovementDoubleAiming : EnemyMovement
         destructionMargin = properties.destructionMargin;
         amplitude = properties.amplitude;
         //backDistance = properties.backDistance;
-        topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + amplitude);
+        topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, originalPos.z + amplitude);
         //moveForward = true;
         xMin = register.xMin;
         xMax = register.xMax;
@@ -54,7 +56,7 @@ public class MovementDoubleAiming : EnemyMovement
             //moveForward = !moveForward;
             zMovementSpeed = -zMovementSpeed;
             amplitude = -amplitude;
-            topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + amplitude);
+            topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, originalPos.z + amplitude);
         }
 
         enemy.transform.position = new Vector3(speed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, zMovementSpeed * Time.deltaTime + enemy.transform.position.z);

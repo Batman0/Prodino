@@ -6,6 +6,8 @@ public class MovementSphericalAiming : EnemyMovement
 {
 
     private bool moveForward;
+    [HideInInspector]
+    public bool barrelRight;
     //private float topdownXSpeed;
     private float zMovementSpeed;
     private float destructionMargin;
@@ -16,6 +18,7 @@ public class MovementSphericalAiming : EnemyMovement
     private float rotationSpeed;
     private float xMin;
     private float xMax;
+    private Vector3 originalPos;
     private Vector3 topdownTarget;
     private Quaternion shooterTransformStartRotation;
     private Quaternion shooterTransformInverseRotation;
@@ -36,13 +39,15 @@ public class MovementSphericalAiming : EnemyMovement
         gameManager = GameManager.instance;
         playerTr = register.player.transform;
         properties = register.propertiesSphericalAiming;
+        originalPos = enemy.transform.position;
         speed = enemy.isRight ? -properties.xSpeed : properties.xSpeed;
+        barrelRight = enemy.isRight ? false : true;
         //topdownXSpeed = enemy.isRight ? -speed : speed;
         zMovementSpeed = properties.zMovementSpeed;
         destructionMargin = properties.destructionMargin;
         forwardDistance = properties.forwardDistance;
         backDistance = properties.backDistance;
-        topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + forwardDistance);
+        topdownTarget = new Vector3(enemy.transform.position.x, enemy.transform.position.y, originalPos.z + forwardDistance);
         moveForward = true;
         playerCl = register.player.sideBodyCollider;
         rotationDeadZone = properties.rotationDeadZone;
@@ -68,7 +73,7 @@ public class MovementSphericalAiming : EnemyMovement
         {
             moveForward = !moveForward;
             zMovementSpeed = -zMovementSpeed;
-            topdownTarget = moveForward ? new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z + forwardDistance) : new Vector3(enemy.transform.position.x, enemy.transform.position.y, enemy.originalPos.z - backDistance);
+            topdownTarget = moveForward ? new Vector3(enemy.transform.position.x, enemy.transform.position.y, originalPos.z + forwardDistance) : new Vector3(enemy.transform.position.x, enemy.transform.position.y, originalPos.z - backDistance);
         }
 
         enemy.transform.position = new Vector3(speed * Time.deltaTime + enemy.transform.position.x, enemy.transform.position.y, zMovementSpeed * Time.deltaTime + enemy.transform.position.z);
@@ -120,20 +125,20 @@ public class MovementSphericalAiming : EnemyMovement
 
             if (enemy.transform.position.x < playerTr.position.x)
             {
-                if (enemy.barrelRight)
+                if (barrelRight)
                 {
                     Debug.Log("right");
                     enemy.shooterTransform.rotation = enemy.isRight ? shooterTransformInverseRotation : shooterTransformStartRotation;
-                    enemy.barrelRight = false;
+                    barrelRight = false;
                 }
             }
             else
             {
-                if (!enemy.barrelRight)
+                if (!barrelRight)
                 {
                     Debug.Log("LERFT");
                     enemy.shooterTransform.rotation = enemy.isRight ? shooterTransformStartRotation : shooterTransformInverseRotation;
-                    enemy.barrelRight = true;
+                    barrelRight = true;
                 }
             }
         }
