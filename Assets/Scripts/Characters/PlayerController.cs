@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
 	private float horizontal;
 	private float horizontalAxis;
 	private float verticalAxis;
+	private float minimumX;
+	private float maximumX;
+	
 	private Quaternion sideScrollRotation;
 	private Quaternion armsAimStartRotation;
 	private Quaternion sideBodyColliderStartRot;
@@ -122,7 +125,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        
+		minimumX = -70f;
+		maximumX = 70;
         bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
         properties = Register.instance.propertiesPlayer;
         speed = properties.xSpeed;
@@ -163,140 +167,152 @@ public class PlayerController : MonoBehaviour
                 thereIsGround = CheckGround(groundCheckRayLength);
                 Aim();
 
-                switch (GameManager.instance.currentGameMode)
-                {
-                    case GameMode.SIDESCROLL:
+				switch (GameManager.instance.currentGameMode) {
+				case GameMode.SIDESCROLL:
 
-                        if (!anim_isSidescroll)
-                        {
-                            anim_isSidescroll = true;
-                            animator.SetBool("sidescroll", anim_isSidescroll);
-                        }
-                        if (transform.rotation != sideScrollRotation)
-                        {
-                            transform.rotation = sideScrollRotation;
-                        }
-                        inverseDirection = new Vector3(horizontalAxis, verticalAxis, 0);
+					if (!anim_isSidescroll) {
+						anim_isSidescroll = true;
+						animator.SetBool ("sidescroll", anim_isSidescroll);
+					}
+					if (transform.rotation != sideScrollRotation) {
+						transform.rotation = sideScrollRotation;
+					}
+					inverseDirection = new Vector3 (horizontalAxis, verticalAxis, 0);
 
-                        if ((transform.position.x > Register.instance.xMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && horizontalAxis > controllerDeadZone))
-                        {
-                            Move(Vector3.right, speed, "Horizontal");
-                        }
-                        if (Input.GetKeyDown(KeyCode.W) && canJump)
-                        {
-                            Jump();
-                        }
-                        if (thereIsGround && !canJump)
-                        {
-                            if (!anim_isJumping)
-                            {
-                                anim_isRunning = false;
-                                anim_isJumping = true;
-                                animator.SetBool("isRunning", anim_isRunning);
-                                animator.SetBool("isJumping", anim_isJumping);
-                            }
-                            ApplyGravity();
-                        }
-                        else if (thereIsGround && canJump)
-                        {
-                            if (rb.velocity.y < 0)
-                            {
-                                if (!anim_isRunning)
-                                {
-                                    anim_isJumping = false;
-                                    anim_isGliding = false;
-                                    anim_isRunning = true;
-                                    animator.SetBool("isJumping", anim_isJumping);
-                                    animator.SetBool("isGliding", anim_isGliding);
-                                    animator.SetBool("isRunning", anim_isRunning);
-                                }
-                                rb.velocity = Vector3.zero;
-                                transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
-                            }
-                        }
-                        if (Input.GetKey(KeyCode.W))
-                        {
-                            if (!canJump && rb.velocity.y < -0.5f)
-                            {
-                                if (!anim_isGliding)
-                                {
-                                    anim_isJumping = false;
-                                    anim_isGliding = true;
-                                    animator.SetBool("isJumping", anim_isJumping);
-                                    animator.SetBool("isGliding", anim_isGliding);
-                                }
+					if ((transform.position.x > Register.instance.xMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && horizontalAxis > controllerDeadZone)) {
+						Move (Vector3.right, speed, "Horizontal");
+					}
+					if (Input.GetKeyDown (KeyCode.W) && canJump) {
+						Jump ();
+					}
+					if (thereIsGround && !canJump) {
+						if (!anim_isJumping) {
+							anim_isRunning = false;
+							anim_isJumping = true;
+							animator.SetBool ("isRunning", anim_isRunning);
+							animator.SetBool ("isJumping", anim_isJumping);
+						}
+						ApplyGravity ();
+					} else if (thereIsGround && canJump) {
+						if (rb.velocity.y < 0) {
+							if (!anim_isRunning) {
+								anim_isJumping = false;
+								anim_isGliding = false;
+								anim_isRunning = true;
+								animator.SetBool ("isJumping", anim_isJumping);
+								animator.SetBool ("isGliding", anim_isGliding);
+								animator.SetBool ("isRunning", anim_isRunning);
+							}
+							rb.velocity = Vector3.zero;
+							transform.position = new Vector3 (transform.position.x, landmark.position.y, transform.position.z);
+						}
+					}
+					if (Input.GetKey (KeyCode.W)) {
+						if (!canJump && rb.velocity.y < -0.5f) {
+							if (!anim_isGliding) {
+								anim_isJumping = false;
+								anim_isGliding = true;
+								animator.SetBool ("isJumping", anim_isJumping);
+								animator.SetBool ("isGliding", anim_isGliding);
+							}
 
-                                if (rb.velocity.y < -2)
-                                {
-                                    StabilizeAcceleration();
-                                }
-                                else
-                                {
-                                    Glide();
-                                }
-                            }
-                        }
+							if (rb.velocity.y < -2) {
+								StabilizeAcceleration ();
+							} else {
+								Glide ();
+							}
+						}
+					}
 
-						if (transform.rotation != sideScrollRotation)
-						{
-							transform.rotation = sideScrollRotation;
+					if (transform.rotation != sideScrollRotation) {
+						transform.rotation = sideScrollRotation;
+					}
+
+					ClampPositionSidescroll ();
+
+					if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot) {
+						Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
+						float aimAngle = Vector3.Angle (Vector3.right, aim);
+						Vector3 cross = Vector3.Cross (Vector3.right, aim);
+						Debug.Log (" Cross: " + cross.z + " AimAngle: " + aimAngle + " Aim.x: " + aim.x );
+						Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
+
+						if (aimAngle <= 90 && cross.z >= 0) {
+							TurnAroundGO (armsAim.transform);
+						} else if (aimAngle <= 90 && cross.z < 0 ) {
+							TurnAroundGO (armsAim.transform);
 						}
 
-                        ClampPositionSidescroll();
+//						if (aimAngle <= maxArmsRotation && cross.z >= 0) {
+//							TurnAroundGO (shoulderAimL.transform);
+//							TurnAroundGO (shoulderAimR.transform);
+//						} else if (aimAngle <= maxArmsRotation && cross.z < 0 ) {
+//							TurnAroundGO (shoulderAimL.transform);
+//							TurnAroundGO (shoulderAimR.transform);
+//						}
+					
+//						if (aimAngle <= upRotationAngle && cross.z >= 0) {
+//							
+//							gunsAimL.transform.rotation = Quaternion.Euler (new Vector3 (-aimAngle, 90f, 0));
+//							gunsAimR.transform.rotation = Quaternion.Euler (new Vector3 (-aimAngle, 90f, 0));
+//						} else if (aimAngle <= downRotationAngle && cross.z < 0 ) {
+//
+//							gunsAimL.transform.rotation = Quaternion.Euler (new Vector3 (aimAngle, 90f, 0));
+//							gunsAimR.transform.rotation = Quaternion.Euler (new Vector3 (aimAngle, 90f, 0));
+//						}
+					}
 
                         if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
                         {
                             StartCoroutine("BiteAttack");
                         }
+
+						
                         break;
-                    case GameMode.TOPDOWN:
-                        if (anim_isSidescroll)
-                        {
-                            anim_isSidescroll = false;
-                            anim_isFlying = true;
-                            animator.SetBool("sidescroll", anim_isSidescroll);
-                            animator.SetBool("isFlying", anim_isFlying);
-                        }
-                        if(rb.velocity != Vector3.zero)
-                        {
-                            rb.velocity = Vector3.zero;
-                        }
-                        inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
-                        playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
-                        anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
-                        if (anglePlayerDirection <= playerBackwardsAnimationLimit)
-                        {
-                            if (!anim_isMovingBackwards)
-                            {
-                                anim_isFlying = false;
-                                anim_isMovingBackwards = true;
-                                animator.SetBool("isFlying", anim_isFlying);
-                                animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
-                            }
-                        }
-                        if (anglePlayerDirection > playerBackwardsAnimationLimit)
-                        {
-                            if (!anim_isFlying)
-                            {
-                                anim_isMovingBackwards = false;
-                                anim_isFlying = true;
-                                animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
-                                animator.SetBool("isFlying", anim_isFlying);
-                            }
-                        }
-                        Move(Vector3.forward, speed, "Vertical");
-                        Move(Vector3.right, speed, "Horizontal");
-                        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
-                        {
-                            TurnAroundGO(transform);
-                        }
+				case GameMode.TOPDOWN:
+					if (anim_isSidescroll) {
+						anim_isSidescroll = false;
+						anim_isFlying = true;
+						animator.SetBool ("sidescroll", anim_isSidescroll);
+						animator.SetBool ("isFlying", anim_isFlying);
+					}
+					if (rb.velocity != Vector3.zero) {
+						rb.velocity = Vector3.zero;
+					}
+					inverseDirection = new Vector3 (-horizontalAxis, 0, -verticalAxis);
+					playerForward = new Vector3 (transform.forward.x, 0, transform.forward.z);
+					anglePlayerDirection = Vector3.Angle (inverseDirection, playerForward);
+					if (anglePlayerDirection <= playerBackwardsAnimationLimit) {
+						if (!anim_isMovingBackwards) {
+							anim_isFlying = false;
+							anim_isMovingBackwards = true;
+							animator.SetBool ("isFlying", anim_isFlying);
+							animator.SetBool ("isMovingBackwards", anim_isMovingBackwards);
+						}
+					}
+					if (anglePlayerDirection > playerBackwardsAnimationLimit) {
+						if (!anim_isFlying) {
+							anim_isMovingBackwards = false;
+							anim_isFlying = true;
+							animator.SetBool ("isMovingBackwards", anim_isMovingBackwards);
+							animator.SetBool ("isFlying", anim_isFlying);
+						}
+					}
+					Move (Vector3.forward, speed, "Vertical");
+					Move (Vector3.right, speed, "Horizontal");
+					if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot) {
+						TurnAroundGO (transform);
+//						TurnAroundGO (shoulderAimL.transform);
+//						TurnAroundGO (shoulderAimR.transform);
 
-                        ClampPositionTopdown();
 
-                        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1))
-                        {
-                            StartCoroutine("TailAttack");
-                        }
+					}
+
+					ClampPositionTopdown ();
+
+					if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown (1)) {
+						StartCoroutine ("TailAttack");
+					}
 
                         break;
                 }
@@ -314,10 +330,9 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
-                {
-                    armsAim.transform.rotation = armsAimStartRotation;
-                }
+				if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation) {
+					armsAim.transform.rotation = armsAimStartRotation;
+				} 
                 ChangePerspective();
             }
         }
@@ -419,7 +434,6 @@ public class PlayerController : MonoBehaviour
             topDownPlane = new Plane(-Camera.main.transform.forward, Vector3.zero);
         }
 
-
         if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
             aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -428,13 +442,6 @@ public class PlayerController : MonoBehaviour
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.transform.position = aimVector;
             }
-
-			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
-			if (aim.x >= 1)
-			{
-				TurnAroundGO(armsAim.transform);
-			}
-
         }
 
         if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
@@ -445,52 +452,6 @@ public class PlayerController : MonoBehaviour
                 aimVector = aimRay.GetPoint(intersectionPoint);
                 aimTransform.transform.position = aimVector;
             }
-                
-			Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
-			float aimAngle = Vector3.Angle (Vector3.right, aim);
-			Vector3 cross = Vector3.Cross (Vector3.right, aim);
-
-			//Max aim of upper body
-			if (aimAngle <= 90 && cross.z >= 0)
-			{
-				
-				TurnAroundGO(armsAim.transform);
-
-			}
-			else if (aimAngle <= 90 && cross.z < 0 )
-			{
-				
-				TurnAroundGO(armsAim.transform);
-
-			}  
-
-			//Movement of Arms
-			if (aimAngle <= maxArmsRotation && cross.z >= 0 )
-			{
-				
-				TurnAroundGO(shoulderAimL.transform);
-				TurnAroundGO(shoulderAimR.transform);
-			}
-			else if (aimAngle <= maxArmsRotation && cross.z < 0 )
-			{
-
-				TurnAroundGO(shoulderAimL.transform);
-				TurnAroundGO(shoulderAimR.transform);
-			} 
-
-			//Aim of Guns
-			if (aimAngle <= upRotationAngle && cross.z >= 0 && aim.x >= 1 )
-			{
-
-				TurnAroundGO(gunsAimL.transform);
-				TurnAroundGO(gunsAimR.transform);
-			}
-			else if (aimAngle <= downRotationAngle && cross.z < 0 && aim.x >= 1 )
-			{
-
-				TurnAroundGO(gunsAimL.transform);
-				TurnAroundGO(gunsAimR.transform);
-			}  
         }
     }
 
@@ -537,6 +498,21 @@ public class PlayerController : MonoBehaviour
         Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
         );
     }
+
+	Quaternion ClampRotationAroundXAxis(Quaternion q)
+	{
+		q.x /= q.w;
+		q.y /= q.w;
+		q.z /= q.w;
+		q.w = 1.0f;
+
+		float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan (q.x);
+		angleX = Mathf.Clamp (angleX, minimumX, maximumX);
+
+		q.x = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleX);
+
+		return q;
+	}
 
     void ChangePerspective()
     {

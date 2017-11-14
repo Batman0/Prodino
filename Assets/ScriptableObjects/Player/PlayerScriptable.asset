@@ -17,12 +17,12 @@ MonoBehaviour:
   bulletSpeed: 20
   glideSpeed: 4
   upRotationAngle: 60
-  downRotationAngle: 80
+  downRotationAngle: 30
   fireRatio: 0.2
   respawnTimer: 2
   gravity: 30
   bulletDestructionMargin: 5
-  maxArmsRotation: 60
+  maxArmsRotation: 45
   tailMeleeSpeed: 5
   biteATKSpeed: 8
   biteCoolDownActive: 0
