@@ -53,13 +53,14 @@ GameObject:
   - component: {fileID: 4347063767607490}
   - component: {fileID: 198729174373625094}
   - component: {fileID: 199181135500553580}
+  - component: {fileID: 114947508847271772}
   m_Layer: 0
   m_Name: PS_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1212601182984194
 GameObject:
   m_ObjectHideFlags: 1
@@ -377,7 +378,7 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
   barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
-  explosionParticleObject: {fileID: 0}
+  explosionParticleManager: {fileID: 114947508847271772}
   bulletSpawnpoint: {fileID: 4923712833204592}
   bulletSpawnpointOther: {fileID: 0}
   shooterTransform: {fileID: 0}
@@ -387,6 +388,17 @@ MonoBehaviour:
   topCollider: {fileID: 65958224007894580}
   movementType: 2
   shotType: 2
+--- !u!114 &114947508847271772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169076588059352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198054690810003360
 ParticleSystem:
   m_ObjectHideFlags: 1

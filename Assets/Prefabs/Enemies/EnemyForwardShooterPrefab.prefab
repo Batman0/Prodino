@@ -75,13 +75,14 @@ GameObject:
   - component: {fileID: 4917348307845096}
   - component: {fileID: 198945021346234114}
   - component: {fileID: 199990253026621942}
+  - component: {fileID: 114052076331849024}
   m_Layer: 0
   m_Name: PS_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1489228525383746
 GameObject:
   m_ObjectHideFlags: 1
@@ -355,6 +356,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 40, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114052076331849024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288225027175162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114677123402881580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,7 +389,7 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0, z: 0}
   barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
   barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
-  explosionParticleObject: {fileID: 1288225027175162}
+  explosionParticleManager: {fileID: 114052076331849024}
   bulletSpawnpoint: {fileID: 4284051299973656}
   bulletSpawnpointOther: {fileID: 0}
   shooterTransform: {fileID: 0}
