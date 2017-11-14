@@ -32,7 +32,6 @@ public class AracnoidLaser : MonoBehaviour
 
     private float initialOffset;
     private AracnoidEnemy aracnoid;
-    private Material laserEmitterMaterial;
     private bool movingUp;
     private Vector3 initialPosition;
     private Vector3 targetPosition;
@@ -68,7 +67,6 @@ public class AracnoidLaser : MonoBehaviour
         loadingTime += waitingTime;
         shootingTime += loadingTime;
         initialOffset = offset;
-        laserEmitterMaterial = laserEmitter.GetComponent<MeshRenderer>().material;
         initialPosition = laserEmitter.transform.position;
         targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + fluctuationAmplitude);
         initialRotation = transform.rotation;
@@ -209,7 +207,6 @@ public class AracnoidLaser : MonoBehaviour
 
     public void StartLoading()
     {
-        laserEmitterMaterial.color = Color.red;
         state = LaserState.loading;
         laserObject.SetActive(true);
         loadingParticle.Play();
@@ -217,7 +214,6 @@ public class AracnoidLaser : MonoBehaviour
 
     public void StartShooting()
     {
-        laserEmitterMaterial.color = Color.yellow;
         laserCollider.enabled = true;
         state = LaserState.shooting;
         loadingParticle.Stop();
