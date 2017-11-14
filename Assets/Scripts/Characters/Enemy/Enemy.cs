@@ -5,7 +5,7 @@ using UnityEngine;
 public delegate void MyMovement(Enemy enemy);
 public delegate void MyShot(Enemy enemy);
 
-public class Enemy: MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     [HideInInspector]
@@ -30,6 +30,7 @@ public class Enemy: MonoBehaviour
     public Quaternion barrelStartRot;
     [HideInInspector]
     public Quaternion barrelInvertedRot;
+    public ParticleSystemManager explosionParticleManager;
 
     public Transform bulletSpawnpoint;
     public Transform bulletSpawnpointOther;
@@ -60,6 +61,8 @@ public class Enemy: MonoBehaviour
     private EnemyMovement myMovementClass;
 
     private EnemyShot myShotClass;
+    protected float enemyDeactivationDelay = 0.5f;
+    private bool isDying = false;
 
     void OnEnable()
     {
@@ -124,7 +127,7 @@ public class Enemy: MonoBehaviour
         {
             Shoot();
         }
-            
+
         Destroy();
     }
 
@@ -192,7 +195,7 @@ public class Enemy: MonoBehaviour
 
     public void Shoot()
     {
-        if(!gameManager.transitionIsRunning)
+        if (!gameManager.transitionIsRunning && !isDying)
         {
             if (gameManager.currentGameMode == GameMode.SIDESCROLL)
             {
@@ -239,10 +242,22 @@ public class Enemy: MonoBehaviour
 
     public void Destroy()
     {
-        if(CheckEnemyLife() || toDestroy)
+        if (CheckEnemyLife() || toDestroy)
         {
-            gameObject.SetActive(false);
+            if (explosionParticleManager != null)
+            {
+                explosionParticleManager.PlayAll();
+            }
+            isDying = true;
+            StartCoroutine(DeactivateObject());
         }
+    }
+
+    protected IEnumerator DeactivateObject()
+    {
+        yield return new WaitForSeconds(enemyDeactivationDelay);
+        isDying = false;
+        gameObject.SetActive(false);
     }
 
     public bool CheckEnemyLife()
