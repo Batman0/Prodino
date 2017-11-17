@@ -2,34 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void MyMovement(Enemy enemy);
-public delegate void MyShot(Enemy enemy);
+public delegate void MyMovement();
+public delegate void MyShot();
 
 public class Enemy : MonoBehaviour
 {
-
-    [HideInInspector]
-    public bool barrelRight;
-    public bool canShoot;
-    public bool isShooting;
-    [HideInInspector]
-    public bool toDestroy;
-    public bool isRight;
+    [Header("References")]
+    private Enemy instance;
+    private GameManager gameManager;
+    private EnemyBehaviour myBehaviourClass;
+    //private EnemyShot myShotClass;
     private PoolManager.PoolBullet bulletPool;
 
-    public int enemyLife;
-    [HideInInspector]
-    public int movementTargetIndex;
-    public float lifeTime;
+    [Header("Statistics")]
+    private int enemyLives;
+    //private float lifeTime;
 
+    //public bool isShooting;
+    //[HideInInspector]
+    //public bool toDeactivate;
+    public bool isRight;
 
-    [HideInInspector]
-    public Vector3 originalPos;
+    //[HideInInspector]
+    //public int movementTargetIndex;
 
-    [HideInInspector]
-    public Quaternion barrelStartRot;
-    [HideInInspector]
-    public Quaternion barrelInvertedRot;
+    //[HideInInspector]
+    //public Quaternion barrelStartRot;
+    //[HideInInspector]
+    //public Quaternion barrelInvertedRot;
     public ParticleSystemManager explosionParticleManager;
 
     public Transform bulletSpawnpoint;
@@ -37,30 +37,23 @@ public class Enemy : MonoBehaviour
     public Transform shooterTransform;
     [HideInInspector]
     public Transform meshTransform;
-    [HideInInspector]
-    public Transform[] targets;
+    //[HideInInspector]
+    //public Transform[] targets;
 
     public Collider sideCollider;
     public Collider topCollider;
 
-    private GameObject particleTrail;
+    //private GameObject particleTrail;
 
-    public MovementType movementType;
+    public BehaviourType behaviourType;
 
-    public ShotType shotType;
+    //public ShotType shotType;
 
     public MyMovement myMovement;
 
-    public MyShot myShotSidescroll;
-    public MyShot myShotTopdown;
+    public MyShot myShot;
+    //public MyShot myShotTopdown;
 
-    private GameManager gameManager;
-
-    private Enemy instance;
-
-    private EnemyMovement myMovementClass;
-
-    private EnemyShot myShotClass;
     protected float enemyDeactivationDelay = 0.5f;
     private bool isDying = false;
 
@@ -68,9 +61,9 @@ public class Enemy : MonoBehaviour
     {
         instance = this;
         gameManager = GameManager.instance;
-        originalPos = transform.position;
-        barrelRight = isRight ? false : true;
-
+        enemyLives = Register.instance.enemyProperties[behaviourType.ToString()].lives;
+        Debug.Log(behaviourType);
+        //Debug.Log(enemyLives + " - " + name);
         if (!isRight)
         {
             transform.Rotate(Vector3.up, 180, Space.World);
@@ -96,115 +89,99 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        if (movementType == MovementType.Trail)
+        if (behaviourType == BehaviourType.Trail)
         {
             meshTransform = transform.GetChild(0);
         }
-        InitMovement();
-        myMovementClass.Init(instance);
-        myMovement += myMovementClass.Movement;
-        //myMovementTopdown += myMovementClass.MoveTopdown;
+        InitBehaviour();
+        myBehaviourClass.Init(instance);
+        myMovement += myBehaviourClass.Move;
+        myShot += myBehaviourClass.Shoot;
 
-        if (shotType != ShotType.Forward)
-        {
-            InitShot();
-            myShotClass.Init();
-            myShotSidescroll += myShotClass.ShootSidescroll;
-            myShotTopdown += myShotClass.ShootTopdown;
-        }
-
-        if (movementType == MovementType.Circular)
-        {
-            lifeTime = Register.instance.propertiesCircular.lifeTime;
-        }
+        //if (movementType == MovementType.Circular)
+        //{
+        //    lifeTime = Register.instance.propertiesCircular.lifeTime;
+        //}
     }
 
     void Update()
     {
         ChangePerspective();
         Move();
-        if (shotType != ShotType.Forward)
+        Shoot();
+        if (CheckEnemyDead() /*|| toDeactivate*/)
         {
-            Shoot();
+            Deactivate();
         }
-
-        Destroy();
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PlayerBullet")
         {
-            enemyLife--;
+            enemyLives--;
             other.gameObject.SetActive(false);
         }
     }
 
-    public void InitMovement()
+    public void InitBehaviour()
     {
-        switch (movementType)
+        switch (behaviourType)
         {
-            case MovementType.ForwardShooter:
-                myMovementClass = new MovementForwardShooter();
+            case BehaviourType.ForwardShooter:
+                myBehaviourClass = new ForwardShooterBehaviour();
                 break;
-            case MovementType.Forward:
-                myMovementClass = new MovementForward();
+            case BehaviourType.Forward:
+                myBehaviourClass = new ForwardBehaviour();
                 break;
-            case MovementType.LaserDiagonal:
-                myMovementClass = new MovementLaserDiagonal();
+            case BehaviourType.LaserDiagonal:
+                myBehaviourClass = new LaserDiagonalBehaviour();
                 break;
-            case MovementType.SphericalAiming:
-                myMovementClass = new MovementSphericalAiming();
+            case BehaviourType.SphericalAiming:
+                myBehaviourClass = new SphericalAimingBehaviour();
                 break;
-            case MovementType.BombDrop:
-                myMovementClass = new MovementBombDrop();
+            case BehaviourType.BombDrop:
+                myBehaviourClass = new BombDropBehaviour();
                 break;
-            case MovementType.Trail:
-                myMovementClass = new MovementTrail();
+            case BehaviourType.Trail:
+                myBehaviourClass = new TrailBehaviour();
                 break;
-            case MovementType.DoubleAiming:
-                myMovementClass = new MovementDoubleAiming();
+            case BehaviourType.DoubleAiming:
+                myBehaviourClass = new DoubleAimingBehaviour();
                 break;
         }
     }
 
-    public void InitShot()
-    {
-        switch (shotType)
-        {
-            case ShotType.ForwardShooter:
-                myShotClass = new ShotForwardShooter();
-                break;
-            case ShotType.LaserDiagonal:
-                myShotClass = new ShotLaserDiagonal();
-                break;
-            case ShotType.SphericalAiming:
-                myShotClass = new ShotSphericalAiming();
-                break;
-            case ShotType.BombDrop:
-                myShotClass = new ShotBombDrop();
-                break;
-            case ShotType.Trail:
-                myShotClass = new ShotTrail();
-                break;
-            case ShotType.DoubleAiming:
-                myShotClass = new ShotDoubleAiming();
-                break;
-        }
-    }
+    //public void InitShot()
+    //{
+    //    switch (shotType)
+    //    {
+    //        case ShotType.ForwardShooter:
+    //            myShotClass = new ShotForwardShooter();
+    //            break;
+    //        case ShotType.LaserDiagonal:
+    //            myShotClass = new ShotLaserDiagonal();
+    //            break;
+    //        case ShotType.SphericalAiming:
+    //            myShotClass = new ShotSphericalAiming();
+    //            break;
+    //        case ShotType.BombDrop:
+    //            myShotClass = new ShotBombDrop();
+    //            break;
+    //        case ShotType.Trail:
+    //            myShotClass = new ShotTrail();
+    //            break;
+    //        case ShotType.DoubleAiming:
+    //            myShotClass = new ShotDoubleAiming();
+    //            break;
+    //    }
+    //}
 
     public void Shoot()
     {
         if (!gameManager.transitionIsRunning && !isDying)
         {
-            if (gameManager.currentGameMode == GameMode.SIDESCROLL)
-            {
-                myShotSidescroll(instance);
-            }
-            else
-            {
-                myShotTopdown(instance);
-            }
+            myShot();
         }
     }
 
@@ -212,7 +189,7 @@ public class Enemy : MonoBehaviour
     {
         if (!gameManager.transitionIsRunning)
         {
-            myMovement(instance);
+            myMovement();
         }
 
     }
@@ -240,17 +217,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Destroy()
+    public void Deactivate()
     {
-        if (CheckEnemyLife() || toDestroy)
+        if (explosionParticleManager != null)
         {
-            if (explosionParticleManager != null)
-            {
-                explosionParticleManager.PlayAll();
-            }
-            isDying = true;
-            StartCoroutine(DeactivateObject());
+            explosionParticleManager.PlayAll();
         }
+        isDying = true;
+        StartCoroutine(DeactivateObject());
     }
 
     protected IEnumerator DeactivateObject()
@@ -260,13 +234,13 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public bool CheckEnemyLife()
+    public bool CheckEnemyDead()
     {
-        return enemyLife <= 0;
+        return enemyLives <= 0;
     }
 
-    void OnDisable()
-    {
-        canShoot = false;
-    }
+    //void OnDisable()
+    //{
+    //    
+    //}
 }

@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Laser : SpecialBullet
+public class LaserBullet : SpecialBullet
 {
 }

@@ -9,7 +9,7 @@ public struct EnemyCreationData
     public float delay;
 }
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawnManager : MonoBehaviour
 {
     private bool isRight;
     private int dataIndex;
