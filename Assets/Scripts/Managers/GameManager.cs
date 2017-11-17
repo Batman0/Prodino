@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject boss = Instantiate(MidBoss);
             boss.transform.position = startPosition.position;
+            isBossAlive = true;
             isBossEntry = false;
         }
     }
