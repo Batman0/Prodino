@@ -265,7 +265,7 @@ public class AracnoidEnemy : MonoBehaviour
         Debug.LogWarning("Aracnoid HP: " + healthPoints);
         if (healthPoints <= 0)
         {
-            gameObject.SetActive(false);
+            Death();
         }
         else if (currentWoundDamage >= maxDamageDuringWound)
         {
@@ -328,6 +328,20 @@ public class AracnoidEnemy : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    void Death()
+    {
+        gameObject.SetActive(false);
+        float timer = 0.0f;
+        if(timer < GameManager.instance.delayToRespawnEnemy)
+        {
+            timer += Time.deltaTime;
+        }
+        else
+        {
+            GameManager.instance.isBossAlive = false;
         }
     }
 

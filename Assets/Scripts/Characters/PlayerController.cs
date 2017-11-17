@@ -234,8 +234,8 @@ public class PlayerController : MonoBehaviour
 						Vector3 aim = aimTransform.transform.position - armsAim.transform.position;
 						float aimAngle = Vector3.Angle (Vector3.right, aim);
 						Vector3 cross = Vector3.Cross (Vector3.right, aim);
-						Debug.Log (" Cross: " + cross.z + " AimAngle: " + aimAngle + " Aim.x: " + aim.x );
-						Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
+						//Debug.Log (" Cross: " + cross.z + " AimAngle: " + aimAngle + " Aim.x: " + aim.x );
+						//Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
 
 						if (aimAngle <= 90 && cross.z >= 0) {
 							TurnAroundGO (armsAim.transform);

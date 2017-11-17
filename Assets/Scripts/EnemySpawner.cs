@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private int dataIndex;
     private Register register;
     public EnemyCreationData[] enemyCreationData;
+    private float timerToSpawn = 0.0f;
 
     private void Awake()
     {
@@ -25,17 +26,18 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if(!GameManager.instance.Isbossfight)
+        if(!GameManager.instance.isBossAlive)
         {
-            SpawnEnemy();
+            timerToSpawn += Time.deltaTime;
+            SpawnEnemy(timerToSpawn);
         }
     }
 
 
-    void SpawnEnemy()
+    void SpawnEnemy(float _timerToSpawn)
     {
-        if (dataIndex < enemyCreationData.Length && Time.time >= enemyCreationData[dataIndex].delay)
-        {     
+        if (dataIndex < enemyCreationData.Length && _timerToSpawn >= enemyCreationData[dataIndex].delay)
+        {  
             GameObject enemyObject = PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();

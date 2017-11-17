@@ -65,5 +65,4 @@ public class Register : MonoBehaviour
         enemyProperties.Add("DoubleAiming", propertiesDoubleAiming);
     }
 
-
 }
