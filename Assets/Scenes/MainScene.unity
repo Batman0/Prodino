@@ -441,7 +441,7 @@ Prefab:
     - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f11535abbdac4c419c0085d748525ff, type: 2}
