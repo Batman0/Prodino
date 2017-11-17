@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da56b777d047734884b82aaefcb1012, type: 3}
   m_Name: LaserDiagonalScriptable
   m_EditorClassIdentifier: 
-  lives: 1
+  lives: 5
   xSpeed: 3
   gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
     type: 2}

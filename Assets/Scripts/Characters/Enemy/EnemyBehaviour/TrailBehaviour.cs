@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementTrail : EnemyMovement
+public class TrailBehaviour : EnemyBehaviour
 {
+
+    [Header("Common")]
+    private PropertiesTrail properties;
+    private bool canShoot;
+
+    [Header("Movement")]
     private float backSpeed;
     private float rotationSpeed;
     private float movementDuration;
     private float waitingTimer;
     private float doneRotation;
     private Transform enemyTransform;
-    private PropertiesTrail properties;
+
+    [Header("Shot")]
+    private PoolManager.PoolBullet bulletPool;
+    private GameObject trail;
+    private int indexOfBullet;
 
     public override void Init(Enemy enemy)
     {
@@ -23,23 +33,25 @@ public class MovementTrail : EnemyMovement
         waitingTimer = 0;
         doneRotation = 0;
         enemyTransform = enemy.meshTransform;
+
+        bulletPool = PoolManager.instance.pooledBulletClass["TrailBullet"];
     }
 
-    public override void Movement(Enemy enemy)
+    public override void Move()
     {
         if (waitingTimer < movementDuration && doneRotation == 0)
         {
-            MoveForward(enemy.transform, speed);
+            MoveForward(enemyInstance.transform, speed);
             waitingTimer += Time.deltaTime;
         }
         else if (waitingTimer > 0.0f && doneRotation >= 180)
         {
-            MoveForward(enemy.transform, -backSpeed);
+            MoveForward(enemyInstance.transform, -backSpeed);
             waitingTimer -= Time.deltaTime;
         }
         else if (waitingTimer <= 0.0f && doneRotation >= 180)
         {
-            enemy.gameObject.SetActive(false);
+            enemyInstance.gameObject.SetActive(false);
         }
         else
         {
@@ -53,9 +65,9 @@ public class MovementTrail : EnemyMovement
                 enemyTransform.Rotate(Vector3.up, rotationSpeed);
                 doneRotation += rotationSpeed;
             }
-            if (doneRotation >= 180 && !enemy.canShoot)
+            if (doneRotation >= 180 && !canShoot)
             {
-                enemy.canShoot = true;
+                canShoot = true;
                 //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
                 //{
                 //    enemy.sideCollider.enabled = true;
@@ -64,6 +76,42 @@ public class MovementTrail : EnemyMovement
             }
         }
     }
+
+    private static void MoveForward(Transform transform, float speed)
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+    }
+
+    public override void Shoot()
+    {
+        if (canShoot && !trail)
+        {
+            trail = bulletPool.GetpooledBullet();
+            trail.transform.position = enemyInstance.bulletSpawnpoint.position;
+            trail.transform.rotation = Quaternion.Inverse(enemyInstance.transform.rotation);
+            trail.SetActive(true);
+            trail.transform.SetParent(enemyInstance.bulletSpawnpoint);
+            canShoot = false;
+        }
+    }
+
+    //public override void ShootTopdown()
+    //{
+    //    if (!isShootSecond)
+    //    {
+    //        isShootSecond = true;
+    //        return;
+    //    }
+    //    if (canShoot && !trail)
+    //    {
+    //        trail = bulletPool.GetpooledBullet();
+    //        trail.transform.position = enemyInstance.bulletSpawnpoint.position;
+    //        trail.transform.rotation = Quaternion.Inverse(enemyInstance.transform.rotation);
+    //        trail.SetActive(true);
+    //        trail.transform.SetParent(enemyInstance.bulletSpawnpoint);
+    //        canShoot = false;
+    //    }
+    //}
 
     //public override void MoveTopdown(Enemy enemy)
     //{
@@ -104,10 +152,5 @@ public class MovementTrail : EnemyMovement
     //        }
     //    }
     //}
-
-    private static void MoveForward(Transform transform, float speed)
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-    }
 
 }

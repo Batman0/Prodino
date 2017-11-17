@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class BombBullet : MonoBehaviour
 {
     private bool blownUp;
     private float speed;
@@ -38,7 +38,6 @@ public class Bomb : MonoBehaviour
     {
         if (other.gameObject.tag == "Env")
         {
-            Debug.Log("SSSS");
             blownUp = true;
         }
 
@@ -51,7 +50,7 @@ public class Bomb : MonoBehaviour
             //explosionTopdownCollider.enabled = false;
         }
 
-        StartCoroutine("Destroy", lifeTime);
+        StartCoroutine("Deactivate", lifeTime);
     }
 
     void OnDisable()
@@ -88,7 +87,7 @@ public class Bomb : MonoBehaviour
         }
     }
 
-    IEnumerator Destroy(float time)
+    IEnumerator Deactivate(float time)
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);

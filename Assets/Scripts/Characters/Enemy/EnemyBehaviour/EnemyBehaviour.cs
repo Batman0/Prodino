@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement
+public class EnemyBehaviour
 {
 
     protected Enemy enemyInstance;
@@ -13,14 +13,13 @@ public class EnemyMovement
         enemyInstance = enemy;
     }
 
-    public virtual void Movement(Enemy enemy)
+    public virtual void Move()
     {
 
     }
 
-    public virtual void MoveTopdown(Enemy enemy)
+    public virtual void Shoot()
     {
 
     }
-
 }
