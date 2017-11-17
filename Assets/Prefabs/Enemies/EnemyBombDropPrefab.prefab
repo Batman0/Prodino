@@ -147,22 +147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateRight: 0
-  canShoot: 0
-  isShooting: 0
-  toDestroy: 0
   isRight: 0
-  enemyLife: 3
-  movementTargetIndex: 0
-  lifeTime: 0
-  originalPos: {x: 0, y: 0, z: 0}
-  barrelStartRot: {x: 0, y: 0, z: 0, w: 0}
-  barrelInvertedRot: {x: 0, y: 0, z: 0, w: 0}
+  explosionParticleManager: {fileID: 0}
   bulletSpawnpoint: {fileID: 4294223520280212}
   bulletSpawnpointOther: {fileID: 0}
   shooterTransform: {fileID: 0}
-  targets: []
+  meshTransform: {fileID: 0}
   sideCollider: {fileID: 65392810251508602}
   topCollider: {fileID: 65041829476234792}
-  movementType: 4
-  shotType: 4
+  behaviourType: 4
