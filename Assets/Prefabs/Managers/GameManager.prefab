@@ -57,3 +57,9 @@ MonoBehaviour:
   backgrounds:
   - background: {fileID: 0}
     speed: 3
+  delayToRespawnEnemy: 0.5
+  isBossEntry: 0
+  MidBoss: {fileID: 1054132749644784, guid: aafd89d55ef0669438ee8d9387239712, type: 2}
+  startPosition: {fileID: 4358199644615332, guid: a9bb0ad3e2bf1ff4c9c02e4cfb095c92,
+    type: 2}
+  isBossAlive: 0
