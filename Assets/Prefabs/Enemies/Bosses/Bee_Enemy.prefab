@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4959528033116170}
   - component: {fileID: 198123702581531220}
   - component: {fileID: 199677418087857002}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Absorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4601046221639538}
   - component: {fileID: 198778077983345978}
   - component: {fileID: 199401273993723006}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4633386844829298}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bee_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 33816935296144716}
   - component: {fileID: 136880742669071120}
   - component: {fileID: 23757567652034696}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Weapon (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4927487044093286}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UnloadingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 33235660237441030}
   - component: {fileID: 136690858057947098}
   - component: {fileID: 23531483386042048}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 33939658847071740}
   - component: {fileID: 23115699350016632}
   - component: {fileID: 114513572754995708}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser_R_External
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4031744871593446}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Enemy_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 33020304350984054}
   - component: {fileID: 23733515373124676}
   - component: {fileID: 114229374389789662}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser_L_External
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4951363371807756}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UnloadingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4480888114189514}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Enemy_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 4103310791188004}
   - component: {fileID: 198823491613905752}
   - component: {fileID: 199289139525874276}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 4041829221159852}
   - component: {fileID: 198267113052019592}
   - component: {fileID: 199737114541878412}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Absorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4482614513936260}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 4689029453279478}
   - component: {fileID: 198894132967999046}
   - component: {fileID: 199625778330086174}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Absorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4326796688861756}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Enemy_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 136489541952920066}
   - component: {fileID: 23962102678057982}
   - component: {fileID: 114346668301240824}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WeakSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 4616334147208982}
   - component: {fileID: 198339593170414190}
   - component: {fileID: 199033084513559212}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4869692798909940}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Lasers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 4684264643012710}
   - component: {fileID: 198130874704773380}
   - component: {fileID: 199704004637952754}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4474289808530924}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UnloadingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 33416026822533352}
   - component: {fileID: 23603920052360866}
   - component: {fileID: 114966685199570310}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4561991314884970}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ExternalLasers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 4079143169151392}
   - component: {fileID: 198406670064000900}
   - component: {fileID: 199381590376272482}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 136063269480353612}
   - component: {fileID: 23685751390892396}
   - component: {fileID: 114938528681812658}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 4039620421700388}
   - component: {fileID: 198581256983878474}
   - component: {fileID: 199138195002477642}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 4876818829086406}
   - component: {fileID: 198715195815318206}
   - component: {fileID: 199714315141867942}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 4164593514943800}
   - component: {fileID: 198322534118969362}
   - component: {fileID: 199467354819156402}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4958759057831798}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: InternalLasers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 33329899897428914}
   - component: {fileID: 23480417029764566}
   - component: {fileID: 114402582017024810}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser_R_Internal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,7 +571,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4157130036458146}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UnloadingPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 33739601539121236}
   - component: {fileID: 23172064248175184}
   - component: {fileID: 114696768431289786}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser_L_Internal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 4303328335880490}
   - component: {fileID: 198952340953148656}
   - component: {fileID: 199942544904429616}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Absorb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +639,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4758571578791572}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PS_Enemy_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1739247237918244}
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -450, y: 0, z: 150}
+  m_LocalPosition: {x: -450, y: 0, z: 400}
   m_LocalScale: {x: 105.12659, y: 105.1268, z: 105.126724}
   m_Children: []
   m_Father: {fileID: 4185361907281480}
@@ -971,7 +971,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054132749644784}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 8.14, y: 0, z: 0.27}
+  m_LocalPosition: {x: 8.14, y: 3.98, z: 0.27}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 4000585622298782}
@@ -1084,7 +1084,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1166635493182194}
   m_LocalRotation: {x: -0.7071068, y: -0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: -450, y: 0, z: -150}
+  m_LocalPosition: {x: -450, y: 0, z: -400}
   m_LocalScale: {x: 105.1266, y: 105.1268, z: 105.126724}
   m_Children: []
   m_Father: {fileID: 4647494503643136}
@@ -1805,8 +1805,8 @@ MonoBehaviour:
   fluctuationSpeed: 0
   waitingTime: 1
   loadingTime: 1
-  shootingTime: 1.5
-  offset: 0
+  shootingTime: 1
+  offset: 1.5
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
   woundedFloatingSpeed: 0
