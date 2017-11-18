@@ -331,6 +331,26 @@ Transform:
   m_PrefabParentObject: {fileID: 4752290712207924, guid: 5f11535abbdac4c419c0085d748525ff,
     type: 2}
   m_PrefabInternal: {fileID: 1491800310}
+--- !u!1 &102727116 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1483680686723104, guid: a9bb0ad3e2bf1ff4c9c02e4cfb095c92,
+    type: 2}
+  m_PrefabInternal: {fileID: 749420611}
+--- !u!114 &102727117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 102727116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4d08d4242f6a843be12b3225ab3ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossesCreation:
+    bossPrefab: {fileID: 1054132749644784, guid: aafd89d55ef0669438ee8d9387239712,
+      type: 2}
+    bossEntry: 1
 --- !u!4 &108527437 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4752290712207924, guid: 5f11535abbdac4c419c0085d748525ff,
@@ -442,6 +462,56 @@ Prefab:
         type: 2}
       propertyPath: enemyCreationData.Array.data[0].prefab
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[1].prefab
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[2].prefab
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[3].prefab
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[1].delay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[2].delay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[3].delay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[4].prefab
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[4].delay
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[5].prefab
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428436915762892, guid: 5f11535abbdac4c419c0085d748525ff,
+        type: 2}
+      propertyPath: enemyCreationData.Array.data[5].delay
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f11535abbdac4c419c0085d748525ff, type: 2}

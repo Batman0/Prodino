@@ -28,9 +28,9 @@ public class GameManager : MonoBehaviour
     public float playerBulletSpawnpointY;
     public Background[] backgrounds;
     public float delayToRespawnEnemy;
-    public bool isBossEntry = false;
-    public GameObject MidBoss;
-    public Transform startPosition;
+    [HideInInspector]
+    public bool isBossEntry;
+
     public bool isBossAlive;
 
 
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
             }
         }
         MoveBackgrounds(Vector3.left);
+
         BossFight();
     }
 
@@ -88,10 +89,7 @@ public class GameManager : MonoBehaviour
     {
         if(isBossEntry)
         {
-            GameObject boss = Instantiate(MidBoss);
-            boss.transform.position = startPosition.position;
-            isBossAlive = true;
-            isBossEntry = false;
+            
         }
     }
 }
