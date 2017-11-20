@@ -64,6 +64,8 @@ public class PlayerController : MonoBehaviour
     private PoolManager.PoolBullet bulletPool;
 
     [Header("Guns")]
+    private Quaternion shoulderRStartRotation;
+    private Quaternion shoulderLStartRotation;
     public GameObject armRx;
     public Transform gunRx;
     public GameObject armLx;
@@ -153,6 +155,8 @@ public class PlayerController : MonoBehaviour
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
         currentPlayerState = PlayerState.CanMoveAndShoot;
         gunIndex = 0;
+        shoulderLStartRotation = shoulderAimL.transform.rotation;
+        shoulderRStartRotation = shoulderAimR.transform.rotation;
     }
 
     void Update()
@@ -237,30 +241,36 @@ public class PlayerController : MonoBehaviour
 						//Debug.Log (" Cross: " + cross.z + " AimAngle: " + aimAngle + " Aim.x: " + aim.x );
 						//Debug.DrawLine (aimTransform.transform.position, armsAim.transform.position);
 
-						if (aimAngle <= 90 && cross.z >= 0) {
-							TurnAroundGO (armsAim.transform);
-						} else if (aimAngle <= 90 && cross.z < 0 ) {
-							TurnAroundGO (armsAim.transform);
-						}
+						//if (aimAngle <= 90 && cross.z >= 0) {
+						//	TurnAroundGO (armsAim.transform);
+						//} else if (aimAngle <= 90 && cross.z < 0 ) {
+						//	TurnAroundGO (armsAim.transform);
+						//}
 
-//						if (aimAngle <= maxArmsRotation && cross.z >= 0) {
-//							TurnAroundGO (shoulderAimL.transform);
-//							TurnAroundGO (shoulderAimR.transform);
-//						} else if (aimAngle <= maxArmsRotation && cross.z < 0 ) {
-//							TurnAroundGO (shoulderAimL.transform);
-//							TurnAroundGO (shoulderAimR.transform);
-//						}
-					
-//						if (aimAngle <= upRotationAngle && cross.z >= 0) {
-//							
-//							gunsAimL.transform.rotation = Quaternion.Euler (new Vector3 (-aimAngle, 90f, 0));
-//							gunsAimR.transform.rotation = Quaternion.Euler (new Vector3 (-aimAngle, 90f, 0));
-//						} else if (aimAngle <= downRotationAngle && cross.z < 0 ) {
-//
-//							gunsAimL.transform.rotation = Quaternion.Euler (new Vector3 (aimAngle, 90f, 0));
-//							gunsAimR.transform.rotation = Quaternion.Euler (new Vector3 (aimAngle, 90f, 0));
-//						}
-					}
+                            if (aimAngle <= maxArmsRotation && cross.z >= 0)
+                            {
+                                TurnAroundGO(shoulderAimL.transform);
+                                TurnAroundGO(shoulderAimR.transform);
+                            }
+                            else if (aimAngle <= maxArmsRotation && cross.z < 0)
+                            {
+                                TurnAroundGO(shoulderAimL.transform);
+                                TurnAroundGO(shoulderAimR.transform);
+                            }
+
+                            if (aimAngle <= upRotationAngle && cross.z >= 0)
+                            {
+
+                                gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
+                                gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
+                            }
+                            else if (aimAngle <= downRotationAngle && cross.z < 0)
+                            {
+
+                                gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
+                                gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
+                            }
+                        }
 
                         if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
                         {
@@ -301,12 +311,10 @@ public class PlayerController : MonoBehaviour
 					Move (Vector3.forward, speed, "Vertical");
 					Move (Vector3.right, speed, "Horizontal");
 					if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot) {
-						TurnAroundGO (transform);
-//						TurnAroundGO (shoulderAimL.transform);
-//						TurnAroundGO (shoulderAimR.transform);
-
-
-					}
+						    TurnAroundGO (transform);
+                            gunsAimL.transform.position = new Vector3(gunsAimL.transform.position.x, aimTransform.transform.position.y, shoulderAimL.transform.position.z);
+                            gunsAimR.transform.position = new Vector3(gunsAimR.transform.position.x, aimTransform.transform.position.y, shoulderAimR.transform.position.z);
+                        }
 
 					ClampPositionTopdown ();
 
@@ -440,7 +448,8 @@ public class PlayerController : MonoBehaviour
             if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
-                aimTransform.transform.position = aimVector;
+                //aimTransform.transform.position = aimVector;
+                aimTransform.transform.position = new Vector3(aimVector.x, transform.position.y, aimVector.z);
             }
         }
 
@@ -518,6 +527,9 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.instance.transitionIsRunning)
         {
+            shoulderAimL.transform.rotation = shoulderLStartRotation;
+            shoulderAimR.transform.rotation = shoulderRStartRotation;
+
             if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
             {
                 if (!sideBodyCollider.enabled)
