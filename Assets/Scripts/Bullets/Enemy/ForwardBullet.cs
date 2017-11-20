@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForwardShooterBullet : NormalBullet
+public class ForwardBullet : NormalBullet
 {
 
     protected override void Awake()

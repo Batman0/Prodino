@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FortressBullet : ForwardShooterBullet
+public class FortressBullet : ForwardBullet
 {
     public float Speed
     {

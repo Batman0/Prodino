@@ -8,7 +8,7 @@ public abstract class NormalBullet : BaseBullet
     protected float destructionMargin;
     protected float xMin, xMax, yMin, yMax, zMin, zMax;
     protected Vector3 direction;
-    private Register register;
+    protected Register register;
 
     protected virtual void Awake()
     {
