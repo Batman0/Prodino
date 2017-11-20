@@ -7,63 +7,33 @@ public delegate void MyShot();
 
 public class Enemy : MonoBehaviour
 {
-    [Header("References")]
-    private Enemy instance;
+    [Header("Objects")]
+    private Enemy enemy;
     private GameManager gameManager;
     private EnemyBehaviour myBehaviourClass;
-    //private EnemyShot myShotClass;
     private PoolManager.PoolBullet bulletPool;
-
-    [Header("Statistics")]
-    private int enemyLives;
-    //private float lifeTime;
-
-    //public bool isShooting;
-    //[HideInInspector]
-    //public bool toDeactivate;
-    public bool isRight;
-
-    //[HideInInspector]
-    //public int movementTargetIndex;
-
-    //[HideInInspector]
-    //public Quaternion barrelStartRot;
-    //[HideInInspector]
-    //public Quaternion barrelInvertedRot;
     public ParticleSystemManager explosionParticleManager;
-
     public Transform bulletSpawnpoint;
-    public Transform bulletSpawnpointOther;
+    public Transform bulletSpawnpointSecond;
     public Transform shooterTransform;
-    [HideInInspector]
-    public Transform meshTransform;
-    //[HideInInspector]
-    //public Transform[] targets;
-
     public Collider sideCollider;
     public Collider topCollider;
 
-    //private GameObject particleTrail;
-
-    public BehaviourType behaviourType;
-
-    //public ShotType shotType;
-
-    public MyMovement myMovement;
-
-    public MyShot myShot;
-    //public MyShot myShotTopdown;
-
-    protected float enemyDeactivationDelay = 0.5f;
+    [Header("Statistics")]
+    private int enemyLives;
+    private float enemyDeactivationDelay = 0.5f;
     private bool isDying = false;
+    [HideInInspector]
+    public bool isRight;
+    public BehaviourType behaviourType;
+    public MyMovement myMovement;
+    public MyShot myShot;
 
     void OnEnable()
     {
-        instance = this;
+        enemy = this;
         gameManager = GameManager.instance;
         enemyLives = Register.instance.enemyProperties[behaviourType.ToString()].lives;
-        Debug.Log(behaviourType);
-        //Debug.Log(enemyLives + " - " + name);
         if (!isRight)
         {
             transform.Rotate(Vector3.up, 180, Space.World);
@@ -89,19 +59,10 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        if (behaviourType == BehaviourType.Trail)
-        {
-            meshTransform = transform.GetChild(0);
-        }
         InitBehaviour();
-        myBehaviourClass.Init(instance);
+        myBehaviourClass.Init(enemy);
         myMovement += myBehaviourClass.Move;
         myShot += myBehaviourClass.Shoot;
-
-        //if (movementType == MovementType.Circular)
-        //{
-        //    lifeTime = Register.instance.propertiesCircular.lifeTime;
-        //}
     }
 
     void Update()
@@ -109,7 +70,7 @@ public class Enemy : MonoBehaviour
         ChangePerspective();
         Move();
         Shoot();
-        if (CheckEnemyDead() /*|| toDeactivate*/)
+        if (CheckEnemyDead())
         {
             Deactivate();
         }
@@ -151,31 +112,6 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-
-    //public void InitShot()
-    //{
-    //    switch (shotType)
-    //    {
-    //        case ShotType.ForwardShooter:
-    //            myShotClass = new ShotForwardShooter();
-    //            break;
-    //        case ShotType.LaserDiagonal:
-    //            myShotClass = new ShotLaserDiagonal();
-    //            break;
-    //        case ShotType.SphericalAiming:
-    //            myShotClass = new ShotSphericalAiming();
-    //            break;
-    //        case ShotType.BombDrop:
-    //            myShotClass = new ShotBombDrop();
-    //            break;
-    //        case ShotType.Trail:
-    //            myShotClass = new ShotTrail();
-    //            break;
-    //        case ShotType.DoubleAiming:
-    //            myShotClass = new ShotDoubleAiming();
-    //            break;
-    //    }
-    //}
 
     public void Shoot()
     {
@@ -238,9 +174,4 @@ public class Enemy : MonoBehaviour
     {
         return enemyLives <= 0;
     }
-
-    //void OnDisable()
-    //{
-    //    
-    //}
 }

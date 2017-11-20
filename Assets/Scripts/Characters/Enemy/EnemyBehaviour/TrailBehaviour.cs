@@ -5,7 +5,7 @@ using UnityEngine;
 public class TrailBehaviour : EnemyBehaviour
 {
 
-    [Header("Common")]
+    [Header("Movement/Shot")]
     private PropertiesTrail properties;
     private bool canShoot;
 
@@ -32,7 +32,7 @@ public class TrailBehaviour : EnemyBehaviour
         movementDuration = properties.movementDuration;
         waitingTimer = 0;
         doneRotation = 0;
-        enemyTransform = enemy.meshTransform;
+        enemyTransform = enemy.transform.GetChild(0);
 
         bulletPool = PoolManager.instance.pooledBulletClass["TrailBullet"];
     }
@@ -77,7 +77,7 @@ public class TrailBehaviour : EnemyBehaviour
         }
     }
 
-    private static void MoveForward(Transform transform, float speed)
+    private void MoveForward(Transform transform, float speed)
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
@@ -94,63 +94,4 @@ public class TrailBehaviour : EnemyBehaviour
             canShoot = false;
         }
     }
-
-    //public override void ShootTopdown()
-    //{
-    //    if (!isShootSecond)
-    //    {
-    //        isShootSecond = true;
-    //        return;
-    //    }
-    //    if (canShoot && !trail)
-    //    {
-    //        trail = bulletPool.GetpooledBullet();
-    //        trail.transform.position = enemyInstance.bulletSpawnpoint.position;
-    //        trail.transform.rotation = Quaternion.Inverse(enemyInstance.transform.rotation);
-    //        trail.SetActive(true);
-    //        trail.transform.SetParent(enemyInstance.bulletSpawnpoint);
-    //        canShoot = false;
-    //    }
-    //}
-
-    //public override void MoveTopdown(Enemy enemy)
-    //{
-    //    if (waitingTimer < movementDuration && doneRotation == 0)
-    //    {
-    //        MoveForward(enemy.transform, speed);
-    //        waitingTimer += Time.deltaTime;
-    //    }
-    //    else if (waitingTimer > 0.0f && doneRotation >= 180)
-    //    {
-    //        MoveForward(enemy.transform, -backSpeed);
-    //        waitingTimer -= Time.deltaTime;
-    //    }
-    //    else if (waitingTimer <= 0.0f && doneRotation >= 180)
-    //    {
-    //        enemy.gameObject.SetActive(false);
-    //    }
-    //    else
-    //    {
-    //        if (doneRotation < 180)
-    //        {
-    //            //if (enemy.sideCollider.enabled)
-    //            //{
-    //            //    enemy.sideCollider.enabled = false;
-    //            //    enemy.topCollider.enabled = true;
-    //            //}
-    //            enemyTransform.Rotate(Vector3.up, rotationSpeed);
-    //            doneRotation += rotationSpeed;
-    //        }
-    //        if (doneRotation >= 180 && !enemy.canShoot)
-    //        {
-    //            enemy.canShoot = true;
-    //            //if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && !enemy.sideCollider.enabled)
-    //            //{
-    //            //    enemy.sideCollider.enabled = true;
-    //            //    enemy.topCollider.enabled = false;
-    //            //}
-    //        }
-    //    }
-    //}
-
 }

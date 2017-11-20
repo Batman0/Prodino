@@ -20,7 +20,6 @@ public class SphericalAimingBullet : NormalBullet
     protected override void Update()
     {
         base.Update();
-        Move();
         DisableGameobject();
     }
 

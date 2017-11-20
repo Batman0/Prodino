@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WideLaser : SpecialBullet
+public class ExtendingLaserBullet : SpecialBullet
 {
 
     private float xMax;

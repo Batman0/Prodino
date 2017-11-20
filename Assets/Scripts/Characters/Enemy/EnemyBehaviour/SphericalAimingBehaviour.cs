@@ -12,8 +12,7 @@ public class SphericalAimingBehaviour : EnemyBehaviour
 
     [Header("Movement")]
     private bool moveForward;
-    [HideInInspector]
-    public bool barrelRight;
+    private bool barrelRight;
     private float zMovementSpeed;
     private float destructionMargin;
     private float forwardDistance;
@@ -151,21 +150,4 @@ public class SphericalAimingBehaviour : EnemyBehaviour
             timer = 0.0f;
         }
     }
-
-    //public override void ShootTopdown()
-    //{
-    //    base.ShootTopdown();
-    //    if (timer < fireRate)
-    //    {
-    //        timer += Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        GameObject bullet = bulletPool.GetpooledBullet();
-    //        bullet.transform.position = enemyInstance.bulletSpawnpoint.position;
-    //        bullet.transform.rotation = enemyInstance.shooterTransform.rotation;
-    //        bullet.SetActive(true);
-    //        timer = 0.0f;
-    //    }
-    //}
 }

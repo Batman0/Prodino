@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseBullet : MonoBehaviour
+public abstract class BaseBullet : MonoBehaviour
 {
     protected float speed;
     public Collider sideCollider;
@@ -42,17 +42,9 @@ public class BaseBullet : MonoBehaviour
         ChangePerspective();
     }
 
-    protected virtual void ChangePerspective()
-    {
+    protected abstract void ChangePerspective();
 
-    }
-
-    protected virtual void Move()
-    {
-
-    }
-
-    protected virtual void OnDisable()
+    private void OnDisable()
     {
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }

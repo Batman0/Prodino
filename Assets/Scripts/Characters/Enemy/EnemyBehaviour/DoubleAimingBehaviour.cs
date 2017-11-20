@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoubleAimingBehaviour : EnemyBehaviour
 {
-    [Header("Common")]
+    [Header("Movement/Shot")]
     private PropertiesDoubleAiming properties;
 
     [Header("Movement")]
@@ -89,35 +89,10 @@ public class DoubleAimingBehaviour : EnemyBehaviour
             bullet.SetActive(true);
             GameObject secondBullet = bulletPoolSin.GetpooledBullet();
             secondBullet.tag = "EnemyBulletInverse";
-            secondBullet.transform.position = enemyInstance.bulletSpawnpointOther.position;
+            secondBullet.transform.position = enemyInstance.bulletSpawnpointSecond.position;
             secondBullet.transform.rotation = enemyInstance.transform.rotation;
             secondBullet.SetActive(true);
             timer = 0.0f;
         }
     }
-
-    //public override void ShootTopdown()
-    //{
-    //    if (!isShootSecond)
-    //    {
-    //        isShootSecond = true;
-    //        return;
-    //    }
-    //    if (timer < fireRate)
-    //    {
-    //        timer += Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        GameObject bullet = bulletPool.GetpooledBullet();
-    //        bullet.transform.position = enemyInstance.bulletSpawnpoint.position;
-    //        bullet.transform.rotation = enemyInstance.transform.rotation;
-    //        bullet.SetActive(true);
-    //        GameObject secondBullet = bulletPool.GetpooledBullet();
-    //        secondBullet.transform.position = enemyInstance.bulletSpawnpointOther.position;
-    //        secondBullet.transform.rotation = Quaternion.Inverse(enemyInstance.transform.rotation);
-    //        secondBullet.SetActive(true);
-    //        timer = 0.0f;
-    //    }
-    //}
 }

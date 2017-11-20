@@ -39,24 +39,4 @@ public class ForwardBehaviour : EnemyBehaviour {
     {
         return;
     }
-
-    //public override void MoveTopdown(Enemy enemy)
-    //{
-    //    enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-
-    //    if (enemy.isRight)
-    //    {
-    //        if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //}
 }

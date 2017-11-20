@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalBullet : BaseBullet
+public abstract class NormalBullet : BaseBullet
 {
     
     protected float destructionMargin;
@@ -25,6 +25,12 @@ public class NormalBullet : BaseBullet
     {
         base.OnEnable();
         direction = transform.forward;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        Move();
     }
 
     protected override void ChangePerspective()
@@ -54,6 +60,8 @@ public class NormalBullet : BaseBullet
             }
         }
     }
+
+    protected abstract void Move();
 
     protected virtual void DisableGameobject()
     {

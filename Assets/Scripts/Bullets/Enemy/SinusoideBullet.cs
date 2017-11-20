@@ -43,12 +43,6 @@ public class SinusoideBullet : NormalBullet
         xSpeed = transform.position.x >= playerTr.position.x ? -speed : speed;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        Move();
-    }
-
     protected override void Move()
     {
         if (Vector3.Distance(transform.position, new Vector3(transform.position.x, transform.position.y, target.z)) < transformTargetDeltaDistance)

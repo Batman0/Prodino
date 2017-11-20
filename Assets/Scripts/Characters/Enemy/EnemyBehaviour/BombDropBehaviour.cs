@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombDropBehaviour : EnemyBehaviour
 {
 
-    [Header("Common")]
+    [Header("Movement/Shot")]
     private PropertiesBombDrop properties;
 
     [Header("Movement")]
@@ -70,42 +70,4 @@ public class BombDropBehaviour : EnemyBehaviour
             timer = 0.0f;
         }
     }
-
-    //public override void ShootTopdown()
-    //{
-    //    base.ShootTopdown();
-    //    if (timer < loadingTime)
-    //    {
-    //        timer += Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        GameObject bullet = bulletPool.GetpooledBullet();
-    //        bullet.transform.position = enemyInstance.bulletSpawnpoint.position;
-    //        bullet.transform.rotation = enemyInstance.transform.rotation;
-    //        bullet.SetActive(true);
-    //        timer = 0.0f;
-    //    }
-    //}
-
-    //public override void MoveTopdown(Enemy enemy)
-    //{
-    //    enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-
-    //    if (enemy.isRight)
-    //    {
-    //        if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //}
-
 }

@@ -22,7 +22,6 @@ public class PlayerBullet : NormalBullet
     protected override void Update()
     {
         base.Update();
-        Move();
         DisableGameobject();
     }
 

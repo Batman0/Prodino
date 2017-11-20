@@ -176,12 +176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRight: 0
   explosionParticleManager: {fileID: 0}
   bulletSpawnpoint: {fileID: 4486392635680876}
-  bulletSpawnpointOther: {fileID: 4901758146355254}
+  bulletSpawnpointSecond: {fileID: 4901758146355254}
   shooterTransform: {fileID: 0}
-  meshTransform: {fileID: 0}
   sideCollider: {fileID: 65626801742002764}
   topCollider: {fileID: 65572497080471554}
+  isRight: 0
   behaviourType: 6

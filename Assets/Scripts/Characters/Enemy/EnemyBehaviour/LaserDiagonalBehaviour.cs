@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserDiagonalBehaviour : EnemyBehaviour
 {
 
-    [Header("Common")]
+    [Header("Movement/Shot")]
     private PropertiesLaserDiagonal properties;
 
     [Header("Movement")]
@@ -132,67 +132,4 @@ public class LaserDiagonalBehaviour : EnemyBehaviour
             }
         }
     }
-
-    //public override void ShootTopdown()
-    //{
-    //    base.ShootTopdown();
-    //    if (timer < waitingTime)
-    //    {
-    //        timer += Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        if (timer < waitingTime + loadingTime)
-    //        {
-    //            timer += Time.deltaTime;
-    //        }
-    //        else
-    //        {
-    //            if (!laser)
-    //            {
-    //                laser = bulletPool.GetpooledBullet();
-    //                laser.SetActive(true);
-    //                laser.transform.SetParent(enemyInstance.bulletSpawnpoint.parent);
-    //                laser.transform.position = enemyInstance.bulletSpawnpoint.position;
-    //                laser.transform.rotation = enemyInstance.transform.rotation;
-    //                laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
-    //                //enemy.canShoot = false;
-    //                enemyInstance.isShooting = true;
-    //            }
-    //            if (timer < waitingTime + loadingTime + shootingTime)
-    //            {
-    //                timer += Time.deltaTime;
-    //            }
-    //            else
-    //            {
-    //                laser.SetActive(false);
-    //                laser = null;
-    //                timer = 0.0f;
-    //                enemyInstance.isShooting = false;
-    //                //canShoot = true;
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public override void MoveTopdown(Enemy enemy)
-    //{
-    //    enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-
-    //    if (enemy.isRight)
-    //    {
-    //        if (enemy.transform.position.x <= Register.instance.xMin - destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (enemy.transform.position.x >= Register.instance.xMax + destructionMargin)
-    //        {
-    //            enemy.gameObject.SetActive(false);
-    //        }
-    //    }
-    //}
-
 }
