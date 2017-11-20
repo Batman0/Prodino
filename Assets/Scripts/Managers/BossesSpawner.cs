@@ -23,7 +23,7 @@ public class BossesSpawner : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(bossesCreation.bossEntry)
+		if(bossesCreation.bossEntry && !GameManager.instance.isBossAlive)
         {
             boss = Instantiate(bossesCreation.bossPrefab) as GameObject;
             boss.transform.position = transform.position;
