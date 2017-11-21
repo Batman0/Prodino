@@ -13,11 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   xSpeed: 15
+  invincibleTime: 3
   jumpForce: 28
   bulletSpeed: 20
   glideSpeed: 4
   upRotationAngle: 60
-  downRotationAngle: 30
+  downRotationAngle: 90
   fireRatio: 0.2
   respawnTimer: 2
   gravity: 30
