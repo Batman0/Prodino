@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour
     private float invincibleTime;
 
 	[Header("Movement")]
-    public bool canJump = true;
-    public bool thereIsGround;
+    private bool canJump = true;
+    private bool thereIsGround;
     private float speed;
     private float jumpForce;
     private float upRotationAngle;
