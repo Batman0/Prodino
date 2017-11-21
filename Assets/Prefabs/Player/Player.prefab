@@ -1013,7 +1013,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1758926448620306}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -14.5, y: -6.25, z: 0}
+  m_LocalPosition: {x: -9.77, y: -5.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4131419845760396}
@@ -2245,7 +2245,7 @@ MonoBehaviour:
   topTailCollider: {fileID: 65153678418553716}
   canJump: 1
   thereIsGround: 0
-  jumpCheckRayLength: 2
+  jumpCheckRayLength: 3
   groundCheckRayLength: 25
   bulletSpawnPoints:
   - {fileID: 4318787980712110}
@@ -2261,14 +2261,14 @@ MonoBehaviour:
   gunsAimL: {fileID: 1377476203020036}
   shoulderAimR: {fileID: 1865555075500928}
   shoulderAimL: {fileID: 1882321277218938}
-  sideXMin: -16
-  sideXMax: 16
-  sideYMin: -6.6
-  sideYMax: 6.6
-  topXMin: -16
-  topXMax: 16
-  topZMin: -9
-  topZMax: 9
+  sideXMin: 4
+  sideXMax: 4
+  sideYMin: 5.5
+  sideYMax: 2
+  topXMin: 4
+  topXMax: 4
+  topZMin: 4
+  topZMax: 4
   animator: {fileID: 95393272320219176}
   jetpackStrongerParticle: {fileID: 0}
   jetpackRegularParticle: {fileID: 0}
