@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour
 
         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove)
         {
-            if ((transform.position.x > Register.instance.xMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < Register.instance.xMax && horizontalAxis > controllerDeadZone))
+			if ((transform.position.x > sideXMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < sideXMax && horizontalAxis > controllerDeadZone))
             {
                 Move(Vector3.right, speed, "Horizontal");
             }
@@ -593,20 +593,32 @@ public class PlayerController : MonoBehaviour
 
     public void ClampPositionSidescroll()
     {
-        transform.position = new Vector3(
-        Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
-        Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
-        0.0f);
+//        transform.position = new Vector3(
+//        Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
+//        Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
+//        0.0f);
+
+		transform.position = new Vector3(
+			Mathf.Clamp(transform.position.x, sideXMin,  sideXMax),
+			Mathf.Clamp(transform.position.y,  sideYMin,  sideYMax),
+			0.0f);
     }
 
     public void ClampPositionTopdown()
     {
-        if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
-        transform.position = new Vector3(
-        Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
-        landmark.position.y + topdownPlayerHeight,
-        Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
-        );
+//        if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
+//        transform.position = new Vector3(
+//        Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
+//        landmark.position.y + topdownPlayerHeight,
+//        Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
+//        );
+
+		if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
+			transform.position = new Vector3(
+				Mathf.Clamp(transform.position.x, topXMin,  topXMax),
+				landmark.position.y + topdownPlayerHeight,
+				Mathf.Clamp(transform.position.z, topZMin, topZMax)
+			);
     }
 
 	Quaternion ClampRotationAroundXAxis(Quaternion q)
