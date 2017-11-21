@@ -79,6 +79,43 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    public class PoolEnv
+    {
+        public int envAmount;
+        public List<GameObject> pooledItems;
+        public int index;
+        public GameObject[] roadTypeObject;
+
+        public PoolEnv(GameObject[] _roadTypeObject,int _envAmount)
+        {
+            envAmount = _envAmount;
+            roadTypeObject = new GameObject[_roadTypeObject.Length];
+           
+            for (int i=0; i < _roadTypeObject.Length; i++)
+            {
+                roadTypeObject[i] = _roadTypeObject[i];
+            }
+
+            pooledItems = new List<GameObject>();
+
+            for (int i = 0; i < roadTypeObject.Length; i++)
+            {
+                for (int j = 0; j < envAmount; j++)
+                {
+                    GameObject road = Instantiate(_roadTypeObject[j]) as GameObject;
+                    road.SetActive(false);
+                    pooledItems.Add(road);
+                }
+            }
+        }
+
+        public GameObject GetPooledEnv(int index)
+        {
+            return (pooledItems[index]);
+        }
+
+    }
+
     public static PoolManager instance;
     private int pooledBulletAmount;
     private int pooledEnemiesAmount;
@@ -112,6 +149,10 @@ public class PoolManager : MonoBehaviour
     public int laserEnemyAmount = 10;
     public int bombDropEnemyAmount = 10;
 
+    [Header("Env")]
+    public GameObject[] roads;
+    public int roadsAmount = 3;
+
     void Awake()
     {
         instance = this;
@@ -124,7 +165,8 @@ public class PoolManager : MonoBehaviour
         DictionaryEnemyInitialization();
         DictionaryBulletInitialization();
 
-
+        PoolEnv env = new PoolEnv(roads, roadsAmount);
+                
     }
     
     void DictionaryEnemyInitialization()

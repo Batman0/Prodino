@@ -59,3 +59,8 @@ MonoBehaviour:
   trailEnemyAmount: 10
   laserEnemyAmount: 10
   bombDropEnemyAmount: 10
+  roads:
+  - {fileID: 1427543112358196, guid: 43e9f00e70108b24a962fca1e894d0f9, type: 2}
+  - {fileID: 1095516685437428, guid: c3de9e86b836d9b42b2d42ef4d2c5e04, type: 2}
+  - {fileID: 1753986949447450, guid: 36bf9bdbce1ff4345abba01d1c2b526e, type: 2}
+  roadsAmount: 3
