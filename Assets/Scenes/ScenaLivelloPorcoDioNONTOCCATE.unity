@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCreationData:
   - prefab: 2
-    delay: 59
+    delay: 62
 --- !u!1 &534165382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,9 +1417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCreationData:
   - prefab: 3
-    delay: 74
+    delay: 77
   - prefab: 3
-    delay: 75
+    delay: 78
 --- !u!1 &707752198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2686,7 +2686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCreationData:
   - prefab: 2
-    delay: 72
+    delay: 75
 --- !u!1001 &1205026926
 Prefab:
   m_ObjectHideFlags: 0
@@ -3417,9 +3417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCreationData:
   - prefab: 0
-    delay: 61
+    delay: 64
   - prefab: 0
-    delay: 62
+    delay: 65
 --- !u!1001 &1416489528
 Prefab:
   m_ObjectHideFlags: 0
@@ -3537,9 +3537,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCreationData:
   - prefab: 0
-    delay: 61
+    delay: 64
   - prefab: 0
-    delay: 62
+    delay: 65
 --- !u!1 &1442209532
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,8 +18,8 @@ MonoBehaviour:
   yMovementSpeed: 3
   yMovementSpeedShooting: 1
   destructionMargin: 3
-  upDistance: 4
-  downDistance: 4
+  upDistance: 1.5
+  downDistance: 3
   laserHeight: 1
   laserWidth: 2
   waitingTime: 2
