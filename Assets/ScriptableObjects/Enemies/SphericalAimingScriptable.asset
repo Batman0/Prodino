@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14625e80e1f81c145b51fc93c3c7ba00, type: 3}
   m_Name: SphericalAimingScriptable
   m_EditorClassIdentifier: 
-  lives: 7
+  lives: 2
   xSpeed: 5
   gameObjectPrefab: {fileID: 1316152001307424, guid: e391b91679723bb489b5e308b56f28b4,
     type: 2}
   zMovementSpeed: 5
   rotationSpeed: 1.5
   destructionMargin: 0
-  forwardDistance: 4
-  backDistance: 4
+  forwardDistance: 1
+  backDistance: 5
   rotationDeadZone: 1
   rightTargets:
   - {fileID: 0}
@@ -33,8 +33,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  fireRate: 3
-  bulletSpeed: 5
+  fireRate: 5
+  bulletSpeed: 6
   bulletDestructionMargin: 3
   bulletPrefab: {fileID: 1770920106933426, guid: ab62c4aa7e011bf4fa22e8d085173c39,
     type: 2}
