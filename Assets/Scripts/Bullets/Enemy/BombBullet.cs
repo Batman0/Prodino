@@ -30,8 +30,12 @@ public class BombBullet : MonoBehaviour
 
     void Update()
     {
-        Move();
         ChangePerspective();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     public void OnCollisionEnter(Collision other)

@@ -30,6 +30,11 @@ public abstract class NormalBullet : BaseBullet
     protected override void Update()
     {
         base.Update();
+        DisableGameobject();
+    }
+
+    private void FixedUpdate()
+    {
         Move();
     }
 

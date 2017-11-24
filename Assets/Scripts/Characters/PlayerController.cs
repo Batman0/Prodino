@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,10 @@ public class PlayerController : MonoBehaviour
 	private int life;
     private bool isInvincible;
     private float invincibleTime;
+
+    [Header("Input")]
+    private Player player;
+    private const int playerId = 0;
 
 	[Header("Movement")]
     public bool canJump = true;
@@ -148,7 +153,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isInvincible && other.gameObject.layer == enemyLayer)
             {
-                Debug.Log("CCCCCCCCC");
+                //Debug.Log("CCCCCCCCC");
                 life--;
 
                 if (IsDead())
@@ -182,6 +187,8 @@ public class PlayerController : MonoBehaviour
 
     void Init()
     {
+        //It initializes the Rewired's player.
+        player = ReInput.players.GetPlayer(playerId);
         minimumX = -70f;
         maximumX = 70;
         bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
@@ -239,7 +246,7 @@ public class PlayerController : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
                 }
-                else if (Input.GetMouseButton(0) && (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot))
+                else if (player.GetButton("Shoot") && (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot))
                 {
                     Shoot();
                 }
@@ -272,9 +279,9 @@ public class PlayerController : MonoBehaviour
         {
 			if ((transform.position.x > sideXMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < sideXMax && horizontalAxis > controllerDeadZone))
             {
-                Move(Vector3.right, speed, "Horizontal");
+                Move(Vector3.right, speed, "MoveHorizontal");
             }
-            if (Input.GetKeyDown(KeyCode.W) && canJump)
+            if (player.GetButtonDown("Jump") && canJump)
             {
                 Jump();
             }
@@ -298,7 +305,7 @@ public class PlayerController : MonoBehaviour
                 ResetPlayerAfterJump();
             }
         }
-        if (Input.GetKey(KeyCode.W))
+        if (player.GetButton("Jump"))
         {
             if (!canJump && rb.velocity.y < -0.5f)
             {
@@ -330,7 +337,7 @@ public class PlayerController : MonoBehaviour
             UpdateArmsRotation();
         }
 
-        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1) && !biteCoolDownActive && canJump)
+        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && player.GetButtonDown("Meele") && !biteCoolDownActive && canJump)
         {
             StartCoroutine("BiteAttack");
         }
@@ -365,8 +372,8 @@ public class PlayerController : MonoBehaviour
         }
         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove)
         {
-            Move(Vector3.forward, speed, "Vertical");
-            Move(Vector3.right, speed, "Horizontal");
+            Move(Vector3.forward, speed, "MoveVertical");
+            Move(Vector3.right, speed, "MoveHorizontal");
         }
         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
         {
@@ -377,7 +384,7 @@ public class PlayerController : MonoBehaviour
 
         ClampPositionTopdown();
 
-        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && Input.GetMouseButtonDown(1))
+        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && player.GetButtonDown("Meele"))
         {
             StartCoroutine("TailAttack");
         }
@@ -385,8 +392,8 @@ public class PlayerController : MonoBehaviour
 
     void UpdateMovementAxises()
     {
-        horizontalAxis = Input.GetAxis("Horizontal");
-        verticalAxis = Input.GetAxis("Vertical");
+        horizontalAxis = player.GetAxis("MoveHorizontal");
+        verticalAxis = player.GetAxis("MoveVertical");
     }
 
     void UpdateGroundBooleans()
@@ -523,11 +530,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Move(Vector3 moveVector, float speed, string moveAxis)
+    void Move(Vector3 moveVector, float speed, string moveAxisName)
     {
-        if (Input.GetAxis(moveAxis) < -controllerDeadZone || Input.GetAxis(moveAxis) > controllerDeadZone)
+        float moveAxis = player.GetAxis(moveAxisName);
+        if (moveAxis < -controllerDeadZone || moveAxis > controllerDeadZone)
         {
-            transform.Translate(moveVector * Input.GetAxis(moveAxis) * speed * Time.fixedDeltaTime, Space.World);
+            transform.Translate(moveVector * moveAxis * speed * Time.fixedDeltaTime, Space.World);
         }
     }
 
@@ -544,7 +552,7 @@ public class PlayerController : MonoBehaviour
 
         if (topDownPlane != null && GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
-            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            aimRay = Camera.main.ScreenPointToRay(player.controllers.Mouse.screenPosition);
             if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
@@ -555,7 +563,7 @@ public class PlayerController : MonoBehaviour
 
         if (sidescrollPlane != null && GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            aimRay = Camera.main.ScreenPointToRay(player.controllers.Mouse.screenPosition);
             if (sidescrollPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);

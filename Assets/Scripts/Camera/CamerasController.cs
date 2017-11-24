@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
 public class CamerasController : MonoBehaviour
 {
@@ -13,24 +14,20 @@ public class CamerasController : MonoBehaviour
     //public Transform topDownCameraPosition;
     //public Transform sideScrollCameraPosition;
     public GameObject cameras;
-    public PlayerController player;
     public Animation anim_animation;
-    /// <summary>
-    /// The lerp speed. Increase to make it faster, decrease to make it slower.
-    /// </summary>
-    //[Range(0.001f, 1.0f)]
-    //public float lerpSpeed = 1.0f;
-    //public float lerpDistance = 0.01f;
+
+    [Header("Input")]
+    private Player player;
+    private const int playerId = 0;
 
     private void Awake()
     {
-        player = Register.instance.player;
+        player = ReInput.players.GetPlayer(playerId);
     }
 
-    // Update is called once per frame
     void LateUpdate ()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.transitionIsRunning/* && player.currentPlayerState == PlayerController.PlayerState.CanMoveAndShoot*/)
+        if (/*Input.GetKeyDown(KeyCode.Space)*/player.GetButtonDown("CameraSwitch") && !GameManager.instance.transitionIsRunning/* && player.currentPlayerState == PlayerController.PlayerState.CanMoveAndShoot*/)
         {
             GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartTransitions = true;
