@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m_Building_E_2
+  m_Name: m_Building_E
   m_Shader: {fileID: 4800000, guid: 517bb5ae043d3854b8c6dfaeeb667adc, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -107,6 +107,8 @@ Material:
     - _Metallic: 0.15
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutlineWidth_Slider: 0.5
+    - _Outline_Width: 0.1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -127,6 +129,8 @@ Material:
     - _EmissiveColor: {r: 0.02941179, g: 0.4778906, b: 1, a: 1}
     - _EmissiveMap_Color: {r: 0, g: 0.8758622, b: 1, a: 1}
     - _Emissive_Map_Color: {r: 0, g: 1, b: 0.9584856, a: 1}
+    - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
     - _node_9146: {r: 0.90344834, g: 1, b: 0, a: 1}
     - _node_9732: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _node_9840: {r: 0, g: 0, b: 0, a: 1}
     - _node_9869: {r: 0.38235295, g: 0.38235295, b: 0.38235295, a: 1}

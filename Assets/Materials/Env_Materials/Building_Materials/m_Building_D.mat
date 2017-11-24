@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: m_Building_C_2
+  m_Name: m_Building_D
   m_Shader: {fileID: 4800000, guid: 517bb5ae043d3854b8c6dfaeeb667adc, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -23,7 +23,7 @@ Material:
         m_Scale: {x: 12, y: 12}
         m_Offset: {x: 0, y: 0}
     - _Ambient_Occlusion:
-        m_Texture: {fileID: 2800000, guid: bac3f8287b062684882378a6b561a5f1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4cee4d508e72c744c80caf32196b8fba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -47,15 +47,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive:
-        m_Texture: {fileID: 2800000, guid: a11834ac63128eb4b9678c223a49c595, type: 3}
+        m_Texture: {fileID: 2800000, guid: 333b1e74c513e1748bc1accf0ade5bb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMap:
-        m_Texture: {fileID: 2800000, guid: a11834ac63128eb4b9678c223a49c595, type: 3}
+        m_Texture: {fileID: 2800000, guid: 333b1e74c513e1748bc1accf0ade5bb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive_Map:
-        m_Texture: {fileID: 2800000, guid: a11834ac63128eb4b9678c223a49c595, type: 3}
+        m_Texture: {fileID: 2800000, guid: 333b1e74c513e1748bc1accf0ade5bb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Specular:
-        m_Texture: {fileID: 2800000, guid: 725b7391fc0271f408104e794c150c03, type: 3}
+        m_Texture: {fileID: 2800000, guid: 59b13c957272a974e87ccb828dc993eb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _node_1530:
@@ -107,6 +107,8 @@ Material:
     - _Metallic: 0.15
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OutlineWidth_Slider: 0.5
+    - _Outline_Width: 0.1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -124,9 +126,11 @@ Material:
     - _BaseColor: {r: 0.16862746, g: 0.16862746, b: 0.16862746, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EmissiveColor: {r: 0.029411793, g: 0.55821514, b: 1, a: 1}
+    - _EmissiveColor: {r: 0, g: 1, b: 0.95862055, a: 1}
     - _EmissiveMap_Color: {r: 0, g: 0.8758622, b: 1, a: 1}
     - _Emissive_Map_Color: {r: 0, g: 1, b: 0.9584856, a: 1}
+    - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
     - _node_9146: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _node_9732: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _node_9840: {r: 0, g: 0, b: 0, a: 1}
     - _node_9869: {r: 0.38235295, g: 0.38235295, b: 0.38235295, a: 1}
