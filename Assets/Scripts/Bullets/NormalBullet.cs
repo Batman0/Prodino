@@ -17,8 +17,8 @@ public abstract class NormalBullet : BaseBullet
         xMax = register.xMax;
         yMin = register.yMin;
         yMax = register.yMax;
-        zMin = register.zMin.Value;
-        zMax = register.zMax.Value;
+        zMin = register.zMin;
+        zMax = register.zMax;
     }
 
     protected override void OnEnable()

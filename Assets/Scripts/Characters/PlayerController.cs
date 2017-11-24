@@ -599,9 +599,16 @@ public class PlayerController : MonoBehaviour
 //        0.0f);
 
 		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, sideXMin,  sideXMax),
-			Mathf.Clamp(transform.position.y,  sideYMin,  sideYMax),
-			0.0f);
+			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax ),
+			Mathf.Clamp(transform.position.y, Register.instance.yMin , Register.instance.yMax ),
+			Mathf.Clamp(transform.position.z, Register.instance.zMin , Register.instance.zMax)
+		);
+
+
+//		transform.position = new Vector3(
+//			Mathf.Clamp(transform.position.x, sideXMin,  sideXMax),
+//			Mathf.Clamp(transform.position.y,  sideYMin,  sideYMax),
+//			0.0f);
     }
 
     public void ClampPositionTopdown()
@@ -613,11 +620,11 @@ public class PlayerController : MonoBehaviour
 //        Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
 //        );
 
-		if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
+
 			transform.position = new Vector3(
-				Mathf.Clamp(transform.position.x, topXMin,  topXMax),
+			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax),
 				landmark.position.y + topdownPlayerHeight,
-				Mathf.Clamp(transform.position.z, topZMin, topZMax)
+			Mathf.Clamp(transform.position.z, Register.instance.zMin , Register.instance.zMax)
 			);
     }
 
