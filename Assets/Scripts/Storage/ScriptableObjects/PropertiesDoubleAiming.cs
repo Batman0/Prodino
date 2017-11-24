@@ -21,7 +21,7 @@ public class PropertiesDoubleAiming : EnemyProperties
     ////not used
     //public Transform[] leftTargets;
     public float xBulletSpeed;
-    public float zBulletSpeed;
+    public float timeToMakeSinusoide;
     public float fireRate;
     public float bulletAmplitude;
     public GameObject sidescrollBulletPrefab;

@@ -7,8 +7,8 @@ public class SinusoideBullet : NormalBullet
 
     private bool moveForward;
     private float xSpeed;
-    private float zSpeed;
-    private float zSpeedToIncrease;
+    private float timeToMakeSinusoide;
+    private float time;
     private float forwardDistance;
     private float backDistance;
     private float transformTargetDeltaDistance;
@@ -21,7 +21,7 @@ public class SinusoideBullet : NormalBullet
     {
         base.Awake();
         speed = register.propertiesDoubleAiming.xBulletSpeed;
-        zSpeed = register.propertiesDoubleAiming.zBulletSpeed;
+        timeToMakeSinusoide = register.propertiesDoubleAiming.timeToMakeSinusoide;
         destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
         forwardDistance = register.propertiesDoubleAiming.bulletForwardDistance;
         backDistance = register.propertiesDoubleAiming.bulletBackDistance;
@@ -44,7 +44,7 @@ public class SinusoideBullet : NormalBullet
         target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
         xSpeed = transform.position.x >= playerTr.position.x ? -speed : speed;
         zOriginal = transform.position.z;
-        zSpeedToIncrease = 0;
+        time = 0;
     }
 
     protected override void Move()
@@ -54,10 +54,10 @@ public class SinusoideBullet : NormalBullet
             moveForward = !moveForward;
             target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
             zOriginal = transform.position.z;
-            zSpeedToIncrease = 0;
+            time = 0;
         }
-        transform.position = new Vector3(transform.position.x + xSpeed * Time.fixedDeltaTime, transform.position.y, Mathfx.Hermite(zOriginal, target.z, zSpeedToIncrease));
+        transform.position = new Vector3(transform.position.x + xSpeed * Time.fixedDeltaTime, transform.position.y, Mathfx.Hermite(zOriginal, target.z, time));
         //Debug.Log(Mathfx.Hermite(zOriginal, target.z, zSpeedToIncrease));
-        zSpeedToIncrease += Time.fixedDeltaTime / 3;
+        time += Time.fixedDeltaTime / timeToMakeSinusoide;
     }
 }

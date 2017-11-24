@@ -22,7 +22,7 @@ MonoBehaviour:
   bulletBackDistance: 4
   bulletSpeedDecrease: 1
   xBulletSpeed: 3
-  zBulletSpeed: 10
+  timeToMakeSinusoide: 2
   fireRate: 2
   bulletAmplitude: 7
   sidescrollBulletPrefab: {fileID: 1215921225492252, guid: cc0367fa9b754cb43848a88db24b2e95,
