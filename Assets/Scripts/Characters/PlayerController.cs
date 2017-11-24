@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
         {
             if (!isInvincible && other.gameObject.layer == enemyLayer)
             {
-                //Debug.Log("CCCCCCCCC");
                 life--;
 
                 if (IsDead())
@@ -349,10 +348,6 @@ public class PlayerController : MonoBehaviour
         {
             SetPlayerToTopdown();
         }
-        //if (rb.velocity != Vector3.zero)
-        //{
-
-        //}e
         inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
         playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
         anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
@@ -601,10 +596,6 @@ public class PlayerController : MonoBehaviour
 
     public void ClampPositionSidescroll()
     {
-//        transform.position = new Vector3(
-//        Mathf.Clamp(transform.position.x, Register.instance.xMin + sideXMin, Register.instance.xMax - sideXMax),
-//        Mathf.Clamp(transform.position.y, Register.instance.yMin + sideYMin, Register.instance.yMax - sideYMax),
-//        0.0f);
 
 		transform.position = new Vector3(
 			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax ),
@@ -613,21 +604,11 @@ public class PlayerController : MonoBehaviour
 		);
 
 
-//		transform.position = new Vector3(
-//			Mathf.Clamp(transform.position.x, sideXMin,  sideXMax),
-//			Mathf.Clamp(transform.position.y,  sideYMin,  sideYMax),
-//			0.0f);
+
     }
 
     public void ClampPositionTopdown()
     {
-//        if (Register.instance.zMin.HasValue && Register.instance.zMax.HasValue)
-//        transform.position = new Vector3(
-//        Mathf.Clamp(transform.position.x, Register.instance.xMin + topXMin, Register.instance.xMax - topXMax),
-//        landmark.position.y + topdownPlayerHeight,
-//        Mathf.Clamp(transform.position.z, Register.instance.zMin.Value + topZMin, Register.instance.zMax.Value - topZMax)
-//        );
-
 
 			transform.position = new Vector3(
 			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax),
@@ -635,22 +616,7 @@ public class PlayerController : MonoBehaviour
 			Mathf.Clamp(transform.position.z, Register.instance.zMin , Register.instance.zMax)
 			);
     }
-
-	Quaternion ClampRotationAroundXAxis(Quaternion q)
-	{
-		q.x /= q.w;
-		q.y /= q.w;
-		q.z /= q.w;
-		q.w = 1.0f;
-
-		float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan (q.x);
-		angleX = Mathf.Clamp (angleX, minimumX, maximumX);
-
-		q.x = Mathf.Tan (0.5f * Mathf.Deg2Rad * angleX);
-
-		return q;
-	}
-
+		
     void ChangePerspective()
     {
         if (GameManager.instance.transitionIsRunning)

@@ -45,19 +45,11 @@ public class GameManager : MonoBehaviour
 		register.yMax = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, distanceFromCamera )).y;
         register.zMin = register.yMin;
         register.zMax = register.yMax;
-
-		Debug.Log (register.xMin);
-		Debug.Log (register.xMax);
-		Debug.Log (register.yMax);
-		Debug.Log (register.yMin);
-		Debug.Log (Camera.main.nearClipPlane + playerHandle.position.z);
     }
 
     void Start()
     {
         playerBulletSpawnpointY = Register.instance.player.bulletSpawnPoints[0].position.y;
-        //Register.instance.player.startPosition = Register.instance.player.transform.position;
-        //Register.instance.player.aimTransform = Register.instance.aimTransform;
     }
 
     void Update()
