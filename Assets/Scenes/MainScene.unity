@@ -2022,6 +2022,11 @@ Prefab:
       propertyPath: backgrounds.Array.data[0].background
       value: 
       objectReference: {fileID: 425058900}
+    - target: {fileID: 114211673695857014, guid: 4dff3f28592711e4da910a40d9fe5f7e,
+        type: 2}
+      propertyPath: playerHandle
+      value: 
+      objectReference: {fileID: 2117967234}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dff3f28592711e4da910a40d9fe5f7e, type: 2}
   m_IsPrefabParent: 0
@@ -3543,6 +3548,11 @@ MonoBehaviour:
     delay: 61
   - prefab: 0
     delay: 62
+--- !u!4 &2117967234 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4021812952014568, guid: 39df20cfb02b81140806e2025c8f177c,
+    type: 2}
+  m_PrefabInternal: {fileID: 2118790503}
 --- !u!1001 &2118790503
 Prefab:
   m_ObjectHideFlags: 0
