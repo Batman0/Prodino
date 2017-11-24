@@ -46,9 +46,9 @@ public class Register : MonoBehaviour
     [HideInInspector]
     public float yMax;
     [HideInInspector]
-    public float? zMin = null;
+    public float zMin;
     [HideInInspector]
-    public float? zMax = null;
+    public float zMax;
 
     void Awake()
     {
