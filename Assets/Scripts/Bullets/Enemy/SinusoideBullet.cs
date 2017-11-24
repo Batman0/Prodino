@@ -50,6 +50,6 @@ public class SinusoideBullet : NormalBullet
             moveForward = !moveForward;
             target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
         }
-        transform.position = new Vector3(transform.position.x + xSpeed * Time.deltaTime, transform.position.y, Mathfx.Hermite(transform.position.z, target.z, zSpeed * Time.deltaTime));
+        transform.position = new Vector3(transform.position.x + xSpeed * Time.fixedDeltaTime, transform.position.y, Mathfx.Hermite(transform.position.z, target.z, zSpeed * Time.fixedDeltaTime));
     }
 }

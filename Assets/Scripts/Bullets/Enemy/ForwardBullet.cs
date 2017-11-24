@@ -18,15 +18,15 @@ public class ForwardBullet : NormalBullet
         base.OnEnable();
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        DisableGameobject();
-    }
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //    DisableGameobject();
+    //}
 
     protected override void Move()
     {
-       transform.Translate(direction * speed * Time.deltaTime, Space.World);
+       transform.Translate(direction * speed * Time.fixedDeltaTime, Space.World);
     }
 
 }
