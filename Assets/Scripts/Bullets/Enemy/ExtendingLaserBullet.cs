@@ -23,10 +23,9 @@ public class ExtendingLaserBullet : SpecialBullet
         //gameObject.SetActive(gameObject, Register.instance.propertiesTrail.fadeTime);
     }
 
-    protected override void Update()
+    private void FixedUpdate()
     {
-        base.Update();
-        fadeTime -= Time.deltaTime;
+        fadeTime -= Time.fixedDeltaTime;
         if (fadeTime <= 0.0f)
         {
             gameObject.SetActive(false);
@@ -40,7 +39,7 @@ public class ExtendingLaserBullet : SpecialBullet
         //Debug.Log("Mathf.Abs(transform.position.x): " + Mathf.Abs(transform.position.x));
         if (transform.localScale.z - Mathf.Abs(transform.position.x) < xMax)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.deltaTime);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z + speed * Time.fixedDeltaTime);
         }
     }
 
