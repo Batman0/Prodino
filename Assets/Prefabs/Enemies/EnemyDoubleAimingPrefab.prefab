@@ -36,16 +36,16 @@ GameObject:
   - component: {fileID: 4812009479238130}
   - component: {fileID: 33188412139708874}
   - component: {fileID: 23077017390704720}
-  - component: {fileID: 114325719614144492}
   - component: {fileID: 65626801742002764}
   - component: {fileID: 65572497080471554}
+  - component: {fileID: 114318340439565910}
   m_Layer: 12
   m_Name: EnemyDoubleAimingPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1667658256963500
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 21, y: 2, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114325719614144492
+--- !u!114 &114318340439565910
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -173,14 +173,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1571608488779970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c65fc62b3640d24692ed4a7410c56f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   explosionParticleManager: {fileID: 0}
   bulletSpawnpoint: {fileID: 4486392635680876}
   bulletSpawnpointSecond: {fileID: 4901758146355254}
-  shooterTransform: {fileID: 0}
+  shooterTransform: {fileID: 4812009479238130}
   sideCollider: {fileID: 65626801742002764}
   topCollider: {fileID: 65572497080471554}
+  timer: 0
   isRight: 0
-  behaviourType: 6
+  properties: {fileID: 0}

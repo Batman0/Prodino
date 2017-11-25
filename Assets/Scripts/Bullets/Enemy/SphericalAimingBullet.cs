@@ -8,8 +8,8 @@ public class SphericalAimingBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        speed = Register.instance.propertiesSphericalAiming.bulletSpeed;
-        destructionMargin = Register.instance.propertiesSphericalAiming.bulletDestructionMargin;
+        //speed = Register.instance.propertiesSphericalAiming.bulletSpeed;
+        //destructionMargin = Register.instance.propertiesSphericalAiming.bulletDestructionMargin;
     }
 
     protected override void OnEnable()

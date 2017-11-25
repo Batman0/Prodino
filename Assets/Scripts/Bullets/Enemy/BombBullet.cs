@@ -18,8 +18,8 @@ public class BombBullet : MonoBehaviour
     {
         register = Register.instance;
         gameManager = GameManager.instance;
-        speed = register.propertiesBombDrop.bombFallSpeed;
-        lifeTime = register.propertiesBombDrop.bombLifeTime;
+        //speed = register.propertiesBombDrop.bombFallSpeed;
+        //lifeTime = register.propertiesBombDrop.bombLifeTime;
     }
 
     private void OnEnable()

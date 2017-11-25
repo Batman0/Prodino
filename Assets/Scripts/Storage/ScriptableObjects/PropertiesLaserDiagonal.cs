@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesLaserDiagonal : EnemyProperties
 {
-    //public float xMovementSpeed;
     public float yMovementSpeed;
     public float yMovementSpeedShooting;
     public float destructionMargin;
@@ -22,5 +21,4 @@ public class PropertiesLaserDiagonal : EnemyProperties
     public float waitingTime;
     public float loadingTime;
     public float shootingTime;
-    public GameObject laserPrefab;
 }

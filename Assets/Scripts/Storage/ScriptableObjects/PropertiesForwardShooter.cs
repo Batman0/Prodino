@@ -10,5 +10,4 @@ public class PropertiesForwardShooter : EnemyProperties
     public float fireRate;
     public float bulletSpeed;
     public float bulletDestructionMargin;
-    public GameObject bulletPrefab;
 }

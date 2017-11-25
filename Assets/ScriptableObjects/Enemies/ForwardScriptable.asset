@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 1
   xSpeed: 10
+  enemyName: Forward
   gameObjectPrefab: {fileID: 1275809954252400, guid: 02cafe5263ae1634cadbc91cb541e30d,
     type: 2}
   destructionMargin: 5

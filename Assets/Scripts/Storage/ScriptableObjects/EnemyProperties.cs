@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyProperties : Properties
 {
-
+    public string enemyName;
     public GameObject gameObjectPrefab;
+    public GameObject bulletPrefab;
 
 }

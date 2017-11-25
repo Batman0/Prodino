@@ -10,15 +10,15 @@ public class ExtendingLaserBullet : SpecialBullet
 
     private void Awake()
     {
-        speed = Register.instance.propertiesTrail.trailSpeed;
-        xMax = Register.instance.xMax;
-        fadeTime = Register.instance.propertiesTrail.fadeTime;
+        //speed = Register.instance.propertiesTrail.trailSpeed;
+        //xMax = Register.instance.xMax;
+        //fadeTime = Register.instance.propertiesTrail.fadeTime;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        fadeTime = Register.instance.propertiesTrail.fadeTime;
+        //fadeTime = Register.instance.propertiesTrail.fadeTime;
         //StartCoroutine("Fade", fadeTime);
         //gameObject.SetActive(gameObject, Register.instance.propertiesTrail.fadeTime);
     }

@@ -8,8 +8,8 @@ public class ForwardBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        speed = Register.instance.propertiesForwardShooter.bulletSpeed;
-        destructionMargin = Register.instance.propertiesForwardShooter.bulletDestructionMargin;
+        //speed = Register.instance.propertiesForwardShooter.bulletSpeed;
+        //destructionMargin = Register.instance.propertiesForwardShooter.bulletDestructionMargin;
     }
 
     protected override void OnEnable()

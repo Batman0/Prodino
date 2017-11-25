@@ -10,5 +10,4 @@ public class PropertiesBombDrop : EnemyProperties
     public float loadingTime;
     public float bombFallSpeed;
     public float bombLifeTime;
-    public GameObject bombPrefab;
 }

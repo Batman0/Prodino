@@ -18,11 +18,11 @@ public class SinusoideBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        speed = register.propertiesDoubleAiming.xBulletSpeed;
-        zSpeed = register.propertiesDoubleAiming.zBulletSpeed;
-        destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
-        forwardDistance = register.propertiesDoubleAiming.bulletForwardDistance;
-        backDistance = register.propertiesDoubleAiming.bulletBackDistance;
+        //speed = register.propertiesDoubleAiming.xBulletSpeed;
+        //zSpeed = register.propertiesDoubleAiming.zBulletSpeed;
+        //destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
+        //forwardDistance = register.propertiesDoubleAiming.bulletForwardDistance;
+        //backDistance = register.propertiesDoubleAiming.bulletBackDistance;
         playerTr = register.player.transform;
         transformTargetDeltaDistance = 0.5f;
     }
