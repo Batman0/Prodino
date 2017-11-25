@@ -13,18 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 5
   xSpeed: 3
-  enemyName: LaserDiagonal
   gameObjectPrefab: {fileID: 1686296282635880, guid: dff460710c6a379479b299ace9b29ced,
-    type: 2}
-  bulletPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
     type: 2}
   yMovementSpeed: 3
   yMovementSpeedShooting: 1
   destructionMargin: 3
-  upDistance: 1
-  downDistance: 1
+  upDistance: 1.5
+  downDistance: 3
   laserHeight: 1
   laserWidth: 2
   waitingTime: 2
   loadingTime: 1
   shootingTime: 2
+  laserPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
+    type: 2}

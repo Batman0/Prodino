@@ -12,7 +12,7 @@ public class PropertiesDoubleAiming : EnemyProperties
     public float bulletBackDistance;
     public float bulletSpeedDecrease;
     public float xBulletSpeed;
-    public float zBulletSpeed;
+    public float timeToMakeSinusoide;
     public float fireRate;
     public float bulletAmplitude;
     public GameObject sidescrollBulletPrefab;

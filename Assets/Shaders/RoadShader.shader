@@ -1,7 +1,7 @@
 // Shader created with Shader Forge v1.38 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32768,y:33171,varname:node_2865,prsc:2|diff-3308-OUT,spec-4326-R,gloss-5285-OUT,normal-7320-RGB,emission-1080-OUT;n:type:ShaderForge.SFN_Tex2d,id:6518,x:32105,y:32572,ptovrint:False,ptlb:Albedo,ptin:_Albedo,varname:node_6518,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:64be6b509a3b4da47bc058e8ebd37142,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Color,id:4820,x:32105,y:32764,ptovrint:False,ptlb:BaseColor,ptin:_BaseColor,varname:node_4820,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;n:type:ShaderForge.SFN_Multiply,id:3308,x:32284,y:32688,varname:node_3308,prsc:2|A-6518-RGB,B-4820-RGB;n:type:ShaderForge.SFN_Tex2d,id:7320,x:32105,y:33424,ptovrint:False,ptlb:NormalMap,ptin:_NormalMap,varname:node_7320,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:a32a3e41fb6d326408accdfab25911fe,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:1019,x:32095,y:33651,ptovrint:False,ptlb:Emissive,ptin:_Emissive,varname:node_1019,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:f882205b2981eff43b331bad4356349a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4326,x:32105,y:32963,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_4326,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:334e7df2f32f8224790273ef6f666407,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Slider,id:5285,x:32026,y:33205,ptovrint:False,ptlb:Glossiness,ptin:_Glossiness,varname:node_5285,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Multiply,id:1080,x:32331,y:33808,varname:node_1080,prsc:2|A-1019-RGB,B-927-RGB;n:type:ShaderForge.SFN_Color,id:927,x:32095,y:33882,ptovrint:False,ptlb:EmissiveColor,ptin:_EmissiveColor,varname:node_927,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;proporder:6518-4820-7320-1019-4326-5285-927;pass:END;sub:END;*/
+/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32768,y:33171,varname:node_2865,prsc:2|diff-3308-OUT,spec-4326-R,gloss-5285-OUT,normal-7320-RGB,emission-1080-OUT;n:type:ShaderForge.SFN_Tex2d,id:6518,x:32105,y:32572,ptovrint:False,ptlb:Albedo,ptin:_Albedo,varname:node_6518,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:64be6b509a3b4da47bc058e8ebd37142,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Color,id:4820,x:32105,y:32764,ptovrint:False,ptlb:BaseColor,ptin:_BaseColor,varname:node_4820,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;n:type:ShaderForge.SFN_Multiply,id:3308,x:32284,y:32688,varname:node_3308,prsc:2|A-6518-RGB,B-4820-RGB;n:type:ShaderForge.SFN_Tex2d,id:7320,x:32105,y:33424,ptovrint:False,ptlb:NormalMap,ptin:_NormalMap,varname:node_7320,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:a32a3e41fb6d326408accdfab25911fe,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:1019,x:31913,y:33784,ptovrint:False,ptlb:Emissive,ptin:_Emissive,varname:node_1019,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:f882205b2981eff43b331bad4356349a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4326,x:32105,y:32963,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_4326,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:334e7df2f32f8224790273ef6f666407,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Slider,id:5285,x:32026,y:33205,ptovrint:False,ptlb:Glossiness,ptin:_Glossiness,varname:node_5285,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Multiply,id:1080,x:32149,y:33941,varname:node_1080,prsc:2|A-1019-RGB,B-927-RGB,C-9938-OUT;n:type:ShaderForge.SFN_Color,id:927,x:31913,y:34015,ptovrint:False,ptlb:EmissiveColor,ptin:_EmissiveColor,varname:node_927,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0.9172413,c3:1,c4:1;n:type:ShaderForge.SFN_Slider,id:9938,x:31497,y:33939,ptovrint:False,ptlb:Emissive Slider,ptin:_EmissiveSlider,varname:node_9938,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:1,max:1;proporder:6518-4820-7320-1019-4326-5285-927-9938;pass:END;sub:END;*/
 
 Shader "Shader Forge/RoadShader" {
     Properties {
@@ -11,7 +11,8 @@ Shader "Shader Forge/RoadShader" {
         _Emissive ("Emissive", 2D) = "white" {}
         _Metallic ("Metallic", 2D) = "white" {}
         _Glossiness ("Glossiness", Range(0, 1)) = 0
-        _EmissiveColor ("EmissiveColor", Color) = (0.5,0.5,0.5,1)
+        _EmissiveColor ("EmissiveColor", Color) = (0,0.9172413,1,1)
+        _EmissiveSlider ("Emissive Slider", Range(0, 1)) = 1
     }
     SubShader {
         Tags {
@@ -49,6 +50,7 @@ Shader "Shader Forge/RoadShader" {
             uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
             uniform float _Glossiness;
             uniform float4 _EmissiveColor;
+            uniform float _EmissiveSlider;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -203,7 +205,7 @@ Shader "Shader Forge/RoadShader" {
                 float3 diffuse = (directDiffuse + indirectDiffuse) * diffuseColor;
 ////// Emissive:
                 float4 _Emissive_var = tex2D(_Emissive,TRANSFORM_TEX(i.uv0, _Emissive));
-                float3 emissive = (_Emissive_var.rgb*_EmissiveColor.rgb);
+                float3 emissive = (_Emissive_var.rgb*_EmissiveColor.rgb*_EmissiveSlider);
 /// Final Color:
                 float3 finalColor = diffuse + specular + emissive;
                 fixed4 finalRGBA = fixed4(finalColor,1);
@@ -245,6 +247,7 @@ Shader "Shader Forge/RoadShader" {
             uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
             uniform float _Glossiness;
             uniform float4 _EmissiveColor;
+            uniform float _EmissiveSlider;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -373,6 +376,7 @@ Shader "Shader Forge/RoadShader" {
             uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
             uniform float _Glossiness;
             uniform float4 _EmissiveColor;
+            uniform float _EmissiveSlider;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord0 : TEXCOORD0;
@@ -401,7 +405,7 @@ Shader "Shader Forge/RoadShader" {
                 UNITY_INITIALIZE_OUTPUT( UnityMetaInput, o );
                 
                 float4 _Emissive_var = tex2D(_Emissive,TRANSFORM_TEX(i.uv0, _Emissive));
-                o.Emission = (_Emissive_var.rgb*_EmissiveColor.rgb);
+                o.Emission = (_Emissive_var.rgb*_EmissiveColor.rgb*_EmissiveSlider);
                 
                 float4 _Albedo_var = tex2D(_Albedo,TRANSFORM_TEX(i.uv0, _Albedo));
                 float3 diffColor = (_Albedo_var.rgb*_BaseColor.rgb);

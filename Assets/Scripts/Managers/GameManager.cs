@@ -32,16 +32,17 @@ public class GameManager : MonoBehaviour
     public bool isBossEntry;
 
     public bool isBossAlive;
-
+	public Transform playerHandle;
 
     private void Awake()
     {
+		float distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
         instance = this;
         register = Register.instance;
-        register.xMin = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
-        register.xMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight / 2, Camera.main.nearClipPlane + distanceZSurplus)).x;
-        register.yMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane + distanceZSurplus)).y;
-        register.yMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane + distanceZSurplus)).y;
+		register.xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, distanceFromCamera )).x;
+		register.xMax = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, distanceFromCamera )).x;
+		register.yMin = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0, distanceFromCamera )).y;
+		register.yMax = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, distanceFromCamera )).y;
         register.zMin = register.yMin;
         register.zMax = register.yMax;
     }
@@ -49,24 +50,24 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         playerBulletSpawnpointY = Register.instance.player.bulletSpawnPoints[0].position.y;
-        //Register.instance.player.startPosition = Register.instance.player.transform.position;
-        //Register.instance.player.aimTransform = Register.instance.aimTransform;
     }
 
     void Update()
     {
-        if (Register.instance.zMin == null && Register.instance.zMax == null)
+		
+		  if (Register.instance.zMin == null && Register.instance.zMax == null)
         {
             if (currentGameMode == GameMode.TOPDOWN)
             {
-                Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.nearClipPlane + distanceZSurplus)).z;
-                Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.nearClipPlane + distanceZSurplus)).z;
+                Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.farClipPlane + distanceZSurplus)).z;
+                Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.farClipPlane + distanceZSurplus)).z;
             }
         }
         MoveBackgrounds(Vector3.left);
 
         BossFight();
     }
+
 
     //void RespawnPlayer(Transform restartPos)
     //{
@@ -92,4 +93,6 @@ public class GameManager : MonoBehaviour
             
         }
     }
+
+
 }

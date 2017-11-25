@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PropertiesPlayer : Properties
 {
+    public float invincibleTime;
     public float jumpForce;
     public float bulletSpeed;
     public float glideSpeed;
