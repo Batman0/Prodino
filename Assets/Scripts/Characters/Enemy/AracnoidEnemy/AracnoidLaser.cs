@@ -227,6 +227,7 @@ public class AracnoidLaser : MonoBehaviour
     }
     public void ForceWaiting()
     {
+        SetLaserParticleTimes();
         Suspend();
     }
     void FixedUpdate()

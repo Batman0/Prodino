@@ -20,8 +20,8 @@ public class AracnoidEnemy : MonoBehaviour
     public float gunRotationSpeed;
     public float gunFireRate;
     [Header("Common Laser Shooting Parameters")]
-    public int externalRotationsAmount=3;
-    public int internalRotationsAmount=6;
+    public int externalRotationsAmount = 3;
+    public int internalRotationsAmount = 6;
     private float externalFracRotation;
     private float internalFracRotation;
 
@@ -38,6 +38,9 @@ public class AracnoidEnemy : MonoBehaviour
     public float maxWoundedTime;
     public float recoveryTime;
 
+
+    [Header("Children")]
+    public Transform explosion;
     //[HideInInspector]
     private AracnoidState state = AracnoidState.Reloading;
 
@@ -103,7 +106,7 @@ public class AracnoidEnemy : MonoBehaviour
         else if (state == AracnoidState.RecoveringPosition)
         {
             bool targetReached;
-            transform.localPosition = MovementFunctions.Lerp(fluctuationSpeed/100, transform, ref fracJourney, origin, startPosition, out targetReached);
+            transform.localPosition = MovementFunctions.Lerp(fluctuationSpeed / 100, transform, ref fracJourney, origin, startPosition, out targetReached);
             foreach (AracnoidLaser laser in lasers)
             {
                 if (laser.State == AracnoidLaser.LaserState.recoveringPosition)
@@ -144,7 +147,7 @@ public class AracnoidEnemy : MonoBehaviour
             externalLasers.localRotation = MovementFunctions.Rotate(externalLasers, ref externalFracRotation, maxWoundedTime, externalRotationsAmount, false, true, false, out rotationComplete);
             internalLasers.localRotation = MovementFunctions.Rotate(internalLasers, ref internalFracRotation, maxWoundedTime, internalRotationsAmount, false, true, false, out rotationComplete);
 
-            if (Time.time > currentStateEnterTime + maxWoundedTime && rotationComplete)
+            if ((Time.time > currentStateEnterTime + maxWoundedTime) && rotationComplete)
             {
                 EnterRecoveryState();
             }
@@ -192,12 +195,15 @@ public class AracnoidEnemy : MonoBehaviour
         {
             lasers[i].ForceLoading();
         }
+        externalFracRotation = 0;
+        internalFracRotation = 0;
         //StartCoroutine(ForceEnableLasers());
     }
 
     void EnterRecoveryState()
     {
         EnterNewState(AracnoidState.Recovery);
+        currentWoundDamage = 0;
         weakSpot.WeakSpotRecovery();
         for (int i = 0; i < lasers.Length; i++)
         {
@@ -224,6 +230,10 @@ public class AracnoidEnemy : MonoBehaviour
     }
     public void GetDamage()
     {
+        if (currentWoundDamage >= maxDamageDuringWound)
+        {
+            return;
+        }
         healthPoints--;
         currentWoundDamage++;
         Debug.LogWarning("Aracnoid HP: " + healthPoints);
@@ -231,78 +241,15 @@ public class AracnoidEnemy : MonoBehaviour
         {
             Death();
         }
-        else if (currentWoundDamage >= maxDamageDuringWound)
-        {
-            currentWoundDamage = 0;
-            EnterRecoveryState();
-        }
     }
     public void Fluctuate()
     {
         transform.localPosition = MovementFunctions.Fluctuate(fluctuationSpeed, fluctuationAmplitudes, origin, ref fluctuationDirection, transform, ref fracJourney, ref targetPosition, ref startPosition);
     }
-    //public void Fluctuate()
-    //{
-    //    float stepLength = Time.fixedDeltaTime * yFluctuationSpeed;
-    //    Vector3 previousPosition = transform.localPosition;
-    //    if (yFluctuationSpeed != 0)
-    //    {
-    //        if (movingUp)
-    //        {
-    //            if (transform.localPosition.y >= initialPosition.y)
-    //            {
-    //                fracJourney += stepLength;
-    //                transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-    //                if (transform.localPosition.y >= targetPosition.y)
-    //                {
-    //                    movingUp = false;
-    //                    transform.localPosition = targetPosition;
-    //                    fracJourney = 0;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                fracJourney += stepLength;
-    //                transform.localPosition = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-    //                if (transform.localPosition.y >= initialPosition.y)
-    //                {
-    //                    transform.localPosition = initialPosition;
-    //                    targetPosition = new Vector3(initialPosition.x, initialPosition.y + Mathf.Abs(yFluctuationAmplitude), initialPosition.z);
-    //                    fracJourney = 0;
-    //                }
-    //            }
-    //        }
-    //        else
-    //        {
-    //            if (transform.localPosition.y <= initialPosition.y)
-    //            {
-    //                fracJourney += stepLength;
-    //                transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, fracJourney);
-    //                if (transform.localPosition.y <= targetPosition.y)
-    //                {
-    //                    movingUp = true;
-    //                    transform.localPosition = targetPosition;
-    //                    fracJourney = 0;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                fracJourney += stepLength;
-    //                transform.localPosition = Vector3.Lerp(targetPosition, initialPosition, fracJourney);
-    //                if (transform.localPosition.y <= initialPosition.y)
-    //                {
-    //                    transform.localPosition = initialPosition;
-    //                    targetPosition = new Vector3(initialPosition.x, initialPosition.y - Mathf.Abs(yFluctuationAmplitude), initialPosition.z );
-    //                    fracJourney = 0;
-    //                }
-    //            }
-    //        }
-    //        transform.localPosition = new Vector3(previousPosition.x, transform.localPosition.y, previousPosition.z);
-    //    }
-    //}
     void Death()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        StartCoroutine(Explode(0));
         float timer = 0.0f;
         if (timer < GameManager.instance.delayToRespawnEnemy)
         {
@@ -328,5 +275,30 @@ public class AracnoidEnemy : MonoBehaviour
     {
         startPosition = transform.localPosition;
         fracJourney = 0;
+    }
+
+    IEnumerator Explode(int index)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (index < explosion.childCount)
+        {
+
+            explosion.GetChild(index).gameObject.SetActive(true);
+            if (index == 0)
+            {
+                foreach (AracnoidLaser l in lasers)
+                {
+                    l.gameObject.SetActive(false);
+                }
+                StartCoroutine(Explode(++index));
+
+            }
+            else if (index == explosion.childCount - 1)
+            {
+                GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+                StartCoroutine(Explode(++index));
+        }
     }
 }
