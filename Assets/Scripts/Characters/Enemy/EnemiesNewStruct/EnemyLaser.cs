@@ -133,8 +133,9 @@ public class EnemyLaser : Enemy
         }
     }
 
-    public override void SetProperty(EnemyProperties _property)
+    public override void SetProperty(ScriptableObject _property)
     {
         property = (PropertiesLaserDiagonal) _property;
+        InitEnemy();
     }
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 3
   xSpeed: 5
+  enemyName: ForwardShooter
   gameObjectPrefab: {fileID: 1204234812890524, guid: 8884d51cfc0062d41a5dcf7eaa77ac02,
+    type: 2}
+  bulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
     type: 2}
   destructionMargin: 2
   fireRate: 5
   bulletSpeed: 10
   bulletDestructionMargin: 3
-  bulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
-    type: 2}

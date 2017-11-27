@@ -13,25 +13,22 @@ public class PoolManager : MonoBehaviour
         public GameObject enemyTypeObject;
         public Enemy enemyScript;
         public GameObject enemyObject;
+        public ScriptableObject property;
 
 
 
-        public PoolEnemy(EnemyProperties _property, GameObject _enemyTypeObject, int _enemyAmount)
+        public PoolEnemy(ScriptableObject _property, GameObject _enemyTypeObject, int _enemyAmount)
         {
             enemyTypeObject = _enemyTypeObject;
             enemyAmount = _enemyAmount;
+            property = _property;
 
             pooledItems = new List<GameObject>();
 
-            enemyObject = Instantiate(enemyTypeObject) as GameObject;
-            enemyObject.GetComponent<Enemy>().SetProperty(_property);
-            enemyObject.GetComponent<Enemy>().InitEnemy();
-            enemyObject.SetActive(false);
-            pooledItems.Add(enemyObject);
-
-            for (int i = 1; i < enemyAmount; i++)
+            for (int i = 0; i < enemyAmount; i++)
             {
-                GameObject Enemy = Instantiate(enemyObject) as GameObject;
+                GameObject Enemy = Instantiate(enemyTypeObject) as GameObject;
+                Enemy.GetComponent<Enemy>().SetProperty(property);
                 Enemy.SetActive(false);
                 pooledItems.Add(Enemy);
             }
@@ -177,7 +174,7 @@ public class PoolManager : MonoBehaviour
 
     void DictionaryEnemyInitialization()
     {
-        EnemyProperties currentProperty;
+        ScriptableObject currentProperty;
         for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
         {
             currentProperty = Register.instance.enemyProperties[i];
@@ -189,8 +186,11 @@ public class PoolManager : MonoBehaviour
 
     void DictionaryBulletInitialization()
     {
-        EnemyProperties currentProperty;
-        
+        ScriptableObject currentProperty;
+
+        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, bulletAmount["PlayerBullet"]);
+        pooledBulletClass.Add("PlayerBullet", PlayerBullet);
+
         for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
         {
             if (Register.instance.enemyProperties[i].enemyName != "Forward" )
@@ -281,6 +281,7 @@ public class PoolManager : MonoBehaviour
 
     void BulletAmountDictionary()
     {
+        bulletAmount.Add("PlayerBullet", pooledPlayerBulletAmount);
         bulletAmount.Add("ForwardShooter", forwardShooterBulletAmount);
         bulletAmount.Add("LaserDiagonal", laserBulletAmount);
         bulletAmount.Add("SphericalAiming", sphericalAimingBulletAmount);

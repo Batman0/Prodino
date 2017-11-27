@@ -153,8 +153,9 @@ public class EnemySphericalAiminig : Enemy
         }
     }
 
-    public override void SetProperty(EnemyProperties _property)
+    public override void SetProperty(ScriptableObject _property)
     {
-        property = (PropertiesSphericalAiming) _property;
+        property = (PropertiesSphericalAiming)_property;
+        InitEnemy();
     }
 }

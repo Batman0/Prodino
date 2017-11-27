@@ -15,7 +15,7 @@ public class ForwardBase : EnemyForward
         enemyLives = property.lives;
     }
 
-    public override void SetProperty(EnemyProperties _property)
+    public override void SetProperty(ScriptableObject _property)
     {
         property = (PropertiesForward)_property;
     }

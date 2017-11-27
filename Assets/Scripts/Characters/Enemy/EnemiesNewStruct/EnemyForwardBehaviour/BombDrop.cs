@@ -46,8 +46,9 @@ public class BombDrop : EnemyForward
         }
     }
 
-    public override void SetProperty(EnemyProperties _property)
+    public override void SetProperty(ScriptableObject _property)
     {
         property = (PropertiesBombDrop)_property;
+        InitEnemy();
     }
 }

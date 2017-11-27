@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesDoubleAiming : EnemyProperties
+public class PropertiesDoubleAiming : ScriptableObject
 {
     public float zMovementSpeed;
     public float destructionMargin;

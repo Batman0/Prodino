@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesForward : EnemyProperties
+public class PropertiesForward : ScriptableObject
 {
     //public float speed;
     public float destructionMargin;

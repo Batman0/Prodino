@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesBombDrop : EnemyProperties
+public class PropertiesBombDrop : ScriptableObject
 {
     //public float xMovementSpeed;
     public float destructionMargin;

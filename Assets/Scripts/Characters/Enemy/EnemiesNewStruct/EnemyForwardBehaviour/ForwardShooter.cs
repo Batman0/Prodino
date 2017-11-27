@@ -44,8 +44,9 @@ public class ForwardShooter : EnemyForward
             }
         }
     }
-    public override void SetProperty(EnemyProperties _property)
+    public override void SetProperty(ScriptableObject _property)
     {
         property = (PropertiesForwardShooter) _property;
+        InitEnemy();
     }
 }

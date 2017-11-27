@@ -17,7 +17,7 @@ public abstract class Enemy : MonoBehaviour
     protected float xMin;
     protected float xMax;
     public float timer = 0;
-    protected EnemyProperties property;
+    protected ScriptableObject property;
 
     [Header("Statistics")]
     protected int enemyLives;
@@ -145,5 +145,5 @@ public abstract class Enemy : MonoBehaviour
         return (!gameManager.transitionIsRunning && !isDying);
     }
 
-    public abstract void SetProperty(EnemyProperties property);
+    public abstract void SetProperty(ScriptableObject property);
 }

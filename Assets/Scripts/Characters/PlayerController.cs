@@ -582,16 +582,16 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        //GameObject bullet = bulletPool.GetpooledBullet();
-        //bullet.transform.position = bulletSpawnPoints[gunIndex].position;
-        //bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
-        //bullet.SetActive(true);
-        //gunIndex++;
-        //if (gunIndex >= bulletSpawnPoints.Length)
-        //{
-        //    gunIndex = 0;
-        //}
-        //fireTimer = 0.00f;
+        GameObject bullet = PoolManager.instance.pooledBulletClass["PlayerBullet"].GetpooledBullet();
+        bullet.transform.position = bulletSpawnPoints[gunIndex].position;
+        bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
+        bullet.SetActive(true);
+        gunIndex++;
+        if (gunIndex >= bulletSpawnPoints.Length)
+        {
+            gunIndex = 0;
+        }
+        fireTimer = 0.00f;
     }
 
     public void ClampPositionSidescroll()
