@@ -343,13 +343,14 @@ GameObject:
   - component: {fileID: 4158078381904254}
   - component: {fileID: 198115279937469548}
   - component: {fileID: 199419140120192618}
+  - component: {fileID: 114752070350470266}
   m_Layer: 0
   m_Name: PS_Explosion (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1273220694298540
 GameObject:
   m_ObjectHideFlags: 1
@@ -693,13 +694,14 @@ GameObject:
   - component: {fileID: 4832628381086228}
   - component: {fileID: 198173540369958442}
   - component: {fileID: 199886821748143290}
+  - component: {fileID: 114190338329233270}
   m_Layer: 0
   m_Name: PS_Explosion (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1561542844763016
 GameObject:
   m_ObjectHideFlags: 1
@@ -995,13 +997,14 @@ GameObject:
   - component: {fileID: 4406956269939750}
   - component: {fileID: 198340093220192620}
   - component: {fileID: 199279736043272138}
+  - component: {fileID: 114677092458113266}
   m_Layer: 0
   m_Name: PS_Explosion (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1851581531801556
 GameObject:
   m_ObjectHideFlags: 1
@@ -1115,13 +1118,14 @@ GameObject:
   - component: {fileID: 4244497016224976}
   - component: {fileID: 198131632462338250}
   - component: {fileID: 199700963389672872}
+  - component: {fileID: 114585940576937302}
   m_Layer: 0
   m_Name: PS_Explosion (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1921106516243578
 GameObject:
   m_ObjectHideFlags: 1
@@ -1149,13 +1153,14 @@ GameObject:
   - component: {fileID: 4043071507162654}
   - component: {fileID: 198238534636496356}
   - component: {fileID: 199893728657338984}
+  - component: {fileID: 114063952619344708}
   m_Layer: 0
   m_Name: PS_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1922089813889258
 GameObject:
   m_ObjectHideFlags: 1
@@ -2916,6 +2921,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114063952619344708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1921362501297284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114178353574521150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2932,6 +2948,17 @@ MonoBehaviour:
   endPosition: {fileID: 4228292891724654, guid: 09f5f50a5a6922241bba90f5823886c6,
     type: 2}
   speed: 0.4
+--- !u!114 &114190338329233270
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1553252690770020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114229374389789662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3016,6 +3043,28 @@ MonoBehaviour:
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
   woundedFloatingSpeed: 0
+--- !u!114 &114585940576937302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920949043231486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114677092458113266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847797540111446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114696768431289786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3036,6 +3085,17 @@ MonoBehaviour:
   woundedInitialTransform: {fileID: 0}
   woundedFloatingTransform: {fileID: 0}
   woundedFloatingSpeed: 0
+--- !u!114 &114752070350470266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1267158912297544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114938528681812658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3064,6 +3124,8 @@ MonoBehaviour:
   - {fileID: 114513572754995708}
   - {fileID: 114696768431289786}
   - {fileID: 114402582017024810}
+  internalLasers: {fileID: 4958759057831798}
+  externalLasers: {fileID: 4561991314884970}
   fluctuationSpeed: 200
   fluctuationAmplitudes: {x: 0, y: 200, z: 0}
   gunRotationSpeed: 0
@@ -3079,7 +3141,7 @@ MonoBehaviour:
   reloadingTime: 2.5
   maxWoundedTime: 10
   recoveryTime: 0
-  explosion: {fileID: 4220863463598006}
+  explosionContainer: {fileID: 4220863463598006}
 --- !u!136 &136063269480353612
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -19949,7 +20011,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -29987,7 +30049,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -43431,7 +43493,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -53514,7 +53576,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -73635,7 +73697,7 @@ ParticleSystem:
   stopAction: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -161258,8 +161320,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
+  - {fileID: 2100000, guid: f0f38077c51905a4ea3c9ee7c020a8e2, type: 2}
+  - {fileID: 2100000, guid: f0f38077c51905a4ea3c9ee7c020a8e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161906,8 +161968,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
+  - {fileID: 2100000, guid: f0f38077c51905a4ea3c9ee7c020a8e2, type: 2}
+  - {fileID: 2100000, guid: f0f38077c51905a4ea3c9ee7c020a8e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
