@@ -8,7 +8,7 @@ public class AracnoidLaser : MonoBehaviour
 
     public enum LaserState
     {
-        waiting, loading, shooting, woundedLoading, woundedShooting, recoveringPosition, opening, closing, suspended
+        Waiting, Loading, Shooting, WoundedLoading, WoundedShooting, RecoveringPosition, Opening, Closing, Suspended
     }
 
     private bool switchable;
@@ -23,11 +23,12 @@ public class AracnoidLaser : MonoBehaviour
     public float loadingTime;
     public float shootingTime;
     public float woundedLoadingTime;
+    private float laserFadeTIme=1f;
     [Header("Laser Phases")]
     //public Transform unloadingTransform;
     public Transform woundedInitialTransform;
     public Transform woundedFloatingTransform;
-    private LaserState state = LaserState.suspended;
+    private LaserState state = LaserState.Suspended;
     [Header("Phases Parameters")]
     public float woundedFloatingSpeed;
 
@@ -58,6 +59,7 @@ public class AracnoidLaser : MonoBehaviour
     private ParticleSystem.MainModule loadingParticleMain;
     private ParticleSystem.MainModule laserParticleMain;
     private ParticleSystem.MainModule rayParticleMain;
+    private ParticleSystem.ColorOverLifetimeModule rayParticleColorOverLifetime;
     private bool isMovingLasers;
     private int particleChildIndex = 1;
     private int targetPositionChildIndex = 2;
@@ -101,6 +103,7 @@ public class AracnoidLaser : MonoBehaviour
         laserParticleMain = laserParticle.main;
         rayParticle = transform.GetChild(particleChildIndex).GetChild(2).GetComponent<ParticleSystem>();
         rayParticleMain = rayParticle.main;
+        rayParticleColorOverLifetime = rayParticle.colorOverLifetime;
         SetLaserParticleTimes();
     }
     public void Fluctuate()
@@ -112,9 +115,9 @@ public class AracnoidLaser : MonoBehaviour
     }
     public void OpenWeakSpot()
     {
-        if (state != LaserState.opening)
+        if (state != LaserState.Opening)
         {
-            state = LaserState.opening;
+            state = LaserState.Opening;
             openingFracJourney = 0;
             startPosition = transform.localPosition;
         }
@@ -123,9 +126,9 @@ public class AracnoidLaser : MonoBehaviour
     }
     public void CloseWeakSpot()
     {
-        if (state != LaserState.closing)
+        if (state != LaserState.Closing)
         {
-            state = LaserState.closing;
+            state = LaserState.Closing;
             openingFracJourney = 0;
             startPosition = transform.localPosition;
         }
@@ -151,14 +154,14 @@ public class AracnoidLaser : MonoBehaviour
 
     public void StartLoading()
     {
-        EnterNewState(LaserState.loading);
+        EnterNewState(LaserState.Loading);
         laserObject.SetActive(true);
         loadingParticle.Play();
     }
 
     public void StartShooting()
     {
-        EnterNewState(LaserState.shooting);
+        EnterNewState(LaserState.Shooting);
         laserCollider.enabled = true;
         loadingParticle.Stop();
         laserParticle.Play();
@@ -166,7 +169,7 @@ public class AracnoidLaser : MonoBehaviour
     }
     public void StartWoundedShooting()
     {
-        EnterNewState(LaserState.woundedShooting);
+        EnterNewState(LaserState.WoundedShooting);
         laserCollider.enabled = true;
         loadingParticle.Stop();
         laserParticle.Play();
@@ -175,7 +178,7 @@ public class AracnoidLaser : MonoBehaviour
 
     public void Suspend()
     {
-        EnterNewState(LaserState.suspended);
+        EnterNewState(LaserState.Suspended);
         laserObject.SetActive(false);
         laserCollider.enabled = false;
         laserParticle.Stop();
@@ -189,6 +192,7 @@ public class AracnoidLaser : MonoBehaviour
         loadingParticleMain.duration = loadingTime - loadingParticleMain.startLifetime.constant / 10;
         laserParticleMain.duration = shootingTime - laserParticleMain.startLifetime.constant;
         rayParticleMain.startLifetime = shootingTime;
+        SetRayGradient(1-(laserFadeTIme / shootingTime));
     }
 
     void SetLaserParticleWoundedTimes()
@@ -197,12 +201,20 @@ public class AracnoidLaser : MonoBehaviour
         laserParticleMain.loop = true;
         rayParticleMain.loop = true;
         rayParticleMain.startLifetime = aracnoid.maxWoundedTime;
+        SetRayGradient(1-(laserFadeTIme / aracnoid.maxWoundedTime));
+    }
+
+    void SetRayGradient(float fadingPoint)
+    {
+        Gradient grad = new Gradient();
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(Color.white, 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(0.0f, 0.0f), new GradientAlphaKey(1.0f, 0.1f), new GradientAlphaKey(1.0f, fadingPoint), new GradientAlphaKey(0, 1) });
+        rayParticleColorOverLifetime.color = grad;
     }
 
     public void EnableLaser()
     {
         //laserEmitter.SetActive(true);
-        EnterNewState(LaserState.waiting);
+        EnterNewState(LaserState.Waiting);
         startPosition = origin;
         fluctuatingFracJourney = 0;
         //SetLaserParticleTimes();
@@ -212,11 +224,11 @@ public class AracnoidLaser : MonoBehaviour
         laserObject.SetActive(false);
         startPosition = transform.localPosition;
         fluctuatingFracJourney = 0;
-        state = LaserState.recoveringPosition;
+        state = LaserState.RecoveringPosition;
     }
     public void ForceLoading()
     {
-        EnterNewState(LaserState.woundedLoading);
+        EnterNewState(LaserState.WoundedLoading);
         SetLaserParticleWoundedTimes();
         StartCoroutine(ForceEnableLaser());
     }
@@ -263,25 +275,25 @@ public class AracnoidLaser : MonoBehaviour
     {
         switch (state)
         {
-            case LaserState.waiting:
+            case LaserState.Waiting:
                 if (isDoneWaiting())
                 {
                     StartLoading();
                 }
                 break;
-            case LaserState.loading:
+            case LaserState.Loading:
                 if (isDoneLoading())
                 {
                     StartShooting();
                 }
                 break;
-            case LaserState.woundedLoading:
+            case LaserState.WoundedLoading:
                 if (isDoneLoading())
                 {
                     StartShooting();
                 }
                 break;
-            case LaserState.shooting:
+            case LaserState.Shooting:
                 if (isDoneShooting())
                 {
                     Suspend();

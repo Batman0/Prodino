@@ -11,14 +11,25 @@ public class AracnoidEnemy : MonoBehaviour
     }
 
 
-    [Header("Lasers")]
+    [Header("Components")]
     public AracnoidLaser[] lasers = new AracnoidLaser[4];
+    private AracnoidWeakSpot weakSpot;
+    public Transform internalLasers;
+    public Transform externalLasers;
+
     [Header("Movement Parameters")]
     public float fluctuationSpeed;
     public Vector3 fluctuationAmplitudes;
-    [Header("Movement Parameters")]
+    private bool fluctuationDirection = true;
+    private Vector3 startPosition;
+    private Vector3 origin;
+    private Vector3 targetPosition;
+    private float journeyPercentage;
+
+    [Header("Fire Parameters")]
     public float gunRotationSpeed;
     public float gunFireRate;
+
     [Header("Common Laser Shooting Parameters")]
     public int externalRotationsAmount = 3;
     public int internalRotationsAmount = 6;
@@ -29,9 +40,14 @@ public class AracnoidEnemy : MonoBehaviour
     public float triggerHealthPoints;
     public float healthPoints;
 
+
     [Header("Enemy State Parameters")]
+    private float currentStateEnterTime;
     public float maxCycles;
+    private float currentCycle;
+    private int lasersDoneShooting = 0;
     public float maxDamageDuringWound;
+    private int currentWoundDamage;
     public float unloadTime;
     public float vulnerableTime;
     public float reloadingTime;
@@ -39,34 +55,11 @@ public class AracnoidEnemy : MonoBehaviour
     public float recoveryTime;
 
 
-    [Header("Children")]
-    public Transform explosion;
-    //[HideInInspector]
+    [Header("Particles")]
+    public Transform explosionContainer;
+    private List<ParticleSystemManager> explosions = new List<ParticleSystemManager>();
+
     private AracnoidState state = AracnoidState.Reloading;
-
-    //Boss Loop Parameters
-    private int currentLaser;
-    private int lasersDoneShooting = 0;
-    private float currentWaitingTime;
-    private float currentLoadTime;
-    private float currentShootingTime;
-    private float currentCycle;
-    private float currentStateEnterTime;
-    private int currentWoundDamage;
-    private AracnoidWeakSpot weakSpot;
-    //Fluctuation Parameters
-    private bool fluctuationDirection = true;
-    private Vector3 startPosition;
-    private Vector3 origin;
-    private Vector3 targetPosition;
-    private float fracJourney;
-
-    //Children Parameters
-    private int headChildIndex = 0;
-    private int gunChildIndex = 1;
-    private int lasersChildIndex = 2;
-    private Transform internalLasers;
-    private Transform externalLasers;
 
     public AracnoidState State
     {
@@ -80,8 +73,10 @@ public class AracnoidEnemy : MonoBehaviour
         startPosition = transform.localPosition;
         origin = transform.localPosition;
         targetPosition = new Vector3(startPosition.x + fluctuationAmplitudes.x, startPosition.y + fluctuationAmplitudes.y, startPosition.z + fluctuationAmplitudes.z);
-        externalLasers = transform.GetChild(lasersChildIndex).GetChild(1);
-        internalLasers = transform.GetChild(lasersChildIndex).GetChild(0);
+        for (int i = 0; i < explosionContainer.childCount; i++)
+        {
+            explosions.Add(explosionContainer.GetChild(i).GetComponent<ParticleSystemManager>());
+        }
     }
     void FixedUpdate()
     {
@@ -106,10 +101,10 @@ public class AracnoidEnemy : MonoBehaviour
         else if (state == AracnoidState.RecoveringPosition)
         {
             bool targetReached;
-            transform.localPosition = MovementFunctions.Lerp(fluctuationSpeed / 100, transform, ref fracJourney, origin, startPosition, out targetReached);
+            transform.localPosition = MovementFunctions.Lerp(fluctuationSpeed / 100, transform, ref journeyPercentage, origin, startPosition, out targetReached);
             foreach (AracnoidLaser laser in lasers)
             {
-                if (laser.State == AracnoidLaser.LaserState.recoveringPosition)
+                if (laser.State == AracnoidLaser.LaserState.RecoveringPosition)
                 {
                     targetReached = false;
                 }
@@ -244,7 +239,7 @@ public class AracnoidEnemy : MonoBehaviour
     }
     public void Fluctuate()
     {
-        transform.localPosition = MovementFunctions.Fluctuate(fluctuationSpeed, fluctuationAmplitudes, origin, ref fluctuationDirection, transform, ref fracJourney, ref targetPosition, ref startPosition);
+        transform.localPosition = MovementFunctions.Fluctuate(fluctuationSpeed, fluctuationAmplitudes, origin, ref fluctuationDirection, transform, ref journeyPercentage, ref targetPosition, ref startPosition);
     }
     void Death()
     {
@@ -274,16 +269,16 @@ public class AracnoidEnemy : MonoBehaviour
     void ResetFluctuationParameters()
     {
         startPosition = transform.localPosition;
-        fracJourney = 0;
+        journeyPercentage = 0;
     }
 
     IEnumerator Explode(int index)
     {
         yield return new WaitForSeconds(0.5f);
-        if (index < explosion.childCount)
+        if (index < explosions.Count)
         {
 
-            explosion.GetChild(index).gameObject.SetActive(true);
+            explosions[index].PlayAll();
             if (index == 0)
             {
                 foreach (AracnoidLaser l in lasers)
@@ -293,7 +288,7 @@ public class AracnoidEnemy : MonoBehaviour
                 StartCoroutine(Explode(++index));
 
             }
-            else if (index == explosion.childCount - 1)
+            else if (index == explosions.Count - 1)
             {
                 GetComponent<MeshRenderer>().enabled = false;
             }
