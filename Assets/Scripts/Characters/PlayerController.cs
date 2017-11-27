@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
         minimumX = -70f;
         maximumX = 70;
-        bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
+        //bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
         properties = Register.instance.propertiesPlayer;
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
@@ -582,16 +582,16 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = bulletPool.GetpooledBullet();
-        bullet.transform.position = bulletSpawnPoints[gunIndex].position;
-        bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
-        bullet.SetActive(true);
-        gunIndex++;
-        if (gunIndex >= bulletSpawnPoints.Length)
-        {
-            gunIndex = 0;
-        }
-        fireTimer = 0.00f;
+        //GameObject bullet = bulletPool.GetpooledBullet();
+        //bullet.transform.position = bulletSpawnPoints[gunIndex].position;
+        //bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
+        //bullet.SetActive(true);
+        //gunIndex++;
+        //if (gunIndex >= bulletSpawnPoints.Length)
+        //{
+        //    gunIndex = 0;
+        //}
+        //fireTimer = 0.00f;
     }
 
     public void ClampPositionSidescroll()

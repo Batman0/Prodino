@@ -371,7 +371,7 @@ MonoBehaviour:
   shooterTransform: {fileID: 4810204316244916}
   sideCollider: {fileID: 65562383542620152}
   topCollider: {fileID: 65958224007894580}
-  timer: 0
+  timer: 0.3
   isRight: 0
 --- !u!114 &114947508847271772
 MonoBehaviour:

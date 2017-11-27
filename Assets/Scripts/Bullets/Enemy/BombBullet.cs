@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BombBullet : MonoBehaviour
 {
+    public PropertiesBombDrop property;
     private bool blownUp;
     private float speed;
     private float lifeTime;
@@ -18,8 +19,8 @@ public class BombBullet : MonoBehaviour
     {
         register = Register.instance;
         gameManager = GameManager.instance;
-        //speed = register.propertiesBombDrop.bombFallSpeed;
-        //lifeTime = register.propertiesBombDrop.bombLifeTime;
+        speed = property.bombFallSpeed;
+        lifeTime = property.bombLifeTime;
     }
 
     private void OnEnable()

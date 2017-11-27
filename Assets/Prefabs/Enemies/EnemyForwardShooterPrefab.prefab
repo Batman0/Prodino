@@ -382,9 +382,8 @@ MonoBehaviour:
   shooterTransform: {fileID: 4204409002134978}
   sideCollider: {fileID: 65459762955537046}
   topCollider: {fileID: 65638722671090642}
-  timer: 0
+  timer: 0.3
   isRight: 0
-  forwardShooterProperties: {fileID: 0}
 --- !u!198 &198035998735164994
 ParticleSystem:
   m_ObjectHideFlags: 1

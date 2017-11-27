@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ForwardBullet : NormalBullet
 {
+    public PropertiesForwardShooter property;
 
     protected override void Awake()
     {
         base.Awake();
-        //speed = Register.instance.propertiesForwardShooter.bulletSpeed;
-        //destructionMargin = Register.instance.propertiesForwardShooter.bulletDestructionMargin;
+        speed = property.bulletSpeed;
+        destructionMargin = property.bulletDestructionMargin;
     }
 
     protected override void OnEnable()

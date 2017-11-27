@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sideCollider: {fileID: 65672075780239120}
   topCollider: {fileID: 65050087538223908}
+  property: {fileID: 11400000, guid: 9b80a2176e0044a42895d0b537f36fa1, type: 2}
