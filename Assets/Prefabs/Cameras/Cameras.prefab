@@ -234,9 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim_duration: 3
+  transitionDuration: 1.3
   cameras: {fileID: 1464347433569160}
-  player: {fileID: 0}
   anim_animation: {fileID: 111799904735687770}
 --- !u!124 &124175412790337104
 Behaviour:

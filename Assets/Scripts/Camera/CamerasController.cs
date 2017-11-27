@@ -8,7 +8,7 @@ public class CamerasController : MonoBehaviour
     public const float timeScaleValueLerping = 0.0f;
     public const float timeScaleValueNotLerping = 1.0f;
     public const float anim_timeRange = 0.95f;
-    public float anim_duration;
+    public float transitionDuration;
     //private Vector3 lerp;
     //private Quaternion slerp;
     //public Transform topDownCameraPosition;
@@ -62,7 +62,7 @@ public class CamerasController : MonoBehaviour
                 anim_animation["CameraMovementSideToTop"].enabled = true;
                 while (anim_animation["CameraMovementSideToTop"].normalizedTime < anim_timeRange)
                 {
-                    anim_animation["CameraMovementSideToTop"].normalizedTime += Time.fixedDeltaTime / anim_duration;
+                    anim_animation["CameraMovementSideToTop"].normalizedTime += Time.fixedDeltaTime / transitionDuration;
                     yield return null;
                 }
                 if (GameManager.instance.currentGameMode != GameMode.TOPDOWN)
@@ -89,7 +89,7 @@ public class CamerasController : MonoBehaviour
                 anim_animation["CameraMovementTopToSide"].enabled = true;
                 while (anim_animation["CameraMovementTopToSide"].time < anim_timeRange)
                 {
-                    anim_animation["CameraMovementTopToSide"].normalizedTime += Time.fixedDeltaTime / anim_duration;
+                    anim_animation["CameraMovementTopToSide"].normalizedTime += Time.fixedDeltaTime / transitionDuration;
                     yield return null;
                 }
                 if (GameManager.instance.currentGameMode != GameMode.SIDESCROLL)
