@@ -20,7 +20,7 @@ Material:
     m_TexEnvs:
     - _Albedo:
         m_Texture: {fileID: 2800000, guid: a2373dfa6eec8c34490181329893c7e5, type: 3}
-        m_Scale: {x: 12, y: 12}
+        m_Scale: {x: 6, y: 6}
         m_Offset: {x: 0, y: 0}
     - _Ambient_Occlusion:
         m_Texture: {fileID: 2800000, guid: 9748cef1822428f4fac987acd96977b6, type: 3}
@@ -68,7 +68,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: 5e451c9c14631774593360dd97becadc, type: 3}
-        m_Scale: {x: 12, y: 12}
+        m_Scale: {x: 6, y: 6}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
@@ -108,7 +108,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlineWidth_Slider: 0.5
-    - _Outline_Width: 0.1
+    - _Outline_Width: 0.05
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
