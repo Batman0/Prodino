@@ -8,13 +8,13 @@ public class AracnoidLaser : MonoBehaviour
 
     public enum LaserState
     {
-        waiting = 0, loading = 1, shooting = 2, alwaysShooting = 3, opening = 4, closing = 5
+        waiting, loading, shooting, woundedLoading, woundedShooting, recoveringPosition, opening, closing, suspended
     }
 
     private bool switchable;
     private float laserWidth;
     private float laserHeight;
-    private float resetTime;
+    private float currentStateEnterTime;
     [Header("Laser Movement Parameters")]
     public float fluctuationAmplitude;
     public float fluctuationSpeed;
@@ -22,31 +22,35 @@ public class AracnoidLaser : MonoBehaviour
     public float waitingTime;
     public float loadingTime;
     public float shootingTime;
-    public float offset;
-    [Header("Laser Positions in Phases")]
+    public float woundedLoadingTime;
+    [Header("Laser Phases")]
     //public Transform unloadingTransform;
     public Transform woundedInitialTransform;
     public Transform woundedFloatingTransform;
+    private LaserState state = LaserState.suspended;
     [Header("Phases Parameters")]
     public float woundedFloatingSpeed;
 
-    private float initialOffset;
+    public LaserState State
+    {
+        get
+        {
+            return state;
+        }
+    }
+
     private AracnoidEnemy aracnoid;
+    private bool fluctuating;
     private bool movingUp;
-    private Vector3 initialPosition;
+    private Vector3 startPosition;
+    private Vector3 origin;
     private Vector3 targetPosition;
     private Vector3 unloadingPosition;
-    private Vector3 woundedInitialPosition;
-    private Vector3 woundedFloatingPosition;
-    private Vector3 lastPositionBeforeOpening;
     private Vector3 lastPositionBeforeClosing;
     private Transform shootingPosition;
     private float fluctuatingFracJourney;
     private float openingFracJourney;
-    [HideInInspector]
-    public LaserState state = LaserState.shooting;
     private GameObject laserObject;
-    private GameObject laserEmitter;
     private Collider laserCollider;
     private ParticleSystem loadingParticle;
     private ParticleSystem laserParticle;
@@ -61,91 +65,49 @@ public class AracnoidLaser : MonoBehaviour
     private Quaternion initialRotation;
     public void Awake()
     {
-        laserEmitter = gameObject;
-        laserObject = laserEmitter.transform.GetChild(0).gameObject;
+        InitializeComponents();
+        InitializePositions();
+        InitializeParticles();
+    }
+    void InitializeComponents()
+    {
+        aracnoid = GetComponentInParent<AracnoidEnemy>();
+        laserObject = transform.GetChild(0).gameObject;
         laserObject.SetActive(false);
-        loadingTime += waitingTime;
-        shootingTime += loadingTime;
-        initialOffset = offset;
-        initialPosition = laserEmitter.transform.position;
-        targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + fluctuationAmplitude);
-        initialRotation = transform.rotation;
+        laserCollider = laserObject.GetComponent<Collider>();
+        laserCollider.enabled = false;
+    }
+
+    void InitializePositions()
+    {
         if (fluctuationAmplitude > 0)
         {
             movingUp = true;
         }
+        startPosition = transform.localPosition;
+        origin = transform.localPosition;
+        targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z + fluctuationAmplitude);
+        initialRotation = transform.rotation;
         Transform unloadingTransform = transform.GetChild(targetPositionChildIndex);
-        unloadingPosition = new Vector3(unloadingTransform.position.x, unloadingTransform.position.y, unloadingTransform.position.z);
-        //woundedFloatingPosition = new Vector3(woundedFloatingTransform.position.x, woundedFloatingTransform.position.y, woundedFloatingTransform.position.z);
-        //woundedInitialPosition = new Vector3(woundedInitialTransform.position.x, woundedInitialTransform.position.y, woundedInitialTransform.position.z);
-        aracnoid = GetComponentInParent<AracnoidEnemy>();
-        laserCollider = laserObject.GetComponent<Collider>();
-        laserCollider.enabled = false;
-        loadingParticle = laserEmitter.transform.GetChild(particleChildIndex).GetChild(0).GetComponent<ParticleSystem>();
+        unloadingTransform.parent = transform.parent;
+        unloadingPosition = new Vector3(unloadingTransform.localPosition.x, unloadingTransform.localPosition.y, unloadingTransform.localPosition.z);
+    }
+
+    void InitializeParticles()
+    {
+        loadingParticle = transform.GetChild(particleChildIndex).GetChild(0).GetComponent<ParticleSystem>();
         loadingParticleMain = loadingParticle.main;
-        laserParticle = laserEmitter.transform.GetChild(particleChildIndex).GetChild(1).GetComponent<ParticleSystem>();
+        laserParticle = transform.GetChild(particleChildIndex).GetChild(1).GetComponent<ParticleSystem>();
         laserParticleMain = laserParticle.main;
-        rayParticle = laserEmitter.transform.GetChild(particleChildIndex).GetChild(2).GetComponent<ParticleSystem>();
+        rayParticle = transform.GetChild(particleChildIndex).GetChild(2).GetComponent<ParticleSystem>();
         rayParticleMain = rayParticle.main;
         SetLaserParticleTimes();
     }
     public void Fluctuate()
     {
-        float stepLength = Time.fixedDeltaTime * fluctuationSpeed;
-        Vector3 previousPosition = laserEmitter.transform.position;
         if (fluctuationSpeed != 0)
         {
-            if (movingUp)
-            {
-                if (laserEmitter.transform.position.z >= initialPosition.z)
-                {
-                    fluctuatingFracJourney += stepLength;
-                    laserEmitter.transform.position = Vector3.Lerp(initialPosition, targetPosition, fluctuatingFracJourney);
-                    if (laserEmitter.transform.position.z >= targetPosition.z)
-                    {
-                        movingUp = false;
-                        laserEmitter.transform.position = targetPosition;
-                        fluctuatingFracJourney = 0;
-                    }
-                }
-                else
-                {
-                    fluctuatingFracJourney += stepLength;
-                    laserEmitter.transform.position = Vector3.Lerp(targetPosition, initialPosition, fluctuatingFracJourney);
-                    if (laserEmitter.transform.position.z >= initialPosition.z)
-                    {
-                        laserEmitter.transform.position = initialPosition;
-                        targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + Mathf.Abs(fluctuationAmplitude));
-                        fluctuatingFracJourney = 0;
-                    }
-                }
-            }
-            else
-            {
-                if (laserEmitter.transform.position.z <= initialPosition.z)
-                {
-                    fluctuatingFracJourney += stepLength;
-                    laserEmitter.transform.position = Vector3.Lerp(initialPosition, targetPosition, fluctuatingFracJourney);
-                    if (laserEmitter.transform.position.z <= targetPosition.z)
-                    {
-                        movingUp = true;
-                        laserEmitter.transform.position = targetPosition;
-                        fluctuatingFracJourney = 0;
-                    }
-                }
-                else
-                {
-                    fluctuatingFracJourney += stepLength;
-                    laserEmitter.transform.position = Vector3.Lerp(targetPosition, initialPosition, fluctuatingFracJourney);
-                    if (laserEmitter.transform.position.z <= initialPosition.z)
-                    {
-                        laserEmitter.transform.position = initialPosition;
-                        targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z - Mathf.Abs(fluctuationAmplitude));
-                        fluctuatingFracJourney = 0;
-                    }
-                }
-            }
-            laserEmitter.transform.position = new Vector3(previousPosition.x, previousPosition.y, laserEmitter.transform.position.z);
+            transform.localPosition = MovementFunctions.Fluctuate(fluctuationSpeed, new Vector3(0, 0, fluctuationAmplitude), origin, ref movingUp, transform, ref fluctuatingFracJourney, ref targetPosition, ref startPosition);
         }
     }
     public void OpenWeakSpot()
@@ -154,14 +116,10 @@ public class AracnoidLaser : MonoBehaviour
         {
             state = LaserState.opening;
             openingFracJourney = 0;
-            lastPositionBeforeOpening = transform.position;
+            startPosition = transform.localPosition;
         }
-        openingFracJourney += Time.fixedDeltaTime / aracnoid.unloadTime;
-        if (transform.position != unloadingPosition)
-        {
-            transform.position = Vector3.Lerp(lastPositionBeforeOpening, unloadingPosition, openingFracJourney);
-        }
-
+        bool targetReached = false;
+        MovementFunctions.Lerp(1 / aracnoid.unloadTime, transform, ref openingFracJourney, unloadingPosition, startPosition, out targetReached);
     }
     public void CloseWeakSpot()
     {
@@ -169,136 +127,178 @@ public class AracnoidLaser : MonoBehaviour
         {
             state = LaserState.closing;
             openingFracJourney = 0;
-            lastPositionBeforeClosing = transform.position;
+            startPosition = transform.localPosition;
         }
-        openingFracJourney += Time.fixedDeltaTime / aracnoid.reloadingTime;
-        if (transform.position != initialPosition)
-        {
-            transform.position = Vector3.Lerp(lastPositionBeforeClosing, initialPosition, openingFracJourney);
-        }
+        bool targetReached = false;
+        MovementFunctions.Lerp(1 / aracnoid.reloadingTime, transform, ref openingFracJourney, origin, startPosition, out targetReached);
     }
-    public bool isDoneWaiting()
+    bool isDoneWaiting()
     {
-        if (Time.time >= waitingTime + resetTime + initialOffset)
-        {
-            StartLoading();
-            return true;
-        }
-        return false;
+        return Time.time >= waitingTime + currentStateEnterTime;
     }
-    public bool isDoneLoading()
+    bool isDoneLoading()
     {
-        if (Time.time >= loadingTime + resetTime + initialOffset)
-        {
-            StartShooting();
-            return true;
-        }
-        return false;
+        return Time.time >= loadingTime + currentStateEnterTime;
     }
-    public bool isDoneShooting()
+    bool isDoneWoundedLoading()
     {
-        if (Time.time >= shootingTime + resetTime + initialOffset)
-        {
-            StartWaiting();
-            return true;
-        }
-        return false;
+        return Time.time >= woundedLoadingTime + currentStateEnterTime;
+    }
+    bool isDoneShooting()
+    {
+        return Time.time >= shootingTime + currentStateEnterTime;
     }
 
     public void StartLoading()
     {
-        state = LaserState.loading;
+        EnterNewState(LaserState.loading);
         laserObject.SetActive(true);
         loadingParticle.Play();
     }
 
     public void StartShooting()
     {
+        EnterNewState(LaserState.shooting);
         laserCollider.enabled = true;
-        state = LaserState.shooting;
+        loadingParticle.Stop();
+        laserParticle.Play();
+        rayParticle.Play();
+    }
+    public void StartWoundedShooting()
+    {
+        EnterNewState(LaserState.woundedShooting);
+        laserCollider.enabled = true;
         loadingParticle.Stop();
         laserParticle.Play();
         rayParticle.Play();
     }
 
-    public void StartWaiting()
+    public void Suspend()
     {
+        EnterNewState(LaserState.suspended);
         laserObject.SetActive(false);
         laserCollider.enabled = false;
-        state = LaserState.waiting;
-        resetTime = resetTime + shootingTime + initialOffset;
-        initialOffset = 0;
         laserParticle.Stop();
         rayParticle.Stop();
-        SetLaserParticleTimes();
     }
 
     void SetLaserParticleTimes()
     {
-        //loadingParticleMain.simulationSpeed = loadingTime / baseLoadingParticleTime;
         laserParticleMain.loop = false;
         rayParticleMain.loop = false;
-        loadingParticleMain.duration = loadingTime - waitingTime;
-        laserParticleMain.duration = shootingTime - loadingTime;
-        rayParticleMain.startLifetime = shootingTime - loadingTime;
-        //laserParticleMain.startDelay = loadingTime - waitingTime;
-        //rayParticleMain.startDelay = loadingTime - waitingTime;
+        loadingParticleMain.duration = loadingTime - loadingParticleMain.startLifetime.constant / 10;
+        laserParticleMain.duration = shootingTime - laserParticleMain.startLifetime.constant;
+        rayParticleMain.startLifetime = shootingTime;
     }
 
     void SetLaserParticleWoundedTimes()
     {
+        loadingParticleMain.duration = woundedLoadingTime;
         laserParticleMain.loop = true;
         rayParticleMain.loop = true;
         rayParticleMain.startLifetime = aracnoid.maxWoundedTime;
     }
 
-    public void EnableLaser(float time)
+    public void EnableLaser()
     {
         //laserEmitter.SetActive(true);
-        state = LaserState.waiting;
-        initialOffset = offset;
-        resetTime = time;
-
+        EnterNewState(LaserState.waiting);
+        startPosition = origin;
+        fluctuatingFracJourney = 0;
+        //SetLaserParticleTimes();
     }
     public void DisableLaser()
     {
-        //laserEmitter.SetActive(false);
         laserObject.SetActive(false);
-        state = LaserState.waiting;
+        startPosition = transform.localPosition;
+        fluctuatingFracJourney = 0;
+        state = LaserState.recoveringPosition;
     }
     public void ForceLoading()
     {
-        StartLoading();
+        EnterNewState(LaserState.woundedLoading);
+        SetLaserParticleWoundedTimes();
         StartCoroutine(ForceEnableLaser());
     }
     IEnumerator ForceEnableLaser()
     {
-        yield return new WaitForSeconds(loadingTime - waitingTime);
-        StartShooting();
-        SetLaserParticleWoundedTimes();
+        yield return new WaitForSeconds(woundedLoadingTime);
+        StartWoundedShooting();
     }
-    public  void ForceWaiting()
+    public void ForceWaiting()
     {
-        StartWaiting();
+        Suspend();
     }
     void FixedUpdate()
     {
-        if (aracnoid.state == AracnoidEnemy.AracnoidState.shooting)
+        if (aracnoid.State == AracnoidEnemy.AracnoidState.Shooting)
         {
             Fluctuate();
         }
-        else if (aracnoid.state == AracnoidEnemy.AracnoidState.unloading)
+        //else if (aracnoid.State == AracnoidEnemy.AracnoidState.RecoveringPosition)
+        //{
+        //    if (state == LaserState.recoveringPosition)
+        //    {
+        //        bool targetReached;
+        //        transform.localPosition = MovementFunctions.Lerp(fluctuationSpeed * 10, transform, ref fluctuatingFracJourney, origin, startPosition, out targetReached);
+        //        if (targetReached)
+        //        {
+        //            state = LaserState.suspended;
+        //        }
+        //    }
+
+        //}
+        else if (aracnoid.State == AracnoidEnemy.AracnoidState.Unloading || aracnoid.State == AracnoidEnemy.AracnoidState.RecoveringPosition)
         {
             OpenWeakSpot();
         }
-        else if (aracnoid.state == AracnoidEnemy.AracnoidState.reloading)
+        else if (aracnoid.State == AracnoidEnemy.AracnoidState.Reloading)
         {
             CloseWeakSpot();
+        }
+    }
+
+    void Update()
+    {
+        switch (state)
+        {
+            case LaserState.waiting:
+                if (isDoneWaiting())
+                {
+                    StartLoading();
+                }
+                break;
+            case LaserState.loading:
+                if (isDoneLoading())
+                {
+                    StartShooting();
+                }
+                break;
+            case LaserState.woundedLoading:
+                if (isDoneLoading())
+                {
+                    StartShooting();
+                }
+                break;
+            case LaserState.shooting:
+                if (isDoneShooting())
+                {
+                    Suspend();
+                    aracnoid.LaserDoneShooting();
+                }
+                break;
+            default: break;
         }
     }
     void LateUpdate()
     {
         transform.rotation = initialRotation;
+    }
+
+    void EnterNewState(LaserState _state)
+    {
+        currentStateEnterTime = Time.time;
+        state = _state;
     }
 }
 

@@ -24,7 +24,7 @@ public class AracnoidHead : MonoBehaviour
 
     void OnTriggerEnter(Collider coll)
     {
-        if (coll.tag == "PlayerBullet" && GameManager.instance.currentGameMode == GameMode.SIDESCROLL && aracnoid.state == AracnoidEnemy.AracnoidState.wounded)
+        if (coll.tag == "PlayerBullet" && GameManager.instance.currentGameMode == GameMode.SIDESCROLL && aracnoid.State == AracnoidEnemy.AracnoidState.Wounded)
         {
             coll.gameObject.SetActive(false);
             aracnoid.GetDamage();
@@ -37,7 +37,7 @@ public class AracnoidHead : MonoBehaviour
     {
         yield return new WaitForSeconds(colorBlinkTime);
         StopAllCoroutines();
-        if(aracnoid.state == AracnoidEnemy.AracnoidState.wounded)
+        if(aracnoid.State == AracnoidEnemy.AracnoidState.Wounded)
         {
             headMaterial.color = Color.green;
         }
