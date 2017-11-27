@@ -122,9 +122,9 @@ GameObject:
   - component: {fileID: 4810204316244916}
   - component: {fileID: 33954578175854522}
   - component: {fileID: 23528693852630570}
-  - component: {fileID: 114938444122959460}
   - component: {fileID: 65562383542620152}
   - component: {fileID: 65958224007894580}
+  - component: {fileID: 114884049239151810}
   m_Layer: 12
   m_Name: EnemyLaserDiagonalPrefab
   m_TagString: Untagged
@@ -354,7 +354,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2142224, y: 40, z: 2.8859777}
   m_Center: {x: -0.00000002980233, y: 0, z: 0}
---- !u!114 &114938444122959460
+--- !u!114 &114884049239151810
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -362,18 +362,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686296282635880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
+  m_Script: {fileID: 11500000, guid: 43fd682fa1516b145a9c4ce0ea2403ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRight: 1
-  explosionParticleManager: {fileID: 114947508847271772}
+  explosionParticleManager: {fileID: 0}
   bulletSpawnpoint: {fileID: 4923712833204592}
-  bulletSpawnpointOther: {fileID: 0}
-  shooterTransform: {fileID: 0}
-  meshTransform: {fileID: 0}
+  bulletSpawnpointSecond: {fileID: 0}
+  shooterTransform: {fileID: 4810204316244916}
   sideCollider: {fileID: 65562383542620152}
   topCollider: {fileID: 65958224007894580}
-  behaviourType: 2
+  timer: 0.3
+  isRight: 0
 --- !u!114 &114947508847271772
 MonoBehaviour:
   m_ObjectHideFlags: 1

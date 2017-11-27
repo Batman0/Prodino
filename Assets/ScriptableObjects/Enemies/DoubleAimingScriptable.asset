@@ -13,7 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 1
   xSpeed: 4
+  enemyName: DoubleAiming
   gameObjectPrefab: {fileID: 1571608488779970, guid: cbd5e43a5209e8849980e9e9023ab7f8,
+    type: 2}
+  bulletPrefab: {fileID: 1889232763993750, guid: 8d4e8a9caa8b48c45a1a389938337d66,
     type: 2}
   zMovementSpeed: 2
   destructionMargin: 5

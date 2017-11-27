@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class PropertiesSphericalAiming : EnemyProperties
+public class PropertiesSphericalAiming : ScriptableObject
 {
     //public float xMovementSpeed;
     public float zMovementSpeed;
@@ -19,5 +19,4 @@ public class PropertiesSphericalAiming : EnemyProperties
     public float fireRate;
     public float bulletSpeed;
     public float bulletDestructionMargin;
-    public GameObject bulletPrefab;
 }

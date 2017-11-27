@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SphericalAimingBullet : NormalBullet
 {
+    public PropertiesSphericalAiming property;
 
     protected override void Awake()
     {
         base.Awake();
-        speed = Register.instance.propertiesSphericalAiming.bulletSpeed;
-        destructionMargin = Register.instance.propertiesSphericalAiming.bulletDestructionMargin;
+        speed = property.bulletSpeed;
+        destructionMargin = property.bulletDestructionMargin;
     }
 
     protected override void OnEnable()

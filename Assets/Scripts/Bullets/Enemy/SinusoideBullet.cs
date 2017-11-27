@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SinusoideBullet : NormalBullet
 {
-
+    public PropertiesDoubleAiming property;
     private bool moveForward;
     private float xSpeed;
     private float timeToMakeSinusoide;
@@ -20,11 +20,11 @@ public class SinusoideBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        speed = register.propertiesDoubleAiming.xBulletSpeed;
-        timeToMakeSinusoide = register.propertiesDoubleAiming.timeToMakeSinusoide;
+        speed = property.xBulletSpeed;
+        timeToMakeSinusoide = property.timeToMakeSinusoide;
         destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
-        forwardDistance = register.propertiesDoubleAiming.bulletForwardDistance;
-        backDistance = register.propertiesDoubleAiming.bulletBackDistance;
+        forwardDistance = property.bulletForwardDistance;
+        backDistance = property.bulletBackDistance;
         playerTr = register.player.transform;
         transformTargetDeltaDistance = 0.5f;
     }

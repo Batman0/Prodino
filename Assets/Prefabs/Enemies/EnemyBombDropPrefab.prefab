@@ -36,16 +36,16 @@ GameObject:
   - component: {fileID: 4561125273950026}
   - component: {fileID: 33373911901805944}
   - component: {fileID: 23470028014943862}
-  - component: {fileID: 114188463991372986}
   - component: {fileID: 65392810251508602}
   - component: {fileID: 65041829476234792}
+  - component: {fileID: 114713272461765256}
   m_Layer: 12
   m_Name: EnemyBombDropPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4294223520280212
 Transform:
   m_ObjectHideFlags: 1
@@ -136,7 +136,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 40, y: 1, z: 2.15}
   m_Center: {x: 0, y: -0.0225, z: 0.25}
---- !u!114 &114188463991372986
+--- !u!114 &114713272461765256
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -144,15 +144,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1476885846380338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
+  m_Script: {fileID: 11500000, guid: 00c8e15a7b0dfc34ab3dc997c6a5620f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRight: 0
   explosionParticleManager: {fileID: 0}
   bulletSpawnpoint: {fileID: 4294223520280212}
-  bulletSpawnpointOther: {fileID: 0}
-  shooterTransform: {fileID: 0}
-  meshTransform: {fileID: 0}
+  bulletSpawnpointSecond: {fileID: 0}
+  shooterTransform: {fileID: 4561125273950026}
   sideCollider: {fileID: 65392810251508602}
   topCollider: {fileID: 65041829476234792}
-  behaviourType: 4
+  timer: 0.3
+  isRight: 0

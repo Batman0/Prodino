@@ -2,42 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void MyMovement();
-public delegate void MyShot();
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header("Objects")]
-    private Enemy enemy;
-    private GameManager gameManager;
-    private EnemyBehaviour myBehaviourClass;
-    private PoolManager.PoolBullet bulletPool;
+    protected GameManager gameManager;
     public ParticleSystemManager explosionParticleManager;
     public Transform bulletSpawnpoint;
     public Transform bulletSpawnpointSecond;
     public Transform shooterTransform;
     public Collider sideCollider;
     public Collider topCollider;
+    protected Register register;
+    protected float xMin;
+    protected float xMax;
+    public float timer = 0;
+    protected ScriptableObject property;
 
     [Header("Statistics")]
-    private int enemyLives;
-    private float enemyDeactivationDelay = 0.5f;
-    private bool isDying = false;
+    protected int enemyLives;
+    protected float enemyDeactivationDelay = 0.5f;
+    protected bool isDying = false;
     [HideInInspector]
     public bool isRight;
-    public BehaviourType behaviourType;
-    public MyMovement myMovement;
-    public MyShot myShot;
 
-    void OnEnable()
+    virtual public void Awake()
     {
-        enemy = this;
+        register = Register.instance;
         gameManager = GameManager.instance;
-        enemyLives = Register.instance.enemyProperties[behaviourType.ToString()].lives;
-        if (!isRight)
-        {
-            transform.Rotate(Vector3.up, 180, Space.World);
-        }
+        xMin = register.xMin;
+        xMax = register.xMax;
+    }
+    virtual public void OnEnable()
+    {
 
         if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
@@ -55,21 +52,18 @@ public class Enemy : MonoBehaviour
                 topCollider.enabled = true;
             }
         }
+
+    }
+    
+    public virtual void InitEnemy()
+    {      
+     
     }
 
-    void Start()
-    {
-        InitBehaviour();
-        myBehaviourClass.Init(enemy);
-        myMovement += myBehaviourClass.Move;
-        myShot += myBehaviourClass.Shoot;
-    }
-
-    void Update()
+    public virtual void Update()
     {
         ChangePerspective();
-        Move();
-        Shoot();
+
         if (CheckEnemyDead())
         {
             Deactivate();
@@ -85,49 +79,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void InitBehaviour()
+    public virtual void Shoot()
     {
-        switch (behaviourType)
+        if(!CheckCondition())
         {
-            case BehaviourType.ForwardShooter:
-                myBehaviourClass = new ForwardShooterBehaviour();
-                break;
-            case BehaviourType.Forward:
-                myBehaviourClass = new ForwardBehaviour();
-                break;
-            case BehaviourType.LaserDiagonal:
-                myBehaviourClass = new LaserDiagonalBehaviour();
-                break;
-            case BehaviourType.SphericalAiming:
-                myBehaviourClass = new SphericalAimingBehaviour();
-                break;
-            case BehaviourType.BombDrop:
-                myBehaviourClass = new BombDropBehaviour();
-                break;
-            case BehaviourType.Trail:
-                myBehaviourClass = new TrailBehaviour();
-                break;
-            case BehaviourType.DoubleAiming:
-                myBehaviourClass = new DoubleAimingBehaviour();
-                break;
+            return;
         }
     }
 
-    public void Shoot()
+    public virtual void Move()
     {
-        if (!gameManager.transitionIsRunning && !isDying)
+        if (!CheckCondition())
         {
-            myShot();
+            return;
         }
-    }
-
-    public void Move()
-    {
-        if (!gameManager.transitionIsRunning)
-        {
-            myMovement();
-        }
-
     }
 
     void ChangePerspective()
@@ -174,4 +139,11 @@ public class Enemy : MonoBehaviour
     {
         return enemyLives <= 0;
     }
+
+    public bool CheckCondition()
+    {      
+        return (!gameManager.transitionIsRunning && !isDying);
+    }
+
+    public abstract void SetProperty(ScriptableObject property);
 }

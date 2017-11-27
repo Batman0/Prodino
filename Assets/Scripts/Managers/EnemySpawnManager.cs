@@ -2,10 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum EnemyStringName
+{
+    ForwardShooter,
+    Forward,
+    LaserDiagonal,
+    SphericalAiming,
+    BombDrop,
+    Trail,
+    DoubleAiming
+
+}
+
 [System.Serializable]
 public struct EnemyCreationData
 {
-    public ShotType prefab;
+    public EnemyStringName enemyStringName;
     public float delay;
 }
 
@@ -37,11 +50,17 @@ public class EnemySpawnManager : MonoBehaviour
     void SpawnEnemy(float _timerToSpawn)
     {
         if (dataIndex < enemyCreationData.Length && _timerToSpawn >= enemyCreationData[dataIndex].delay)
-        {  
-            GameObject enemyObject = PoolManager.instance.pooledEnemyClass[enemyCreationData[dataIndex].prefab.ToString()].GetpooledEnemy();
+        {
+            EnemyStringName enemyCD = enemyCreationData[dataIndex].enemyStringName;
+            string propertiesString = register.enemyPropertiesDictionary[enemyCD.ToString()].enemyName;
+            GameObject enemyObject = PoolManager.instance.pooledEnemyClass[propertiesString].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             enemyScript.isRight = isRight;
+            if (!enemyScript.isRight)
+            {
+                enemyObject.transform.Rotate(Vector3.up, 180, Space.World);
+            }
             enemyObject.SetActive(true);
             dataIndex++;
         }

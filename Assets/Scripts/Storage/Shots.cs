@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShotType
-{
-    ForwardShooter,
-    Forward,
-    LaserDiagonal,
-    SphericalAiming,
-    BombDrop,
-    Trail,
-    DoubleAiming
+//public enum ShotType
+//{
+//    ForwardShooter,
+//    Forward,
+//    LaserDiagonal,
+//    SphericalAiming,
+//    BombDrop,
+//    Trail,
+//    DoubleAiming
     
-}
+//}
 public static class Shots
 {
     //public static void ShootForward(GameObject prefab, Transform spawnpoint, Transform rotTransform)

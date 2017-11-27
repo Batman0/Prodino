@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef8ebe4395661e48aed3872e71c13b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  property: {fileID: 11400000, guid: b3957d2329e61b44eab59082a094a6f8, type: 2}
   explosionSidescrollCollider: {fileID: 136824951470486596}
   explosionTopdownCollider: {fileID: 136647782903394288}
   rb: {fileID: 54014682950675450}

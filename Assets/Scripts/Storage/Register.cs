@@ -24,17 +24,9 @@ public class Register : MonoBehaviour
 
     [Header("Scriptables")]
     public PropertiesPlayer propertiesPlayer;
-    public PropertiesForwardShooter propertiesForwardShooter;
-    public PropertiesForward propertiesForward;
-    public PropertiesLaserDiagonal propertiesLaserDiagonal;
-    public PropertiesSphericalAiming propertiesSphericalAiming;
-    public PropertiesBombDrop propertiesBombDrop;
-    public PropertiesTrail propertiesTrail;
-    public PropertiesDoubleAiming propertiesDoubleAiming;
-    public PropertiesCircular propertiesCircular;
-    public PropertiesSquare propertiesSquare;
+    public ScriptableObject[] enemyProperties;
 
-    public Dictionary<string, EnemyProperties> enemyProperties;
+    public Dictionary<string, ScriptableObject> enemyPropertiesDictionary = new Dictionary<string, ScriptableObject>();
 
     [Header("Bounds")]
     [HideInInspector]
@@ -53,16 +45,17 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
+        EnemyPropertiesDictionary();
+    }
 
-        enemyProperties = new Dictionary<string, EnemyProperties>();
-
-        enemyProperties.Add("ForwardShooter", propertiesForwardShooter);
-        enemyProperties.Add("Forward", propertiesForward);
-        enemyProperties.Add("LaserDiagonal", propertiesLaserDiagonal);
-        enemyProperties.Add("SphericalAiming", propertiesSphericalAiming);
-        enemyProperties.Add("BombDrop", propertiesBombDrop);
-        enemyProperties.Add("Trail", propertiesTrail);
-        enemyProperties.Add("DoubleAiming", propertiesDoubleAiming);
+    void EnemyPropertiesDictionary()
+    {
+        ScriptableObject currentProperty;
+        for (int i = 0; i < enemyProperties.Length; i++)
+        {
+            currentProperty = enemyProperties[i];
+            enemyPropertiesDictionary.Add(currentProperty.enemyName, enemyProperties[i]);
+        }
     }
 
 }

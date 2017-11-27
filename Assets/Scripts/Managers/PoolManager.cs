@@ -7,25 +7,30 @@ public class PoolManager : MonoBehaviour
 {
     public class PoolEnemy
     {
-        public string enemyName;
         public int enemyAmount;
         public List<GameObject> pooledItems;
         public int index;
         public GameObject enemyTypeObject;
+        public Enemy enemyScript;
+        public GameObject enemyObject;
+        public ScriptableObject property;
 
-        public PoolEnemy(string _enemyName, GameObject _enemyTypeObject, int _enemyAmount)
+
+
+        public PoolEnemy(ScriptableObject _property, GameObject _enemyTypeObject, int _enemyAmount)
         {
             enemyTypeObject = _enemyTypeObject;
             enemyAmount = _enemyAmount;
-            enemyName = _enemyName;
+            property = _property;
 
             pooledItems = new List<GameObject>();
-            
+
             for (int i = 0; i < enemyAmount; i++)
             {
-                GameObject enemy = Instantiate(_enemyTypeObject) as GameObject;
-                enemy.SetActive(false);
-                pooledItems.Add(enemy);
+                GameObject Enemy = Instantiate(enemyTypeObject) as GameObject;
+                Enemy.GetComponent<Enemy>().SetProperty(property);
+                Enemy.SetActive(false);
+                pooledItems.Add(Enemy);
             }
         }
 
@@ -33,9 +38,9 @@ public class PoolManager : MonoBehaviour
         {
             int currentIndex = index;
 
-            if(currentIndex >= pooledItems.Count - 1)
+            if (currentIndex >= pooledItems.Count - 1)
             {
-                 index = 0;
+                index = 0;
             }
 
             index++;
@@ -86,12 +91,12 @@ public class PoolManager : MonoBehaviour
         public int index;
         public GameObject[] roadTypeObject;
 
-        public PoolEnv(GameObject[] _roadTypeObject,int _envAmount)
+        public PoolEnv(GameObject[] _roadTypeObject, int _envAmount)
         {
             envAmount = _envAmount;
             roadTypeObject = new GameObject[_roadTypeObject.Length];
-           
-            for (int i=0; i < _roadTypeObject.Length; i++)
+
+            for (int i = 0; i < _roadTypeObject.Length; i++)
             {
                 roadTypeObject[i] = _roadTypeObject[i];
             }
@@ -123,22 +128,16 @@ public class PoolManager : MonoBehaviour
     public Dictionary<string, PoolBullet> pooledBulletClass;
 
     [Header("Bullets")]
+    public int pooledPlayerBulletAmount;
+    public int doubleAimingBulletAmount;
+    public int doubleAimingSinusoideBulletAmount;
+    public int forwardShooterBulletAmount;
+    public int sphericalAimingBulletAmount;
+    public int trailBulletAmount;
+    public int laserBulletAmount;
+    public int bombDropBulletAmount;
+    public Dictionary<string, int> bulletAmount = new Dictionary<string, int>();
 
-	public int pooledPlayerBulletAmount;
-
-	private int doubleAimingBulletAmount;
-
-	private int doubleAimingSinusoideBulletAmount;
-	
-	private int forwardShooterBulletAmount;
-	
-	private int sphericalAimingBulletAmount;
-
-	private int trailBulletAmount;
-	
-	private int laserBulletAmount;
-	
-	private int bombDropBulletAmount;
 
     [Header("Enemies")]
     public int forwardEnemyAmount = 10;
@@ -148,6 +147,7 @@ public class PoolManager : MonoBehaviour
     public int trailEnemyAmount = 10;
     public int laserEnemyAmount = 10;
     public int bombDropEnemyAmount = 10;
+    public Dictionary<string, int> enemyAmount = new Dictionary<string, int>();
 
     [Header("Env")]
     public GameObject[] roads;
@@ -157,7 +157,10 @@ public class PoolManager : MonoBehaviour
     {
         instance = this;
 
-		MaxBulletSetter ();
+        EnemyAmountDictionary();
+        BulletAmountDictionary();
+
+       // MaxBulletSetter();
 
         pooledEnemyClass = new Dictionary<string, PoolEnemy>();
         pooledBulletClass = new Dictionary<string, PoolBullet>();
@@ -166,118 +169,124 @@ public class PoolManager : MonoBehaviour
         DictionaryBulletInitialization();
 
         PoolEnv env = new PoolEnv(roads, roadsAmount);
-                
+
     }
-    
+
     void DictionaryEnemyInitialization()
     {
-        PoolEnemy ForwardShooter = new PoolEnemy(Register.instance.enemyProperties["ForwardShooter"].ToString(), Register.instance.enemyProperties["ForwardShooter"].gameObjectPrefab, shooterForwardEnemyAmount);
-        PoolEnemy Forward = new PoolEnemy(Register.instance.enemyProperties["Forward"].ToString(), Register.instance.enemyProperties["Forward"].gameObjectPrefab, forwardEnemyAmount);
-        PoolEnemy LaserDiagonal = new PoolEnemy(Register.instance.enemyProperties["LaserDiagonal"].ToString(), Register.instance.enemyProperties["LaserDiagonal"].gameObjectPrefab, laserEnemyAmount);
-        PoolEnemy SphericalAiming = new PoolEnemy(Register.instance.enemyProperties["SphericalAiming"].ToString(), Register.instance.enemyProperties["SphericalAiming"].gameObjectPrefab, sphericalAimingEnemyAmount);
-        PoolEnemy BombDrop = new PoolEnemy(Register.instance.enemyProperties["BombDrop"].ToString(), Register.instance.enemyProperties["BombDrop"].gameObjectPrefab, bombDropEnemyAmount);
-        PoolEnemy Trail = new PoolEnemy(Register.instance.enemyProperties["Trail"].ToString(), Register.instance.enemyProperties["Trail"].gameObjectPrefab, trailEnemyAmount);
-        PoolEnemy DoubleAiming = new PoolEnemy(Register.instance.enemyProperties["DoubleAiming"].ToString(), Register.instance.enemyProperties["DoubleAiming"].gameObjectPrefab, doubleAimingEnemyAmount);
+        ScriptableObject currentProperty;
+        for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
+        {
+            currentProperty = Register.instance.enemyProperties[i];
+            PoolEnemy Enemy = new PoolEnemy(currentProperty, currentProperty.gameObjectPrefab, enemyAmount[currentProperty.enemyName]);
+            pooledEnemyClass.Add(currentProperty.enemyName, Enemy);
 
-        pooledEnemyClass.Add("ForwardShooter", ForwardShooter);
-        pooledEnemyClass.Add("Forward", Forward);
-        pooledEnemyClass.Add("LaserDiagonal", LaserDiagonal);
-        pooledEnemyClass.Add("SphericalAiming", SphericalAiming);
-        pooledEnemyClass.Add("BombDrop", BombDrop);
-        pooledEnemyClass.Add("Trail", Trail);
-        pooledEnemyClass.Add("DoubleAiming", DoubleAiming);
+        }
     }
 
     void DictionaryBulletInitialization()
     {
-        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, pooledPlayerBulletAmount);
-        PoolBullet DoubleAimingBullet = new PoolBullet(Register.instance.propertiesDoubleAiming.sidescrollBulletPrefab, doubleAimingBulletAmount);
-        PoolBullet DoubleAimingSinusoideBullet = new PoolBullet(Register.instance.propertiesDoubleAiming.topdownBulletPrefab, doubleAimingSinusoideBulletAmount);
-        PoolBullet ForwardShooterBullet = new PoolBullet(Register.instance.propertiesForwardShooter.bulletPrefab, forwardShooterBulletAmount);
-        PoolBullet SphericalAimingBullet = new PoolBullet(Register.instance.propertiesSphericalAiming.bulletPrefab, sphericalAimingBulletAmount);
-        PoolBullet TrailBullet = new PoolBullet(Register.instance.propertiesTrail.trailPrefab, trailBulletAmount);
-        PoolBullet LaserBullet = new PoolBullet(Register.instance.propertiesLaserDiagonal.laserPrefab, laserBulletAmount);
-        PoolBullet BombDropBullet = new PoolBullet(Register.instance.propertiesBombDrop.bombPrefab, bombDropBulletAmount);
+        ScriptableObject currentProperty;
 
+        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, bulletAmount["PlayerBullet"]);
         pooledBulletClass.Add("PlayerBullet", PlayerBullet);
-        pooledBulletClass.Add("DoubleAimingBullet", DoubleAimingBullet);
-        pooledBulletClass.Add("DoubleAimingSinusoideBullet", DoubleAimingSinusoideBullet);
-        pooledBulletClass.Add("ForwardShooterBullet", ForwardShooterBullet);
-        pooledBulletClass.Add("SphericalAimingBullet", SphericalAimingBullet);
-        pooledBulletClass.Add("TrailBullet", TrailBullet);
-        pooledBulletClass.Add("LaserBullet", LaserBullet);
-        pooledBulletClass.Add("BombDropBullet", BombDropBullet);
+
+        for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
+        {
+            if (Register.instance.enemyProperties[i].enemyName != "Forward" )
+            {
+                currentProperty = Register.instance.enemyProperties[i];
+                PoolBullet Bullet = new PoolBullet(currentProperty.bulletPrefab, bulletAmount[currentProperty.enemyName]);
+                pooledBulletClass.Add(currentProperty.enemyName, Bullet);
+            }
+        }
     }
 
-	public int MaxBulletsCalculator(int enemyAmount, float enemySpeed, float enemyRateOfFire, float minLimit, float maxLimit)
-	{
-		float maxBulletAmount;
-		float enemyLifeTime;
-		float maxDistance;
-		float totalLifeTime;
-		float enemyBulletAmount;
-		maxDistance = Mathf.Abs( maxLimit - minLimit);
-		enemyLifeTime = Mathf.Round (maxDistance / enemySpeed);
-		enemyBulletAmount = enemyLifeTime / enemyRateOfFire;
-		maxBulletAmount = enemyBulletAmount * enemyAmount;
-		return (int)maxBulletAmount;
-	}
+    public int MaxBulletsCalculator(int enemyAmount, float enemySpeed, float enemyRateOfFire, float minLimit, float maxLimit)
+    {
+        float maxBulletAmount;
+        float enemyLifeTime;
+        float maxDistance;
+        float totalLifeTime;
+        float enemyBulletAmount;
+        maxDistance = Mathf.Abs(maxLimit - minLimit);
+        enemyLifeTime = Mathf.Round(maxDistance / enemySpeed);
+        enemyBulletAmount = enemyLifeTime / enemyRateOfFire;
+        maxBulletAmount = enemyBulletAmount * enemyAmount;
+        return (int)maxBulletAmount;
+    }
 
-	public void MaxBulletSetter()
-	{
-		float xMax = Register.instance.xMax;
-		float xMin = Register.instance.xMin;
+      public void MaxBulletSetter()
+      {
+        //float xMax = Register.instance.xMax;
+        //float xMin = Register.instance.xMin;
 
-		forwardShooterBulletAmount = MaxBulletsCalculator(
-			shooterForwardEnemyAmount,
-			Register.instance.propertiesForwardShooter.xSpeed,
-			Register.instance.propertiesForwardShooter.fireRate,
-			xMax,
-			xMin);
 
-		doubleAimingBulletAmount = MaxBulletsCalculator (
-			doubleAimingEnemyAmount,
-			Register.instance.propertiesDoubleAiming.xSpeed,
-			Register.instance.propertiesDoubleAiming.fireRate,
-			xMax,
-			xMin);
+        //forwardShooterBulletAmount = MaxBulletsCalculator(
+        //    shooterForwardEnemyAmount,
+        //    Register.instance.propertiesForwardShooter.xSpeed,
+        //    Register.instance.propertiesForwardShooter.fireRate,
+        //    xMax,
+        //    xMin);
 
-		doubleAimingSinusoideBulletAmount = MaxBulletsCalculator (
-			doubleAimingEnemyAmount,
-			Register.instance.propertiesDoubleAiming.xSpeed,
-			Register.instance.propertiesDoubleAiming.fireRate,
-			xMax,
-			xMin);
+        //doubleAimingBulletAmount = MaxBulletsCalculator(
+        //    doubleAimingEnemyAmount,
+        //    Register.instance.propertiesDoubleAiming.xSpeed,
+        //    Register.instance.propertiesDoubleAiming.fireRate,
+        //    xMax,
+        //    xMin);
 
-		sphericalAimingBulletAmount = MaxBulletsCalculator (
-			sphericalAimingEnemyAmount,
-			Register.instance.propertiesSphericalAiming.xSpeed,
-			Register.instance.propertiesSphericalAiming.fireRate,
-			xMax,
-			xMin);
+        //sphericalAimingBulletAmount = MaxBulletsCalculator(
+        //    sphericalAimingEnemyAmount,
+        //    Register.instance.propertiesSphericalAiming.xSpeed,
+        //    Register.instance.propertiesSphericalAiming.fireRate,
+        //    xMax,
+        //    xMin);
 
-		trailBulletAmount = trailEnemyAmount;
+        //trailBulletAmount = trailEnemyAmount;
 
-		laserBulletAmount = MaxBulletsCalculator (
-			laserEnemyAmount,
-			Register.instance.propertiesLaserDiagonal.xSpeed,
-			Register.instance.propertiesLaserDiagonal.loadingTime + Register.instance.propertiesLaserDiagonal.shootingTime + Register.instance.propertiesLaserDiagonal.waitingTime,
-			xMax,
-			xMin);
+        //laserBulletAmount = MaxBulletsCalculator(
+        //    laserEnemyAmount,
+        //    Register.instance.propertiesLaserDiagonal.xSpeed,
+        //    Register.instance.propertiesLaserDiagonal.loadingTime + Register.instance.propertiesLaserDiagonal.shootingTime + Register.instance.propertiesLaserDiagonal.waitingTime,
+        //    xMax,
+        //    xMin);
 
-		bombDropBulletAmount = MaxBulletsCalculator (
-			bombDropEnemyAmount,
-			Register.instance.propertiesBombDrop.xSpeed,
-			Register.instance.propertiesBombDrop.loadingTime + Register.instance.propertiesBombDrop.bombLifeTime,
-			xMax,
-			xMin);
-		
-//		Debug.Log ("Forward" + forwardShooterBulletAmount);
-//		Debug.Log ("DoubleAiming" + doubleAimingBulletAmount);
-//		Debug.Log ("DoubleAimingSin" + doubleAimingSinusoideBulletAmount);
-//		Debug.Log ("SphericalAiming" + sphericalAimingBulletAmount);
-//		Debug.Log ("Trail" + trailBulletAmount);
-//		Debug.Log ("Laser" + laserBulletAmount);
-//		Debug.Log ("BombDrop" + bombDropBulletAmount);
-	}
+        //bombDropBulletAmount = MaxBulletsCalculator(
+        //    bombDropEnemyAmount,
+        //    Register.instance.propertiesBombDrop.xSpeed,
+        //    Register.instance.propertiesBombDrop.loadingTime + Register.instance.propertiesBombDrop.bombLifeTime,
+        //    xMax,
+        //    xMin);
+
+        //Debug.Log("Forward" + forwardShooterBulletAmount);
+        //Debug.Log("DoubleAiming" + doubleAimingBulletAmount);
+        //Debug.Log("DoubleAimingSin" + doubleAimingSinusoideBulletAmount);
+        //Debug.Log("SphericalAiming" + sphericalAimingBulletAmount);
+        //Debug.Log("Trail" + trailBulletAmount);
+        //Debug.Log("Laser" + laserBulletAmount);
+        //Debug.Log("BombDrop" + bombDropBulletAmount);
+    }
+
+    void EnemyAmountDictionary()
+    {
+        enemyAmount.Add("ForwardShooter", shooterForwardEnemyAmount);
+        enemyAmount.Add("Forward", forwardEnemyAmount);
+        enemyAmount.Add("LaserDiagonal", laserEnemyAmount);
+        enemyAmount.Add("SphericalAiming", sphericalAimingEnemyAmount);
+        enemyAmount.Add("BombDrop", bombDropEnemyAmount);
+        enemyAmount.Add("Trail", trailEnemyAmount);
+        enemyAmount.Add("DoubleAiming", doubleAimingEnemyAmount);
+    }
+
+    void BulletAmountDictionary()
+    {
+        bulletAmount.Add("PlayerBullet", pooledPlayerBulletAmount);
+        bulletAmount.Add("ForwardShooter", forwardShooterBulletAmount);
+        bulletAmount.Add("LaserDiagonal", laserBulletAmount);
+        bulletAmount.Add("SphericalAiming", sphericalAimingBulletAmount);
+        bulletAmount.Add("BombDrop", doubleAimingBulletAmount);
+        bulletAmount.Add("Trail", trailBulletAmount);
+        bulletAmount.Add("DoubleAiming", doubleAimingBulletAmount);
+    }
 }

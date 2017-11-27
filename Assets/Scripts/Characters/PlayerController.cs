@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
         minimumX = -70f;
         maximumX = 70;
-        bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
+        //bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
         properties = Register.instance.propertiesPlayer;
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
@@ -582,7 +582,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = bulletPool.GetpooledBullet();
+        GameObject bullet = PoolManager.instance.pooledBulletClass["PlayerBullet"].GetpooledBullet();
         bullet.transform.position = bulletSpawnPoints[gunIndex].position;
         bullet.transform.rotation = bulletSpawnPoints[gunIndex].rotation;
         bullet.SetActive(true);

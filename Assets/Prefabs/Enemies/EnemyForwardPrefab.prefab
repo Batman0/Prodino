@@ -72,16 +72,16 @@ GameObject:
   - component: {fileID: 4866505689508780}
   - component: {fileID: 33175344848340842}
   - component: {fileID: 23410314197661144}
-  - component: {fileID: 114002524796094322}
   - component: {fileID: 65381888155023296}
   - component: {fileID: 65066026575963902}
+  - component: {fileID: 114862091362335256}
   m_Layer: 12
   m_Name: EnemyForwardPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1281073772698188
 GameObject:
   m_ObjectHideFlags: 1
@@ -354,26 +354,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 40, y: 1, z: 2.15}
   m_Center: {x: 0, y: -0.0225, z: 0.25}
---- !u!114 &114002524796094322
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275809954252400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f533d8d2b8172944ba55816012b62320, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRight: 0
-  explosionParticleManager: {fileID: 114171334904376290}
-  bulletSpawnpoint: {fileID: 4587967034834114}
-  bulletSpawnpointOther: {fileID: 0}
-  shooterTransform: {fileID: 0}
-  meshTransform: {fileID: 0}
-  sideCollider: {fileID: 65381888155023296}
-  topCollider: {fileID: 65066026575963902}
-  behaviourType: 1
 --- !u!114 &114171334904376290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,6 +365,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a435e229a00939e4f893779bceb8a72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114862091362335256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275809954252400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39df1d8eb692aba42b50eb8234a865a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionParticleManager: {fileID: 0}
+  bulletSpawnpoint: {fileID: 4587967034834114}
+  bulletSpawnpointSecond: {fileID: 0}
+  shooterTransform: {fileID: 4866505689508780}
+  sideCollider: {fileID: 65381888155023296}
+  topCollider: {fileID: 65066026575963902}
+  timer: 0.3
+  isRight: 0
 --- !u!198 &198337668876478720
 ParticleSystem:
   m_ObjectHideFlags: 1
