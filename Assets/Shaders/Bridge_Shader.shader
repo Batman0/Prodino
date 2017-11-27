@@ -1,19 +1,74 @@
 // Shader created with Shader Forge v1.38 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32719,y:32712,varname:node_2865,prsc:2|diff-6343-OUT,spec-3951-R,gloss-1813-OUT,normal-1208-RGB;n:type:ShaderForge.SFN_Multiply,id:6343,x:32114,y:32712,varname:node_6343,prsc:2|A-2441-RGB,B-5706-RGB;n:type:ShaderForge.SFN_Slider,id:1813,x:32250,y:32882,ptovrint:False,ptlb:Gloss,ptin:_Gloss,varname:_Metallic_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Tex2d,id:2441,x:31827,y:32611,ptovrint:False,ptlb:Albedo,ptin:_Albedo,varname:node_2441,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:5130491bfef150a4db3c4d0197ca9e59,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Color,id:5706,x:31827,y:32814,ptovrint:False,ptlb:BaseColor,ptin:_BaseColor,varname:node_5706,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.5,c2:0.5,c3:0.5,c4:1;n:type:ShaderForge.SFN_Tex2d,id:1208,x:32353,y:32521,ptovrint:False,ptlb:NormalMap,ptin:_NormalMap,varname:node_1208,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:6683bd369e45c264aa9bf86458cbadef,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:3951,x:32594,y:32478,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_3951,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:1320cbaa7edaeb04db51908c5f821db1,ntxv:0,isnm:False;proporder:1813-5706-2441-1208-3951;pass:END;sub:END;*/
+/*SF_DATA;ver:1.38;sub:START;pass:START;ps:flbk:,iptp:0,cusa:False,bamd:0,cgin:,lico:1,lgpr:1,limd:3,spmd:1,trmd:0,grmd:0,uamb:True,mssp:True,bkdf:True,hqlp:False,rprd:True,enco:False,rmgx:True,imps:True,rpth:0,vtps:0,hqsc:True,nrmq:1,nrsp:0,vomd:0,spxs:False,tesm:0,olmd:1,culm:0,bsrc:0,bdst:1,dpts:2,wrdp:True,dith:0,atcv:False,rfrpo:True,rfrpn:Refraction,coma:15,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,stcl:False,atwp:False,stva:128,stmr:255,stmw:255,stcp:6,stps:0,stfa:0,stfz:0,ofsf:0,ofsu:0,f2p0:False,fnsp:False,fnfb:False,fsmp:False;n:type:ShaderForge.SFN_Final,id:2865,x:32719,y:32712,varname:node_2865,prsc:2|diff-912-OUT,spec-358-OUT,gloss-1813-OUT,normal-6973-RGB,olwid-6153-OUT,olcol-1480-RGB;n:type:ShaderForge.SFN_Slider,id:358,x:32373,y:32594,ptovrint:False,ptlb:Metallic,ptin:_Metallic,varname:node_358,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Slider,id:1813,x:32100,y:32589,ptovrint:False,ptlb:Gloss,ptin:_Gloss,varname:_Metallic_copy,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0,max:1;n:type:ShaderForge.SFN_Tex2d,id:6973,x:32037,y:32845,ptovrint:False,ptlb:NormalMap,ptin:_NormalMap,varname:_NormalMap,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,tex:5e451c9c14631774593360dd97becadc,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Slider,id:6153,x:32324,y:33343,ptovrint:False,ptlb:Outline_Width,ptin:_Outline_Width,varname:node_987,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,min:0,cur:0.04360101,max:1;n:type:ShaderForge.SFN_Color,id:1480,x:32443,y:33177,ptovrint:False,ptlb:Outline_Color,ptin:_Outline_Color,varname:node_9840,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0,c2:0,c3:0,c4:1;n:type:ShaderForge.SFN_Color,id:4223,x:31677,y:33073,ptovrint:False,ptlb:Albedo_Color,ptin:_Albedo_Color,varname:node_4223,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,c1:0.004865921,c2:0.1313238,c3:0.2205882,c4:1;n:type:ShaderForge.SFN_Tex2d,id:3774,x:31677,y:32861,ptovrint:False,ptlb:Albedo,ptin:_Albedo,varname:node_3774,prsc:2,glob:False,taghide:False,taghdr:False,tagprd:False,tagnsco:False,tagnrm:False,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:912,x:31955,y:33060,varname:node_912,prsc:2|A-3774-RGB,B-4223-RGB;proporder:358-1813-6973-6153-1480-4223-3774;pass:END;sub:END;*/
 
-Shader "Shader Forge/BridgeShader" {
+Shader "Shader Forge/Bridge_Shader" {
     Properties {
+        _Metallic ("Metallic", Range(0, 1)) = 0
         _Gloss ("Gloss", Range(0, 1)) = 0
-        _BaseColor ("BaseColor", Color) = (0.5,0.5,0.5,1)
-        _Albedo ("Albedo", 2D) = "white" {}
         _NormalMap ("NormalMap", 2D) = "bump" {}
-        _Metallic ("Metallic", 2D) = "white" {}
+        _Outline_Width ("Outline_Width", Range(0, 1)) = 0.04360101
+        _Outline_Color ("Outline_Color", Color) = (0,0,0,1)
+        _Albedo_Color ("Albedo_Color", Color) = (0.004865921,0.1313238,0.2205882,1)
+        _Albedo ("Albedo", 2D) = "white" {}
     }
     SubShader {
         Tags {
             "RenderType"="Opaque"
+        }
+        Pass {
+            Name "Outline"
+            Tags {
+            }
+            Cull Front
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #define SHOULD_SAMPLE_SH ( defined (LIGHTMAP_OFF) && defined(DYNAMICLIGHTMAP_OFF) )
+            #define _GLOSSYENV 1
+            #include "UnityCG.cginc"
+            #include "Lighting.cginc"
+            #include "UnityPBSLighting.cginc"
+            #include "UnityStandardBRDF.cginc"
+            #pragma fragmentoption ARB_precision_hint_fastest
+            #pragma multi_compile_shadowcaster
+            #pragma multi_compile LIGHTMAP_OFF LIGHTMAP_ON
+            #pragma multi_compile DIRLIGHTMAP_OFF DIRLIGHTMAP_COMBINED DIRLIGHTMAP_SEPARATE
+            #pragma multi_compile DYNAMICLIGHTMAP_OFF DYNAMICLIGHTMAP_ON
+            #pragma multi_compile_fog
+            #pragma only_renderers d3d9 d3d11 glcore gles 
+            #pragma target 3.0
+            uniform float _Outline_Width;
+            uniform float4 _Outline_Color;
+            struct VertexInput {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+                float2 texcoord1 : TEXCOORD1;
+                float2 texcoord2 : TEXCOORD2;
+            };
+            struct VertexOutput {
+                float4 pos : SV_POSITION;
+                float2 uv1 : TEXCOORD0;
+                float2 uv2 : TEXCOORD1;
+                float4 posWorld : TEXCOORD2;
+                UNITY_FOG_COORDS(3)
+            };
+            VertexOutput vert (VertexInput v) {
+                VertexOutput o = (VertexOutput)0;
+                o.uv1 = v.texcoord1;
+                o.uv2 = v.texcoord2;
+                o.posWorld = mul(unity_ObjectToWorld, v.vertex);
+                o.pos = UnityObjectToClipPos( float4(v.vertex.xyz + v.normal*_Outline_Width,1) );
+                UNITY_TRANSFER_FOG(o,o.pos);
+                return o;
+            }
+            float4 frag(VertexOutput i) : COLOR {
+                float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
+                return fixed4(_Outline_Color.rgb,0);
+            }
+            ENDCG
         }
         Pass {
             Name "FORWARD"
@@ -40,11 +95,11 @@ Shader "Shader Forge/BridgeShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles 
             #pragma target 3.0
+            uniform float _Metallic;
             uniform float _Gloss;
-            uniform sampler2D _Albedo; uniform float4 _Albedo_ST;
-            uniform float4 _BaseColor;
             uniform sampler2D _NormalMap; uniform float4 _NormalMap_ST;
-            uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
+            uniform float4 _Albedo_Color;
+            uniform sampler2D _Albedo; uniform float4 _Albedo_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -155,11 +210,10 @@ Shader "Shader Forge/BridgeShader" {
 ////// Specular:
                 float NdotL = saturate(dot( normalDirection, lightDirection ));
                 float LdotH = saturate(dot(lightDirection, halfDirection));
-                float4 _Metallic_var = tex2D(_Metallic,TRANSFORM_TEX(i.uv0, _Metallic));
-                float3 specularColor = _Metallic_var.r;
+                float3 specularColor = _Metallic;
                 float specularMonochrome;
                 float4 _Albedo_var = tex2D(_Albedo,TRANSFORM_TEX(i.uv0, _Albedo));
-                float3 diffuseColor = (_Albedo_var.rgb*_BaseColor.rgb); // Need this for specular when using metallic
+                float3 diffuseColor = (_Albedo_var.rgb*_Albedo_Color.rgb); // Need this for specular when using metallic
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, specularColor, specularColor, specularMonochrome );
                 specularMonochrome = 1.0-specularMonochrome;
                 float NdotV = abs(dot( normalDirection, viewDirection ));
@@ -231,11 +285,11 @@ Shader "Shader Forge/BridgeShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles 
             #pragma target 3.0
+            uniform float _Metallic;
             uniform float _Gloss;
-            uniform sampler2D _Albedo; uniform float4 _Albedo_ST;
-            uniform float4 _BaseColor;
             uniform sampler2D _NormalMap; uniform float4 _NormalMap_ST;
-            uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
+            uniform float4 _Albedo_Color;
+            uniform sampler2D _Albedo; uniform float4 _Albedo_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -294,11 +348,10 @@ Shader "Shader Forge/BridgeShader" {
 ////// Specular:
                 float NdotL = saturate(dot( normalDirection, lightDirection ));
                 float LdotH = saturate(dot(lightDirection, halfDirection));
-                float4 _Metallic_var = tex2D(_Metallic,TRANSFORM_TEX(i.uv0, _Metallic));
-                float3 specularColor = _Metallic_var.r;
+                float3 specularColor = _Metallic;
                 float specularMonochrome;
                 float4 _Albedo_var = tex2D(_Albedo,TRANSFORM_TEX(i.uv0, _Albedo));
-                float3 diffuseColor = (_Albedo_var.rgb*_BaseColor.rgb); // Need this for specular when using metallic
+                float3 diffuseColor = (_Albedo_var.rgb*_Albedo_Color.rgb); // Need this for specular when using metallic
                 diffuseColor = DiffuseAndSpecularFromMetallic( diffuseColor, specularColor, specularColor, specularMonochrome );
                 specularMonochrome = 1.0-specularMonochrome;
                 float NdotV = abs(dot( normalDirection, viewDirection ));
@@ -358,10 +411,10 @@ Shader "Shader Forge/BridgeShader" {
             #pragma multi_compile_fog
             #pragma only_renderers d3d9 d3d11 glcore gles 
             #pragma target 3.0
+            uniform float _Metallic;
             uniform float _Gloss;
+            uniform float4 _Albedo_Color;
             uniform sampler2D _Albedo; uniform float4 _Albedo_ST;
-            uniform float4 _BaseColor;
-            uniform sampler2D _Metallic; uniform float4 _Metallic_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float2 texcoord0 : TEXCOORD0;
@@ -392,11 +445,10 @@ Shader "Shader Forge/BridgeShader" {
                 o.Emission = 0;
                 
                 float4 _Albedo_var = tex2D(_Albedo,TRANSFORM_TEX(i.uv0, _Albedo));
-                float3 diffColor = (_Albedo_var.rgb*_BaseColor.rgb);
+                float3 diffColor = (_Albedo_var.rgb*_Albedo_Color.rgb);
                 float specularMonochrome;
                 float3 specColor;
-                float4 _Metallic_var = tex2D(_Metallic,TRANSFORM_TEX(i.uv0, _Metallic));
-                diffColor = DiffuseAndSpecularFromMetallic( diffColor, _Metallic_var.r, specColor, specularMonochrome );
+                diffColor = DiffuseAndSpecularFromMetallic( diffColor, _Metallic, specColor, specularMonochrome );
                 float roughness = 1.0 - _Gloss;
                 o.Albedo = diffColor + specColor * roughness * roughness * 0.5;
                 

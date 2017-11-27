@@ -1153,11 +1153,11 @@ namespace Rewired.Demos {
             string message;
             if(entry.controllerType == ControllerType.Keyboard) {
 
-                //if(Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer) {
-                //    message = "Press any key to assign it to this action. You may also use the modifier keys Command, Control, Alt, and Shift. If you wish to assign a modifier key ifselt this action, press and hold the key for 1 second.";
-                //} else {
+                if(Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXWebPlayer) {
+                    message = "Press any key to assign it to this action. You may also use the modifier keys Command, Control, Alt, and Shift. If you wish to assign a modifier key ifselt this action, press and hold the key for 1 second.";
+                } else {
                     message = "Press any key to assign it to this action. You may also use the modifier keys Control, Alt, and Shift. If you wish to assign a modifier key itself to this action, press and hold the key for 1 second.";
-                //}
+                }
 
                 // Editor modifier key disclaimer
                 if(Application.isEditor) {
