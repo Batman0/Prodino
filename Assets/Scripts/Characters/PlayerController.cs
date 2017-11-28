@@ -6,7 +6,7 @@ using Rewired;
 public class PlayerController : MonoBehaviour
 {
 
-    public enum PlayerState { CanMove, CanShoot, CanMoveAndShoot, CantMoveOrShoot }
+    public enum PlayerState { Moving, Attacking, Dead }
 
 	[Header("General")]
 	[HideInInspector]
@@ -51,8 +51,7 @@ public class PlayerController : MonoBehaviour
 	private float horizontal;
 	private float horizontalAxis;
 	private float verticalAxis;
-	private float minimumX;
-	private float maximumX;
+
     private Quaternion sideScrollRotation;
     private Quaternion armsAimStartRotation;
     private Quaternion sideBodyColliderStartRot;
@@ -70,8 +69,6 @@ public class PlayerController : MonoBehaviour
     private PoolManager.PoolBullet bulletPool;
 
     [Header("Guns")]
-    private Quaternion shoulderRStartRotation;
-    private Quaternion shoulderLStartRotation;
     public GameObject armRx;
     public Transform gunRx;
     public GameObject armLx;
@@ -93,15 +90,14 @@ public class PlayerController : MonoBehaviour
 	public GameObject gunsAimL;
 	public GameObject shoulderAimR;
 	public GameObject shoulderAimL;
-	public Quaternion gunLStartRotation;
-	public Quaternion gunRStartRotation;
+	private Quaternion gunLStartRotation;
+	private Quaternion gunRStartRotation;
+	private Quaternion shoulderRStartRotation;
+	private Quaternion shoulderLStartRotation;
 
     [Header("Boundaries")]
-    public float sideXMin;
-    public float sideXMax;
-    public float sideYMin = 5.5f;
-    public float sideYMax;
-    public float topXMin, topXMax, topZMin, topZMax;
+	private float sideXMin, sideXMax, sideYMin, sideYMax;
+	private float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
     private bool isSidescroll;
@@ -165,12 +161,16 @@ public class PlayerController : MonoBehaviour
             if (!isInvincible && other.gameObject.layer == enemyLayer)
             {
                 life--;
+				StartCoroutine("RespawnPlayer");
+				StartCoroutine ("InvinciblePlayer");
 
                 if (IsDead())
                 {
-                    life = properties.lives;
-                    playerModel.SetActive(false);
-                    StartCoroutine("EnablePlayer");
+					//Game over initialization
+					//Temp value
+					StartCoroutine("RespawnPlayer");
+					StartCoroutine ("InvinciblePlayer");
+					ResetPlayerLives();
                 }
                 
                 if (other.transform.tag.StartsWith("EnemyBullet"))
@@ -197,49 +197,68 @@ public class PlayerController : MonoBehaviour
 
     void Init()
     {
-        //It initializes the Rewired's player.
+		//Player state initialization
+		startPosition = transform.position;
+		currentPlayerState = PlayerState.Moving;
+		properties = Register.instance.propertiesPlayer;
+
+        //Rewired Initialization
         player = ReInput.players.GetPlayer(playerId);
-        minimumX = -70f;
-        maximumX = 70;
-        //bulletPool = PoolManager.instance.pooledBulletClass["PlayerBullet"];
-        properties = Register.instance.propertiesPlayer;
+        
+		//Arm Rotation in Sidescroll
+		upRotationAngle = properties.upRotationAngle;
+		downRotationAngle = properties.downRotationAngle;
+		maxArmsRotation = properties.maxArmsRotation;
+
+		//Jumping
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
         glideSpeed = properties.glideSpeed;
-        upRotationAngle = properties.upRotationAngle;
-        downRotationAngle = properties.downRotationAngle;
+        
+		//Shooting
+		aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
         fireRatio = properties.fireRatio;
         RespawnTimer = properties.respawnTimer;
         gravity = properties.gravity;
-        maxArmsRotation = properties.maxArmsRotation;
+		gunIndex = 0;
+        
+		//Attacks
         tailMeleeSpeed = properties.tailMeleeSpeed;
         biteATKSpeed = properties.biteATKSpeed;
         biteCoolDownActive = properties.biteCoolDownActive;
         biteCoolDown = properties.biteCoolDown;
+
+		//Player Stats
         topdownPlayerHeight = properties.topdownPlayerHeight;
         invincibleTime = properties.invincibleTime;
-        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
-        topBodyColliderStartRot = topBodyCollider.transform.rotation;
-        sideScrollRotation = transform.rotation;
-        armsAimStartRotation = armsAim.transform.rotation;
         life = properties.lives;
         transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
-        startPosition = transform.position;
-        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
-        currentPlayerState = PlayerState.CanMoveAndShoot;
-        gunIndex = 0;
+        
+		//Changes during camera transition
         shoulderLStartRotation = shoulderAimL.transform.rotation;
         shoulderRStartRotation = shoulderAimR.transform.rotation;
 		gunLStartRotation = gunsAimL.transform.rotation;
 		gunRStartRotation = gunsAimR.transform.rotation;
+		sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
+		topBodyColliderStartRot = topBodyCollider.transform.rotation;
+		sideScrollRotation = transform.rotation;
+		armsAimStartRotation = armsAim.transform.rotation;
 
+		//Player boundaries From Register
+		sideXMin = Register.instance.xMin;
+		sideXMax = Register.instance.xMax;
+		sideYMin = Register.instance.yMin;
+		sideYMax = Register.instance.yMax;
+		topXMax = Register.instance.xMax;
+		topXMin = Register.instance.xMin;
+		topZMax = Register.instance.zMax;
+		topZMin = Register.instance.zMin;
     }
 
     void Main()
     {
         if (!IsDead())
         {
-			
             if (!GameManager.instance.transitionIsRunning)
             {
                 UpdateMovementAxes();
@@ -260,15 +279,10 @@ public class PlayerController : MonoBehaviour
                 {
                     fireTimer += Time.deltaTime;
                 }
-                else if (player.GetButton("Shoot") && (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot))
+				else if (player.GetButton("Shoot") && currentPlayerState == PlayerState.Moving)
                 {
                     Shoot();
                 }
-
-            }
-			else
-            {
-				
             }
         }
     }
@@ -281,7 +295,7 @@ public class PlayerController : MonoBehaviour
         }
         inverseDirection = new Vector3(horizontalAxis, verticalAxis, 0);
 
-        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove)
+		if (currentPlayerState == PlayerState.Moving)
         {
 			if ((transform.position.x > sideXMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < sideXMax && horizontalAxis > controllerDeadZone))
             {
@@ -338,12 +352,11 @@ public class PlayerController : MonoBehaviour
 
         ClampPositionSidescroll();
 
-        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
-        {
+        
             UpdateArmsRotation();
-        }
+        
 
-        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && player.GetButtonDown("Meele") && !biteCoolDownActive && canJump)
+		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele") && !biteCoolDownActive && canJump)
         {
             StartCoroutine("BiteAttack");
         }
@@ -372,21 +385,19 @@ public class PlayerController : MonoBehaviour
                 SetAnimationFromMoveBackwardsToFly();
             }
         }
-        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove)
+		if (currentPlayerState == PlayerState.Moving)
         {
             Move(Vector3.forward, speed, "MoveVertical");
             Move(Vector3.right, speed, "MoveHorizontal");
         }
-        if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
+		if (currentPlayerState == PlayerState.Moving)
         {
             TurnAroundGO(transform);
-//            gunsAimL.transform.position = new Vector3(gunsAimL.transform.position.x, aimTransform.transform.position.y, shoulderAimL.transform.position.z);
-//            gunsAimR.transform.position = new Vector3(gunsAimR.transform.position.x, aimTransform.transform.position.y, shoulderAimR.transform.position.z);
         }
 
         ClampPositionTopdown();
 
-        if ((currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove) && player.GetButtonDown("Meele"))
+		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele"))
         {
             StartCoroutine("TailAttack");
         }
@@ -604,9 +615,9 @@ public class PlayerController : MonoBehaviour
     {
 
 		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax ),
-			Mathf.Clamp(transform.position.y, Register.instance.yMin , Register.instance.yMax ),
-			Mathf.Clamp(transform.position.z, Register.instance.zMin , Register.instance.zMax)
+			Mathf.Clamp(transform.position.x, sideXMin , sideXMax ),
+			Mathf.Clamp(transform.position.y, sideYMin , sideYMax ),
+			Mathf.Clamp(transform.position.z, topZMin , topZMax)
 		);
 
 
@@ -617,9 +628,9 @@ public class PlayerController : MonoBehaviour
     {
 
 			transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, Register.instance.xMin , Register.instance.xMax),
+			Mathf.Clamp(transform.position.x, topXMin , topXMax),
 				landmark.position.y + topdownPlayerHeight,
-			Mathf.Clamp(transform.position.z, Register.instance.zMin , Register.instance.zMax)
+			Mathf.Clamp(transform.position.z, topZMin , topZMax)
 			);
     }
 		
@@ -628,10 +639,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance.transitionIsRunning)
         {
 			
-			shoulderAimL.transform.rotation = shoulderLStartRotation;
-			shoulderAimR.transform.rotation = shoulderRStartRotation;
-			gunsAimL.transform.rotation = gunLStartRotation;
-			gunsAimR.transform.rotation = gunRStartRotation;
+			ResetLimbsRotation ();
 
             if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
             {
@@ -653,14 +661,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	void ResetLimbsRotation()
+	{
+		shoulderAimL.transform.rotation = shoulderLStartRotation;
+		shoulderAimR.transform.rotation = shoulderRStartRotation;
+		gunsAimL.transform.rotation = gunLStartRotation;
+		gunsAimR.transform.rotation = gunRStartRotation;
+	}
+
 	public bool IsDead()
 	{
 		return life <= 0;
 	}
 
+	public void ResetPlayerLives()
+	{
+		life = properties.lives;
+	}
+
     IEnumerator TailAttack()
     {
-        currentPlayerState = PlayerState.CantMoveOrShoot;
+		currentPlayerState = PlayerState.Attacking;
         angle = 0;
         topTailCollider.enabled = true;
       
@@ -672,32 +693,39 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         topTailCollider.enabled = false;
-        currentPlayerState = PlayerState.CanMoveAndShoot;
+		currentPlayerState = PlayerState.Moving;
     }
 
 	IEnumerator BiteAttack()
 	{
-        currentPlayerState = PlayerState.CantMoveOrShoot;
+		currentPlayerState = PlayerState.Attacking;
         rb.velocity = new Vector3(0, biteATKSpeed, 0);
 		biteCoolDownActive = true;
 
         yield return new WaitForSeconds (biteCoolDown);
         biteCoolDownActive = false;
-        currentPlayerState = PlayerState.CanMoveAndShoot;
+		currentPlayerState = PlayerState.Moving;
 	}
 
-    IEnumerator EnablePlayer()
+    IEnumerator InvinciblePlayer()
     {
-        currentPlayerState = PlayerState.CantMoveOrShoot;
-        yield return new WaitForSeconds(RespawnTimer);
-        currentPlayerState = PlayerState.CanMoveAndShoot;
-        playerModel.SetActive(true);
-        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
-        rb.velocity = Vector3.zero;
         isInvincible = true;
         yield return new WaitForSeconds(invincibleTime);
         isInvincible = false;
     }
+
+	IEnumerator RespawnPlayer()
+	{
+		currentPlayerState = PlayerState.Dead;
+		playerModel.SetActive(false);
+		yield return new WaitForSeconds(RespawnTimer);
+		currentPlayerState = PlayerState.Moving;
+		playerModel.SetActive(true);
+		//Reset Positiion after being hit ?
+		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+		rb.velocity = Vector3.zero;
+
+	}
 
     private void ActivateStrongerJetpack()
     {
