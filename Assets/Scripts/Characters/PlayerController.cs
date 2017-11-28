@@ -47,11 +47,8 @@ public class PlayerController : MonoBehaviour
 	private float gravity;
 	private float glideSpeed;
 	private float topdownPlayerHeight;
-	private float angle;
-	private float horizontal;
 	private float horizontalAxis;
 	private float verticalAxis;
-
 	private Quaternion transformStartRotation;
     private Quaternion armsAimStartRotation;
     private Quaternion sideBodyColliderStartRot;
@@ -117,6 +114,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("TailMelee")]
     private float tailMeleeSpeed;
+    private float angleTailAttack;
 
 	[Header("BiteMelee")]
     private float biteATKSpeed;
@@ -427,26 +425,41 @@ public class PlayerController : MonoBehaviour
 
         if (aimAngle <= maxArmsRotation && cross.z >= 0)
         {
-            TurnAroundGO(shoulderAimL.transform);
-            TurnAroundGO(shoulderAimR.transform);
+            shoulderAimL.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
+            shoulderAimR.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
         }
         else if (aimAngle <= maxArmsRotation && cross.z < 0)
         {
-            TurnAroundGO(shoulderAimL.transform);
-            TurnAroundGO(shoulderAimR.transform);
+            shoulderAimL.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
+            shoulderAimR.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
         }
 
-        if (aimAngle <= upRotationAngle && cross.z >= 0)
+
+        if (aimAngle < upRotationAngle && cross.z >= 0)
         {
 
             gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
             gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(-aimAngle, 90f, 0));
         }
-        else if (aimAngle <= downRotationAngle && cross.z < 0)
+        else if (aimAngle < downRotationAngle && cross.z < 0)
         {
-
             gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
             gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
+        }
+
+        if (aimAngle >= 90 && cross.z >= 0)
+        {
+            shoulderAimL.transform.rotation = Quaternion.Euler(new Vector3(-maxArmsRotation, 90f, 0));
+            shoulderAimR.transform.rotation = Quaternion.Euler(new Vector3(-maxArmsRotation, 90f, 0));
+            gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(-upRotationAngle, 90f, 0));
+            gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(-upRotationAngle, 90f, 0));
+        }
+        else if (aimAngle >= 90 && cross.z < 0)
+        {
+            shoulderAimL.transform.rotation = Quaternion.Euler(new Vector3(maxArmsRotation, 90f, 0));
+            shoulderAimR.transform.rotation = Quaternion.Euler(new Vector3(maxArmsRotation, 90f, 0));
+            gunsAimL.transform.rotation = Quaternion.Euler(new Vector3(downRotationAngle, 90f, 0));
+            gunsAimR.transform.rotation = Quaternion.Euler(new Vector3(downRotationAngle, 90f, 0));
         }
     }
 
@@ -698,12 +711,12 @@ public class PlayerController : MonoBehaviour
     IEnumerator TailAttack()
     {
 		currentPlayerState = PlayerState.Attacking;
-        angle = 0;
+        angleTailAttack = 0;
         topTailCollider.enabled = true;
       
-        while (angle < 360)
+        while (angleTailAttack < 360)
         {
-            angle += tailMeleeSpeed;
+            angleTailAttack += tailMeleeSpeed;
             transform.Rotate(Vector3.up, tailMeleeSpeed, Space.World);
 
             yield return null;
