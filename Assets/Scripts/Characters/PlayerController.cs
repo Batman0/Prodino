@@ -6,7 +6,7 @@ using Rewired;
 public class PlayerController : MonoBehaviour
 {
 
-    public enum PlayerState { Moving, Attacking, Dead }
+    public enum PlayerState { Moving, Stop , Attacking, Dead }
 
 	[Header("General")]
 	[HideInInspector]
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 	private float horizontalAxis;
 	private float verticalAxis;
 
-    private Quaternion sideScrollRotation;
+	private Quaternion transformStartRotation;
     private Quaternion armsAimStartRotation;
     private Quaternion sideBodyColliderStartRot;
     private Quaternion topBodyColliderStartRot;
@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
 	private float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
-    private bool isSidescroll;
-    private bool anim_isRunning;
-    private bool anim_isFlying;
-    private bool anim_isMovingBackwards;
+	public bool isSidescroll;
+	public bool anim_isRunning;
+	public bool anim_isFlying;
+	public bool anim_isMovingBackwards;
     private bool anim_isGliding;
     private bool anim_isJumping;
     private Vector3 inverseDirection;
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    { 
         Main();
     }
 
@@ -145,7 +145,11 @@ public class PlayerController : MonoBehaviour
 			{
 				armsAim.transform.rotation = armsAimStartRotation;
 			}
-			ChangePerspective();	
+
+			if (GameManager.instance.transitionIsRunning) 
+			{
+				StartCoroutine ("ChangePerspective");
+			}
 	}
 
     void LateUpdate()
@@ -201,6 +205,7 @@ public class PlayerController : MonoBehaviour
 		startPosition = transform.position;
 		currentPlayerState = PlayerState.Moving;
 		properties = Register.instance.propertiesPlayer;
+		anim_isRunning = true;
 
         //Rewired Initialization
         player = ReInput.players.GetPlayer(playerId);
@@ -241,7 +246,7 @@ public class PlayerController : MonoBehaviour
 		gunRStartRotation = gunsAimR.transform.rotation;
 		sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
 		topBodyColliderStartRot = topBodyCollider.transform.rotation;
-		sideScrollRotation = transform.rotation;
+		transformStartRotation = transform.rotation;
 		armsAimStartRotation = armsAim.transform.rotation;
 
 		//Player boundaries From Register
@@ -345,17 +350,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (transform.rotation != sideScrollRotation)
+        if (transform.rotation != transformStartRotation)
         {
-            transform.rotation = sideScrollRotation;
+            transform.rotation = transformStartRotation;
         }
 
         ClampPositionSidescroll();
-
+		 UpdateArmsRotation();
         
-            UpdateArmsRotation();
-        
-
 		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele") && !biteCoolDownActive && canJump)
         {
             StartCoroutine("BiteAttack");
@@ -368,33 +370,35 @@ public class PlayerController : MonoBehaviour
         {
             SetPlayerToTopdown();
         }
-        inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
-        playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
-        anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
-        if (anglePlayerDirection <= playerBackwardsAnimationLimit)
-        {
-            if (!anim_isMovingBackwards)
-            {
-                SetAnimationFromFlyToMoveBackwards();
-            }
-        }
-        if (anglePlayerDirection > playerBackwardsAnimationLimit)
-        {
-            if (!anim_isFlying)
-            {
-                SetAnimationFromMoveBackwardsToFly();
-            }
-        }
+
 		if (currentPlayerState == PlayerState.Moving)
         {
             Move(Vector3.forward, speed, "MoveVertical");
             Move(Vector3.right, speed, "MoveHorizontal");
-        }
-		if (currentPlayerState == PlayerState.Moving)
-        {
-            TurnAroundGO(transform);
-        }
 
+			TurnAroundGO(transform);
+
+			inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
+			playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
+			anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
+
+			if (anglePlayerDirection <= playerBackwardsAnimationLimit)
+			{
+				if (!anim_isMovingBackwards)
+				{
+					SetAnimationFromFlyToMoveBackwards();
+				}
+			}
+
+			if (anglePlayerDirection > playerBackwardsAnimationLimit)
+			{
+				if (!anim_isFlying)
+				{
+					SetAnimationFromMoveBackwardsToFly();
+				}
+			}
+        }
+			
         ClampPositionTopdown();
 
 		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele"))
@@ -450,7 +454,7 @@ public class PlayerController : MonoBehaviour
     {
         isSidescroll = true;
         animator.SetBool("sidescroll", isSidescroll);
-        transform.rotation = sideScrollRotation;
+        transform.rotation = transformStartRotation;
     }
 
     void SetPlayerToTopdown()
@@ -498,8 +502,8 @@ public class PlayerController : MonoBehaviour
 
     void SetAnimationFromMoveBackwardsToFly()
     {
+		anim_isFlying = true;
         anim_isMovingBackwards = false;
-        anim_isFlying = true;
         animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
         animator.SetBool("isFlying", anim_isFlying);
     }
@@ -619,9 +623,6 @@ public class PlayerController : MonoBehaviour
 			Mathf.Clamp(transform.position.y, sideYMin , sideYMax ),
 			Mathf.Clamp(transform.position.z, topZMin , topZMax)
 		);
-
-
-
     }
 
     public void ClampPositionTopdown()
@@ -634,31 +635,41 @@ public class PlayerController : MonoBehaviour
 			);
     }
 		
-    void ChangePerspective()
+	IEnumerator ChangePerspective()
     {
-        if (GameManager.instance.transitionIsRunning)
-        {
-			
-			ResetLimbsRotation ();
+		anim_isMovingBackwards = false;
+		anim_isFlying = false;
+		anim_isRunning = false;
+		horizontalAxis = 0;
+		verticalAxis = 0;	
 
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-            {
-				
-                if (!sideBodyCollider.enabled)
-                {
-                    topBodyCollider.enabled = false;
-                    sideBodyCollider.enabled = true;
-                }
-            }
-            else
-            {
-                if (!topBodyCollider.enabled)
-                {
-                    sideBodyCollider.enabled = false;
-                    topBodyCollider.enabled = true;
-                }
-            }
-        }
+		currentPlayerState = PlayerState.Stop;
+		ResetLimbsRotation ();
+
+		if (transform.rotation != transformStartRotation)
+		{
+			transform.rotation = transformStartRotation;
+		}
+
+		if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+		{
+			if (!sideBodyCollider.enabled)
+			{
+				topBodyCollider.enabled = false;
+				sideBodyCollider.enabled = true;
+			}
+		}
+		else
+		{
+			if (!topBodyCollider.enabled)
+			{
+				sideBodyCollider.enabled = false;
+				topBodyCollider.enabled = true;
+			}
+		}
+	
+		currentPlayerState = PlayerState.Moving;
+		yield return null;
     }
 
 	void ResetLimbsRotation()
@@ -667,6 +678,11 @@ public class PlayerController : MonoBehaviour
 		shoulderAimR.transform.rotation = shoulderRStartRotation;
 		gunsAimL.transform.rotation = gunLStartRotation;
 		gunsAimR.transform.rotation = gunRStartRotation;
+
+		shoulderAimL.transform.rotation = transform.rotation;
+		shoulderAimR.transform.rotation = transform.rotation;
+		gunsAimL.transform.rotation = transform.rotation;
+		gunsAimR.transform.rotation = transform.rotation;
 	}
 
 	public bool IsDead()
