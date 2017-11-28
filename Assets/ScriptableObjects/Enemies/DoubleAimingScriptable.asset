@@ -25,9 +25,9 @@ MonoBehaviour:
   bulletBackDistance: 4
   bulletSpeedDecrease: 1
   xBulletSpeed: 3
-  timeToMakeSinusoide: 2
+  sinusoideDuration: 1
   fireRate: 2
-  bulletAmplitude: 7
+  easingValue: 0.94
   sidescrollBulletPrefab: {fileID: 1215921225492252, guid: cc0367fa9b754cb43848a88db24b2e95,
     type: 2}
   topdownBulletPrefab: {fileID: 1889232763993750, guid: 8d4e8a9caa8b48c45a1a389938337d66,

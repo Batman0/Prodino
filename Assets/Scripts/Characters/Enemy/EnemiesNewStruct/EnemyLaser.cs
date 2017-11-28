@@ -12,8 +12,8 @@ public class EnemyLaser : Enemy
     private float yMovementSpeed;
     private float yMovementSpeedShooting;
     private float destructionMargin;
-    private float upDistance;
-    private float downDistance;
+    private float amplitude;
+    //private float downDistance;
     private float targetPlayerDeltaDistance;
     private Vector3 originalPos;
     private Vector3 sidescrollTarget;
@@ -33,15 +33,17 @@ public class EnemyLaser : Enemy
         base.InitEnemy();
         enemyLives = property.lives;
         originalPos = transform.position;
+        //Debug.Log(originalPos);
+        //Debug.Log(transform.position);
         speed = isRight ? -property.xSpeed : property.xSpeed;
         moveUp = true;
         yMovementSpeed = property.yMovementSpeed;
         yMovementSpeedShooting = property.yMovementSpeedShooting;
-        targetPlayerDeltaDistance = Mathf.Max(yMovementSpeed, yMovementSpeedShooting) / 10;
+        targetPlayerDeltaDistance = yMovementSpeed / 10;
         destructionMargin = property.destructionMargin;
-        upDistance = property.upDistance;
-        downDistance = property.downDistance;
-        sidescrollTarget = new Vector3(transform.position.x, originalPos.y + upDistance, transform.position.z);
+        amplitude = property.amplitude;
+        //downDistance = property.downDistance;
+        sidescrollTarget = new Vector3(transform.position.x, originalPos.y + amplitude, transform.position.z);
         waitingTime = property.waitingTime;
         loadingTime = property.loadingTime;
         shootingTime = property.shootingTime;
@@ -66,16 +68,18 @@ public class EnemyLaser : Enemy
         if (Vector3.Distance(transform.position, sidescrollTarget) > targetPlayerDeltaDistance)
         {
             sidescrollTarget = new Vector3(transform.position.x, sidescrollTarget.y, transform.position.z);
+            //Debug.Log(transform.position);
         }
         else
         {
-            moveUp = !moveUp;
-            yMovementSpeed = moveUp ? Mathf.Abs(yMovementSpeed) : -Mathf.Abs(yMovementSpeed);
-            yMovementSpeedShooting = moveUp ? Mathf.Abs(yMovementSpeedShooting) : -Mathf.Abs(yMovementSpeedShooting);
-            sidescrollTarget = moveUp ? new Vector3(transform.position.x, originalPos.y + upDistance, transform.position.z) : new Vector3(transform.position.x, originalPos.y - downDistance, transform.position.z);
+            //Debug.Log("ddddddd");
+            yMovementSpeed = -yMovementSpeed;
+            yMovementSpeedShooting = -yMovementSpeedShooting;
+            amplitude = -amplitude;
+            sidescrollTarget = new Vector3(transform.position.x, originalPos.y + amplitude, transform.position.z);
         }
 
-        transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, (!isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.fixedDeltaTime + transform.position.y, transform.position.z);
+        //transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, ((!isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.fixedDeltaTime) + transform.position.y, transform.position.z);
 
         if (isRight)
         {

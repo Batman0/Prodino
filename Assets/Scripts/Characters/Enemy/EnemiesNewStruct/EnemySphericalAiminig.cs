@@ -15,8 +15,7 @@ public class EnemySphericalAiminig : Enemy
     private bool barrelRight;
     private float zMovementSpeed;
     private float destructionMargin;
-    private float forwardDistance;
-    private float backDistance;
+    private float amplitude;
     private float targetPlayerDeltaDistance = 0.1f;
     private float rotationDeadZone;
     private float rotationSpeed;
@@ -39,13 +38,13 @@ public class EnemySphericalAiminig : Enemy
         barrelRight = isRight ? false : true;
         zMovementSpeed = property.zMovementSpeed;
         destructionMargin = property.destructionMargin;
-        forwardDistance = property.forwardDistance;
-        backDistance = property.backDistance;
-        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance);
+        amplitude = property.amplitude;
+        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         moveForward = true;
         playerCl = register.player.sideBodyCollider;
         rotationDeadZone = property.rotationDeadZone;
         rotationSpeed = property.rotationSpeed;
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
         shooterTransformStartRotation = shooterTransform.rotation;
         shooterTransformInverseRotation = Quaternion.Inverse(shooterTransformStartRotation);
     }
@@ -69,12 +68,15 @@ public class EnemySphericalAiminig : Enemy
         if (Vector3.Distance(transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
             topdownTarget = new Vector3(transform.position.x, transform.position.y, topdownTarget.z);
+            Debug.Log("NO");
         }
         else
         {
-            moveForward = !moveForward;
+            Debug.Log("YES");
+            //moveForward = !moveForward;
             zMovementSpeed = -zMovementSpeed;
-            topdownTarget = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
+            amplitude = -amplitude;
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         }
 
         transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);

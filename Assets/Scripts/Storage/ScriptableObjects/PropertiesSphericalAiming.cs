@@ -9,7 +9,7 @@ public class PropertiesSphericalAiming : ScriptableObject
     public float zMovementSpeed;
     public float rotationSpeed;
     public float destructionMargin;
-    public float forwardDistance;
+    public float amplitude;
     public float backDistance;
     public float rotationDeadZone;
     //public float waveLenght;

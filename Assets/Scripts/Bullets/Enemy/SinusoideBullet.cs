@@ -7,12 +7,16 @@ public class SinusoideBullet : NormalBullet
     public PropertiesDoubleAiming property;
     private bool moveForward;
     private float xSpeed;
-    private float timeToMakeSinusoide;
-    private float time;
+    private float sinusoideDuration;
     private float forwardDistance;
     private float backDistance;
     private float transformTargetDeltaDistance;
     private float zOriginal;
+    private float moment;
+    /// <summary>
+    /// Makes the movement more or less smooth. It doesn't have to be less than 0.935f (0.94f just to be sure).
+    /// </summary>
+    private float easingValue;
     private Vector3 originalPos;
     private Vector3 target;
     private Transform playerTr;
@@ -21,10 +25,11 @@ public class SinusoideBullet : NormalBullet
     {
         base.Awake();
         speed = property.xBulletSpeed;
-        timeToMakeSinusoide = property.timeToMakeSinusoide;
+        sinusoideDuration = property.sinusoideDuration;
         destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
         forwardDistance = property.bulletForwardDistance;
         backDistance = property.bulletBackDistance;
+        easingValue = property.easingValue;
         playerTr = register.player.transform;
         transformTargetDeltaDistance = 0.5f;
     }
@@ -43,8 +48,8 @@ public class SinusoideBullet : NormalBullet
         }
         target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
         xSpeed = transform.position.x >= playerTr.position.x ? -speed : speed;
-        zOriginal = transform.position.z;
-        time = 0;
+        zOriginal = !moveForward ? originalPos.z + forwardDistance : originalPos.z - backDistance;
+        moment = 0.5f;
     }
 
     protected override void Move()
@@ -54,10 +59,9 @@ public class SinusoideBullet : NormalBullet
             moveForward = !moveForward;
             target = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
             zOriginal = transform.position.z;
-            time = 0;
+            moment = 0;
         }
-        transform.position = new Vector3(transform.position.x + xSpeed * Time.fixedDeltaTime, transform.position.y, Mathfx.Hermite(zOriginal, target.z, time));
-        //Debug.Log(Mathfx.Hermite(zOriginal, target.z, zSpeedToIncrease));
-        time += Time.fixedDeltaTime / timeToMakeSinusoide;
+        transform.position = new Vector3(transform.position.x + xSpeed * Time.fixedDeltaTime, transform.position.y, Mathfx.Hermite(zOriginal, target.z, moment, easingValue));
+        moment += Time.fixedDeltaTime / sinusoideDuration;
     }
 }

@@ -8,6 +8,7 @@ public class EnemyDoubleAiming : Enemy
     private new PropertiesDoubleAiming property;
 
     [Header("Movement")]
+    private bool moveForward;
     private float zMovementSpeed;
     private float destructionMargin;
     private float amplitude;
@@ -34,10 +35,12 @@ public class EnemyDoubleAiming : Enemy
         base.InitEnemy();
         enemyLives = property.lives;
         originalPos = transform.position;
+        Debug.Log(transform.position);
         speed = isRight ? -property.xSpeed : property.xSpeed;
         zMovementSpeed = property.zMovementSpeed;
         destructionMargin = property.destructionMargin;
         amplitude = property.amplitude;
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
         topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         fireRate = property.fireRate;
     }
@@ -58,7 +61,7 @@ public class EnemyDoubleAiming : Enemy
         base.Move();
         if (Vector3.Distance(transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
-            topdownTarget = new Vector3(transform.position.x,transform.position.y, topdownTarget.z);
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, topdownTarget.z);
         }
         else
         {
