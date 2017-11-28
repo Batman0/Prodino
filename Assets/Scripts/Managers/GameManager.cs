@@ -28,10 +28,11 @@ public class GameManager : MonoBehaviour
     public float playerBulletSpawnpointY;
     public Background[] backgrounds;
     public float delayToRespawnEnemy;
-    [HideInInspector]
-    public bool isBossEntry;
-
+    [Header("Bosses")]
     public bool isBossAlive;
+
+    public float currentTime;
+    
 	public Transform playerHandle;
 
     private void Awake()
@@ -54,18 +55,18 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-		
-		  if (Register.instance.zMin == null && Register.instance.zMax == null)
+        if (!isBossAlive)
         {
-            if (currentGameMode == GameMode.TOPDOWN)
-            {
-                Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.farClipPlane + distanceZSurplus)).z;
-                Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.farClipPlane + distanceZSurplus)).z;
-            }
+            currentTime += Time.deltaTime;
+        }
+
+        if (currentGameMode == GameMode.TOPDOWN)
+        {
+            Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.farClipPlane + distanceZSurplus)).z;
+            Register.instance.zMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight, Camera.main.farClipPlane + distanceZSurplus)).z;
         }
         MoveBackgrounds(Vector3.left);
 
-        BossFight();
     }
 
 
@@ -85,14 +86,5 @@ public class GameManager : MonoBehaviour
             item.background.transform.Translate(moveVector * item.speed * Time.deltaTime, Space.World);
         }
     }
-
-    public void BossFight()
-    {
-        if(isBossEntry)
-        {
-            
-        }
-    }
-
 
 }

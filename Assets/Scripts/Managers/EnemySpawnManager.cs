@@ -57,16 +57,23 @@ public class EnemySpawnManager : MonoBehaviour
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             enemyScript.isRight = isRight;
-            if (!enemyScript.isRight)
-            {
-                enemyObject.transform.Rotate(Vector3.up, 180, Space.World);
-            }
+
+            CheckRotation(enemyObject, enemyScript);
+
             enemyObject.SetActive(true);
             dataIndex++;
         }
         else if (dataIndex >= enemyCreationData.Length)
         {
             gameObject.SetActive(false);
+        }
+    }
+
+    void CheckRotation(GameObject _enemyObject, Enemy _enemyScript)
+    {
+        if (!_enemyScript.isRight)
+        {
+            _enemyObject.transform.Rotate(Vector3.up, 180, Space.World);
         }
     }
 }
