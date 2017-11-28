@@ -6,6 +6,11 @@ public class ForwardBase : EnemyForward
 {
     private new PropertiesForward property;
    
+	public override void Update ()
+	{
+		base.Update ();	
+	}
+
     public override void InitEnemy()
     {
         base.InitEnemy();

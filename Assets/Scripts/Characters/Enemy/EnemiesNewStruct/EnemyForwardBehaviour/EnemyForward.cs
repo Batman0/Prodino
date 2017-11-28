@@ -7,6 +7,11 @@ public abstract class EnemyForward : Enemy
     protected float speed = 0;
     protected float destructionMargin;
 
+	public override void Update()
+	{
+		base.Update ();	
+	}
+
     public virtual void FixedUpdate()
     {
         Move();

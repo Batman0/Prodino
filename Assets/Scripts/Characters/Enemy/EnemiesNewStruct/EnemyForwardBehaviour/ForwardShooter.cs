@@ -22,6 +22,7 @@ public class ForwardShooter : EnemyForward
 
     public override void Update()
     {
+		base.Update ();
         Shoot();
     }
 

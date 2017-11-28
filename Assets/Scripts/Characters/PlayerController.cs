@@ -93,6 +93,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject gunsAimL;
 	public GameObject shoulderAimR;
 	public GameObject shoulderAimL;
+	public Quaternion gunLStartRotation;
+	public Quaternion gunRStartRotation;
 
     [Header("Boundaries")]
     public float sideXMin;
@@ -140,6 +142,15 @@ public class PlayerController : MonoBehaviour
     {
         Main();
     }
+
+	void Update ()
+	{
+			if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
+			{
+				armsAim.transform.rotation = armsAimStartRotation;
+			}
+			ChangePerspective();	
+	}
 
     void LateUpdate()
     {
@@ -219,15 +230,19 @@ public class PlayerController : MonoBehaviour
         gunIndex = 0;
         shoulderLStartRotation = shoulderAimL.transform.rotation;
         shoulderRStartRotation = shoulderAimR.transform.rotation;
+		gunLStartRotation = gunsAimL.transform.rotation;
+		gunRStartRotation = gunsAimR.transform.rotation;
+
     }
 
     void Main()
     {
         if (!IsDead())
         {
+			
             if (!GameManager.instance.transitionIsRunning)
             {
-                UpdateMovementAxises();
+                UpdateMovementAxes();
                 UpdateGroundBooleans();
                 Aim();
 
@@ -251,13 +266,9 @@ public class PlayerController : MonoBehaviour
                 }
 
             }
-            else
+			else
             {
-                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
-                {
-                    armsAim.transform.rotation = armsAimStartRotation;
-                }
-                ChangePerspective();
+				
             }
         }
     }
@@ -268,10 +279,6 @@ public class PlayerController : MonoBehaviour
         {
             SetPlayerToSidescroll();
         }
-        //if (transform.rotation != sideScrollRotation)
-        //{
-        //    transform.rotation = sideScrollRotation;
-        //}
         inverseDirection = new Vector3(horizontalAxis, verticalAxis, 0);
 
         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanMove)
@@ -324,10 +331,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //if (transform.rotation != sideScrollRotation)
-        //{
-        //    transform.rotation = sideScrollRotation;
-        //}
+        if (transform.rotation != sideScrollRotation)
+        {
+            transform.rotation = sideScrollRotation;
+        }
 
         ClampPositionSidescroll();
 
@@ -373,8 +380,8 @@ public class PlayerController : MonoBehaviour
         if (currentPlayerState == PlayerState.CanMoveAndShoot || currentPlayerState == PlayerState.CanShoot)
         {
             TurnAroundGO(transform);
-            gunsAimL.transform.position = new Vector3(gunsAimL.transform.position.x, aimTransform.transform.position.y, shoulderAimL.transform.position.z);
-            gunsAimR.transform.position = new Vector3(gunsAimR.transform.position.x, aimTransform.transform.position.y, shoulderAimR.transform.position.z);
+//            gunsAimL.transform.position = new Vector3(gunsAimL.transform.position.x, aimTransform.transform.position.y, shoulderAimL.transform.position.z);
+//            gunsAimR.transform.position = new Vector3(gunsAimR.transform.position.x, aimTransform.transform.position.y, shoulderAimR.transform.position.z);
         }
 
         ClampPositionTopdown();
@@ -385,7 +392,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateMovementAxises()
+    void UpdateMovementAxes()
     {
         horizontalAxis = player.GetAxis("MoveHorizontal");
         verticalAxis = player.GetAxis("MoveVertical");
@@ -551,7 +558,6 @@ public class PlayerController : MonoBehaviour
             if (topDownPlane.Value.Raycast(aimRay, out intersectionPoint))
             {
                 aimVector = aimRay.GetPoint(intersectionPoint);
-                //aimTransform.transform.position = aimVector;
                 aimTransform.transform.position = new Vector3(aimVector.x, transform.position.y, aimVector.z);
             }
         }
@@ -621,11 +627,15 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.instance.transitionIsRunning)
         {
-            shoulderAimL.transform.rotation = shoulderLStartRotation;
-            shoulderAimR.transform.rotation = shoulderRStartRotation;
+			
+			shoulderAimL.transform.rotation = shoulderLStartRotation;
+			shoulderAimR.transform.rotation = shoulderRStartRotation;
+			gunsAimL.transform.rotation = gunLStartRotation;
+			gunsAimR.transform.rotation = gunRStartRotation;
 
             if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
             {
+				
                 if (!sideBodyCollider.enabled)
                 {
                     topBodyCollider.enabled = false;
