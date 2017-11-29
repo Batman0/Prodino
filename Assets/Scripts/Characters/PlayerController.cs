@@ -9,8 +9,7 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState { Moving, Attacking, Dead}
     //GENERAL non va tanto bene, organizzare meglio questa sezione
     [Header("General")]
-    [HideInInspector]
-    public PlayerState currentPlayerState;
+    private PlayerState currentPlayerState;
     [HideInInspector]
     public Vector3 startPosition;
     [SerializeField]
@@ -130,11 +129,11 @@ public class PlayerController : MonoBehaviour
     {
         Register.instance.player = this;
         rb = GetComponent<Rigidbody>();
+        Init();
     }
 
     void Start()
     {
-        Init();
     }
 
     void FixedUpdate()
