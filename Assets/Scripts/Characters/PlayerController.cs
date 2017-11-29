@@ -6,27 +6,29 @@ using Rewired;
 public class PlayerController : MonoBehaviour
 {
 
-    public enum PlayerState { Moving, Stop , Attacking, Dead }
-
-	[Header("General")]
-	[HideInInspector]
-	public PlayerState currentPlayerState;
-	[HideInInspector]
-	public Vector3 startPosition;
-	[SerializeField]
-	private GameObject playerModel;
-	private PropertiesPlayer properties;
-	private int enemyLayer = 12;
-	private float playerBackwardsAnimationLimit = 25;
-	private RaycastHit hit;
-	private Rigidbody rb;
-	public LayerMask groundMask;
-	[SerializeField]
-	private Transform landmark;
-	public Collider sideBodyCollider;
-	public Collider topBodyCollider;
-	public Collider topTailCollider;
-	private int life;
+    public enum PlayerState { Moving, Attacking, Dead}
+    //GENERAL non va tanto bene, organizzare meglio questa sezione
+    [Header("General")]
+    [HideInInspector]
+    public PlayerState currentPlayerState;
+    [HideInInspector]
+    public Vector3 startPosition;
+    [SerializeField]
+    private GameObject playerModel;
+    private PropertiesPlayer properties;
+    //GURRA Ricavarsi il layer in un altro modo 
+    private int enemyLayer = 12;
+    private float playerBackwardsAnimationLimit = 25;
+    private RaycastHit hit;
+    private Rigidbody rb;
+    public LayerMask groundMask;
+    //GURRA Questa cosa del landmark va sistemata
+    [SerializeField]
+    private Transform landmark;
+    public Collider sideBodyCollider;
+    public Collider topBodyCollider;
+    public Collider topTailCollider;
+    private int life;
     private bool isInvincible;
     private float invincibleTime;
 
@@ -34,22 +36,23 @@ public class PlayerController : MonoBehaviour
     private Player player;
     private const int playerId = 0;
 
-	[Header("Movement")]
+    [Header("Movement")]
     public bool canJump = true;
     public bool thereIsGround;
     private float speed;
     private float jumpForce;
     private float upRotationAngle;
     private float downRotationAngle;
+    //GURRA Fissate i valori e rendetele private le variabili sui raycast
     public float jumpCheckRayLength;
     public float groundCheckRayLength;
     private float controllerDeadZone = 0.1f;
-	private float gravity;
-	private float glideSpeed;
-	private float topdownPlayerHeight;
-	private float horizontalAxis;
-	private float verticalAxis;
-	private Quaternion transformStartRotation;
+    private float gravity;
+    private float glideSpeed;
+    private float topdownPlayerHeight;
+    private float horizontalAxis;
+    private float verticalAxis;
+    private Quaternion transformStartRotation;
     private Quaternion armsAimStartRotation;
     private Quaternion sideBodyColliderStartRot;
     private Quaternion topBodyColliderStartRot;
@@ -58,10 +61,11 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting")]
     private float fireRatio;
     private float fireTimer;
-	public Transform[] bulletSpawnPoints;
+    public Transform[] bulletSpawnPoints;
+    //GURRA questa non penso vada in shooting
     private float RespawnTimer;
     private const string playerBulletTag = "PlayerBullet";
-    
+
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
 
@@ -72,7 +76,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunLx;
     private float maxArmsRotation;
     private float angleS = 0;
-	private int gunIndex;
+    private int gunIndex;
 
     [Header("Aim")]
     private float intersectionPoint;
@@ -82,25 +86,26 @@ public class PlayerController : MonoBehaviour
     private Ray aimRay;
     public GameObject aimTransformPrefab;
     private GameObject aimTransform;
-	public GameObject armsAim;
-	public GameObject gunsAimR;
-	public GameObject gunsAimL;
-	public GameObject shoulderAimR;
-	public GameObject shoulderAimL;
-	private Quaternion gunLStartRotation;
-	private Quaternion gunRStartRotation;
-	private Quaternion shoulderRStartRotation;
-	private Quaternion shoulderLStartRotation;
+    public GameObject armsAim;
+    public GameObject gunsAimR;
+    public GameObject gunsAimL;
+    public GameObject shoulderAimR;
+    public GameObject shoulderAimL;
+    private Quaternion gunLStartRotation;
+    private Quaternion gunRStartRotation;
+    private Quaternion shoulderRStartRotation;
+    private Quaternion shoulderLStartRotation;
 
     [Header("Boundaries")]
-	private float sideXMin, sideXMax, sideYMin, sideYMax;
-	private float topXMin, topXMax, topZMin, topZMax;
+    private float sideXMin, sideXMax, sideYMin, sideYMax;
+    private float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
-	public bool isSidescroll;
-	public bool anim_isRunning;
-	public bool anim_isFlying;
-	public bool anim_isMovingBackwards;
+    //GURRA mettete anche i nomi delle animazioni come variabili, così non si scrive ogni volta la stringa a mano quando si richiama un'animazione
+    public bool isSidescroll;
+    public bool anim_isRunning;
+    public bool anim_isFlying;
+    public bool anim_isMovingBackwards;
     private bool anim_isGliding;
     private bool anim_isJumping;
     private Vector3 inverseDirection;
@@ -116,9 +121,9 @@ public class PlayerController : MonoBehaviour
     private float tailMeleeSpeed;
     private float angleTailAttack;
 
-	[Header("BiteMelee")]
+    [Header("BiteMelee")]
+    //GURRA con questa varibile in realtà si va a modificare l'altezza dell'attacco, non la velocità
     private float biteATKSpeed;
-    private bool biteCoolDownActive;
     private float biteCoolDown;
 
     void Awake()
@@ -133,22 +138,35 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate()
-    { 
+    {
         Main();
     }
 
-	void Update ()
-	{
-			if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
-			{
-				armsAim.transform.rotation = armsAimStartRotation;
-			}
+    void Update()
+    {
+        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
+        {
+            armsAim.transform.rotation = armsAimStartRotation;
+        }
 
-			if (GameManager.instance.transitionIsRunning) 
-			{
-				StartCoroutine ("ChangePerspective");
-			}
-	}
+        if (currentPlayerState != PlayerState.Dead)
+        {
+            if (GameManager.instance.transitionIsRunning)
+            {
+                StartCoroutine("ChangePerspective");
+            }
+            else
+            {
+                if (currentPlayerState != PlayerState.Attacking)
+                {
+                    UpdateMovementAxes();
+                    UpdateGroundBooleans();
+                    Aim();
+                    TryShooting();
+                }
+            }
+        }
+    }
 
     void LateUpdate()
     {
@@ -156,135 +174,80 @@ public class PlayerController : MonoBehaviour
         topBodyCollider.transform.rotation = topBodyColliderStartRot;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-		if (!topTailCollider.enabled && !biteCoolDownActive)
-        {
-            if (!isInvincible && other.gameObject.layer == enemyLayer)
-            {
-                life--;
-				StartCoroutine("RespawnPlayer");
-				StartCoroutine ("InvinciblePlayer");
-
-                if (IsDead())
-                {
-					//Game over initialization
-					//Temp value
-					StartCoroutine("RespawnPlayer");
-					StartCoroutine ("InvinciblePlayer");
-					ResetPlayerLives();
-                }
-                
-                if (other.transform.tag.StartsWith("EnemyBullet"))
-                {
-                    other.transform.gameObject.SetActive(false);
-                }
-            }
-        }
-        else if (topTailCollider.enabled)
-        {
-            if (other.gameObject.layer == enemyLayer && !IsDead())
-            {
-                other.transform.gameObject.SetActive(false);
-            }
-        }
-
-		if (biteCoolDownActive) {
-			if (other.gameObject.layer == enemyLayer && !IsDead())
-			{
-                other.transform.gameObject.SetActive(false);
-            }
-		}
-    }
-
     void Init()
     {
-		//Player state initialization
-		startPosition = transform.position;
-		currentPlayerState = PlayerState.Moving;
-		properties = Register.instance.propertiesPlayer;
-		anim_isRunning = true;
+        //GURRA visto che avete messo questi commenti facendo una divisione sensata, raggruppate in metodi queste sezioni
+        //Player state initialization
+        startPosition = transform.position;
+        currentPlayerState = PlayerState.Moving;
+        properties = Register.instance.propertiesPlayer;
+        anim_isRunning = true;
 
         //Rewired Initialization
         player = ReInput.players.GetPlayer(playerId);
-        
-		//Arm Rotation in Sidescroll
-		upRotationAngle = properties.upRotationAngle;
-		downRotationAngle = properties.downRotationAngle;
-		maxArmsRotation = properties.maxArmsRotation;
 
-		//Jumping
+        //Arm Rotation in Sidescroll
+        upRotationAngle = properties.upRotationAngle;
+        downRotationAngle = properties.downRotationAngle;
+        maxArmsRotation = properties.maxArmsRotation;
+
+        //Jumping
         speed = properties.xSpeed;
         jumpForce = properties.jumpForce;
         glideSpeed = properties.glideSpeed;
-        
-		//Shooting
-		aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+
+        //Shooting
+        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
         fireRatio = properties.fireRatio;
         RespawnTimer = properties.respawnTimer;
         gravity = properties.gravity;
-		gunIndex = 0;
-        
-		//Attacks
+        gunIndex = 0;
+
+        //Attacks
         tailMeleeSpeed = properties.tailMeleeSpeed;
         biteATKSpeed = properties.biteATKSpeed;
-        biteCoolDownActive = properties.biteCoolDownActive;
         biteCoolDown = properties.biteCoolDown;
 
-		//Player Stats
+        //Player Stats
         topdownPlayerHeight = properties.topdownPlayerHeight;
         invincibleTime = properties.invincibleTime;
         life = properties.lives;
         transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
-        
-		//Changes during camera transition
+
+        //Changes during camera transition
         shoulderLStartRotation = shoulderAimL.transform.rotation;
         shoulderRStartRotation = shoulderAimR.transform.rotation;
-		gunLStartRotation = gunsAimL.transform.rotation;
-		gunRStartRotation = gunsAimR.transform.rotation;
-		sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
-		topBodyColliderStartRot = topBodyCollider.transform.rotation;
-		transformStartRotation = transform.rotation;
-		armsAimStartRotation = armsAim.transform.rotation;
+        gunLStartRotation = gunsAimL.transform.rotation;
+        gunRStartRotation = gunsAimR.transform.rotation;
+        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
+        topBodyColliderStartRot = topBodyCollider.transform.rotation;
+        transformStartRotation = transform.rotation;
+        armsAimStartRotation = armsAim.transform.rotation;
 
-		//Player boundaries From Register
-		sideXMin = Register.instance.xMin;
-		sideXMax = Register.instance.xMax;
-		sideYMin = Register.instance.yMin;
-		sideYMax = Register.instance.yMax;
-		topXMax = Register.instance.xMax;
-		topXMin = Register.instance.xMin;
-		topZMax = Register.instance.zMax;
-		topZMin = Register.instance.zMin;
+        //Player boundaries From Register
+        sideXMin = Register.instance.xMin;
+        sideXMax = Register.instance.xMax;
+        sideYMin = Register.instance.yMin;
+        sideYMax = Register.instance.yMax;
+        topXMax = Register.instance.xMax;
+        topXMin = Register.instance.xMin;
+        topZMax = Register.instance.zMax;
+        topZMin = Register.instance.zMin;
     }
 
     void Main()
     {
-        if (!IsDead())
+        if (currentPlayerState != PlayerState.Dead)
         {
             if (!GameManager.instance.transitionIsRunning)
             {
-                UpdateMovementAxes();
-                UpdateGroundBooleans();
-                Aim();
-
-                switch (GameManager.instance.currentGameMode)
+                if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
                 {
-                    case GameMode.SIDESCROLL:
-                        MainSidescroll();
-                        break;
-                    case GameMode.TOPDOWN:
-                        MainTopdown();
-                        break;
+                    MainSidescroll();
                 }
-
-                if (fireTimer < fireRatio)
+                else
                 {
-                    fireTimer += Time.deltaTime;
-                }
-				else if (player.GetButton("Shoot") && currentPlayerState == PlayerState.Moving)
-                {
-                    Shoot();
+                    MainTopdown();
                 }
             }
         }
@@ -298,23 +261,27 @@ public class PlayerController : MonoBehaviour
         }
         inverseDirection = new Vector3(horizontalAxis, verticalAxis, 0);
 
-		if (currentPlayerState == PlayerState.Moving)
+        if (currentPlayerState == PlayerState.Moving)
         {
-			if ((transform.position.x > sideXMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < sideXMax && horizontalAxis > controllerDeadZone))
+            if ((transform.position.x > sideXMin && horizontalAxis < -controllerDeadZone) || (transform.position.x < sideXMax && horizontalAxis > controllerDeadZone))
             {
                 Move(Vector3.right, speed, "MoveHorizontal");
             }
+            //GURRA potrebbe essere utile inserire un timer per il salto, per evitare che il salto venga effettuato più volte nei vari update
+            //GURRA non va assolutamente bene il getbuttondown qui. Nel fixed update rischio di perdere l'input. mettere il controllo sull'input nell'update e lasciare il salto qua nel fixed.
             if (player.GetButtonDown("Jump") && canJump)
             {
                 Jump();
             }
         }
+        
         if (thereIsGround && !canJump)
         {
             if (!anim_isJumping)
             {
                 SetAnimationFromRunToJump();
             }
+            //GURRA da rivedere questa parte, è evidente che in game succedono cose strane, tipo il player che sta mezz'ora sul lato alto dello schermo
             ApplyGravity();
         }
         else if (thereIsGround && canJump)
@@ -325,6 +292,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SetAnimationToRun();
                 }
+                //GURRA rivedere questa parte
                 ResetPlayerAfterJump();
             }
         }
@@ -336,7 +304,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SetAnimationFromJumpToGlide();
                 }
-
+                //GURRA assolutamente NO. vedo un sacco di numeri magici, questo -2, poi in StabilizeAcceleration c'è una cosa divia per 3. cosa rappresentano questi numeri? a cosa serve il metodo?
                 if (rb.velocity.y < -2)
                 {
                     StabilizeAcceleration();
@@ -354,9 +322,10 @@ public class PlayerController : MonoBehaviour
         }
 
         ClampPositionSidescroll();
-		 UpdateArmsRotation();
-        
-		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele") && !biteCoolDownActive && canJump)
+        UpdateArmsRotation();
+        //GURRA se playerstate è moving è ovvio che non sia attacking, no? poi viene usato il canjump come controllo del fatto che lui non stia saltando. Non va bene, ci va una variabile apposta. Io magari posso dire che trevor sta camminando nella 
+        //melma e quindi non può saltare, ma questo non significa che stia già saltando. Vedi sopra quando viene gestito il glide.
+        if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele") && currentPlayerState != PlayerState.Attacking && canJump)
         {
             StartCoroutine("BiteAttack");
         }
@@ -369,41 +338,91 @@ public class PlayerController : MonoBehaviour
             SetPlayerToTopdown();
         }
 
-		if (currentPlayerState == PlayerState.Moving)
+        if (currentPlayerState == PlayerState.Moving)
         {
             Move(Vector3.forward, speed, "MoveVertical");
             Move(Vector3.right, speed, "MoveHorizontal");
 
-			TurnAroundGO(transform);
+            TurnAroundGO(transform);
 
-			inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
-			playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
-			anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
+            inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
+            playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
+            anglePlayerDirection = Vector3.Angle(inverseDirection, playerForward);
 
-			if (anglePlayerDirection <= playerBackwardsAnimationLimit)
-			{
-				if (!anim_isMovingBackwards)
-				{
-					SetAnimationFromFlyToMoveBackwards();
-				}
-			}
+            if (anglePlayerDirection <= playerBackwardsAnimationLimit)
+            {
+                if (!anim_isMovingBackwards)
+                {
+                    SetAnimationFromFlyToMoveBackwards();
+                }
+            }
 
-			if (anglePlayerDirection > playerBackwardsAnimationLimit)
-			{
-				if (!anim_isFlying)
-				{
-					SetAnimationFromMoveBackwardsToFly();
-				}
-			}
+            if (anglePlayerDirection > playerBackwardsAnimationLimit)
+            {
+                if (!anim_isFlying)
+                {
+                    SetAnimationFromMoveBackwardsToFly();
+                }
+            }
         }
-			
+
         ClampPositionTopdown();
 
-		if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele"))
+        if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele"))
         {
             StartCoroutine("TailAttack");
         }
     }
+
+    void TryShooting()
+    {
+        if (fireTimer < fireRatio)
+        {
+            fireTimer += Time.deltaTime;
+        }
+        else if (player.GetButton("Shoot") && currentPlayerState == PlayerState.Moving)
+        {
+            Shoot();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!topTailCollider.enabled && currentPlayerState != PlayerState.Attacking)
+        {
+            if (!isInvincible && other.gameObject.layer == enemyLayer)
+            {
+                life--;
+                if (IsDead())
+                {
+                    KillPlayer();
+                }
+
+                if (other.transform.tag.StartsWith("EnemyBullet"))
+                {
+                    other.transform.gameObject.SetActive(false);
+                }
+            }
+        }
+        //GURRA aggiustare questo if, fare riferimento allo stato Attacking, così c'è anche meno ridondanza
+        else if (topTailCollider.enabled)
+        {
+            if (other.gameObject.layer == enemyLayer && !IsDead())
+            {
+                other.transform.gameObject.SetActive(false);
+            }
+        }
+
+        if (currentPlayerState == PlayerState.Attacking)
+        {
+            if (other.gameObject.layer == enemyLayer && !IsDead())
+            {
+                other.transform.gameObject.SetActive(false);
+            }
+        }
+    }
+
+  
 
     void UpdateMovementAxes()
     {
@@ -515,7 +534,7 @@ public class PlayerController : MonoBehaviour
 
     void SetAnimationFromMoveBackwardsToFly()
     {
-		anim_isFlying = true;
+        anim_isFlying = true;
         anim_isMovingBackwards = false;
         animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
         animator.SetBool("isFlying", anim_isFlying);
@@ -549,7 +568,8 @@ public class PlayerController : MonoBehaviour
 
     bool CheckGround(float rayLength)
     {
-        Ray ray = new Ray(new Vector3 (transform.position.x, transform.position.y, transform.position.z), Vector3.down);
+        Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
+        //GURRA sintetizzate qua con return physics.raycast...
         if (Physics.Raycast(ray, rayLength, groundMask))
         {
             return true;
@@ -601,8 +621,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //GURRA a cosa serve passare il transform in un metodo interno???
     void TurnAroundGO(Transform transform)
     {
+        //GURRA questo metodo viene chiamato in top down, controllo superfluo.
         switch (GameManager.instance.currentGameMode)
         {
             case GameMode.SIDESCROLL:
@@ -631,89 +653,93 @@ public class PlayerController : MonoBehaviour
     public void ClampPositionSidescroll()
     {
 
-		transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, sideXMin , sideXMax ),
-			Mathf.Clamp(transform.position.y, sideYMin , sideYMax ),
-			Mathf.Clamp(transform.position.z, topZMin , topZMax)
-		);
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, sideXMin, sideXMax),
+            Mathf.Clamp(transform.position.y, sideYMin, sideYMax),
+            Mathf.Clamp(transform.position.z, topZMin, topZMax)
+        );
     }
 
     public void ClampPositionTopdown()
     {
 
-			transform.position = new Vector3(
-			Mathf.Clamp(transform.position.x, topXMin , topXMax),
-				landmark.position.y + topdownPlayerHeight,
-			Mathf.Clamp(transform.position.z, topZMin , topZMax)
-			);
+        transform.position = new Vector3(
+        Mathf.Clamp(transform.position.x, topXMin, topXMax),
+            landmark.position.y + topdownPlayerHeight,
+        Mathf.Clamp(transform.position.z, topZMin, topZMax)
+        );
     }
-		
-	IEnumerator ChangePerspective()
+
+    IEnumerator ChangePerspective()
     {
-		anim_isMovingBackwards = false;
-		anim_isFlying = false;
-		anim_isRunning = false;
-		horizontalAxis = 0;
-		verticalAxis = 0;	
+        anim_isMovingBackwards = false;
+        anim_isFlying = false;
+        anim_isRunning = false;
+        horizontalAxis = 0;
+        verticalAxis = 0;
 
-		currentPlayerState = PlayerState.Stop;
-		ResetLimbsRotation ();
+        ResetLimbsRotation();
 
-		if (transform.rotation != transformStartRotation)
-		{
-			transform.rotation = transformStartRotation;
-		}
+        if (transform.rotation != transformStartRotation)
+        {
+            transform.rotation = transformStartRotation;
+        }
 
-		if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
-		{
-			if (!sideBodyCollider.enabled)
-			{
-				topBodyCollider.enabled = false;
-				sideBodyCollider.enabled = true;
-			}
-		}
-		else
-		{
-			if (!topBodyCollider.enabled)
-			{
-				sideBodyCollider.enabled = false;
-				topBodyCollider.enabled = true;
-			}
-		}
-	
-		currentPlayerState = PlayerState.Moving;
-		yield return null;
+        if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+        {
+            if (!sideBodyCollider.enabled)
+            {
+                topBodyCollider.enabled = false;
+                sideBodyCollider.enabled = true;
+            }
+        }
+        else
+        {
+            if (!topBodyCollider.enabled)
+            {
+                sideBodyCollider.enabled = false;
+                topBodyCollider.enabled = true;
+            }
+        }
+
+        currentPlayerState = PlayerState.Moving;
+        yield return null;
     }
 
-	void ResetLimbsRotation()
-	{
-		shoulderAimL.transform.rotation = shoulderLStartRotation;
-		shoulderAimR.transform.rotation = shoulderRStartRotation;
-		gunsAimL.transform.rotation = gunLStartRotation;
-		gunsAimR.transform.rotation = gunRStartRotation;
+    void ResetLimbsRotation()
+    {
+        shoulderAimL.transform.rotation = shoulderLStartRotation;
+        shoulderAimR.transform.rotation = shoulderRStartRotation;
+        gunsAimL.transform.rotation = gunLStartRotation;
+        gunsAimR.transform.rotation = gunRStartRotation;
 
-		shoulderAimL.transform.rotation = transform.rotation;
-		shoulderAimR.transform.rotation = transform.rotation;
-		gunsAimL.transform.rotation = transform.rotation;
-		gunsAimR.transform.rotation = transform.rotation;
-	}
+        shoulderAimL.transform.rotation = transform.rotation;
+        shoulderAimR.transform.rotation = transform.rotation;
+        gunsAimL.transform.rotation = transform.rotation;
+        gunsAimR.transform.rotation = transform.rotation;
+    }
 
-	public bool IsDead()
-	{
-		return life <= 0;
-	}
+    public bool IsDead()
+    {
+        if (life <= 0)
+        {
+            currentPlayerState = PlayerState.Dead;
+            return true;
+        }
+        return false;
+    }
 
-	public void ResetPlayerLives()
-	{
-		life = properties.lives;
-	}
+    public void ResetPlayerLives()
+    {
+        life = properties.lives;
+    }
 
     IEnumerator TailAttack()
     {
-		currentPlayerState = PlayerState.Attacking;
+        currentPlayerState = PlayerState.Attacking;
         angleTailAttack = 0;
         topTailCollider.enabled = true;
-      
+
         while (angleTailAttack < 360)
         {
             angleTailAttack += tailMeleeSpeed;
@@ -722,19 +748,18 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         topTailCollider.enabled = false;
-		currentPlayerState = PlayerState.Moving;
+        currentPlayerState = PlayerState.Moving;
     }
 
-	IEnumerator BiteAttack()
-	{
-		currentPlayerState = PlayerState.Attacking;
+    IEnumerator BiteAttack()
+    {
+        currentPlayerState = PlayerState.Attacking;
         rb.velocity = new Vector3(0, biteATKSpeed, 0);
-		biteCoolDownActive = true;
+        currentPlayerState = PlayerState.Attacking;
 
-        yield return new WaitForSeconds (biteCoolDown);
-        biteCoolDownActive = false;
-		currentPlayerState = PlayerState.Moving;
-	}
+        yield return new WaitForSeconds(biteCoolDown);
+        currentPlayerState = PlayerState.Moving;
+    }
 
     IEnumerator InvinciblePlayer()
     {
@@ -743,18 +768,26 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
     }
 
-	IEnumerator RespawnPlayer()
-	{
-		currentPlayerState = PlayerState.Dead;
-		playerModel.SetActive(false);
-		yield return new WaitForSeconds(RespawnTimer);
-		currentPlayerState = PlayerState.Moving;
-		playerModel.SetActive(true);
-		//Reset Positiion after being hit ?
-		transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-		rb.velocity = Vector3.zero;
+    private void KillPlayer()
+    {
+        currentPlayerState = PlayerState.Dead;
+        playerModel.SetActive(false);
+        StartCoroutine(RespawnPlayer());
+    }
 
-	}
+    IEnumerator RespawnPlayer()
+    {
+        yield return new WaitForSeconds(RespawnTimer);
+        ResetPlayerLives();
+        StartCoroutine(InvinciblePlayer());
+        currentPlayerState = PlayerState.Moving;
+        playerModel.SetActive(true);
+        //Reset Positiion after being hit ?
+        //GURRA sì, resettiamo la posizione
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        rb.velocity = Vector3.zero;
+
+    }
 
     private void ActivateStrongerJetpack()
     {
