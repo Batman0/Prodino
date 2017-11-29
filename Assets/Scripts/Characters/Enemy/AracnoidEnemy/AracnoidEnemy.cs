@@ -94,7 +94,6 @@ public class AracnoidEnemy : MonoBehaviour
                     EnterRecoveringPositionState();
                     currentCycle = 0;
                 }
-                lasersDoneShooting = 0;
             }
             Fluctuate();
         }
@@ -178,6 +177,7 @@ public class AracnoidEnemy : MonoBehaviour
     void EnterShootingState()
     {
         EnterNewState(AracnoidState.Shooting);
+        lasersDoneShooting = 0;
         ResetFluctuationParameters();
         currentCycle = 0;
         EnableLasers();
