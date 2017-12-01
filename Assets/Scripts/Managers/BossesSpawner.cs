@@ -6,29 +6,59 @@ using UnityEngine;
 public struct BossesCreation
 {
     public GameObject bossPrefab;
-    public bool bossEntry;
+    public float timeToSpawn;
 }
 public class BossesSpawner : MonoBehaviour
 {
-    public BossesCreation bossesCreation;
+    public BossesCreation[] bossesCreation;
     private GameObject boss;
+    private GameManager gameManager;
+    public bool bossEntry;
+    private float timerModify = 0;
+    private float deltaTime = 0.2f;
+    private int currentIndex = 0;
 
 
     void Awake()
     {
-        bossesCreation.bossEntry = false;
-        GameManager.instance.isBossEntry = bossesCreation.bossEntry;
+        gameManager = GameManager.instance;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+   
+    void Update()
     {
-		if(bossesCreation.bossEntry && !GameManager.instance.isBossAlive)
-        {
-            boss = Instantiate(bossesCreation.bossPrefab) as GameObject;
-            boss.transform.position = transform.position;
-            bossesCreation.bossEntry = false;
-            GameManager.instance.isBossAlive = true;
+
+        if((gameManager.currentTime >= bossesCreation[currentIndex].timeToSpawn - deltaTime) && (gameManager.currentTime <= bossesCreation[currentIndex].timeToSpawn + deltaTime))
+        {          
+             bossEntry = true;
+             SpawnBoss();
+             currentIndex++;
         }
-	}
+
+        CheckIndex(currentIndex);
+    }
+
+    void SpawnBoss()
+    {
+        if (bossEntry && !gameManager.isBossAlive)
+        {
+            boss = Instantiate(bossesCreation[currentIndex].bossPrefab) as GameObject;
+            boss.transform.position = transform.position;
+            gameManager.isBossAlive = true;
+            bossEntry = false;                 
+        }
+    }
+    
+    void CheckIndex(int _bossesCreationIndex)
+    {
+        if (_bossesCreationIndex > bossesCreation.Length -1)
+        {
+            DisableObject();
+        }
+    }
+    
+    void DisableObject()
+    {
+        gameObject.SetActive(false);
+    }
 }

@@ -22,6 +22,7 @@ MonoBehaviour:
   fireRatio: 0.2
   respawnTimer: 2
   gravity: 30
+  drag: 4
   bulletDestructionMargin: 5
   maxArmsRotation: 45
   tailMeleeSpeed: 5

@@ -14,6 +14,7 @@ public class PropertiesPlayer : Properties
     public float fireRatio;
     public float respawnTimer;
     public float gravity;
+    public float drag;
     public float bulletDestructionMargin;
     public float maxArmsRotation;
     public float tailMeleeSpeed;

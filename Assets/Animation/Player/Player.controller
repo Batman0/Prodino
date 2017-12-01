@@ -448,8 +448,8 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isMovingBackwards
+  - m_ConditionMode: 2
+    m_ConditionEvent: isFlying
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102301894297130824}
@@ -685,10 +685,10 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions:
     data:
-      first: {fileID: 1107845310353641526}
+      first: {fileID: 1107477432066250130}
       second: []
     data:
-      first: {fileID: 1107477432066250130}
+      first: {fileID: 1107845310353641526}
       second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 24, y: 24, z: 0}
