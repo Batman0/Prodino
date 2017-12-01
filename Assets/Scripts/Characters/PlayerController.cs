@@ -7,46 +7,52 @@ public class PlayerController : MonoBehaviour
 {
 
     public enum PlayerState { Moving, Attacking, Dead}
-    //GENERAL non va tanto bene, organizzare meglio questa sezione
-    [Header("General")]
+
+    [Header("Initialization")]
     private PlayerState currentPlayerState;
     [HideInInspector]
+    //LUCA usata per settare la posizione di partenza e anche per farlo rimanere su una y costante. 
+    //da cambiare se da design ci fosse bisogno di far cadere o spostare in basso trevor.
     public Vector3 startPosition;
     [SerializeField]
-    private GameObject playerModel;
     private PropertiesPlayer properties;
-    //GURRA Ricavarsi il layer in un altro modo 
-    private int enemyLayer = 12;
-    private float playerBackwardsAnimationLimit = 25;
+    private const string enemyLayerString = "Enemy";
+    private const string enemyBulletTag = "EnemyBullet";
+    private int enemyLayer;
     private RaycastHit hit;
     private Rigidbody rb;
     public LayerMask groundMask;
-    //GURRA Questa cosa del landmark va sistemata
-    [SerializeField]
-    private Transform landmark;
     public Collider sideBodyCollider;
     public Collider topBodyCollider;
     public Collider topTailCollider;
     private int life;
+
+    [Header("Respawn")]
+    public GameObject playerModel;
     private bool isInvincible;
-    private float invincibleTime;
+    public float invincibleTime;
+    public float RespawnTimer;
 
     [Header("Input")]
     private Player player;
     private const int playerId = 0;
 
     [Header("Movement")]
-    public bool canJump = true;
-    public bool thereIsGround;
+    private bool canJump = true;
+    private bool thereIsGround;
     private float speed;
     private float jumpForce;
+    private float jumpTimer;
+    public float timeToJump = 0.2f;
     private float upRotationAngle;
     private float downRotationAngle;
-    //GURRA Fissate i valori e rendetele private le variabili sui raycast
-    public float jumpCheckRayLength;
-    public float groundCheckRayLength;
+    private const float jumpCheckRayLength = 3.0f;
+    private const float groundCheckRayLength = 25.0f;
     private float controllerDeadZone = 0.1f;
     private float gravity;
+    //LUCA nuova property drag per gestire l'attrito del glide e metterei la gravity come const ma chiedo conferma
+    //elimina anche esigenza di numeri vari per la velocity
+    private float drag;
     private float glideSpeed;
     private float topdownPlayerHeight;
     private float horizontalAxis;
@@ -61,8 +67,6 @@ public class PlayerController : MonoBehaviour
     private float fireRatio;
     private float fireTimer;
     public Transform[] bulletSpawnPoints;
-    //GURRA questa non penso vada in shooting
-    private float RespawnTimer;
     private const string playerBulletTag = "PlayerBullet";
 
     [Header("BulletPool")]
@@ -74,7 +78,6 @@ public class PlayerController : MonoBehaviour
     public GameObject armLx;
     public Transform gunLx;
     private float maxArmsRotation;
-    private float angleS = 0;
     private int gunIndex;
 
     [Header("Aim")]
@@ -100,7 +103,6 @@ public class PlayerController : MonoBehaviour
     private float topXMin, topXMax, topZMin, topZMax;
 
     [Header("Animations")]
-    //GURRA mettete anche i nomi delle animazioni come variabili, così non si scrive ogni volta la stringa a mano quando si richiama un'animazione
     public bool isSidescroll;
     public bool anim_isRunning;
     public bool anim_isFlying;
@@ -111,6 +113,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerForward;
     private float anglePlayerDirection;
     public Animator animator;
+    private float playerBackwardsAnimationLimit = 25;
+    private const string sidescrollAnimation = "sidescroll";
+    private const string isFlyingAnim = "isFlying";
+    private const string isRunningAnim = "isRunning";
+    private const string isJumpingAnim = "isJumping";
+    private const string isGlidingAnim = "isGliding";
+    private const string movingBackwardsAnim = "isMovingBackwards";
 
     [Header("Particles")]
     public ParticleSystemManager jetpackStrongerParticle;
@@ -121,8 +130,7 @@ public class PlayerController : MonoBehaviour
     private float angleTailAttack;
 
     [Header("BiteMelee")]
-    //GURRA con questa varibile in realtà si va a modificare l'altezza dell'attacco, non la velocità
-    private float biteATKSpeed;
+    private float biteHeight;
     private float biteCoolDown;
 
     void Awake()
@@ -130,10 +138,6 @@ public class PlayerController : MonoBehaviour
         Register.instance.player = this;
         rb = GetComponent<Rigidbody>();
         Init();
-    }
-
-    void Start()
-    {
     }
 
     void FixedUpdate()
@@ -175,63 +179,14 @@ public class PlayerController : MonoBehaviour
 
     void Init()
     {
-        //GURRA visto che avete messo questi commenti facendo una divisione sensata, raggruppate in metodi queste sezioni
-        //Player state initialization
-        startPosition = transform.position;
-        currentPlayerState = PlayerState.Moving;
-        properties = Register.instance.propertiesPlayer;
-        anim_isRunning = true;
-
-        //Rewired Initialization
-        player = ReInput.players.GetPlayer(playerId);
-
-        //Arm Rotation in Sidescroll
-        upRotationAngle = properties.upRotationAngle;
-        downRotationAngle = properties.downRotationAngle;
-        maxArmsRotation = properties.maxArmsRotation;
-
-        //Jumping
-        speed = properties.xSpeed;
-        jumpForce = properties.jumpForce;
-        glideSpeed = properties.glideSpeed;
-
-        //Shooting
-        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
-        fireRatio = properties.fireRatio;
-        RespawnTimer = properties.respawnTimer;
-        gravity = properties.gravity;
-        gunIndex = 0;
-
-        //Attacks
-        tailMeleeSpeed = properties.tailMeleeSpeed;
-        biteATKSpeed = properties.biteATKSpeed;
-        biteCoolDown = properties.biteCoolDown;
-
-        //Player Stats
-        topdownPlayerHeight = properties.topdownPlayerHeight;
-        invincibleTime = properties.invincibleTime;
-        life = properties.lives;
-        transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
-
-        //Changes during camera transition
-        shoulderLStartRotation = shoulderAimL.transform.rotation;
-        shoulderRStartRotation = shoulderAimR.transform.rotation;
-        gunLStartRotation = gunsAimL.transform.rotation;
-        gunRStartRotation = gunsAimR.transform.rotation;
-        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
-        topBodyColliderStartRot = topBodyCollider.transform.rotation;
-        transformStartRotation = transform.rotation;
-        armsAimStartRotation = armsAim.transform.rotation;
-
-        //Player boundaries From Register
-        sideXMin = Register.instance.xMin;
-        sideXMax = Register.instance.xMax;
-        sideYMin = Register.instance.yMin;
-        sideYMax = Register.instance.yMax;
-        topXMax = Register.instance.xMax;
-        topXMin = Register.instance.xMin;
-        topZMax = Register.instance.zMax;
-        topZMin = Register.instance.zMin;
+        PlayerInit();
+        RewiredInit();
+        SideArmsRotation();
+        JumpInit();
+        ShootInit();
+        AttackInit();
+        ArmsAimInit();
+        Boundaries();
     }
 
     void Main()
@@ -254,6 +209,7 @@ public class PlayerController : MonoBehaviour
 
     void MainSidescroll()
     {
+        
         if (!isSidescroll)
         {
             SetPlayerToSidescroll();
@@ -266,12 +222,22 @@ public class PlayerController : MonoBehaviour
             {
                 Move(Vector3.right, speed, "MoveHorizontal");
             }
-            //GURRA potrebbe essere utile inserire un timer per il salto, per evitare che il salto venga effettuato più volte nei vari update
-            //GURRA non va assolutamente bene il getbuttondown qui. Nel fixed update rischio di perdere l'input. mettere il controllo sull'input nell'update e lasciare il salto qua nel fixed.
-            if (player.GetButtonDown("Jump") && canJump)
+            //LUCA con il timer non dovrebbe piu servire il getbuttondown (?)
+            if (player.GetButton("Jump") && canJump)
             {
-                Jump();
+                if (jumpTimer < timeToJump)
+                {
+                    jumpTimer += Time.deltaTime;
+                }
+                else
+                { 
+                    //LUCA check nell'update jump nel fixed
+                    Jump();
+                    jumpTimer = 0;
+                }
             }
+           
+
         }
         
         if (thereIsGround && !canJump)
@@ -280,6 +246,7 @@ public class PlayerController : MonoBehaviour
             {
                 SetAnimationFromRunToJump();
             }
+            //LUCA cambiato il modo in cui la forza viene applicata
             //GURRA da rivedere questa parte, è evidente che in game succedono cose strane, tipo il player che sta mezz'ora sul lato alto dello schermo
             ApplyGravity();
         }
@@ -291,20 +258,21 @@ public class PlayerController : MonoBehaviour
                 {
                     SetAnimationToRun();
                 }
+                //LUCA sistemare salto
                 //GURRA rivedere questa parte
                 ResetPlayerAfterJump();
             }
         }
         if (player.GetButton("Jump"))
         {
-            if (!canJump && rb.velocity.y < -0.5f)
+            if (!canJump && rb.velocity.y < 0)
             {
                 if (!anim_isGliding)
                 {
                     SetAnimationFromJumpToGlide();
                 }
                 //GURRA assolutamente NO. vedo un sacco di numeri magici, questo -2, poi in StabilizeAcceleration c'è una cosa divia per 3. cosa rappresentano questi numeri? a cosa serve il metodo?
-                if (rb.velocity.y < -2)
+                if (rb.velocity.y < -drag)
                 {
                     StabilizeAcceleration();
                 }
@@ -322,9 +290,7 @@ public class PlayerController : MonoBehaviour
 
         ClampPositionSidescroll();
         UpdateArmsRotation();
-        //GURRA se playerstate è moving è ovvio che non sia attacking, no? poi viene usato il canjump come controllo del fatto che lui non stia saltando. Non va bene, ci va una variabile apposta. Io magari posso dire che trevor sta camminando nella 
-        //melma e quindi non può saltare, ma questo non significa che stia già saltando. Vedi sopra quando viene gestito il glide.
-        if ((currentPlayerState == PlayerState.Moving) && player.GetButtonDown("Meele") && currentPlayerState != PlayerState.Attacking && canJump)
+        if (currentPlayerState == PlayerState.Moving && player.GetButtonDown("Meele") && canJump)
         {
             StartCoroutine("BiteAttack");
         }
@@ -342,7 +308,7 @@ public class PlayerController : MonoBehaviour
             Move(Vector3.forward, speed, "MoveVertical");
             Move(Vector3.right, speed, "MoveHorizontal");
 
-            TurnAroundGO(transform);
+            transform.LookAt(new Vector3(aimTransform.transform.position.x, transform.position.y, aimTransform.transform.position.z));
 
             inverseDirection = new Vector3(-horizontalAxis, 0, -verticalAxis);
             playerForward = new Vector3(transform.forward.x, 0, transform.forward.z);
@@ -397,22 +363,13 @@ public class PlayerController : MonoBehaviour
                     KillPlayer();
                 }
 
-                if (other.transform.tag.StartsWith("EnemyBullet"))
+                if (other.transform.tag.StartsWith(enemyBulletTag))
                 {
                     other.transform.gameObject.SetActive(false);
                 }
             }
         }
-        //GURRA aggiustare questo if, fare riferimento allo stato Attacking, così c'è anche meno ridondanza
-        else if (topTailCollider.enabled)
-        {
-            if (other.gameObject.layer == enemyLayer && !IsDead())
-            {
-                other.transform.gameObject.SetActive(false);
-            }
-        }
-
-        if (currentPlayerState == PlayerState.Attacking)
+        else
         {
             if (other.gameObject.layer == enemyLayer && !IsDead())
             {
@@ -420,8 +377,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-  
 
     void UpdateMovementAxes()
     {
@@ -451,7 +406,6 @@ public class PlayerController : MonoBehaviour
             shoulderAimL.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
             shoulderAimR.transform.rotation = Quaternion.Euler(new Vector3(aimAngle, 90f, 0));
         }
-
 
         if (aimAngle < upRotationAngle && cross.z >= 0)
         {
@@ -484,7 +438,7 @@ public class PlayerController : MonoBehaviour
     void SetPlayerToSidescroll()
     {
         isSidescroll = true;
-        animator.SetBool("sidescroll", isSidescroll);
+        animator.SetBool(sidescrollAnimation, isSidescroll);
         transform.rotation = transformStartRotation;
     }
 
@@ -492,7 +446,7 @@ public class PlayerController : MonoBehaviour
     {
         isSidescroll = false;
         anim_isFlying = true;
-        animator.SetBool("sidescroll", isSidescroll);
+        animator.SetBool(sidescrollAnimation, isSidescroll);
         animator.SetBool("isFlying", anim_isFlying);
         rb.velocity = Vector3.zero;
     }
@@ -501,8 +455,8 @@ public class PlayerController : MonoBehaviour
     {
         anim_isRunning = false;
         anim_isJumping = true;
-        animator.SetBool("isRunning", anim_isRunning);
-        animator.SetBool("isJumping", anim_isJumping);
+        animator.SetBool(isRunningAnim, anim_isRunning);
+        animator.SetBool(isJumpingAnim, anim_isJumping);
     }
 
     void SetAnimationToRun()
@@ -510,49 +464,49 @@ public class PlayerController : MonoBehaviour
         anim_isJumping = false;
         anim_isGliding = false;
         anim_isRunning = true;
-        animator.SetBool("isJumping", anim_isJumping);
-        animator.SetBool("isGliding", anim_isGliding);
-        animator.SetBool("isRunning", anim_isRunning);
+        animator.SetBool(isJumpingAnim, anim_isJumping);
+        animator.SetBool(isGlidingAnim, anim_isGliding);
+        animator.SetBool(isRunningAnim, anim_isRunning);
     }
 
     void SetAnimationFromJumpToGlide()
     {
         anim_isJumping = false;
         anim_isGliding = true;
-        animator.SetBool("isJumping", anim_isJumping);
-        animator.SetBool("isGliding", anim_isGliding);
+        animator.SetBool(isJumpingAnim, anim_isJumping);
+        animator.SetBool(isGlidingAnim, anim_isGliding);
     }
 
     void SetAnimationFromFlyToMoveBackwards()
     {
         anim_isFlying = false;
         anim_isMovingBackwards = true;
-        animator.SetBool("isFlying", anim_isFlying);
-        animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
+        animator.SetBool(isFlyingAnim, anim_isFlying);
+        animator.SetBool(movingBackwardsAnim, anim_isMovingBackwards);
     }
 
     void SetAnimationFromMoveBackwardsToFly()
     {
         anim_isFlying = true;
         anim_isMovingBackwards = false;
-        animator.SetBool("isMovingBackwards", anim_isMovingBackwards);
-        animator.SetBool("isFlying", anim_isFlying);
+        animator.SetBool(movingBackwardsAnim, anim_isMovingBackwards);
+        animator.SetBool(isFlyingAnim, anim_isFlying);
     }
 
     void ResetPlayerAfterJump()
     {
         rb.velocity = Vector3.zero;
-        transform.position = new Vector3(transform.position.x, landmark.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
     }
 
     void ApplyGravity()
     {
-        rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * gravity, ForceMode.Force);
     }
 
     void StabilizeAcceleration()
     {
-        rb.AddForce(Vector3.up * Mathf.Abs((rb.velocity.y / 3)), ForceMode.Impulse);
+        rb.AddForce(Vector3.up * Mathf.Abs((rb.velocity.y / gravity * drag)), ForceMode.Impulse);
     }
 
     void Jump()
@@ -568,15 +522,7 @@ public class PlayerController : MonoBehaviour
     bool CheckGround(float rayLength)
     {
         Ray ray = new Ray(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
-        //GURRA sintetizzate qua con return physics.raycast...
-        if (Physics.Raycast(ray, rayLength, groundMask))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return Physics.Raycast(ray, rayLength, groundMask);
     }
 
     void Move(Vector3 moveVector, float speed, string moveAxisName)
@@ -620,21 +566,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //GURRA a cosa serve passare il transform in un metodo interno???
-    void TurnAroundGO(Transform transform)
-    {
-        //GURRA questo metodo viene chiamato in top down, controllo superfluo.
-        switch (GameManager.instance.currentGameMode)
-        {
-            case GameMode.SIDESCROLL:
-                transform.LookAt(new Vector3(aimTransform.transform.position.x, aimTransform.transform.position.y, transform.position.z));
-                break;
-            case GameMode.TOPDOWN:
-                transform.LookAt(new Vector3(aimTransform.transform.position.x, transform.position.y, aimTransform.transform.position.z));
-                break;
-        }
-    }
-
     void Shoot()
     {
         GameObject bullet = PoolManager.instance.pooledBulletClass["PlayerBullet"].GetpooledBullet();
@@ -664,7 +595,7 @@ public class PlayerController : MonoBehaviour
 
         transform.position = new Vector3(
         Mathf.Clamp(transform.position.x, topXMin, topXMax),
-            landmark.position.y + topdownPlayerHeight,
+            startPosition.y + topdownPlayerHeight,
         Mathf.Clamp(transform.position.z, topZMin, topZMax)
         );
     }
@@ -733,6 +664,13 @@ public class PlayerController : MonoBehaviour
         life = properties.lives;
     }
 
+    private void KillPlayer()
+    {
+        currentPlayerState = PlayerState.Dead;
+        playerModel.SetActive(false);
+        StartCoroutine(RespawnPlayer());
+    }
+
     IEnumerator TailAttack()
     {
         currentPlayerState = PlayerState.Attacking;
@@ -753,7 +691,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator BiteAttack()
     {
         currentPlayerState = PlayerState.Attacking;
-        rb.velocity = new Vector3(0, biteATKSpeed, 0);
+        rb.velocity = new Vector3(0, biteHeight, 0);
         currentPlayerState = PlayerState.Attacking;
 
         yield return new WaitForSeconds(biteCoolDown);
@@ -767,13 +705,6 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
     }
 
-    private void KillPlayer()
-    {
-        currentPlayerState = PlayerState.Dead;
-        playerModel.SetActive(false);
-        StartCoroutine(RespawnPlayer());
-    }
-
     IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(RespawnTimer);
@@ -781,13 +712,13 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(InvinciblePlayer());
         currentPlayerState = PlayerState.Moving;
         playerModel.SetActive(true);
-        //Reset Positiion after being hit ?
-        //GURRA sì, resettiamo la posizione
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //Position Reset
+        transform.position = startPosition;
         rb.velocity = Vector3.zero;
 
     }
 
+    //JET PARTICLES
     private void ActivateStrongerJetpack()
     {
         jetpackStrongerParticle.PlayAll(true);
@@ -802,5 +733,90 @@ public class PlayerController : MonoBehaviour
     {
         jetpackRegularParticle.StopAll(true);
         jetpackStrongerParticle.StopAll(true);
+    }
+
+    //INIT METHODS
+    void PlayerInit()
+    {
+        //Player state initialization
+        startPosition = transform.position;
+        currentPlayerState = PlayerState.Moving;
+        properties = Register.instance.propertiesPlayer;
+        anim_isRunning = true;
+        enemyLayer = LayerMask.NameToLayer(enemyLayerString);
+
+        //Player Stats
+        topdownPlayerHeight = properties.topdownPlayerHeight;
+        invincibleTime = properties.invincibleTime;
+        life = properties.lives;
+        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
+    }
+
+    //Rewired Initialization
+    void RewiredInit()
+    {
+        player = ReInput.players.GetPlayer(playerId);
+    }
+
+    //Arm Rotation in Sidescroll
+    void SideArmsRotation()
+    {
+        upRotationAngle = properties.upRotationAngle;
+        downRotationAngle = properties.downRotationAngle;
+        maxArmsRotation = properties.maxArmsRotation;
+    }
+
+    //Jumping
+    void JumpInit()
+    {
+
+        speed = properties.xSpeed;
+        jumpForce = properties.jumpForce;
+        glideSpeed = properties.glideSpeed;
+        gravity = properties.gravity;
+        drag = properties.drag;
+    }
+
+    void ShootInit()
+    {
+        //Shooting
+        aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
+        fireRatio = properties.fireRatio;
+        RespawnTimer = properties.respawnTimer;
+        gunIndex = 0;
+    }
+
+    //Attacks
+    void AttackInit()
+    {
+        tailMeleeSpeed = properties.tailMeleeSpeed;
+        biteHeight = properties.biteATKSpeed;
+        biteCoolDown = properties.biteCoolDown;
+    }
+
+    void ArmsAimInit()
+    {
+        //Changes during camera transition
+        shoulderLStartRotation = shoulderAimL.transform.rotation;
+        shoulderRStartRotation = shoulderAimR.transform.rotation;
+        gunLStartRotation = gunsAimL.transform.rotation;
+        gunRStartRotation = gunsAimR.transform.rotation;
+        sideBodyColliderStartRot = sideBodyCollider.transform.rotation;
+        topBodyColliderStartRot = topBodyCollider.transform.rotation;
+        transformStartRotation = transform.rotation;
+        armsAimStartRotation = armsAim.transform.rotation;
+    }
+
+    void Boundaries()
+    {
+        //Boundaries From Register
+        sideXMin = Register.instance.xMin;
+        sideXMax = Register.instance.xMax;
+        sideYMin = Register.instance.yMin;
+        sideYMax = Register.instance.yMax;
+        topXMax = Register.instance.xMax;
+        topXMin = Register.instance.xMin;
+        topZMax = Register.instance.zMax;
+        topZMin = Register.instance.zMin;
     }
 }
