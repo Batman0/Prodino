@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class SinusoideBullet : NormalBullet
 {
-    public PropertiesDoubleAiming property;
+    //public PropertiesDoubleAiming property;
     private bool moveForward;
+    [SerializeField]
     private float xSpeed;
+    [SerializeField]
     private float sinusoideDuration;
+    [SerializeField]
     private float forwardDistance;
+    [SerializeField]
     private float backDistance;
     private float transformTargetDeltaDistance;
     private float zOriginal;
@@ -16,6 +20,8 @@ public class SinusoideBullet : NormalBullet
     /// <summary>
     /// Makes the movement more or less smooth. It doesn't have to be less than 0.935f (0.94f just to be sure).
     /// </summary>
+    [SerializeField]
+    [Range(0.94f, 10f)]
     private float easingValue;
     private Vector3 originalPos;
     private Vector3 target;
@@ -24,12 +30,12 @@ public class SinusoideBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        speed = property.xBulletSpeed;
-        sinusoideDuration = property.sinusoideDuration;
+        //speed = property.xBulletSpeed;
+        //sinusoideDuration = property.sinusoideDuration;
         destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
-        forwardDistance = property.bulletForwardDistance;
-        backDistance = property.bulletBackDistance;
-        easingValue = property.easingValue;
+        //forwardDistance = property.bulletForwardDistance;
+        //backDistance = property.bulletBackDistance;
+        //easingValue = property.easingValue;
         playerTr = register.player.transform;
         transformTargetDeltaDistance = 0.5f;
     }

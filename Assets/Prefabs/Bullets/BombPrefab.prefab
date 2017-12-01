@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4758789199509044}
   - component: {fileID: 33973435051643894}
   - component: {fileID: 23046999104650858}
-  - component: {fileID: 114813301702638966}
   - component: {fileID: 54014682950675450}
   - component: {fileID: 65777839111721650}
   - component: {fileID: 136824951470486596}
   - component: {fileID: 136647782903394288}
+  - component: {fileID: 114813301702638966}
   m_Layer: 12
   m_Name: BombPrefab
   m_TagString: Untagged
@@ -123,7 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef8ebe4395661e48aed3872e71c13b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  property: {fileID: 11400000, guid: b3957d2329e61b44eab59082a094a6f8, type: 2}
+  bombFallSpeed: 7.62
+  bombLifeTime: 2
   explosionSidescrollCollider: {fileID: 136824951470486596}
   explosionTopdownCollider: {fileID: 136647782903394288}
   rb: {fileID: 54014682950675450}

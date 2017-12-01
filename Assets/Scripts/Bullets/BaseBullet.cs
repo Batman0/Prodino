@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BaseBullet : MonoBehaviour
 {
+    [SerializeField]
     protected float speed;
     public Collider sideCollider;
     public Collider topCollider;

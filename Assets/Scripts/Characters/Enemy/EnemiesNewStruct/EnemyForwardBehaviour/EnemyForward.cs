@@ -4,9 +4,6 @@ using UnityEngine;
 
 public abstract class EnemyForward : Enemy
 {
-    protected float speed = 0;
-    protected float destructionMargin;
-
 	public override void Update()
 	{
 		base.Update ();	
@@ -21,7 +18,7 @@ public abstract class EnemyForward : Enemy
     {
         base.Move();
 
-            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime, Space.Self);
+            transform.Translate(Vector3.forward * xSpeed * Time.fixedDeltaTime, Space.Self);
 
             if (isRight)
             {

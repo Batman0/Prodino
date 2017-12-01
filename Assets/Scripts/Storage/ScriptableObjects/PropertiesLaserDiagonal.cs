@@ -12,7 +12,7 @@ public class PropertiesLaserDiagonal : ScriptableObject
     //public float amplitude;
     //public float height;
     public float amplitude;
-    public float downDistance;
+    //public float downDistance;
     //public Transform[] rightTargets;
     //public Transform[] leftTargets;
     public float laserHeight;

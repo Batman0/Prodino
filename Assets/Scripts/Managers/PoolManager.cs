@@ -13,27 +13,25 @@ public class PoolManager : MonoBehaviour
         public GameObject enemyTypeObject;
         public Enemy enemyScript;
         public GameObject enemyObject;
-        public ScriptableObject property;
 
 
 
-        public PoolEnemy(ScriptableObject _property, GameObject _enemyTypeObject, int _enemyAmount)
+        public PoolEnemy(GameObject _enemyTypeObject, int _enemyAmount)
         {
             enemyTypeObject = _enemyTypeObject;
             enemyAmount = _enemyAmount;
-            property = _property;
 
             pooledItems = new List<GameObject>();
 
             for (int i = 0; i < enemyAmount; i++)
             {
-                GameObject Enemy = Instantiate(enemyTypeObject) as GameObject;
-                Enemy.GetComponent<Enemy>().SetProperty(property);
-                Enemy.SetActive(false);
-                pooledItems.Add(Enemy);
+                GameObject enemy = Instantiate(enemyTypeObject) as GameObject;
+                //enemy.GetComponent<Enemy>().SetProperty(property);
+                enemy.SetActive(false);
+                pooledItems.Add(enemy);
             }
         }
-
+        //TO REVIEW THIS FUNCTION. WHEN INDEX IS POOLDEITEMS.COUNT - 1 IT BOTH GETS 0 AND INCREASES OF 1, SKIPPING THE 0.
         public GameObject GetpooledEnemy()
         {
             int currentIndex = index;
@@ -64,12 +62,13 @@ public class PoolManager : MonoBehaviour
 
             for (int i = 0; i < _bulletAmount; i++)
             {
+                Debug.Log(_bulletTypeObject.name);
                 GameObject bullet = Instantiate(_bulletTypeObject) as GameObject;
                 bullet.SetActive(false);
                 pooledItems.Add(bullet);
             }
         }
-
+        //TO REVIEW THIS FUNCTION. WHEN INDEX IS POOLDEITEMS.COUNT - 1 IT BOTH GETS 0 AND INCREASES OF 1, SKIPPING THE 0.
         public GameObject GetpooledBullet()
         {
             int currentIndex = index;
@@ -174,30 +173,31 @@ public class PoolManager : MonoBehaviour
 
     void DictionaryEnemyInitialization()
     {
-        ScriptableObject currentProperty;
-        for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
+        Enemy enemyScript;
+
+        for (int i = 0; i < Register.instance.enemyScripts.Length; i++)
         {
-            currentProperty = Register.instance.enemyProperties[i];
-            PoolEnemy Enemy = new PoolEnemy(currentProperty, currentProperty.gameObjectPrefab, enemyAmount[currentProperty.enemyName]);
-            pooledEnemyClass.Add(currentProperty.enemyName, Enemy);
+            enemyScript = Register.instance.enemyScripts[i];
+            PoolEnemy enemyPool = new PoolEnemy(enemyScript.gameObject, enemyAmount[enemyScript.enemyName]);
+            pooledEnemyClass.Add(enemyScript.enemyName, enemyPool);
 
         }
     }
 
     void DictionaryBulletInitialization()
     {
-        ScriptableObject currentProperty;
+        Enemy enemyScript;
 
         PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, bulletAmount["PlayerBullet"]);
         pooledBulletClass.Add("PlayerBullet", PlayerBullet);
 
-        for (int i = 0; i < Register.instance.enemyProperties.Length; i++)
+        for (int i = 0; i < Register.instance.enemyScripts.Length; i++)
         {
-            if (Register.instance.enemyProperties[i].enemyName != "Forward" )
+            if (Register.instance.enemyScripts[i].enemyName != "Forward" )
             {
-                currentProperty = Register.instance.enemyProperties[i];
-                PoolBullet Bullet = new PoolBullet(currentProperty.bulletPrefab, bulletAmount[currentProperty.enemyName]);
-                pooledBulletClass.Add(currentProperty.enemyName, Bullet);
+                enemyScript = Register.instance.enemyScripts[i];
+                PoolBullet bulletPool = new PoolBullet(enemyScript.bulletPrefab, bulletAmount[enemyScript.enemyName]);
+                pooledBulletClass.Add(enemyScript.enemyName, bulletPool);
             }
         }
     }

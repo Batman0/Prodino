@@ -51,8 +51,9 @@ public class EnemySpawnManager : MonoBehaviour
     {
         if (dataIndex < enemyCreationData.Length && _timerToSpawn >= enemyCreationData[dataIndex].delay)
         {
-            EnemyStringName enemyCD = enemyCreationData[dataIndex].enemyStringName;
-            string propertiesString = register.enemyPropertiesDictionary[enemyCD.ToString()].enemyName;
+            EnemyStringName enemyType = enemyCreationData[dataIndex].enemyStringName;
+            string propertiesString = register.enemyPropertiesDictionary[enemyType.ToString()].enemyName;
+            //Debug.Log(enemyType.ToString());
             GameObject enemyObject = PoolManager.instance.pooledEnemyClass[propertiesString].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();

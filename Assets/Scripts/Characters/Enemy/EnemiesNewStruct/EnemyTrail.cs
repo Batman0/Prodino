@@ -4,35 +4,34 @@ using UnityEngine;
 
 public class EnemyTrail : Enemy
 {
-    private new PropertiesTrail property;
+    //private new PropertiesTrail property;
 
-    private bool canShoot;
-    private float destructionMargin;
+    //private float destructionMargin;
 
-    [Header("Movement")]
-    private float speed;
-    private float backSpeed;
+    [SerializeField]
+    private float xReturnSpeed;
+    [SerializeField]
     private float rotationSpeed;
+    [SerializeField]
     private float movementDuration;
     private float waitingTimer;
     private float doneRotation;
     private Transform enemyTransform;
-
-    [Header("Shot")]
     private GameObject trail;
+    private bool canShoot;
 
     public override void InitEnemy()
     {
-        base.InitEnemy();
-        enemyLives = property.lives;
-        speed = property.xSpeed;
-        backSpeed = property.xReturnSpeed;
-        rotationSpeed = property.rotationSpeed;
-        movementDuration = property.movementDuration;
+        //base.InitEnemy();
+        //enemyLives = property.lives;
+        //speed = property.xSpeed;
+        //backSpeed = property.xReturnSpeed;
+        //rotationSpeed = property.rotationSpeed;
+        //movementDuration = property.movementDuration;
         waitingTimer = 0;
         doneRotation = 0;
         enemyTransform = transform.GetChild(0);
-        trail = property.bulletPrefab;
+        //trail = property.bulletPrefab;
     }
 
     void FixedUpdate()
@@ -54,12 +53,12 @@ public class EnemyTrail : Enemy
         
             if (waitingTimer < movementDuration && doneRotation == 0)
             {
-                transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime, Space.Self);
+                transform.Translate(Vector3.forward * xSpeed * Time.fixedDeltaTime, Space.Self);
                 waitingTimer += Time.deltaTime;
             }
             else if (waitingTimer > 0.0f && doneRotation >= 180)
             {
-                transform.Translate(Vector3.forward * -backSpeed * Time.fixedDeltaTime, Space.Self);
+                transform.Translate(Vector3.forward * -xReturnSpeed * Time.fixedDeltaTime, Space.Self);
                 waitingTimer -= Time.deltaTime;
             }
             else if (waitingTimer <= 0.0f && doneRotation >= 180)
@@ -86,7 +85,7 @@ public class EnemyTrail : Enemy
 
         if(canShoot && !trail)
         {
-            trail = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+            trail = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
             trail.transform.position = bulletSpawnpoint.position;
             trail.transform.rotation = Quaternion.Inverse(transform.rotation);
             trail.SetActive(true);
@@ -95,9 +94,9 @@ public class EnemyTrail : Enemy
         }
     }
 
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesTrail)_property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesTrail)_property;
+    //    InitEnemy();
+    //}
 }

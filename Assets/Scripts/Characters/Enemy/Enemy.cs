@@ -13,18 +13,26 @@ public abstract class Enemy : MonoBehaviour
     public Transform shooterTransform;
     public Collider sideCollider;
     public Collider topCollider;
+    //public GameObject gameObjectPrefab;
+    public GameObject bulletPrefab;
+    public string enemyName;
     protected Register register;
     protected float xMin;
     protected float xMax;
-    public float timer = 0;
-    protected ScriptableObject property;
+    //protected ScriptableObject property;
 
     [Header("Statistics")]
+    [SerializeField]
     protected int enemyLives;
     protected float enemyDeactivationDelay = 0.5f;
+    [SerializeField]
+    protected float xSpeed;
+    [SerializeField]
+    protected float destructionMargin;
     protected bool isDying = false;
     [HideInInspector]
     public bool isRight;
+    public float fireRateTimer = 0;
 
     virtual public void Awake()
     {
@@ -145,5 +153,5 @@ public abstract class Enemy : MonoBehaviour
         return (!gameManager.transitionIsRunning && !isDying);
     }
 
-    public abstract void SetProperty(ScriptableObject property);
+    //public abstract void SetProperty(ScriptableObject property);
 }
