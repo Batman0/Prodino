@@ -6,7 +6,7 @@ using Rewired;
 public class PlayerController : MonoBehaviour
 {
 
-    public enum PlayerState { Moving, Attacking, Dead}
+    public enum PlayerState { Moving, Attacking, Dead }
 
     [Header("Initialization")]
     private PlayerState currentPlayerState;
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     private bool canJump = true;
+    private bool jumpFrame = false;
     private bool thereIsGround;
     private float speed;
     private float jumpForce;
@@ -50,8 +51,6 @@ public class PlayerController : MonoBehaviour
     private const float groundCheckRayLength = 25.0f;
     private float controllerDeadZone = 0.1f;
     private float gravity;
-    //LUCA nuova property drag per gestire l'attrito del glide e metterei la gravity come const ma chiedo conferma
-    //elimina anche esigenza di numeri vari per la velocity
     private float drag;
     private float glideSpeed;
     private float topdownPlayerHeight;
@@ -138,6 +137,7 @@ public class PlayerController : MonoBehaviour
         Register.instance.player = this;
         rb = GetComponent<Rigidbody>();
         Init();
+        jumpTimer = timeToJump;
     }
 
     void FixedUpdate()
@@ -147,9 +147,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL && armsAim.transform.rotation != armsAimStartRotation)
+        if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            armsAim.transform.rotation = armsAimStartRotation;
+            SetArmsToStartRotation();
+            CheckJump();
         }
 
         if (currentPlayerState != PlayerState.Dead)
@@ -177,6 +178,30 @@ public class PlayerController : MonoBehaviour
         topBodyCollider.transform.rotation = topBodyColliderStartRot;
     }
 
+    private void CheckJump()
+    {
+        if (jumpTimer < timeToJump)
+        {
+            jumpTimer += Time.deltaTime;
+        }
+        //GURRA ho rimesso il button down, poiché se il player sta planando c'è il rischio che appena tocchi terra salti subito involontariamente
+        if (player.GetButtonDown("Jump") && jumpTimer>=timeToJump && canJump)
+        {
+            jumpFrame = true;
+        }
+        else
+        {
+            jumpFrame = false;
+        }
+    }
+    private void SetArmsToStartRotation()
+    {
+        if (armsAim.transform.rotation != armsAimStartRotation)
+        {
+            armsAim.transform.rotation = armsAimStartRotation;
+
+        }
+    }
     void Init()
     {
         PlayerInit();
@@ -209,7 +234,7 @@ public class PlayerController : MonoBehaviour
 
     void MainSidescroll()
     {
-        
+
         if (!isSidescroll)
         {
             SetPlayerToSidescroll();
@@ -222,47 +247,37 @@ public class PlayerController : MonoBehaviour
             {
                 Move(Vector3.right, speed, "MoveHorizontal");
             }
-            //LUCA con il timer non dovrebbe piu servire il getbuttondown (?)
-            if (player.GetButton("Jump") && canJump)
+            if (jumpFrame)
             {
-                if (jumpTimer < timeToJump)
+                Jump();
+            }
+        }
+        if (thereIsGround)
+        {
+            if (!canJump)
+            {
+                if (!anim_isJumping)
                 {
-                    jumpTimer += Time.deltaTime;
+                    SetAnimationFromRunToJump();
                 }
-                else
-                { 
-                    //LUCA check nell'update jump nel fixed
-                    Jump();
-                    jumpTimer = 0;
+                ApplyGravity();
+            }
+            else
+            {
+                if (rb.velocity.y < 0)
+                {
+                    if (!anim_isRunning)
+                    {
+                        SetAnimationToRun();
+                    }
+                    //LUCA sistemare salto
+                    //GURRA rivedere questa parte
+                    ResetPlayerAfterJump();
                 }
             }
-           
+        }
+    
 
-        }
-        
-        if (thereIsGround && !canJump)
-        {
-            if (!anim_isJumping)
-            {
-                SetAnimationFromRunToJump();
-            }
-            //LUCA cambiato il modo in cui la forza viene applicata
-            //GURRA da rivedere questa parte, è evidente che in game succedono cose strane, tipo il player che sta mezz'ora sul lato alto dello schermo
-            ApplyGravity();
-        }
-        else if (thereIsGround && canJump)
-        {
-            if (rb.velocity.y < 0)
-            {
-                if (!anim_isRunning)
-                {
-                    SetAnimationToRun();
-                }
-                //LUCA sistemare salto
-                //GURRA rivedere questa parte
-                ResetPlayerAfterJump();
-            }
-        }
         if (player.GetButton("Jump"))
         {
             if (!canJump && rb.velocity.y < 0)
@@ -271,7 +286,6 @@ public class PlayerController : MonoBehaviour
                 {
                     SetAnimationFromJumpToGlide();
                 }
-                //GURRA assolutamente NO. vedo un sacco di numeri magici, questo -2, poi in StabilizeAcceleration c'è una cosa divia per 3. cosa rappresentano questi numeri? a cosa serve il metodo?
                 if (rb.velocity.y < -drag)
                 {
                     StabilizeAcceleration();
@@ -511,6 +525,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
+        jumpTimer = 0;
         rb.velocity = new Vector3(0, jumpForce, 0);
     }
 
@@ -602,6 +617,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ChangePerspective()
     {
+        jumpTimer = timeToJump;
         anim_isMovingBackwards = false;
         anim_isFlying = false;
         anim_isRunning = false;
