@@ -2970,15 +2970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: -0.7
-  fluctuationSpeed: 0.3
-  waitingTime: 4
-  loadingTime: 1
-  shootingTime: 14.9
-  woundedLoadingTime: 3
-  woundedInitialTransform: {fileID: 0}
-  woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 0
 --- !u!114 &114246466668310326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3014,15 +3005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: 0
-  fluctuationSpeed: 0
-  waitingTime: 4
-  loadingTime: 1
-  shootingTime: 6
-  woundedLoadingTime: 3
-  woundedInitialTransform: {fileID: 0}
-  woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 0
 --- !u!114 &114513572754995708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3034,15 +3016,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: 0.7
-  fluctuationSpeed: 0.1
-  waitingTime: 10
-  loadingTime: 1
-  shootingTime: 4
-  woundedLoadingTime: 3
-  woundedInitialTransform: {fileID: 0}
-  woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 0
 --- !u!114 &114585940576937302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3076,15 +3049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffa3c24179c45047ad4ecbfd1cfbce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fluctuationAmplitude: 0
-  fluctuationSpeed: 0
-  waitingTime: 10
-  loadingTime: 1
-  shootingTime: 2
-  woundedLoadingTime: 3
-  woundedInitialTransform: {fileID: 0}
-  woundedFloatingTransform: {fileID: 0}
-  woundedFloatingSpeed: 0
 --- !u!114 &114752070350470266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3119,13 +3083,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ab8c2b44a819c48a3adbd78b36eeea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  internalLasers: {fileID: 4958759057831798}
+  externalLasers: {fileID: 4561991314884970}
   lasers:
   - {fileID: 114229374389789662}
   - {fileID: 114513572754995708}
   - {fileID: 114696768431289786}
   - {fileID: 114402582017024810}
-  internalLasers: {fileID: 4958759057831798}
-  externalLasers: {fileID: 4561991314884970}
+  laserCycles:
+  - patterns:
+    - leftExternalLaser:
+        fluctuationAmplitude: 1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 1
+      rightExternalLaser:
+        fluctuationAmplitude: -1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 2
+      leftInternalLaser:
+        fluctuationAmplitude: 0
+        fluctuationSpeed: 0
+        offset: 1
+        waitingTime: 1
+        shootingTime: 3
+      rightInternalLaser:
+        fluctuationAmplitude: 0
+        fluctuationSpeed: 0
+        offset: 2
+        waitingTime: 1
+        shootingTime: 4
+    - leftExternalLaser:
+        fluctuationAmplitude: 1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 1
+      rightExternalLaser:
+        fluctuationAmplitude: -1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 2
+      leftInternalLaser:
+        fluctuationAmplitude: 1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 3
+      rightInternalLaser:
+        fluctuationAmplitude: 0
+        fluctuationSpeed: 0
+        offset: 2
+        waitingTime: 1
+        shootingTime: 4
+    cycles: 2
+  - patterns:
+    - leftExternalLaser:
+        fluctuationAmplitude: 0
+        fluctuationSpeed: 0
+        offset: 1
+        waitingTime: 1
+        shootingTime: 1
+      rightExternalLaser:
+        fluctuationAmplitude: -1
+        fluctuationSpeed: 1
+        offset: 1
+        waitingTime: 1
+        shootingTime: 2
+      leftInternalLaser:
+        fluctuationAmplitude: 1
+        fluctuationSpeed: 0
+        offset: 1
+        waitingTime: 1
+        shootingTime: 3
+      rightInternalLaser:
+        fluctuationAmplitude: 0
+        fluctuationSpeed: 0
+        offset: 2
+        waitingTime: 1
+        shootingTime: 4
+    cycles: 4
+  loadingTime: 1
+  woundedLoadingTime: 3
   fluctuationSpeed: 200
   fluctuationAmplitudes: {x: 0, y: 200, z: 0}
   gunRotationSpeed: 0
@@ -3134,13 +3177,13 @@ MonoBehaviour:
   internalRotationsAmount: 6
   triggerHealthPoints: 1
   healthPoints: 10
-  maxCycles: 1
-  maxDamageDuringWound: 18
+  maxDamageDuringWound: 9
   unloadTime: 3
   vulnerableTime: 0
   reloadingTime: 2.5
   maxWoundedTime: 10
   recoveryTime: 0
+  phaseHPLimits: 09000000
   explosionContainer: {fileID: 4220863463598006}
 --- !u!136 &136063269480353612
 CapsuleCollider:
@@ -160996,8 +161039,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161806,8 +161849,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162022,8 +162065,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162292,8 +162335,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162778,8 +162821,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
-  - {fileID: 2100000, guid: d1beb30b82c7ff84a964bfbb5fc410b0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162832,8 +162875,8 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
-  - {fileID: 2100000, guid: b87a1ab694c6a4e4b90e72c1c0f3b35b, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
