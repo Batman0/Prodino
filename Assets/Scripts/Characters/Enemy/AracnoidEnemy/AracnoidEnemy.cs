@@ -12,11 +12,17 @@ public class AracnoidEnemy : MonoBehaviour
 
 
     [Header("Components")]
-    public AracnoidLaser[] lasers = new AracnoidLaser[4];
     private AracnoidWeakSpot weakSpot;
     public Transform internalLasers;
     public Transform externalLasers;
 
+
+    [Header("Lasers")]
+    public AracnoidLaser[] lasers = new AracnoidLaser[4];
+    [SerializeField]
+    public AracnoidLaserCycle[] laserCycles;
+    public float loadingTime;
+    public float woundedLoadingTime;
     [Header("Movement Parameters")]
     public float fluctuationSpeed;
     public Vector3 fluctuationAmplitudes;
@@ -41,18 +47,22 @@ public class AracnoidEnemy : MonoBehaviour
     public float healthPoints;
 
 
+
     [Header("Enemy State Parameters")]
     private float currentStateEnterTime;
-    public float maxCycles;
-    private float currentCycle;
+    private int currentCycle;
     private int lasersDoneShooting = 0;
-    public float maxDamageDuringWound;
+    public int maxDamageDuringWound;
     private int currentWoundDamage;
     public float unloadTime;
     public float vulnerableTime;
     public float reloadingTime;
     public float maxWoundedTime;
     public float recoveryTime;
+    [Header("Enemy Phase Parameters")]
+    public int[] phaseHPLimits;
+    private int currentPhase;
+    private int currentLaserCyle;
 
 
     [Header("Particles")]
@@ -66,7 +76,51 @@ public class AracnoidEnemy : MonoBehaviour
         get { return state; }
     }
 
+    [System.Serializable]
+    public class AracnoidLaserCycle
+    {
+        [SerializeField]
+        public AracnoidLasersPatternContainer[] patterns;
+        public int cycles;
+        [System.Serializable]
+        public class AracnoidLasersPatternContainer
+        {
+            public AracnoidLaserParameters leftExternalLaser;
+            public AracnoidLaserParameters rightExternalLaser;
+            public AracnoidLaserParameters leftInternalLaser;
+            public AracnoidLaserParameters rightInternalLaser;
+            private AracnoidLaserParameters[] lasersBehaviour = new AracnoidLaserParameters[4];
 
+            public AracnoidLaserParameters[] LaserBehaviour
+            {
+                get
+                {
+                    lasersBehaviour[0] = leftExternalLaser;
+                    lasersBehaviour[1] = rightExternalLaser;
+                    lasersBehaviour[2] = leftInternalLaser;
+                    lasersBehaviour[3] = rightInternalLaser;
+                    return lasersBehaviour;
+                }
+            }
+        }
+        [System.Serializable]
+
+        public struct AracnoidLaserParameters
+        {
+            [Header("Laser Movement Parameters")]
+            public float fluctuationAmplitude;
+            public float fluctuationSpeed;
+            public float offset;
+            [Header("Laser Shooting Parameters")]
+            public float waitingTime;
+            public float shootingTime;
+        }
+
+        public AracnoidLaserParameters[] GetPattern()
+        {
+            return patterns[Random.Range(0, patterns.Length)].LaserBehaviour;
+        }
+    }
     void Awake()
     {
         weakSpot = GetComponentInChildren<AracnoidWeakSpot>();
@@ -84,13 +138,15 @@ public class AracnoidEnemy : MonoBehaviour
         {
             if (lasersDoneShooting > 3)
             {
-                if (currentCycle < maxCycles - 1)
+                if (currentCycle < laserCycles[currentPhase].cycles - 1)
                 {
                     EnableLasers();
+                    lasersDoneShooting = 0;
                     currentCycle++;
                 }
                 else
                 {
+                    currentLaserCyle++;
                     EnterRecoveringPositionState();
                     currentCycle = 0;
                 }
@@ -214,9 +270,13 @@ public class AracnoidEnemy : MonoBehaviour
     }
     void EnableLasers()
     {
+        AracnoidLaserCycle.AracnoidLaserParameters[] pattern = laserCycles[currentPhase].GetPattern();
+
         for (int i = 0; i < lasers.Length; i++)
         {
             lasers[i].EnableLaser();
+            lasers[i].SetLaserParameters(pattern[i]);
+
         }
     }
     public void WeakSpotHit()
@@ -231,6 +291,10 @@ public class AracnoidEnemy : MonoBehaviour
         }
         healthPoints--;
         currentWoundDamage++;
+        if (currentPhase < phaseHPLimits.Length && healthPoints < phaseHPLimits[currentPhase])
+        {
+            currentPhase++;
+        }
         Debug.LogWarning("Aracnoid HP: " + healthPoints);
         if (healthPoints <= 0)
         {
@@ -243,7 +307,6 @@ public class AracnoidEnemy : MonoBehaviour
     }
     void Death()
     {
-        //gameObject.SetActive(false);
         StartCoroutine(Explode(0));
         float timer = 0.0f;
         if (timer < GameManager.instance.delayToRespawnEnemy)
@@ -296,4 +359,6 @@ public class AracnoidEnemy : MonoBehaviour
                 StartCoroutine(Explode(++index));
         }
     }
+
+
 }
