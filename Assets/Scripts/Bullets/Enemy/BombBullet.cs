@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BombBullet : MonoBehaviour
 {
-    public PropertiesBombDrop property;
     private bool blownUp;
-    private float speed;
-    private float lifeTime;
+    [SerializeField]
+    private float bombFallSpeed;
+    [SerializeField]
+    private float bombLifeTime;
     public CapsuleCollider explosionSidescrollCollider;
     public CapsuleCollider explosionTopdownCollider;
     public Rigidbody rb;
@@ -19,8 +20,6 @@ public class BombBullet : MonoBehaviour
     {
         register = Register.instance;
         gameManager = GameManager.instance;
-        speed = property.bombFallSpeed;
-        lifeTime = property.bombLifeTime;
     }
 
     private void OnEnable()
@@ -55,7 +54,7 @@ public class BombBullet : MonoBehaviour
             //explosionTopdownCollider.enabled = false;
         }
 
-        StartCoroutine("Deactivate", lifeTime);
+        StartCoroutine("Deactivate", bombLifeTime);
     }
 
     void OnDisable()
@@ -66,7 +65,7 @@ public class BombBullet : MonoBehaviour
 
     void Move()
     {
-        rb.AddForce(Vector3.down * speed, ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * bombFallSpeed, ForceMode.Acceleration);
     }
 
     void ChangePerspective()

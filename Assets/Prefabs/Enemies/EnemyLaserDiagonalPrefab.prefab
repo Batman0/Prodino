@@ -371,8 +371,22 @@ MonoBehaviour:
   shooterTransform: {fileID: 4810204316244916}
   sideCollider: {fileID: 65562383542620152}
   topCollider: {fileID: 65958224007894580}
-  timer: 0.3
+  bulletPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
+    type: 2}
+  enemyName: LaserDiagonal
+  enemyLives: 5
+  xSpeed: 3
+  destructionMargin: 3
   isRight: 0
+  fireRateTimer: 0
+  yMovementSpeed: 3
+  yMovementSpeedShooting: 1
+  amplitude: 20
+  waitingTime: 2
+  loadingTime: 1
+  shootingTime: 2
+  width: 2
+  height: 1
 --- !u!114 &114947508847271772
 MonoBehaviour:
   m_ObjectHideFlags: 1

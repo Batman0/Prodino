@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class NormalBullet : BaseBullet
 {
-    
+    [SerializeField]
     protected float destructionMargin;
     protected float xMin, xMax, yMin, yMax, zMin, zMax;
     protected Vector3 direction;

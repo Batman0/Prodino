@@ -10,7 +10,6 @@ public class PropertiesDoubleAiming : ScriptableObject
     public float amplitude;
     public float bulletForwardDistance;
     public float bulletBackDistance;
-    public float bulletSpeedDecrease;
     public float xBulletSpeed;
     public float sinusoideDuration;
     public float fireRate;

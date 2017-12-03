@@ -59,15 +59,17 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyScript: {fileID: 0}
   propertiesPlayer: {fileID: 11400000, guid: 5db68b97bf0ceb64c8a1335b341e1bc4, type: 2}
-  enemyProperties:
-  - {fileID: 11400000, guid: 61db0577212bde747b591e9151f2a9fb, type: 2}
-  - {fileID: 11400000, guid: 5e22fdde01590774280713b5df29e2a5, type: 2}
-  - {fileID: 11400000, guid: b3957d2329e61b44eab59082a094a6f8, type: 2}
-  - {fileID: 11400000, guid: 0c4beaaf9d3b41945a56f51dc1116639, type: 2}
-  - {fileID: 11400000, guid: 2825f629973b1344b81581f6a04d1324, type: 2}
-  - {fileID: 11400000, guid: b0be0b3c559645942b5959d0346cf464, type: 2}
-  - {fileID: 11400000, guid: 9b80a2176e0044a42895d0b537f36fa1, type: 2}
+  enemyScripts:
+  - {fileID: 114191051340109322, guid: 8884d51cfc0062d41a5dcf7eaa77ac02, type: 2}
+  - {fileID: 114862091362335256, guid: 02cafe5263ae1634cadbc91cb541e30d, type: 2}
+  - {fileID: 114884049239151810, guid: dff460710c6a379479b299ace9b29ced, type: 2}
+  - {fileID: 114226854465930744, guid: e391b91679723bb489b5e308b56f28b4, type: 2}
+  - {fileID: 114713272461765256, guid: a72ef70ed7f9a544796b4287f34b9dde, type: 2}
+  - {fileID: 114486126764172726, guid: 4b2e466300699434b9cc14acc1950bc0, type: 2}
+  - {fileID: 114318340439565910, guid: cbd5e43a5209e8849980e9e9023ab7f8, type: 2}
   xMin: 0
   xMax: 0
   yMin: 0
   yMax: 0
+  zMin: 0
+  zMax: 0
