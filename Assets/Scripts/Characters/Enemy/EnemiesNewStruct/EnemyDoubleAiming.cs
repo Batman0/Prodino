@@ -5,18 +5,19 @@ using UnityEngine;
 public class EnemyDoubleAiming : Enemy
 {
     
-    private new PropertiesDoubleAiming property;
+    //private new PropertiesDoubleAiming property;
 
-    [Header("Movement")]
+    //private bool moveForward;
+    [SerializeField]
     private float zMovementSpeed;
-    private float destructionMargin;
+    //[SerializeField]
+    //private float destructionMargin;
+    [SerializeField]
     private float amplitude;
     private float targetPlayerDeltaDistance = 0.1f;
     private Vector3 originalPos;
     private Vector3 topdownTarget;
-    private float speed;
 
-    [Header("Shot")]
     private float fireRate;
 
     public override void Awake()
@@ -32,14 +33,16 @@ public class EnemyDoubleAiming : Enemy
     public override void InitEnemy()
     {
         base.InitEnemy();
-        enemyLives = property.lives;
+        //enemyLives = property.lives;
         originalPos = transform.position;
-        speed = isRight ? -property.xSpeed : property.xSpeed;
-        zMovementSpeed = property.zMovementSpeed;
-        destructionMargin = property.destructionMargin;
-        amplitude = property.amplitude;
+        Debug.Log(transform.position);
+        xSpeed = isRight ? -xSpeed : xSpeed;
+        //zMovementSpeed = property.zMovementSpeed;
+        //destructionMargin = property.destructionMargin;
+        //amplitude = property.amplitude;
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
         topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
-        fireRate = property.fireRate;
+        //fireRate = property.fireRate;
     }
 
     void FixedUpdate()
@@ -58,7 +61,7 @@ public class EnemyDoubleAiming : Enemy
         base.Move();
         if (Vector3.Distance(transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
-            topdownTarget = new Vector3(transform.position.x,transform.position.y, topdownTarget.z);
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, topdownTarget.z);
         }
         else
         {
@@ -67,7 +70,7 @@ public class EnemyDoubleAiming : Enemy
             topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         }
 
-        transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
+        transform.position = new Vector3(xSpeed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
 
         if (isRight)
         {
@@ -88,29 +91,29 @@ public class EnemyDoubleAiming : Enemy
     public override void Shoot()
     {
         base.Shoot();
-        if (timer < fireRate)
+        if (fireRateTimer < fireRate)
         {
-            timer += Time.deltaTime;
+            fireRateTimer += Time.deltaTime;
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+            GameObject bullet = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
             bullet.tag = "EnemyBullet";
             bullet.transform.position = bulletSpawnpoint.position;
             bullet.transform.rotation = transform.rotation;
             bullet.SetActive(true);
-            GameObject secondBullet = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+            GameObject secondBullet = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
             secondBullet.tag = "EnemyBulletInverse";
             secondBullet.transform.position = bulletSpawnpointSecond.position;
             secondBullet.transform.rotation = transform.rotation;
             secondBullet.SetActive(true);
-            timer = 0.0f;
+            fireRateTimer = 0.0f;
         }
     }
 
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesDoubleAiming)_property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesDoubleAiming)_property;
+    //    InitEnemy();
+    //}
 }

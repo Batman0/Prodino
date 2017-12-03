@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ForwardShooter : EnemyForward
 {
-    private new PropertiesForwardShooter property;
+    //private new PropertiesForwardShooter property;
 
-    [Header("Shot")]
+    [SerializeField]
     private float fireRate;
 
 
     public override void InitEnemy()
     {
-        base.InitEnemy();
-        enemyLives = property.lives;
-        speed = property.xSpeed;
-        enemyLives = property.lives;
-        destructionMargin = property.destructionMargin;
-        fireRate = property.fireRate;
+    //    base.InitEnemy();
+    //    enemyLives = property.lives;
+    //    speed = property.xSpeed;
+    //    enemyLives = property.lives;
+    //    destructionMargin = property.destructionMargin;
+    //    fireRate = property.fireRate;
     }
 
     public override void Update()
@@ -31,23 +31,23 @@ public class ForwardShooter : EnemyForward
         base.Shoot();
         if(CheckCondition())
         {
-            if (timer < fireRate)
+            if (fireRateTimer < fireRate)
             {
-                timer += Time.deltaTime;
+                fireRateTimer += Time.deltaTime;
             }
             else
             {
-                GameObject bullet = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+                GameObject bullet = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
                 bullet.transform.position = bulletSpawnpoint.position;
                 bullet.transform.rotation = transform.rotation;
                 bullet.SetActive(true);
-                timer = 0.0f;
+                fireRateTimer = 0.0f;
             }
         }
     }
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesForwardShooter) _property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesForwardShooter) _property;
+    //    InitEnemy();
+    //}
 }

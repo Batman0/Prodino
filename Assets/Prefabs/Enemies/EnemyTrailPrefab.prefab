@@ -182,5 +182,14 @@ MonoBehaviour:
   shooterTransform: {fileID: 4958441338833634}
   sideCollider: {fileID: 65798314600009978}
   topCollider: {fileID: 65864004444632390}
-  timer: 0.3
+  bulletPrefab: {fileID: 1047232896709052, guid: b5ff0752424c99a43aa54799e3068775,
+    type: 2}
+  enemyName: Trail
+  enemyLives: 1
+  xSpeed: 5
+  destructionMargin: 0
   isRight: 0
+  fireRateTimer: 0
+  xReturnSpeed: 3
+  rotationSpeed: 1
+  movementDuration: 4

@@ -5,48 +5,56 @@ using UnityEngine;
 public class EnemyLaser : Enemy
 {
     
-    private new PropertiesLaserDiagonal property;
+    //private new PropertiesLaserDiagonal property;
 
-    [Header("Movement")]
     private bool moveUp;
+    [SerializeField]
     private float yMovementSpeed;
+    [SerializeField]
     private float yMovementSpeedShooting;
-    private float destructionMargin;
-    private float upDistance;
-    private float downDistance;
+    //[SerializeField]
+    //private float destructionMargin;
+    [SerializeField]
+    private float amplitude;
+    //private float downDistance;
     private float targetPlayerDeltaDistance;
     private Vector3 originalPos;
     private Vector3 sidescrollTarget;
-    private float speed;
 
-    [Header("Shot")]
     private bool isShooting;
+    [SerializeField]
     private float waitingTime;
+    [SerializeField]
     private float loadingTime;
+    [SerializeField]
     private float shootingTime;
+    [SerializeField]
     private float width;
+    [SerializeField]
     private float height;
     private GameObject laser;
 
     public override void InitEnemy()
     {
         base.InitEnemy();
-        enemyLives = property.lives;
+        //enemyLives = property.lives;
         originalPos = transform.position;
-        speed = isRight ? -property.xSpeed : property.xSpeed;
+        //Debug.Log(originalPos);
+        //Debug.Log(transform.position);
+        xSpeed = isRight ? -xSpeed : xSpeed;
         moveUp = true;
-        yMovementSpeed = property.yMovementSpeed;
-        yMovementSpeedShooting = property.yMovementSpeedShooting;
-        targetPlayerDeltaDistance = Mathf.Max(yMovementSpeed, yMovementSpeedShooting) / 10;
-        destructionMargin = property.destructionMargin;
-        upDistance = property.upDistance;
-        downDistance = property.downDistance;
-        sidescrollTarget = new Vector3(transform.position.x, originalPos.y + upDistance, transform.position.z);
-        waitingTime = property.waitingTime;
-        loadingTime = property.loadingTime;
-        shootingTime = property.shootingTime;
-        width = property.laserWidth;
-        height = property.laserHeight;
+        //yMovementSpeed = property.yMovementSpeed;
+        //yMovementSpeedShooting = property.yMovementSpeedShooting;
+        targetPlayerDeltaDistance = yMovementSpeed / 10;
+        //destructionMargin = property.destructionMargin;
+        //amplitude = property.amplitude;
+        //downDistance = property.downDistance;
+        sidescrollTarget = new Vector3(transform.position.x, originalPos.y + amplitude, transform.position.z);
+        //waitingTime = property.waitingTime;
+        //loadingTime = property.loadingTime;
+        //shootingTime = property.shootingTime;
+        //width = property.laserWidth;
+        //height = property.laserHeight;
     }
 
    void FixedUpdate()
@@ -66,16 +74,18 @@ public class EnemyLaser : Enemy
         if (Vector3.Distance(transform.position, sidescrollTarget) > targetPlayerDeltaDistance)
         {
             sidescrollTarget = new Vector3(transform.position.x, sidescrollTarget.y, transform.position.z);
+            //Debug.Log(transform.position);
         }
         else
         {
-            moveUp = !moveUp;
-            yMovementSpeed = moveUp ? Mathf.Abs(yMovementSpeed) : -Mathf.Abs(yMovementSpeed);
-            yMovementSpeedShooting = moveUp ? Mathf.Abs(yMovementSpeedShooting) : -Mathf.Abs(yMovementSpeedShooting);
-            sidescrollTarget = moveUp ? new Vector3(transform.position.x, originalPos.y + upDistance, transform.position.z) : new Vector3(transform.position.x, originalPos.y - downDistance, transform.position.z);
+            //Debug.Log("ddddddd");
+            yMovementSpeed = -yMovementSpeed;
+            yMovementSpeedShooting = -yMovementSpeedShooting;
+            amplitude = -amplitude;
+            sidescrollTarget = new Vector3(transform.position.x, originalPos.y + amplitude, transform.position.z);
         }
 
-        transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, (!isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.fixedDeltaTime + transform.position.y, transform.position.z);
+        transform.position = new Vector3(xSpeed * Time.fixedDeltaTime + transform.position.x, ((!isShooting ? yMovementSpeed : yMovementSpeedShooting) * Time.fixedDeltaTime) + transform.position.y, transform.position.z);
 
         if (isRight)
         {
@@ -96,21 +106,21 @@ public class EnemyLaser : Enemy
     public override void Shoot()
     {
         base.Shoot();
-        if (timer < waitingTime)
+        if (fireRateTimer < waitingTime)
         {
-            timer += Time.deltaTime;
+            fireRateTimer += Time.deltaTime;
         }
         else
         {
-            if (timer < waitingTime + loadingTime)
+            if (fireRateTimer < waitingTime + loadingTime)
             {
-                timer += Time.deltaTime;
+                fireRateTimer += Time.deltaTime;
             }
             else
             {
                 if (!laser)
                 {
-                    laser = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+                    laser = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
                     laser.SetActive(true);
                     laser.transform.SetParent(bulletSpawnpoint.parent);
                     laser.transform.position = bulletSpawnpoint.position;
@@ -118,24 +128,24 @@ public class EnemyLaser : Enemy
                     laser.transform.localScale = new Vector3(width, height, laser.transform.localScale.z);
                     isShooting = true;
                 }
-                if (timer < waitingTime + loadingTime + shootingTime)
+                if (fireRateTimer < waitingTime + loadingTime + shootingTime)
                 {
-                    timer += Time.deltaTime;
+                    fireRateTimer += Time.deltaTime;
                 }
                 else
                 {
                     laser.SetActive(false);
                     laser = null;
-                    timer = 0.0f;
+                    fireRateTimer = 0.0f;
                     isShooting = false;
                 }
             }
         }
     }
 
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesLaserDiagonal) _property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesLaserDiagonal) _property;
+    //    InitEnemy();
+    //}
 }

@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class BombDrop : EnemyForward
 {
-    private new PropertiesBombDrop property;
+    //private new PropertiesBombDrop property;
     
 
-    [Header("Shot")]
+    [SerializeField]
     private float loadingTime;
 
 
     public override void InitEnemy()
     {
-        base.InitEnemy();
-        enemyLives = property.lives;
-        speed = property.xSpeed;
-        destructionMargin = property.destructionMargin;
-        loadingTime = property.loadingTime;
+    //    base.InitEnemy();
+    //    enemyLives = property.lives;
+    //    speed = property.xSpeed;
+    //    destructionMargin = property.destructionMargin;
+    //    loadingTime = property.loadingTime;
     }
 
     // Update is called once per frame
     public override void Update ()
     {
-		base.Update ();
+		base.Update();
         Shoot();
 	}
 
@@ -33,23 +33,23 @@ public class BombDrop : EnemyForward
         base.Shoot();
 
 
-        if (timer < loadingTime)
+        if (fireRateTimer < loadingTime)
         {
-            timer += Time.deltaTime;
+            fireRateTimer += Time.deltaTime;
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+            GameObject bullet = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
             bullet.transform.position = bulletSpawnpoint.position;
             bullet.transform.rotation = transform.rotation;
             bullet.SetActive(true);
-            timer = 0.0f;
+            fireRateTimer = 0.0f;
         }
     }
 
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesBombDrop)_property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesBombDrop)_property;
+    //    InitEnemy();
+    //}
 }

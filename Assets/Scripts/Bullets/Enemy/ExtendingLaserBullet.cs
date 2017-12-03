@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class ExtendingLaserBullet : SpecialBullet
 {
-    public PropertiesTrail property;
     private float xMax;
+    [SerializeField]
     private float fadeTime;
 
     private void Awake()
     {
-        speed = property.trailSpeed;
         xMax = Register.instance.xMax;
-        fadeTime = property.fadeTime;
     }
 
     protected override void OnEnable()

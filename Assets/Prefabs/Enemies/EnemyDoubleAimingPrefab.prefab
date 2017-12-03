@@ -182,5 +182,13 @@ MonoBehaviour:
   shooterTransform: {fileID: 4812009479238130}
   sideCollider: {fileID: 65626801742002764}
   topCollider: {fileID: 65572497080471554}
-  timer: 0.3
+  bulletPrefab: {fileID: 1889232763993750, guid: 8d4e8a9caa8b48c45a1a389938337d66,
+    type: 2}
+  enemyName: DoubleAiming
+  enemyLives: 1
+  xSpeed: 4
+  destructionMargin: 5
   isRight: 0
+  fireRateTimer: 0
+  zMovementSpeed: 2
+  amplitude: 4

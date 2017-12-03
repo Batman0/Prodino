@@ -24,9 +24,9 @@ public class Register : MonoBehaviour
 
     [Header("Scriptables")]
     public PropertiesPlayer propertiesPlayer;
-    public ScriptableObject[] enemyProperties;
+    public Enemy[] enemyScripts;
 
-    public Dictionary<string, ScriptableObject> enemyPropertiesDictionary = new Dictionary<string, ScriptableObject>();
+    public Dictionary<string, Enemy> enemyPropertiesDictionary = new Dictionary<string, Enemy>();
 
     [Header("Bounds")]
     [HideInInspector]
@@ -50,11 +50,11 @@ public class Register : MonoBehaviour
 
     void EnemyPropertiesDictionary()
     {
-        ScriptableObject currentProperty;
-        for (int i = 0; i < enemyProperties.Length; i++)
+        Enemy currentEnemy;
+        for (int i = 0; i < enemyScripts.Length; i++)
         {
-            currentProperty = enemyProperties[i];
-            enemyPropertiesDictionary.Add(currentProperty.enemyName, enemyProperties[i]);
+            currentEnemy = enemyScripts[i];
+            enemyPropertiesDictionary.Add(currentEnemy.enemyName, currentEnemy);
         }
     }
 

@@ -5,47 +5,48 @@ using UnityEngine;
 public class EnemySphericalAiminig : Enemy
 {
     
-    private new PropertiesSphericalAiming property;
+    //private new PropertiesSphericalAiming property;
 
-    [Header("Common")]
-    private Transform playerTr;
-
-    [Header("Movement")]
     private bool moveForward;
     private bool barrelRight;
+    [SerializeField]
     private float zMovementSpeed;
-    private float destructionMargin;
-    private float forwardDistance;
-    private float backDistance;
+    //[SerializeField]
+    //private float destructionMargin;
+    [SerializeField]
+    private float amplitude;
     private float targetPlayerDeltaDistance = 0.1f;
+    [SerializeField]
     private float rotationDeadZone;
+    [SerializeField]
     private float rotationSpeed;
     private Vector3 originalPos;
     private Vector3 topdownTarget;
     private Quaternion shooterTransformStartRotation;
     private Quaternion shooterTransformInverseRotation;
     private Collider playerCl;
-    private float speed;
 
-    [Header("Shot")]
+    [SerializeField]
     private float fireRate;
+
+    private Transform playerTr;
 
     public override void InitEnemy()
     {
         base.InitEnemy();
-        enemyLives = property.lives;
+        //enemyLives = property.lives;
         originalPos = transform.position;
-        speed = isRight ? -property.xSpeed : property.xSpeed;
+        xSpeed = isRight ? -xSpeed : xSpeed;
         barrelRight = isRight ? false : true;
-        zMovementSpeed = property.zMovementSpeed;
-        destructionMargin = property.destructionMargin;
-        forwardDistance = property.forwardDistance;
-        backDistance = property.backDistance;
-        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance);
+        //zMovementSpeed = property.zMovementSpeed;
+        //destructionMargin = property.destructionMargin;
+        //amplitude = property.amplitude;
+        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         moveForward = true;
         playerCl = register.player.sideBodyCollider;
-        rotationDeadZone = property.rotationDeadZone;
-        rotationSpeed = property.rotationSpeed;
+        //rotationDeadZone = property.rotationDeadZone;
+        //rotationSpeed = property.rotationSpeed;
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
         shooterTransformStartRotation = shooterTransform.rotation;
         shooterTransformInverseRotation = Quaternion.Inverse(shooterTransformStartRotation);
     }
@@ -69,15 +70,18 @@ public class EnemySphericalAiminig : Enemy
         if (Vector3.Distance(transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
             topdownTarget = new Vector3(transform.position.x, transform.position.y, topdownTarget.z);
+            Debug.Log("NO");
         }
         else
         {
-            moveForward = !moveForward;
+            Debug.Log("YES");
+            //moveForward = !moveForward;
             zMovementSpeed = -zMovementSpeed;
-            topdownTarget = moveForward ? new Vector3(transform.position.x, transform.position.y, originalPos.z + forwardDistance) : new Vector3(transform.position.x, transform.position.y, originalPos.z - backDistance);
+            amplitude = -amplitude;
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
         }
 
-        transform.position = new Vector3(speed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
+        transform.position = new Vector3(xSpeed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
 
         if (isRight)
         {
@@ -139,23 +143,23 @@ public class EnemySphericalAiminig : Enemy
     public override void Shoot()
     {
         base.Shoot();
-        if (timer < fireRate)
+        if (fireRateTimer < fireRate)
         {
-            timer += Time.deltaTime;
+            fireRateTimer += Time.deltaTime;
         }
         else
         {
-            GameObject bullet = PoolManager.instance.pooledBulletClass[property.enemyName].GetpooledBullet();
+            GameObject bullet = PoolManager.instance.pooledBulletClass[enemyName].GetpooledBullet();
             bullet.transform.position = bulletSpawnpoint.position;
             bullet.transform.rotation = shooterTransform.rotation;
             bullet.SetActive(true);
-            timer = 0.0f;
+            fireRateTimer = 0.0f;
         }
     }
 
-    public override void SetProperty(ScriptableObject _property)
-    {
-        property = (PropertiesSphericalAiming)_property;
-        InitEnemy();
-    }
+    //public override void SetProperty(ScriptableObject _property)
+    //{
+    //    property = (PropertiesSphericalAiming)_property;
+    //    InitEnemy();
+    //}
 }

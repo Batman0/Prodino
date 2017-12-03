@@ -19,9 +19,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1443689809309172, guid: 732a5f1a2247b0340a62b728968db5b4,
     type: 2}
   yMovementSpeed: 3
-  yMovementSpeedShooting: 1
+  yMovementSpeedShooting: 3
   destructionMargin: 3
-  upDistance: 1.5
+  amplitude: 20
   downDistance: 3
   laserHeight: 1
   laserWidth: 2

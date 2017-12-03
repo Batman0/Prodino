@@ -287,8 +287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093edeccc9755444987a2afb91e92549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 20
   sideCollider: {fileID: 65500761285806874}
   topCollider: {fileID: 65629360401863642}
+  destructionMargin: 5
 --- !u!198 &198457409176121470
 ParticleSystem:
   m_ObjectHideFlags: 1

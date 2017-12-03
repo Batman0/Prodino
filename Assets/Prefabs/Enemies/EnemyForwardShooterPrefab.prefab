@@ -382,8 +382,15 @@ MonoBehaviour:
   shooterTransform: {fileID: 4204409002134978}
   sideCollider: {fileID: 65459762955537046}
   topCollider: {fileID: 65638722671090642}
-  timer: 0.3
+  bulletPrefab: {fileID: 1077403304418244, guid: 32cff3bd0c712e44b8d0ad2b6661082f,
+    type: 2}
+  enemyName: ForwardShooter
+  enemyLives: 3
+  xSpeed: 5
+  destructionMargin: 2
   isRight: 0
+  fireRateTimer: 0
+  fireRate: 5
 --- !u!198 &198035998735164994
 ParticleSystem:
   m_ObjectHideFlags: 1
