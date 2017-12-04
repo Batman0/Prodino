@@ -26,7 +26,8 @@ public abstract class Enemy : MonoBehaviour
     protected int enemyLives;
     protected float enemyDeactivationDelay = 0.5f;
     [SerializeField]
-    protected float xSpeed;
+    private float xSpeed;
+    protected float xSpeedAdjustable;
     [SerializeField]
     protected float destructionMargin;
     protected bool isDying = false;
@@ -36,36 +37,12 @@ public abstract class Enemy : MonoBehaviour
 
     virtual public void Awake()
     {
-        register = Register.instance;
-        gameManager = GameManager.instance;
-        xMin = register.xMin;
-        xMax = register.xMax;
+        ConstructEnemy();
     }
+
     virtual public void OnEnable()
     {
-
-        if (gameManager.currentGameMode == GameMode.SIDESCROLL)
-        {
-            if (!sideCollider.enabled || topCollider.enabled)
-            {
-                topCollider.enabled = false;
-                sideCollider.enabled = true;
-            }
-        }
-        else
-        {
-            if (!topCollider.enabled || sideCollider.enabled)
-            {
-                sideCollider.enabled = false;
-                topCollider.enabled = true;
-            }
-        }
-
-    }
-    
-    public virtual void InitEnemy()
-    {      
-     
+        InitEnemy();
     }
 
     public virtual void Update()
@@ -85,6 +62,38 @@ public abstract class Enemy : MonoBehaviour
             enemyLives--;
             other.gameObject.SetActive(false);
         }
+    }
+
+    public virtual void ConstructEnemy()
+    {
+        register = Register.instance;
+        gameManager = GameManager.instance;
+        xMin = register.xMin;
+        xMax = register.xMax;
+    }
+
+    public virtual void InitEnemy()
+    {
+        if (gameManager.currentGameMode == GameMode.SIDESCROLL)
+        {
+            if (!sideCollider.enabled || topCollider.enabled)
+            {
+                topCollider.enabled = false;
+                sideCollider.enabled = true;
+            }
+        }
+        else
+        {
+            if (!topCollider.enabled || sideCollider.enabled)
+            {
+                sideCollider.enabled = false;
+                topCollider.enabled = true;
+            }
+        }
+
+        isRight = transform.position.x >= register.player.transform.position.x ? true : false;
+        CheckRotation();
+        xSpeedAdjustable = xSpeed;
     }
 
     public virtual void Shoot()
@@ -151,6 +160,14 @@ public abstract class Enemy : MonoBehaviour
     public bool CheckCondition()
     {      
         return (!gameManager.transitionIsRunning && !isDying);
+    }
+
+    private void CheckRotation()
+    {
+        if (!isRight)
+        {
+            transform.Rotate(Vector3.up, 180, Space.World);
+        }
     }
 
     //public abstract void SetProperty(ScriptableObject property);

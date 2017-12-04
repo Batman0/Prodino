@@ -381,7 +381,7 @@ MonoBehaviour:
   fireRateTimer: 0
   yMovementSpeed: 3
   yMovementSpeedShooting: 1
-  amplitude: 20
+  amplitude: 10
   waitingTime: 2
   loadingTime: 1
   shootingTime: 2

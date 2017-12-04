@@ -26,7 +26,7 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < enemyAmount; i++)
             {
                 GameObject enemy = Instantiate(enemyTypeObject) as GameObject;
-                //enemy.GetComponent<Enemy>().SetProperty(property);
+                //enemy.GetComponent<Enemy>().ConstructEnemy();
                 enemy.SetActive(false);
                 pooledItems.Add(enemy);
             }
@@ -62,7 +62,7 @@ public class PoolManager : MonoBehaviour
 
             for (int i = 0; i < _bulletAmount; i++)
             {
-                Debug.Log(_bulletTypeObject.name);
+                //Debug.Log(_bulletTypeObject.name);
                 GameObject bullet = Instantiate(_bulletTypeObject) as GameObject;
                 bullet.SetActive(false);
                 pooledItems.Add(bullet);
@@ -129,7 +129,6 @@ public class PoolManager : MonoBehaviour
     [Header("Bullets")]
     public int pooledPlayerBulletAmount;
     public int doubleAimingBulletAmount;
-    public int doubleAimingSinusoideBulletAmount;
     public int forwardShooterBulletAmount;
     public int sphericalAimingBulletAmount;
     public int trailBulletAmount;
@@ -188,7 +187,7 @@ public class PoolManager : MonoBehaviour
     {
         Enemy enemyScript;
 
-        PoolBullet PlayerBullet = new PoolBullet(Register.instance.propertiesPlayer.bulletPrefab, bulletAmount["PlayerBullet"]);
+        PoolBullet PlayerBullet = new PoolBullet(Register.instance.player.bulletPrefab, bulletAmount["PlayerBullet"]);
         pooledBulletClass.Add("PlayerBullet", PlayerBullet);
 
         for (int i = 0; i < Register.instance.enemyScripts.Length; i++)
@@ -285,7 +284,7 @@ public class PoolManager : MonoBehaviour
         bulletAmount.Add("ForwardShooter", forwardShooterBulletAmount);
         bulletAmount.Add("LaserDiagonal", laserBulletAmount);
         bulletAmount.Add("SphericalAiming", sphericalAimingBulletAmount);
-        bulletAmount.Add("BombDrop", doubleAimingBulletAmount);
+        bulletAmount.Add("BombDrop", bombDropBulletAmount);
         bulletAmount.Add("Trail", trailBulletAmount);
         bulletAmount.Add("DoubleAiming", doubleAimingBulletAmount);
     }

@@ -192,3 +192,4 @@ MonoBehaviour:
   fireRateTimer: 0
   zMovementSpeed: 2
   amplitude: 4
+  fireRate: 3

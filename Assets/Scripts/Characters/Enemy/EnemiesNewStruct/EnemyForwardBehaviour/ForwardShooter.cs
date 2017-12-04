@@ -9,17 +9,6 @@ public class ForwardShooter : EnemyForward
     [SerializeField]
     private float fireRate;
 
-
-    public override void InitEnemy()
-    {
-    //    base.InitEnemy();
-    //    enemyLives = property.lives;
-    //    speed = property.xSpeed;
-    //    enemyLives = property.lives;
-    //    destructionMargin = property.destructionMargin;
-    //    fireRate = property.fireRate;
-    }
-
     public override void Update()
     {
 		base.Update ();

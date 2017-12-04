@@ -18,7 +18,7 @@ public class PropertiesPlayer : Properties
     public float bulletDestructionMargin;
     public float maxArmsRotation;
     public float tailMeleeSpeed;
-    public float biteATKSpeed;
+    //public float biteATKSpeed;
     public bool biteCoolDownActive;
     public float biteCoolDown;
     public float topdownPlayerHeight;

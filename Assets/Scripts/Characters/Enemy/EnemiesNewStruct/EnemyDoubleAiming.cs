@@ -10,14 +10,16 @@ public class EnemyDoubleAiming : Enemy
     //private bool moveForward;
     [SerializeField]
     private float zMovementSpeed;
+    private float zMovementSpeedAdjustable;
     //[SerializeField]
     //private float destructionMargin;
     [SerializeField]
     private float amplitude;
+    private float amplitudeAdjustable;
     private float targetPlayerDeltaDistance = 0.1f;
     private Vector3 originalPos;
     private Vector3 topdownTarget;
-
+    [SerializeField]
     private float fireRate;
 
     public override void Awake()
@@ -30,19 +32,20 @@ public class EnemyDoubleAiming : Enemy
         base.OnEnable();
     }
 
+    public override void ConstructEnemy()
+    {
+        base.ConstructEnemy();
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
+    }
+
     public override void InitEnemy()
     {
         base.InitEnemy();
-        //enemyLives = property.lives;
         originalPos = transform.position;
-        Debug.Log(transform.position);
-        xSpeed = isRight ? -xSpeed : xSpeed;
-        //zMovementSpeed = property.zMovementSpeed;
-        //destructionMargin = property.destructionMargin;
-        //amplitude = property.amplitude;
-        targetPlayerDeltaDistance = zMovementSpeed / 10;
+        xSpeedAdjustable = isRight ? -xSpeedAdjustable : xSpeedAdjustable;
+        zMovementSpeedAdjustable = zMovementSpeed;
+        amplitudeAdjustable = amplitude;
         topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
-        //fireRate = property.fireRate;
     }
 
     void FixedUpdate()
@@ -65,12 +68,12 @@ public class EnemyDoubleAiming : Enemy
         }
         else
         {
-            zMovementSpeed = -zMovementSpeed;
-            amplitude = -amplitude;
-            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
+            zMovementSpeedAdjustable = -zMovementSpeedAdjustable;
+            amplitudeAdjustable = -amplitudeAdjustable;
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitudeAdjustable);
         }
 
-        transform.position = new Vector3(xSpeed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
+        transform.position = new Vector3(xSpeedAdjustable * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeedAdjustable * Time.fixedDeltaTime + transform.position.z);
 
         if (isRight)
         {

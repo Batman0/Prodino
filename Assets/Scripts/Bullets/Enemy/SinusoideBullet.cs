@@ -6,7 +6,6 @@ public class SinusoideBullet : NormalBullet
 {
     //public PropertiesDoubleAiming property;
     private bool moveForward;
-    [SerializeField]
     private float xSpeed;
     [SerializeField]
     private float sinusoideDuration;
@@ -32,7 +31,7 @@ public class SinusoideBullet : NormalBullet
         base.Awake();
         //speed = property.xBulletSpeed;
         //sinusoideDuration = property.sinusoideDuration;
-        destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
+        //destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
         //forwardDistance = property.bulletForwardDistance;
         //backDistance = property.bulletBackDistance;
         //easingValue = property.easingValue;

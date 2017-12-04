@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class EnemyForward : Enemy
 {
-	public override void Update()
-	{
-		base.Update ();	
-	}
+	//public override void Update()
+	//{
+	//	base.Update ();	
+	//}
 
     public virtual void FixedUpdate()
     {
@@ -18,7 +18,7 @@ public abstract class EnemyForward : Enemy
     {
         base.Move();
 
-            transform.Translate(Vector3.forward * xSpeed * Time.fixedDeltaTime, Space.Self);
+            transform.Translate(Vector3.forward * xSpeedAdjustable * Time.fixedDeltaTime, Space.Self);
 
             if (isRight)
             {

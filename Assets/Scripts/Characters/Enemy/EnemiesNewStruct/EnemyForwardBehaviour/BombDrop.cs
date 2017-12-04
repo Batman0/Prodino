@@ -11,17 +11,6 @@ public class BombDrop : EnemyForward
     [SerializeField]
     private float loadingTime;
 
-
-    public override void InitEnemy()
-    {
-    //    base.InitEnemy();
-    //    enemyLives = property.lives;
-    //    speed = property.xSpeed;
-    //    destructionMargin = property.destructionMargin;
-    //    loadingTime = property.loadingTime;
-    }
-
-    // Update is called once per frame
     public override void Update ()
     {
 		base.Update();

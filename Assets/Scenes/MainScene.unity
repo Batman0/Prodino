@@ -263,15 +263,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 102727116}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d4d08d4242f6a843be12b3225ab3ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bossesCreation:
-    bossPrefab: {fileID: 1054132749644784, guid: aafd89d55ef0669438ee8d9387239712,
-      type: 2}
-    bossEntry: 1
+  - bossPrefab: {fileID: 0}
+    timeToSpawn: 0
+  - bossPrefab: {fileID: 0}
+    timeToSpawn: 0
+  bossEntry: 0
 --- !u!1 &152570970
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,20 +382,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - enemyStringName: 0
-    delay: 0
-  - enemyStringName: 1
-    delay: 5
   - enemyStringName: 2
-    delay: 10
-  - enemyStringName: 3
-    delay: 15
-  - enemyStringName: 4
-    delay: 20
-  - enemyStringName: 5
-    delay: 25
-  - enemyStringName: 6
-    delay: 30
+    delay: 0
 --- !u!1 &187446762
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,7 +1468,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1377708426787892, guid: 79345f38799ec0348b832c7a85596c42, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 79345f38799ec0348b832c7a85596c42, type: 2}
@@ -1729,7 +1719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1271378082
 Transform:
   m_ObjectHideFlags: 0
@@ -1757,10 +1747,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - enemyStringName: 0
-    delay: 3
-  - enemyStringName: 0
-    delay: 4
+  - enemyStringName: 2
+    delay: 0
 --- !u!1 &1288374151
 GameObject:
   m_ObjectHideFlags: 0
@@ -3245,24 +3233,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
-        type: 2}
-      propertyPath: jumpCheckRayLength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1752219706998962, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1434822307563322, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
-        type: 2}
-      propertyPath: material
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e31b6f058452504eaffce590b2d699b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39df20cfb02b81140806e2025c8f177c, type: 2}
   m_IsPrefabParent: 0

@@ -7,14 +7,16 @@ public class EnemySphericalAiminig : Enemy
     
     //private new PropertiesSphericalAiming property;
 
-    private bool moveForward;
+    //private bool moveForward;
     private bool barrelRight;
     [SerializeField]
     private float zMovementSpeed;
+    private float zMovementSpeedAdjustable;
     //[SerializeField]
     //private float destructionMargin;
     [SerializeField]
     private float amplitude;
+    private float amplitudeAdjustable;
     private float targetPlayerDeltaDistance = 0.1f;
     [SerializeField]
     private float rotationDeadZone;
@@ -31,26 +33,6 @@ public class EnemySphericalAiminig : Enemy
 
     private Transform playerTr;
 
-    public override void InitEnemy()
-    {
-        base.InitEnemy();
-        //enemyLives = property.lives;
-        originalPos = transform.position;
-        xSpeed = isRight ? -xSpeed : xSpeed;
-        barrelRight = isRight ? false : true;
-        //zMovementSpeed = property.zMovementSpeed;
-        //destructionMargin = property.destructionMargin;
-        //amplitude = property.amplitude;
-        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
-        moveForward = true;
-        playerCl = register.player.sideBodyCollider;
-        //rotationDeadZone = property.rotationDeadZone;
-        //rotationSpeed = property.rotationSpeed;
-        targetPlayerDeltaDistance = zMovementSpeed / 10;
-        shooterTransformStartRotation = shooterTransform.rotation;
-        shooterTransformInverseRotation = Quaternion.Inverse(shooterTransformStartRotation);
-    }
-
     void FixedUpdate()
     {
         Move();
@@ -64,24 +46,42 @@ public class EnemySphericalAiminig : Enemy
 
 	}
 
+    public override void ConstructEnemy()
+    {
+        base.ConstructEnemy();
+        playerTr = register.player.transform;
+        playerCl = register.player.sideBodyCollider;
+        shooterTransformStartRotation = shooterTransform.rotation;
+        shooterTransformInverseRotation = Quaternion.Inverse(shooterTransformStartRotation);
+        targetPlayerDeltaDistance = zMovementSpeed / 10;
+    }
+
+    public override void InitEnemy()
+    {
+        base.InitEnemy();
+        originalPos = transform.position;
+        xSpeedAdjustable = isRight ? -xSpeedAdjustable : xSpeedAdjustable;
+        barrelRight = isRight ? false : true;
+        amplitudeAdjustable = amplitude;
+        topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
+        zMovementSpeedAdjustable = zMovementSpeed;
+    }
+
     public override void Move()
     {
         base.Move();
         if (Vector3.Distance(transform.position, topdownTarget) > targetPlayerDeltaDistance)
         {
             topdownTarget = new Vector3(transform.position.x, transform.position.y, topdownTarget.z);
-            Debug.Log("NO");
         }
         else
         {
-            Debug.Log("YES");
-            //moveForward = !moveForward;
-            zMovementSpeed = -zMovementSpeed;
-            amplitude = -amplitude;
-            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitude);
+            zMovementSpeedAdjustable = -zMovementSpeedAdjustable;
+            amplitudeAdjustable = -amplitudeAdjustable;
+            topdownTarget = new Vector3(transform.position.x, transform.position.y, originalPos.z + amplitudeAdjustable);
         }
 
-        transform.position = new Vector3(xSpeed * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeed * Time.fixedDeltaTime + transform.position.z);
+        transform.position = new Vector3(xSpeedAdjustable * Time.fixedDeltaTime + transform.position.x, transform.position.y, zMovementSpeedAdjustable * Time.fixedDeltaTime + transform.position.z);
 
         if (isRight)
         {
@@ -121,20 +121,16 @@ public class EnemySphericalAiminig : Enemy
         {
             if (transform.position.x < playerTr.position.x)
             {
-                if (barrelRight)
+                if (shooterTransform.rotation != shooterTransformInverseRotation)
                 {
-                    
-                    shooterTransform.rotation = isRight ? shooterTransformInverseRotation : shooterTransformStartRotation;
-                    barrelRight = false;
+                    shooterTransform.rotation = shooterTransformInverseRotation;
                 }
             }
             else
             {
-                if (!barrelRight)
+                if (shooterTransform.rotation != shooterTransformStartRotation)
                 {
-                   
-                    shooterTransform.rotation = isRight ? shooterTransformStartRotation : shooterTransformInverseRotation;
-                    barrelRight = true;
+                    shooterTransform.rotation = shooterTransformStartRotation;
                 }
             }
         }

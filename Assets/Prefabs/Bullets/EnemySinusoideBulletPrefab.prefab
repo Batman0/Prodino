@@ -134,11 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35985b22f5960c4d8cac8bc2b969166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 3
   sideCollider: {fileID: 65297898253948646}
   topCollider: {fileID: 65953236752592486}
   destructionMargin: 0
-  xSpeed: 3
   sinusoideDuration: 1
   forwardDistance: 4
   backDistance: 4

@@ -20,9 +20,15 @@ public class EnemyTrail : Enemy
     private GameObject trail;
     private bool canShoot;
 
+    public override void ConstructEnemy()
+    {
+        base.ConstructEnemy();
+        enemyTransform = transform.GetChild(0);
+    }
+
     public override void InitEnemy()
     {
-        //base.InitEnemy();
+        base.InitEnemy();
         //enemyLives = property.lives;
         //speed = property.xSpeed;
         //backSpeed = property.xReturnSpeed;
@@ -30,7 +36,6 @@ public class EnemyTrail : Enemy
         //movementDuration = property.movementDuration;
         waitingTimer = 0;
         doneRotation = 0;
-        enemyTransform = transform.GetChild(0);
         //trail = property.bulletPrefab;
     }
 
@@ -53,7 +58,7 @@ public class EnemyTrail : Enemy
         
             if (waitingTimer < movementDuration && doneRotation == 0)
             {
-                transform.Translate(Vector3.forward * xSpeed * Time.fixedDeltaTime, Space.Self);
+                transform.Translate(Vector3.forward * xSpeedAdjustable * Time.fixedDeltaTime, Space.Self);
                 waitingTimer += Time.deltaTime;
             }
             else if (waitingTimer > 0.0f && doneRotation >= 180)

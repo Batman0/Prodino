@@ -24,7 +24,7 @@ public struct EnemyCreationData
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    private bool isRight;
+    //private bool isRight;
     private int dataIndex;
     private Register register;
     public EnemyCreationData[] enemyCreationData;
@@ -34,7 +34,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         register = Register.instance;
         dataIndex = 0;
-        isRight = transform.position.x >= register.player.transform.position.x ? true : false;      
+        //isRight = transform.position.x >= register.player.transform.position.x ? true : false;      
     }
 
     private void Update()
@@ -56,10 +56,11 @@ public class EnemySpawnManager : MonoBehaviour
             //Debug.Log(enemyType.ToString());
             GameObject enemyObject = PoolManager.instance.pooledEnemyClass[propertiesString].GetpooledEnemy();
             enemyObject.transform.position = transform.position;
-            Enemy enemyScript = enemyObject.GetComponent<Enemy>();
-            enemyScript.isRight = isRight;
+            //Enemy enemyScript = enemyObject.GetComponent<Enemy>();
+            //enemyScript.isRight = isRight;
+            //enemyScript.InitEnemy();
 
-            CheckRotation(enemyObject, enemyScript);
+            //CheckRotation(enemyObject, enemyScript);
 
             enemyObject.SetActive(true);
             dataIndex++;
@@ -67,14 +68,6 @@ public class EnemySpawnManager : MonoBehaviour
         else if (dataIndex >= enemyCreationData.Length)
         {
             gameObject.SetActive(false);
-        }
-    }
-
-    void CheckRotation(GameObject _enemyObject, Enemy _enemyScript)
-    {
-        if (!_enemyScript.isRight)
-        {
-            _enemyObject.transform.Rotate(Vector3.up, 180, Space.World);
         }
     }
 }

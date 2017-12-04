@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     //LUCA usata per settare la posizione di partenza e anche per farlo rimanere su una y costante. 
     //da cambiare se da design ci fosse bisogno di far cadere o spostare in basso trevor.
     public Vector3 startPosition;
-    [SerializeField]
-    private PropertiesPlayer properties;
+    //[SerializeField]
+    //private PropertiesPlayer properties;
     private const string enemyLayerString = "Enemy";
     private const string enemyBulletTag = "EnemyBullet";
     private int enemyLayer;
@@ -25,12 +25,16 @@ public class PlayerController : MonoBehaviour
     public Collider sideBodyCollider;
     public Collider topBodyCollider;
     public Collider topTailCollider;
-    private int life;
+    [SerializeField]
+    private int lives;
+    private int currentLives;
 
     [Header("Respawn")]
     public GameObject playerModel;
     private bool isInvincible;
+    [SerializeField]
     public float invincibleTime;
+    [SerializeField]
     public float RespawnTimer;
 
     [Header("Input")]
@@ -41,18 +45,26 @@ public class PlayerController : MonoBehaviour
     private bool canJump = true;
     private bool jumpFrame = false;
     private bool thereIsGround;
+    [SerializeField]
     private float speed;
+    [SerializeField]
     private float jumpForce;
     private float jumpTimer;
     public float timeToJump = 0.2f;
+    [SerializeField]
     private float upRotationAngle;
+    [SerializeField]
     private float downRotationAngle;
     private const float jumpCheckRayLength = 3.0f;
     private const float groundCheckRayLength = 25.0f;
     private float controllerDeadZone = 0.1f;
+    [SerializeField]
     private float gravity;
+    [SerializeField]
     private float drag;
+    [SerializeField]
     private float glideSpeed;
+    [SerializeField]
     private float topdownPlayerHeight;
     private float horizontalAxis;
     private float verticalAxis;
@@ -63,10 +75,12 @@ public class PlayerController : MonoBehaviour
     private Quaternion topTailBodyColliderStartRot;
 
     [Header("Shooting")]
+    [SerializeField]
     private float fireRatio;
     private float fireTimer;
     public Transform[] bulletSpawnPoints;
     private const string playerBulletTag = "PlayerBullet";
+    public GameObject bulletPrefab;
 
     [Header("BulletPool")]
     private PoolManager.PoolBullet bulletPool;
@@ -76,6 +90,7 @@ public class PlayerController : MonoBehaviour
     public Transform gunRx;
     public GameObject armLx;
     public Transform gunLx;
+    [SerializeField]
     private float maxArmsRotation;
     private int gunIndex;
 
@@ -125,11 +140,14 @@ public class PlayerController : MonoBehaviour
     public ParticleSystemManager jetpackRegularParticle;
 
     [Header("TailMelee")]
+    [SerializeField]
     private float tailMeleeSpeed;
     private float angleTailAttack;
 
     [Header("BiteMelee")]
+    [SerializeField]
     private float biteHeight;
+    [SerializeField]
     private float biteCoolDown;
 
     void Awake()
@@ -206,10 +224,10 @@ public class PlayerController : MonoBehaviour
     {
         PlayerInit();
         RewiredInit();
-        SideArmsRotation();
-        JumpInit();
+        //SideArmsRotation();
+        //JumpInit();
         ShootInit();
-        AttackInit();
+        //AttackInit();
         ArmsAimInit();
         Boundaries();
     }
@@ -371,7 +389,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isInvincible && other.gameObject.layer == enemyLayer)
             {
-                life--;
+                currentLives--;
                 if (IsDead())
                 {
                     KillPlayer();
@@ -667,7 +685,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsDead()
     {
-        if (life <= 0)
+        if (currentLives <= 0)
         {
             currentPlayerState = PlayerState.Dead;
             return true;
@@ -677,7 +695,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetPlayerLives()
     {
-        life = properties.lives;
+        currentLives = lives;
     }
 
     private void KillPlayer()
@@ -757,14 +775,14 @@ public class PlayerController : MonoBehaviour
         //Player state initialization
         startPosition = transform.position;
         currentPlayerState = PlayerState.Moving;
-        properties = Register.instance.propertiesPlayer;
+        //properties = Register.instance.propertiesPlayer;
         anim_isRunning = true;
         enemyLayer = LayerMask.NameToLayer(enemyLayerString);
 
         //Player Stats
-        topdownPlayerHeight = properties.topdownPlayerHeight;
-        invincibleTime = properties.invincibleTime;
-        life = properties.lives;
+        //topdownPlayerHeight = properties.topdownPlayerHeight;
+        //invincibleTime = properties.invincibleTime;
+        currentLives = lives;
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
     }
 
@@ -774,41 +792,41 @@ public class PlayerController : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
     }
 
-    //Arm Rotation in Sidescroll
-    void SideArmsRotation()
-    {
-        upRotationAngle = properties.upRotationAngle;
-        downRotationAngle = properties.downRotationAngle;
-        maxArmsRotation = properties.maxArmsRotation;
-    }
+    ////Arm Rotation in Sidescroll
+    //void SideArmsRotation()
+    //{
+    //    upRotationAngle = properties.upRotationAngle;
+    //    downRotationAngle = properties.downRotationAngle;
+    //    maxArmsRotation = properties.maxArmsRotation;
+    //}
 
-    //Jumping
-    void JumpInit()
-    {
+    ////Jumping
+    //void JumpInit()
+    //{
 
-        speed = properties.xSpeed;
-        jumpForce = properties.jumpForce;
-        glideSpeed = properties.glideSpeed;
-        gravity = properties.gravity;
-        drag = properties.drag;
-    }
+    //    speed = properties.xSpeed;
+    //    jumpForce = properties.jumpForce;
+    //    glideSpeed = properties.glideSpeed;
+    //    gravity = properties.gravity;
+    //    drag = properties.drag;
+    //}
 
     void ShootInit()
     {
         //Shooting
         aimTransform = Instantiate(aimTransformPrefab, Vector3.zero, aimTransformPrefab.transform.rotation) as GameObject;
-        fireRatio = properties.fireRatio;
-        RespawnTimer = properties.respawnTimer;
+        //fireRatio = properties.fireRatio;
+        //RespawnTimer = properties.respawnTimer;
         gunIndex = 0;
     }
 
-    //Attacks
-    void AttackInit()
-    {
-        tailMeleeSpeed = properties.tailMeleeSpeed;
-        biteHeight = properties.biteATKSpeed;
-        biteCoolDown = properties.biteCoolDown;
-    }
+    ////Attacks
+    //void AttackInit()
+    //{
+    //    tailMeleeSpeed = properties.tailMeleeSpeed;
+    //    biteHeight = properties.biteATKSpeed;
+    //    biteCoolDown = properties.biteCoolDown;
+    //}
 
     void ArmsAimInit()
     {
