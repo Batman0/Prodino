@@ -209,11 +209,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 1
+  - enemyStringName: 1
     delay: 9
-  - prefab: 1
+  - enemyStringName: 1
     delay: 10
-  - prefab: 1
+  - enemyStringName: 1
     delay: 11
 --- !u!1 &29223421
 GameObject:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &84582036
 GameObject:
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &179231499
 GameObject:
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &197154918
 GameObject:
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &219644499
 GameObject:
@@ -775,9 +775,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 1
+  - enemyStringName: 1
     delay: 3
-  - prefab: 1
+  - enemyStringName: 1
     delay: 4
 --- !u!1 &307577311
 GameObject:
@@ -959,7 +959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!4 &353557677 stripped
 Transform:
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &524857533
 GameObject:
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 2
     delay: 62
 --- !u!1 &533603304 stripped
 GameObject:
@@ -1381,9 +1381,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossesCreation:
-    bossPrefab: {fileID: 1054132749644784, guid: aafd89d55ef0669438ee8d9387239712,
-      type: 2}
-    bossEntry: 1
+  - bossPrefab: {fileID: 0}
+    timeToSpawn: 0
+  - bossPrefab: {fileID: 0}
+    timeToSpawn: 0
+  bossEntry: 0
 --- !u!1 &534165382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,9 +1589,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 3
+  - enemyStringName: 3
     delay: 77
-  - prefab: 3
+  - enemyStringName: 3
     delay: 78
 --- !u!1 &707752198
 GameObject:
@@ -1635,7 +1637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 3
+  - enemyStringName: 3
     delay: 33
 --- !u!1 &720505217
 GameObject:
@@ -1716,7 +1718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 3
+  - enemyStringName: 3
     delay: 33
 --- !u!1 &742469305
 GameObject:
@@ -1792,7 +1794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &781185232
 GameObject:
@@ -1838,7 +1840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &788671131
 GameObject:
@@ -1884,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &800923067 stripped
 GameObject:
@@ -1935,7 +1937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &828789666
 GameObject:
@@ -2078,7 +2080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 0
+  - enemyStringName: 0
     delay: 18
 --- !u!1 &879369305
 GameObject:
@@ -2129,26 +2131,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7da0903a1a1d684b966a5623874482e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayerState: 0
   startPosition: {x: 0, y: 0, z: 0}
-  playerModel: {fileID: 2013151461}
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  landmark: {fileID: 4913762895110830, guid: e11bde519ac5dbd4eb24eb5e3a865154, type: 2}
   sideBodyCollider: {fileID: 373654707}
   topBodyCollider: {fileID: 1491822269}
   topTailCollider: {fileID: 1972494421}
-  canJump: 1
-  thereIsGround: 0
-  jumpCheckRayLength: 2
-  groundCheckRayLength: 25
+  lives: 0
+  playerModel: {fileID: 2013151461}
+  invincibleTime: 0
+  RespawnTimer: 0
+  speed: 0
+  jumpForce: 0
+  timeToJump: 0.2
+  upRotationAngle: 0
+  downRotationAngle: 0
+  gravity: 0
+  drag: 0
+  glideSpeed: 0
+  topdownPlayerHeight: 0
+  fireRatio: 0
   bulletSpawnPoints:
   - {fileID: 0}
+  bulletPrefab: {fileID: 0}
   armRx: {fileID: 1695018959}
   gunRx: {fileID: 2144593300}
   armLx: {fileID: 484168820}
   gunLx: {fileID: 1336665519}
+  maxArmsRotation: 0
   aimTransformPrefab: {fileID: 1434152225440652, guid: 16a637cf0eda6774fb261d0bd486d19b,
     type: 2}
   armsAim: {fileID: 720505217}
@@ -2156,17 +2167,16 @@ MonoBehaviour:
   gunsAimL: {fileID: 0}
   shoulderAimR: {fileID: 0}
   shoulderAimL: {fileID: 0}
-  sideXMin: 4
-  sideXMax: 4
-  sideYMin: 5.5
-  sideYMax: 4
-  topXMin: 4
-  topXMax: 4
-  topZMin: 4
-  topZMax: 4
+  isSidescroll: 0
+  anim_isRunning: 0
+  anim_isFlying: 0
+  anim_isMovingBackwards: 0
   animator: {fileID: 879369306}
   jetpackStrongerParticle: {fileID: 0}
   jetpackRegularParticle: {fileID: 0}
+  tailMeleeSpeed: 0
+  biteHeight: 0
+  biteCoolDown: 0
 --- !u!54 &879369308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2335,7 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1003745879
 GameObject:
@@ -2412,7 +2422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1013151642
 GameObject:
@@ -2458,7 +2468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1021302552
 GameObject:
@@ -2646,7 +2656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1001 &1079310309
 Prefab:
@@ -2784,7 +2794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1001 &1165511591
 Prefab:
@@ -2902,7 +2912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 2
     delay: 75
 --- !u!1001 &1205026926
 Prefab:
@@ -2990,7 +3000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1219324705
 GameObject:
@@ -3110,7 +3120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1236487350
 GameObject:
@@ -3156,7 +3166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1247788437
 GameObject:
@@ -3202,7 +3212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1248699306
 GameObject:
@@ -3352,7 +3362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1319763776
 GameObject:
@@ -3670,9 +3680,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 0
+  - enemyStringName: 0
     delay: 64
-  - prefab: 0
+  - enemyStringName: 0
     delay: 65
 --- !u!1001 &1416489528
 Prefab:
@@ -3795,9 +3805,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 0
+  - enemyStringName: 0
     delay: 64
-  - prefab: 0
+  - enemyStringName: 0
     delay: 65
 --- !u!1 &1442209532
 GameObject:
@@ -3843,9 +3853,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 3
+  - enemyStringName: 3
     delay: 26
-  - prefab: 3
+  - enemyStringName: 3
     delay: 27
 --- !u!1 &1458543647
 GameObject:
@@ -3891,7 +3901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1469730718
 GameObject:
@@ -3999,7 +4009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1491822267
 GameObject:
@@ -4135,7 +4145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1553705309
 GameObject:
@@ -4181,7 +4191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 2
     delay: 49
 --- !u!1 &1558320223
 GameObject:
@@ -4227,7 +4237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1580021708
 GameObject:
@@ -4465,7 +4475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 2
     delay: 49
 --- !u!1 &1639648534
 GameObject:
@@ -4541,7 +4551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1647210876
 GameObject:
@@ -4587,9 +4597,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 0
+  - enemyStringName: 0
     delay: 19
-  - prefab: 0
+  - enemyStringName: 0
     delay: 20
 --- !u!1 &1648995417
 GameObject:
@@ -4635,7 +4645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1666852935
 GameObject:
@@ -4681,7 +4691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1685541044
 GameObject:
@@ -4982,9 +4992,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 0
+  - enemyStringName: 0
     delay: 17
-  - prefab: 0
+  - enemyStringName: 0
     delay: 18
 --- !u!114 &1750645673 stripped
 MonoBehaviour:
@@ -5066,7 +5076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1843366079
 GameObject:
@@ -5112,7 +5122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1846359033
 GameObject:
@@ -5158,7 +5168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1866207960
 GameObject:
@@ -5204,7 +5214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1871215621
 GameObject:
@@ -5281,7 +5291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 6
+  - enemyStringName: 6
     delay: 39
 --- !u!1 &1897392640
 GameObject:
@@ -5327,7 +5337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &1897940590
 GameObject:
@@ -5646,7 +5656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 2
+  - enemyStringName: 0
     delay: 0
 --- !u!1 &2104769099
 GameObject:
@@ -5853,7 +5863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCreationData:
-  - prefab: 6
+  - enemyStringName: 0
     delay: 0
 --- !u!1001 &2129160069
 Prefab:
