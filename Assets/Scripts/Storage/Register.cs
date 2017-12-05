@@ -22,6 +22,25 @@ public class Register : MonoBehaviour
     [HideInInspector]
     public Enemy enemyScript;
 
+    //CommonProperties
+    private const string enemyLayerName = "Enemy";
+    private const string enemyBulletTag = "EnemyBullet";
+    private const string playerLayerName = "Player";
+    private int enemyLayer;
+    private int playerLayer;
+    public int EnemyLayer
+    {
+        get { return enemyLayer; }
+    }
+    public int PlayerLayer
+    {
+        get { return playerLayer; }
+    }
+    public string EnemyBulletTag
+    {
+        get { return enemyBulletTag; }
+    }
+
     [Header("Scriptables")]
     public PropertiesPlayer propertiesPlayer;
     public Enemy[] enemyScripts;
@@ -45,6 +64,8 @@ public class Register : MonoBehaviour
     void Awake()
     {
         instance = this;
+        enemyLayer = LayerMask.NameToLayer(enemyLayerName);
+        playerLayer = LayerMask.NameToLayer(playerLayerName);
         EnemyPropertiesDictionary();
     }
 
