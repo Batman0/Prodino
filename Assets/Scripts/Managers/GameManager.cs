@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameMode
 {
-    SIDESCROLL,
-    TOPDOWN
+    SIDESCROLL = 0,
+    TOPDOWN = 1
 }
 
 [System.Serializable]
@@ -35,8 +36,15 @@ public class GameManager : MonoBehaviour
     
 	public Transform playerHandle;
 
+
+    [Header("Input")]
+    private Player player;
+    private const int playerId = 0;
+
     private void Awake()
     {
+        player = ReInput.players.GetPlayer(playerId);
+        currentGameMode = GameMode.SIDESCROLL;
 		float distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
         instance = this;
         register = Register.instance;
@@ -70,15 +78,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    //void RespawnPlayer(Transform restartPos)
-    //{
-    //    GameObject playerGO = Instantiate(playerPrefab, restartPos.position, playerPrefab.transform.rotation) as GameObject;
-    //    Register.instance.player = playerGO.GetComponent<PlayerController>();
-    //    Register.instance.player.startPosition = playerStartPos.position;
-    //    Register.instance.player.aimTransform = Register.instance.aimTransform;
-    //    playerBulletSpawnpoointY = Register.instance.player.bulletSpawnPoint.position.y;
-    //}
-
     void MoveBackgrounds(Vector3 moveVector)
     {
         foreach (Background item in backgrounds)
@@ -87,4 +86,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ChangeProspective()
+    {
+        //player.GetButtonDown("CameraSwitch");
+        if(!transitionIsRunning)
+        {
+            if (currentGameMode == GameMode.SIDESCROLL)
+            {
+                currentGameMode = GameMode.TOPDOWN;
+                //Debug.Log("Sono in " + currentGameMode);
+            }
+            else 
+            {
+                currentGameMode = GameMode.SIDESCROLL;
+                //Debug.Log("Sono in " + currentGameMode);
+            }
+        }
+    }
 }

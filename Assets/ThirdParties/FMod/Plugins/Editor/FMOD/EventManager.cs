@@ -46,7 +46,7 @@ namespace FMODUnity
                 if (eventCache == null || eventCache.cacheVersion != EventCache.CurrentCacheVersion)
                 {
                     UnityEngine.Debug.Log("FMOD Studio: Cannot find serialized event cache or cache in old format, creating new instance");
-                    eventCache = ScriptableObject.CreateInstance<EventCache>();
+                    eventCache = UnityEngine.ScriptableObject.CreateInstance<EventCache>();
                     eventCache.cacheVersion = EventCache.CurrentCacheVersion;
 
                     AssetDatabase.CreateAsset(eventCache, CacheAssetFullName);
@@ -217,7 +217,7 @@ namespace FMODUnity
 
             if (eventCache.StringsBankRef == null)
             {
-                eventCache.StringsBankRef = ScriptableObject.CreateInstance<EditorBankRef>();
+                eventCache.StringsBankRef = UnityEngine.ScriptableObject.CreateInstance<EditorBankRef>();
                 eventCache.StringsBankRef.FileSizes = new List<EditorBankRef.NameValuePair>();
                 eventCache.EditorBanks.Add(eventCache.StringsBankRef);
                 AssetDatabase.AddObjectToAsset(eventCache.StringsBankRef, eventCache);
@@ -254,7 +254,7 @@ namespace FMODUnity
                 // New bank we've never seen before
                 if (bankRef == null)
                 {
-                    bankRef = ScriptableObject.CreateInstance<EditorBankRef>();
+                    bankRef = UnityEngine.ScriptableObject.CreateInstance<EditorBankRef>();
                     AssetDatabase.AddObjectToAsset(bankRef, eventCache);
                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(bankRef));
                     bankRef.Path = bankFileInfo.FullName;
@@ -344,7 +344,7 @@ namespace FMODUnity
                         EditorEventRef eventRef = eventCache.EditorEvents.Find((x) => x.Path == path);
                         if (eventRef == null)
                         {
-                            eventRef = ScriptableObject.CreateInstance<EditorEventRef>();
+                            eventRef = UnityEngine.ScriptableObject.CreateInstance<EditorEventRef>();
                             AssetDatabase.AddObjectToAsset(eventRef, eventCache);
                             AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(eventRef));
                             eventRef.Banks = new List<EditorBankRef>();
@@ -372,7 +372,7 @@ namespace FMODUnity
                             {
                                 continue;
                             }
-                            EditorParamRef paramRef = ScriptableObject.CreateInstance<EditorParamRef>();
+                            EditorParamRef paramRef = UnityEngine.ScriptableObject.CreateInstance<EditorParamRef>();
                             AssetDatabase.AddObjectToAsset(paramRef, eventCache);
                             AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(paramRef));
                             paramRef.Name = param.name;

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -476,6 +476,12 @@ MonoBehaviour:
   enemyCreationData:
   - enemyStringName: 0
     delay: 0
+--- !u!114 &341611456 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114261192250372820, guid: 6f8b5d06809eb5947950f7ce6eb8c6ac,
+    type: 2}
+  m_PrefabInternal: {fileID: 292208}
+  m_Script: {fileID: 11500000, guid: 8ea1b527bff7a494291f708b22e9134b, type: 3}
 --- !u!4 &353557677
 Transform:
   m_ObjectHideFlags: 0
@@ -2321,6 +2327,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1658615794 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114211673695857014, guid: 4dff3f28592711e4da910a40d9fe5f7e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1416489528}
+  m_Script: {fileID: 11500000, guid: d32781819db05f2468943f078219142f, type: 3}
 --- !u!1 &1666701415
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,6 +2536,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1728778736
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -7.4605637
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 9.782818
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 15.140339
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923419738788094, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608422902142594, guid: 420087ff53f36d443a6e6d794599383a,
+        type: 2}
+      propertyPath: changeProspective.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1658615794}
+    - target: {fileID: 114608422902142594, guid: 420087ff53f36d443a6e6d794599383a,
+        type: 2}
+      propertyPath: changeProspective.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 341611456}
+    - target: {fileID: 114608422902142594, guid: 420087ff53f36d443a6e6d794599383a,
+        type: 2}
+      propertyPath: changeProspective.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StartTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608422902142594, guid: 420087ff53f36d443a6e6d794599383a,
+        type: 2}
+      propertyPath: changeProspective.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 420087ff53f36d443a6e6d794599383a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &1750645673 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114361016435548334, guid: 39df20cfb02b81140806e2025c8f177c,
