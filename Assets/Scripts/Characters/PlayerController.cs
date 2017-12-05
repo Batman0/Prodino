@@ -16,9 +16,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 startPosition;
     //[SerializeField]
     //private PropertiesPlayer properties;
-    private const string enemyLayerString = "Enemy";
-    private const string enemyBulletTag = "EnemyBullet";
-    private int enemyLayer;
+    
     private RaycastHit hit;
     private Rigidbody rb;
     public LayerMask groundMask;
@@ -387,25 +385,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!topTailCollider.enabled && currentPlayerState != PlayerState.Attacking)
         {
-            if (!isInvincible && other.gameObject.layer == enemyLayer)
+            if (!isInvincible && other.gameObject.layer == Register.instance.EnemyLayer)
             {
                 currentLives--;
                 if (IsDead())
                 {
                     KillPlayer();
                 }
-
-                if (other.transform.tag.StartsWith(enemyBulletTag))
-                {
-                    other.transform.gameObject.SetActive(false);
-                }
-            }
-        }
-        else
-        {
-            if (other.gameObject.layer == enemyLayer && !IsDead())
-            {
-                other.transform.gameObject.SetActive(false);
             }
         }
     }
@@ -777,7 +763,6 @@ public class PlayerController : MonoBehaviour
         currentPlayerState = PlayerState.Moving;
         //properties = Register.instance.propertiesPlayer;
         anim_isRunning = true;
-        enemyLayer = LayerMask.NameToLayer(enemyLayerString);
 
         //Player Stats
         //topdownPlayerHeight = properties.topdownPlayerHeight;

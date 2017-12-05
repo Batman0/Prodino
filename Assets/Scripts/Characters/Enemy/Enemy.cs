@@ -60,7 +60,6 @@ public abstract class Enemy : MonoBehaviour
         if (other.tag == "PlayerBullet")
         {
             enemyLives--;
-            other.gameObject.SetActive(false);
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBullet : NormalBullet
 {
+
     //private bool? isRight = null;
     //private bool? isCenter = null;
 
@@ -25,7 +26,13 @@ public class PlayerBullet : NormalBullet
     //    DisableGameobject();
     //}
 
-    
+       protected override void Awake()
+    {
+        base.Awake();
+        myTargetLayer = Register.instance.EnemyLayer;
+    }
+
+
     protected override void Move()
     {
         transform.Translate(direction * speed * Time.fixedDeltaTime, Space.World);

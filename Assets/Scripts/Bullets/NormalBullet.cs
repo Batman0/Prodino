@@ -9,6 +9,7 @@ public abstract class NormalBullet : BaseBullet
     protected float xMin, xMax, yMin, yMax, zMin, zMax;
     protected Vector3 direction;
     protected Register register;
+    protected int myTargetLayer;
 
     protected virtual void Awake()
     {
@@ -19,6 +20,7 @@ public abstract class NormalBullet : BaseBullet
         yMax = register.yMax;
         zMin = register.zMin;
         zMax = register.zMax;
+        myTargetLayer = Register.instance.PlayerLayer;
     }
 
     protected override void OnEnable()
@@ -67,6 +69,20 @@ public abstract class NormalBullet : BaseBullet
     }
 
     protected abstract void Move();
+
+    protected virtual void OnTriggerEnter(Collider coll)
+    {
+        if (coll.gameObject.layer == myTargetLayer)
+        {
+            StartCoroutine(DeactivateBullet());
+        }
+    }
+
+    protected virtual IEnumerator DeactivateBullet()
+    {
+        yield return new WaitForEndOfFrame();
+        gameObject.SetActive(false);
+    }
 
     protected virtual void DisableGameobject()
     {
