@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public class EventManager: MonoBehaviour 
 {
-    public UnityEvent changeProspective;
+    public delegate void GameModeState(GameMode currentState);
+    public static event GameModeState changeState;
     
 
-    void Update()
+    public static void OnChangeGameMode(GameMode currentState)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (changeState != null)
         {
-            changeProspective.Invoke();
+            changeState(currentState);
         }
-    }   
+    }
+           
 }

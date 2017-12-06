@@ -11,32 +11,22 @@ public class CamerasController : MonoBehaviour
     public float transitionDuration;
     public GameObject cameras;
     public Animation anim_animation;
-    private GameMode currentMode;
     
-    void Update()
+    void OnEnable()
     {
-        SetCurrentMode(GameManager.instance.currentGameMode);
+        EventManager.changeState += StartTransition;
     }
 
-    IEnumerator LerpCamera()
+    void OnDisable()
     {
-        switch (currentMode)
+        EventManager.changeState -= StartTransition;
+    }
+
+    IEnumerator LerpCamera(GameMode currentState)
+    {
+        switch (currentState)
         {
             case GameMode.SIDESCROLL:
-                anim_animation["CameraMovementSideToTop"].weight = 1;
-                anim_animation["CameraMovementSideToTop"].enabled = true;
-                while (anim_animation["CameraMovementSideToTop"].normalizedTime < anim_timeRange)
-                {
-                    anim_animation["CameraMovementSideToTop"].normalizedTime += Time.fixedDeltaTime / transitionDuration;
-                    yield return null;
-                }
-                //if (GameManager.instance.currentGameMode != GameMode.TOPDOWN)
-                //{
-                //    GameManager.instance.currentGameMode = GameMode.TOPDOWN;
-                //}
-                break;
-
-            case GameMode.TOPDOWN:
                 anim_animation["CameraMovementTopToSide"].weight = 1;
                 anim_animation["CameraMovementTopToSide"].enabled = true;
                 while (anim_animation["CameraMovementTopToSide"].time < anim_timeRange)
@@ -44,10 +34,16 @@ public class CamerasController : MonoBehaviour
                     anim_animation["CameraMovementTopToSide"].normalizedTime += Time.fixedDeltaTime / transitionDuration;
                     yield return null;
                 }
-                //if (GameManager.instance.currentGameMode != GameMode.SIDESCROLL)
-                //{
-                //    GameManager.instance.currentGameMode = GameMode.SIDESCROLL;
-                //}
+                break;
+
+            case GameMode.TOPDOWN:
+                anim_animation["CameraMovementSideToTop"].weight = 1;
+                anim_animation["CameraMovementSideToTop"].enabled = true;
+                while (anim_animation["CameraMovementSideToTop"].normalizedTime < anim_timeRange)
+                {
+                    anim_animation["CameraMovementSideToTop"].normalizedTime += Time.fixedDeltaTime / transitionDuration;
+                    yield return null;
+                }
                 break;
         }
         EndTransition();
@@ -61,20 +57,19 @@ public class CamerasController : MonoBehaviour
         GameManager.instance.transitionIsRunning = false;
     }
 
-    public void StartTransition()
-    {
-
+    public void StartTransition(GameMode currentState)
+    { 
         if (!GameManager.instance.transitionIsRunning)
         {
             GameManager.instance.transitionIsRunning = true;
             Register.instance.canStartTransitions = true;
             Time.timeScale = timeScaleValueLerping;
-            StartCoroutine(LerpCamera());
+            StartCoroutine(LerpCamera(currentState));
         }
     }
 
-    public void SetCurrentMode(GameMode _currentMode)
-    {
-        currentMode = _currentMode;
-    }
+    //public void SetCurrentMode(GameMode _currentMode)
+    //{
+    //    currentMode = _currentMode;
+    //}
 }

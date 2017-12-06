@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum GameMode
 {
-    SIDESCROLL = 0,
-    TOPDOWN = 1
+    SIDESCROLL,
+    TOPDOWN
 }
 
 [System.Serializable]
@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         register.zMin = register.yMin;
         register.zMax = register.yMax;
     }
+    
 
     void Start()
     {
@@ -68,6 +69,12 @@ public class GameManager : MonoBehaviour
             currentTime += Time.deltaTime;
         }
 
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            currentGameMode = ChangeGameMode(currentGameMode);
+            EventManager.OnChangeGameMode(currentGameMode);
+        }
+
         if (currentGameMode == GameMode.TOPDOWN)
         {
             Register.instance.zMin = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth / 2, 0, Camera.main.farClipPlane + distanceZSurplus)).z;
@@ -77,7 +84,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     void MoveBackgrounds(Vector3 moveVector)
     {
         foreach (Background item in backgrounds)
@@ -86,21 +92,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ChangeProspective()
+    public GameMode ChangeGameMode(GameMode _currentGameMode)
     {
-        //player.GetButtonDown("CameraSwitch");
         if(!transitionIsRunning)
         {
-            if (currentGameMode == GameMode.SIDESCROLL)
+            if (_currentGameMode == GameMode.SIDESCROLL)
             {
-                currentGameMode = GameMode.TOPDOWN;
-                //Debug.Log("Sono in " + currentGameMode);
+                _currentGameMode = GameMode.TOPDOWN;
+                Debug.Log("Sono in " + _currentGameMode);
             }
             else 
             {
-                currentGameMode = GameMode.SIDESCROLL;
-                //Debug.Log("Sono in " + currentGameMode);
+                _currentGameMode = GameMode.SIDESCROLL;
+                Debug.Log("Sono in " + _currentGameMode);
             }
         }
+        return _currentGameMode;
     }
 }
