@@ -42,17 +42,21 @@ public abstract class Enemy : MonoBehaviour
 
     virtual public void OnEnable()
     {
+        EventManager.changeState += ChangeGameState;
         InitEnemy();
     }
 
     public virtual void Update()
     {
-        ChangePerspective();
-
         if (CheckEnemyDead())
         {
             Deactivate();
         }
+    }
+
+    virtual public void OnDisable()
+    {
+        EventManager.changeState += ChangeGameState;
     }
 
     void OnTriggerEnter(Collider other)
@@ -75,19 +79,13 @@ public abstract class Enemy : MonoBehaviour
     {
         if (gameManager.currentGameMode == GameMode.SIDESCROLL)
         {
-            if (!sideCollider.enabled || topCollider.enabled)
-            {
-                topCollider.enabled = false;
-                sideCollider.enabled = true;
-            }
+            topCollider.enabled = false;
+            sideCollider.enabled = true;
         }
         else
         {
-            if (!topCollider.enabled || sideCollider.enabled)
-            {
-                sideCollider.enabled = false;
-                topCollider.enabled = true;
-            }
+            sideCollider.enabled = false;
+            topCollider.enabled = true;
         }
 
         isRight = transform.position.x >= register.player.transform.position.x ? true : false;
@@ -111,26 +109,17 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void ChangePerspective()
+    void ChangeGameState(GameMode currentGameMode)
     {
-        if (gameManager.transitionIsRunning)
+        if (currentGameMode == GameMode.TOPDOWN)
         {
-            if (gameManager.currentGameMode == GameMode.TOPDOWN)
-            {
-                if (!sideCollider.enabled)
-                {
-                    topCollider.enabled = false;
-                    sideCollider.enabled = true;
-                }
-            }
-            else
-            {
-                if (!topCollider.enabled)
-                {
-                    sideCollider.enabled = false;
-                    topCollider.enabled = true;
-                }
-            }
+            topCollider.enabled = true;
+            sideCollider.enabled = false;
+        }
+        else
+        {
+            sideCollider.enabled = true;
+            topCollider.enabled = false;
         }
     }
 
@@ -168,6 +157,4 @@ public abstract class Enemy : MonoBehaviour
             transform.Rotate(Vector3.up, 180, Space.World);
         }
     }
-
-    //public abstract void SetProperty(ScriptableObject property);
 }

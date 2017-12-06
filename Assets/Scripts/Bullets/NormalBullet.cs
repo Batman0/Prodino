@@ -40,31 +40,25 @@ public abstract class NormalBullet : BaseBullet
         Move();
     }
 
-    protected override void ChangePerspective()
+    protected override void ChangeGameState(GameMode currentState)
     {
-        if (GameManager.instance.transitionIsRunning)
+
+        if (currentState == GameMode.TOPDOWN)
         {
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            topCollider.enabled = true;
+            sideCollider.enabled = false;
+            transform.rotation = Quaternion.identity;
+        }
+        else
+        {
+
+            sideCollider.enabled = true;
+            topCollider.enabled = false;
+            if (sidescrollRotation.HasValue)
             {
-                if (!sideCollider.enabled)
-                {
-                    topCollider.enabled = false;
-                    sideCollider.enabled = true;
-                    if (sidescrollRotation.HasValue)
-                    {
-                        transform.rotation = sidescrollRotation.Value;
-                    }
-                }
+                transform.rotation = sidescrollRotation.Value;
             }
-            else
-            {
-                if (!topCollider.enabled)
-                {
-                    sideCollider.enabled = false;
-                    topCollider.enabled = true;
-                    transform.rotation = Quaternion.identity;
-                }
-            }
+
         }
     }
 

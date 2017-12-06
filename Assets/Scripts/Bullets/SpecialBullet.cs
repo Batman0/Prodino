@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class SpecialBullet : BaseBullet
 {
-    protected override void ChangePerspective()
+    protected override void ChangeGameState(GameMode currentState)
     {
-        if (GameManager.instance.transitionIsRunning)
+        //if (GameManager.instance.transitionIsRunning)
         {
-            if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
+            if (currentState == GameMode.TOPDOWN)
             {
-                if (!sideCollider.enabled)
+               // if (!sideCollider.enabled)
                 {
-                    topCollider.enabled = false;
-                    sideCollider.enabled = true;
-                    if (sidescrollRotation.HasValue)
-                    {
-                        transform.rotation = sidescrollRotation.Value;
-                    }
+                    topCollider.enabled = true;
+                    sideCollider.enabled = false;
                 }
             }
             else
             {
-                if (!topCollider.enabled)
+                //if (!topCollider.enabled)
                 {
-                    sideCollider.enabled = false;
-                    topCollider.enabled = true;
+                    sideCollider.enabled = true;
+                    topCollider.enabled = false;
+                    if (sidescrollRotation.HasValue)
+                    {
+                        transform.rotation = sidescrollRotation.Value;
+                    }
                 }
             }
         }

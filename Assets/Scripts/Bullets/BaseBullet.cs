@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class BaseBullet : MonoBehaviour
 {
@@ -12,21 +13,16 @@ public abstract class BaseBullet : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        EventManager.changeState += ChangeGameState;
         if (GameManager.instance.currentGameMode == GameMode.SIDESCROLL)
         {
-            if (!sideCollider.enabled || topCollider.enabled)
-            {
-                topCollider.enabled = false;
-                sideCollider.enabled = true;
-            }
+            topCollider.enabled = false;
+            sideCollider.enabled = true;
         }
         else
         {
-            if (!topCollider.enabled || sideCollider.enabled)
-            {
-                sideCollider.enabled = false;
-                topCollider.enabled = true;
-            }
+            sideCollider.enabled = false;
+            topCollider.enabled = true;
         }
     }
 
@@ -40,13 +36,13 @@ public abstract class BaseBullet : MonoBehaviour
                 sidescrollRotation = transform.rotation;
             }       
         }
-        ChangePerspective();
     }
 
-    protected abstract void ChangePerspective();
+    protected abstract void ChangeGameState(GameMode currentState);
 
     private void OnDisable()
     {
+        EventManager.changeState -= ChangeGameState;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 }

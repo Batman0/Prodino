@@ -29,12 +29,6 @@ public class SinusoideBullet : NormalBullet
     protected override void Awake()
     {
         base.Awake();
-        //speed = property.xBulletSpeed;
-        //sinusoideDuration = property.sinusoideDuration;
-        //destructionMargin = register.propertiesPlayer.bulletDestructionMargin;
-        //forwardDistance = property.bulletForwardDistance;
-        //backDistance = property.bulletBackDistance;
-        //easingValue = property.easingValue;
         playerTr = register.player.transform;
         transformTargetDeltaDistance = 0.5f;
     }

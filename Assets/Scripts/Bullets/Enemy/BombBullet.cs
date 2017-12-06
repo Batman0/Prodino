@@ -24,14 +24,10 @@ public class BombBullet : MonoBehaviour
 
     private void OnEnable()
     {
-        currentGameMode = gameManager.currentGameMode;
+        EventManager.changeState += ChangePerspective;
         blownUp = false;
     }
 
-    void Update()
-    {
-        ChangePerspective();
-    }
 
     private void FixedUpdate()
     {
@@ -48,10 +44,8 @@ public class BombBullet : MonoBehaviour
         if(other.gameObject.tag =="Player")
         {
             gameObject.SetActive(false);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             blownUp = false;
-            //explosionSidescrollCollider.enabled = false;
-            //explosionTopdownCollider.enabled = false;
         }
 
         StartCoroutine("Deactivate", bombLifeTime);
@@ -68,21 +62,20 @@ public class BombBullet : MonoBehaviour
         rb.AddForce(Vector3.down * bombFallSpeed, ForceMode.Acceleration);
     }
 
-    void ChangePerspective()
+    void ChangePerspective(GameMode currentState)
     {
         if (blownUp)
         {
-            if (gameManager.currentGameMode == GameMode.SIDESCROLL)
+            if (currentState == GameMode.SIDESCROLL)
             {
-                if (!explosionSidescrollCollider.enabled)
-                {
-                    explosionSidescrollCollider.enabled = true;
-                    explosionTopdownCollider.enabled = false;
-                }
+
+                explosionSidescrollCollider.enabled = true;
+                explosionTopdownCollider.enabled = false;
+
             }
             else
             {
-                if (!explosionTopdownCollider.enabled)
+                //if (!explosionTopdownCollider.enabled)
                 {
                     explosionSidescrollCollider.enabled = false;
                     explosionTopdownCollider.enabled = true;

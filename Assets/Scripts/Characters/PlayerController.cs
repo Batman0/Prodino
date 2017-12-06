@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
         {
             if (GameManager.instance.transitionIsRunning)
             {
-                StartCoroutine("ChangePerspective");
+                StartCoroutine("ChangeGameMode");
             }
             else
             {
@@ -619,7 +619,7 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-    IEnumerator ChangePerspective()
+    IEnumerator ChangeGameMode()
     {
         jumpTimer = timeToJump;
         anim_isMovingBackwards = false;
@@ -637,19 +637,13 @@ public class PlayerController : MonoBehaviour
 
         if (GameManager.instance.currentGameMode == GameMode.TOPDOWN)
         {
-            if (!sideBodyCollider.enabled)
-            {
-                topBodyCollider.enabled = false;
-                sideBodyCollider.enabled = true;
-            }
+            topBodyCollider.enabled = true;
+            sideBodyCollider.enabled = false;
         }
         else
         {
-            if (!topBodyCollider.enabled)
-            {
-                sideBodyCollider.enabled = false;
-                topBodyCollider.enabled = true;
-            }
+            sideBodyCollider.enabled = true;
+            topBodyCollider.enabled = false;
         }
 
         currentPlayerState = PlayerState.Moving;
@@ -777,25 +771,7 @@ public class PlayerController : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
     }
 
-    ////Arm Rotation in Sidescroll
-    //void SideArmsRotation()
-    //{
-    //    upRotationAngle = properties.upRotationAngle;
-    //    downRotationAngle = properties.downRotationAngle;
-    //    maxArmsRotation = properties.maxArmsRotation;
-    //}
-
-    ////Jumping
-    //void JumpInit()
-    //{
-
-    //    speed = properties.xSpeed;
-    //    jumpForce = properties.jumpForce;
-    //    glideSpeed = properties.glideSpeed;
-    //    gravity = properties.gravity;
-    //    drag = properties.drag;
-    //}
-
+   
     void ShootInit()
     {
         //Shooting
@@ -805,13 +781,6 @@ public class PlayerController : MonoBehaviour
         gunIndex = 0;
     }
 
-    ////Attacks
-    //void AttackInit()
-    //{
-    //    tailMeleeSpeed = properties.tailMeleeSpeed;
-    //    biteHeight = properties.biteATKSpeed;
-    //    biteCoolDown = properties.biteCoolDown;
-    //}
 
     void ArmsAimInit()
     {
