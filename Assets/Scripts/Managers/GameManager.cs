@@ -19,6 +19,8 @@ public struct Background
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    private PlayerController playerController;
     private Register register;
     [HideInInspector]
     public GameMode currentGameMode;
@@ -33,29 +35,35 @@ public class GameManager : MonoBehaviour
     public bool isBossAlive;
 
     public float currentTime;
-    
-	public Transform playerHandle;
+
+    public Transform playerHandle;
 
 
     [Header("Input")]
     private Player player;
     private const int playerId = 0;
 
+    public PlayerController.PlayerState playerState
+    {
+        get { return playerController.CurrentPlayerState; }
+    }
+
     private void Awake()
     {
         player = ReInput.players.GetPlayer(playerId);
+        playerController = FindObjectOfType<PlayerController>();
         currentGameMode = GameMode.SIDESCROLL;
-		float distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
+        float distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
         instance = this;
         register = Register.instance;
-		register.xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, distanceFromCamera )).x;
-		register.xMax = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, distanceFromCamera )).x;
-		register.yMin = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0, distanceFromCamera )).y;
-		register.yMax = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, distanceFromCamera )).y;
+        register.xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, distanceFromCamera)).x;
+        register.xMax = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, distanceFromCamera)).x;
+        register.yMin = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0, distanceFromCamera)).y;
+        register.yMax = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, distanceFromCamera)).y;
         register.zMin = register.yMin;
         register.zMax = register.yMax;
     }
-    
+
 
     void Start()
     {
@@ -69,7 +77,7 @@ public class GameManager : MonoBehaviour
             currentTime += Time.deltaTime;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             currentGameMode = ChangeGameMode(currentGameMode);
             EventManager.OnChangeGameMode(currentGameMode);
@@ -94,14 +102,14 @@ public class GameManager : MonoBehaviour
 
     public GameMode ChangeGameMode(GameMode _currentGameMode)
     {
-        if(!transitionIsRunning)
+        if (!transitionIsRunning)
         {
             if (_currentGameMode == GameMode.SIDESCROLL)
             {
                 _currentGameMode = GameMode.TOPDOWN;
                 Debug.Log("Sono in " + _currentGameMode);
             }
-            else 
+            else
             {
                 _currentGameMode = GameMode.SIDESCROLL;
                 Debug.Log("Sono in " + _currentGameMode);
