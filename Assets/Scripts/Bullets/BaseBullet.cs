@@ -40,7 +40,7 @@ public abstract class BaseBullet : MonoBehaviour
 
     protected abstract void ChangeGameState(GameMode currentState);
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         EventManager.changeState -= ChangeGameState;
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);

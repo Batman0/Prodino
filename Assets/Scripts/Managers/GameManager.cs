@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public float playerBulletSpawnpointY;
     public Background[] backgrounds;
     public float delayToRespawnEnemy;
+    public float distanceFromCamera;
     [Header("Bosses")]
     public bool isBossAlive;
 
@@ -43,10 +44,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         player = ReInput.players.GetPlayer(playerId);
         currentGameMode = GameMode.SIDESCROLL;
-		float distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
-        instance = this;
+	    distanceFromCamera = playerHandle.position.z - Camera.main.transform.position.z;
         register = Register.instance;
 		register.xMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, distanceFromCamera )).x;
 		register.xMax = Camera.main.ViewportToWorldPoint(new Vector3(1, 0.5f, distanceFromCamera )).x;
@@ -99,12 +100,12 @@ public class GameManager : MonoBehaviour
             if (_currentGameMode == GameMode.SIDESCROLL)
             {
                 _currentGameMode = GameMode.TOPDOWN;
-                Debug.Log("Sono in " + _currentGameMode);
+               
             }
             else 
             {
                 _currentGameMode = GameMode.SIDESCROLL;
-                Debug.Log("Sono in " + _currentGameMode);
+
             }
         }
         return _currentGameMode;
