@@ -74,10 +74,6 @@ public class AracnoidLaser : MonoBehaviour
 
     void InitializePositions()
     {
-        if (fluctuationAmplitude > 0)
-        {
-            movingUp = true;
-        }
         startPosition = transform.localPosition;
         origin = transform.localPosition;
         targetPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z + fluctuationAmplitude);
@@ -345,6 +341,10 @@ public class AracnoidLaser : MonoBehaviour
         waitingTime = cycle.waitingTime;
         shootingTime = cycle.shootingTime;
         SetLaserParticleTimes();
+        if (fluctuationAmplitude > 0)
+        {
+            movingUp = true;
+        }
     }
 }
 

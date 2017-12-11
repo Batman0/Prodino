@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 114246466668310326}
   m_Layer: 12
   m_Name: ShotLaser
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 23170655387231722}
   m_Layer: 12
   m_Name: ShotLaser
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -832,7 +832,7 @@ GameObject:
   - component: {fileID: 23076278536651536}
   m_Layer: 12
   m_Name: ShotLaser
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1242,7 +1242,7 @@ GameObject:
   - component: {fileID: 23425017240265760}
   m_Layer: 12
   m_Name: ShotLaser
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2981,6 +2981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a90ecc5522223a24aa578700652734d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
   sideCollider: {fileID: 65920658996208254}
   topCollider: {fileID: 65452012885389244}
 --- !u!114 &114346668301240824
@@ -3176,7 +3177,7 @@ MonoBehaviour:
   externalRotationsAmount: 3
   internalRotationsAmount: 6
   triggerHealthPoints: 1
-  healthPoints: 10
+  healthPoints: 20
   maxDamageDuringWound: 9
   unloadTime: 3
   vulnerableTime: 0

@@ -6,13 +6,25 @@ public class FortressBossEnemy : MonoBehaviour
 {
 
 
-    enum FortressPhase
+    public enum FortressState
     {
-        Entry, Shooting, OpeningWeakSpot, Vulnerable, ClosingWeakSpot, OpeningCore, ProtectingCore, VulnerableCore, ClosingCore, ShootingPlus
+        Entry, Shooting, OpeningWeakSpot, Vulnerable, ClosingWeakSpot, OpeningCore, ProtectingCore, VulnerableCore, ClosingCore, ShootingPlus, Death
     }
 
     [Header("Fortress Parameters")]
     public int healthPoints;
+    public int maxDamagePerCycle;
+    private int cycleCurrentDamage = 0;
+
+    [Header("State durations")]
+    public float openingWeakSpotDuration = 1f;
+    public float vulnerableDuration = 1f;
+    public float closingWeakSpotDuration = 1f;
+    public float openingCoreDuration;
+    public float vulnerableCoreDuration;
+    public float closingCoreDuration;
+    public float attackPlusDuration;
+
 
     [Header("Cannons Parameters")]
     public float[] fireRates;
@@ -20,29 +32,28 @@ public class FortressBossEnemy : MonoBehaviour
     [SerializeField]
     public CannonPatterns[] cannonPatterns;
 
+    [Header("Object components")]
+    public Transform body;
+    public Transform bodyFinalTransform;
+    private Vector3 bodyInitialPosition;
+
     //Cannons
     private int currentBullet;
     private float fireTimer = 0;
     private FortressBullet[] bulletPool;
-    private FortressCannon[] cannons = new FortressCannon[4];
+    private FortressBossCannon[] cannons = new FortressBossCannon[4];
 
-    //Child indexes
-    private const int CANNON_CHILD_INDEX = 0;
-
-    //Phases and cycles
+    //States and cycles
     private int currentCycle = 0;
-    private FortressPhase currentPhase = FortressPhase.Entry;
+    private FortressState state = FortressState.Entry;
+    private int hitSpots = 0;
+    private float currentStateEnterTime = 0;
 
-    //Classes
-    [System.Serializable]
-    public class FortressCannon : MonoBehaviour
+    public FortressState State
     {
-        bool isShooting;
-        public void Shoot(FortressBullet bullet, float speed)
+        get
         {
-            bullet.gameObject.SetActive(true);
-            bullet.transform.position = transform.position;
-            bullet.Speed = speed;
+            return state;
         }
     }
 
@@ -52,8 +63,7 @@ public class FortressBossEnemy : MonoBehaviour
         private int currentBulletIndex;
         private int currentPattern = -1;
         [SerializeField]
-        public Pattern [] patterns;
-
+        public Pattern[] patterns;
         [System.Serializable]
         public struct Pattern
         {
@@ -64,7 +74,7 @@ public class FortressBossEnemy : MonoBehaviour
             if (currentPattern == -1)
             { SetPattern(); }
             cannonIndex = patterns[currentPattern].pattern[currentBulletIndex];
-            if (currentBulletIndex < patterns[currentPattern].pattern.Length-1)
+            if (currentBulletIndex < patterns[currentPattern].pattern.Length - 1)
             {
                 currentBulletIndex++;
             }
@@ -86,22 +96,33 @@ public class FortressBossEnemy : MonoBehaviour
         bulletPool = GetComponentsInChildren<FortressBullet>();
         foreach (FortressBullet bullet in bulletPool)
         {
+            bullet.transform.parent = null;
             bullet.gameObject.SetActive(false);
         }
-        for(int i =0; i<cannons.Length; i++)
-        {
-            GameObject cannon = transform.GetChild(CANNON_CHILD_INDEX).GetChild(i).gameObject;
-            cannon.AddComponent<FortressCannon>();
-            cannons[i] = cannon.GetComponent<FortressCannon>();
-        }
+        cannons = GetComponentsInChildren<FortressBossCannon>();
+        bodyInitialPosition = body.position;
+    }
+
+    void Start()
+    {
+        EnterNewState(FortressState.Shooting);
     }
 
     void FixedUpdate()
     {
-        currentPhase = FortressPhase.Shooting;
-        if (currentPhase == FortressPhase.Shooting)
+        Debug.Log(state);
+        switch (state)
         {
-            TryShooting();
+            case FortressState.Shooting:
+                TryShooting();
+                break;
+            case FortressState.OpeningCore:
+                OpenCoreAnimation();
+                break;
+            case FortressState.ClosingCore:
+                CloseCoreAnimation();
+                break;
+            default: break;
         }
     }
 
@@ -124,7 +145,7 @@ public class FortressBossEnemy : MonoBehaviour
         NextBullet();
         if (isLast)
         {
-            EnterOpeningWeakSpotPhase();
+            EnterOpeningWeakSpotState();
         }
     }
 
@@ -137,8 +158,114 @@ public class FortressBossEnemy : MonoBehaviour
         }
     }
 
-    void EnterOpeningWeakSpotPhase()
+    void EnterShootingState()
     {
-        currentPhase = FortressPhase.Entry;
+        EnterNewState(FortressState.Shooting);
+    }
+
+    void EnterOpeningWeakSpotState()
+    {
+        EnterNewState(FortressState.OpeningWeakSpot);
+        //Opening animation
+        Invoke("EnterVulnerableState", openingWeakSpotDuration);
+    }
+
+    void EnterVulnerableState()
+    {
+        EnterNewState(FortressState.Vulnerable);
+        Invoke("EnterClosingWeakSpotState", vulnerableDuration);
+    }
+
+    void EnterClosingWeakSpotState()
+    {
+        EnterNewState(FortressState.ClosingWeakSpot);
+        Invoke("EnterShootingState", closingWeakSpotDuration);
+    }
+
+    void EnterOpeningCoreState()
+    {
+        CancelInvoke("EnterClosingWeakSpotState");
+        EnterNewState(FortressState.OpeningCore);
+        Invoke("EnterOpeningProtectingCore", openingCoreDuration);
+    }
+
+    void EnterOpeningProtectingCore()
+    {
+        EnterNewState(FortressState.ProtectingCore);
+        Invoke("EnterClosingCoreState", openingCoreDuration);
+    }
+
+    void EnterVulnerableCoreState()
+    {
+        CancelInvoke("EnterClosingCoreState");
+        EnterNewState(FortressState.VulnerableCore);
+        Invoke("EnterClosingCoreState", openingCoreDuration);
+    }
+
+    void EnterClosingCoreState()
+    {
+        CancelInvoke("EnterClosingCoreState");
+        EnterNewState(FortressState.ClosingCore);
+        Invoke("EnterShootingState", closingCoreDuration);
+    }
+
+    void EnterAttackPlusState()
+    {
+        CancelInvoke("EnterShootingState");
+        EnterNewState(FortressState.ShootingPlus);
+        Invoke("EnterShootingState", attackPlusDuration);
+    }
+
+    void EnterDeathState()
+    {
+        EnterNewState(FortressState.Death);
+    }
+
+    public void WeakSpotHit()
+    {
+        hitSpots++;
+        if (hitSpots == 4)
+        {
+            hitSpots = 0;
+            EnterOpeningCoreState();
+        }
+    }
+
+    public void DealDamage()
+    {
+        healthPoints--;
+        cycleCurrentDamage++;
+        Debug.Log(healthPoints);
+        if (healthPoints <= 0)
+        {
+            EnterDeathState();
+        }
+        if (cycleCurrentDamage > maxDamagePerCycle)
+        {
+            EnterClosingCoreState();
+            Invoke("EnterShootingPlusState", closingCoreDuration);
+        }
+    }
+
+    public void BreakBarrier()
+    {
+        EnterVulnerableCoreState();
+    }
+
+    void OpenCoreAnimation()
+    {
+        body.position = bodyFinalTransform.position;
+    }
+
+    void CloseCoreAnimation()
+    {
+        body.position = bodyInitialPosition;
+    }
+
+    void EnterNewState(FortressState _state)
+    {
+        state = _state;
+        currentStateEnterTime = Time.time;
     }
 }
+

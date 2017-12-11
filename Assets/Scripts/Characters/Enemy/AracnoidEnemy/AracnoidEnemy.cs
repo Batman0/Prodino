@@ -82,6 +82,8 @@ public class AracnoidEnemy : MonoBehaviour
         [SerializeField]
         public AracnoidLasersPatternContainer[] patterns;
         public int cycles;
+        public bool random;
+        private int currentPattern;
         [System.Serializable]
         public class AracnoidLasersPatternContainer
         {
@@ -118,7 +120,22 @@ public class AracnoidEnemy : MonoBehaviour
 
         public AracnoidLaserParameters[] GetPattern()
         {
-            return patterns[Random.Range(0, patterns.Length)].LaserBehaviour;
+            if(random)
+            {
+                currentPattern = Random.Range(0, patterns.Length);
+            }
+            else
+            {
+                if (currentPattern < patterns.Length - 1)
+                {
+                    currentPattern++;
+                }
+                else
+                {
+                    currentPattern = 0;
+                }
+            }
+            return patterns[currentPattern].LaserBehaviour;
         }
     }
     void Awake()
