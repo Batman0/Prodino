@@ -47,17 +47,17 @@ public abstract class NormalBullet : BaseBullet
         {
             topCollider.enabled = true;
             sideCollider.enabled = false;
-            transform.rotation = Quaternion.identity;
+            //transform.rotation = Quaternion.identity;
         }
         else
         {
 
             sideCollider.enabled = true;
             topCollider.enabled = false;
-            if (sidescrollRotation.HasValue)
-            {
-                transform.rotation = sidescrollRotation.Value;
-            }
+            //if (sidescrollRotation.HasValue)
+            //{
+            //    transform.rotation = sidescrollRotation.Value;
+            //}
 
         }
     }

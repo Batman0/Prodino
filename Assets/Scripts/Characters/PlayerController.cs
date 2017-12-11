@@ -156,6 +156,12 @@ public class PlayerController : MonoBehaviour
         jumpTimer = timeToJump;
     }
 
+    //Mettere il sistema ad evento 
+    //void OnEnable()
+    //{
+    //    EventManager.changeState += ChangeGameMode;
+    //}
+
     void FixedUpdate()
     {
         Main();
@@ -222,10 +228,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerInit();
         RewiredInit();
-        //SideArmsRotation();
-        //JumpInit();
         ShootInit();
-        //AttackInit();
         ArmsAimInit();
         Boundaries();
     }
@@ -280,14 +283,13 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (rb.velocity.y < 0)
+                if (rb.velocity.y <= 0)
                 {
                     if (!anim_isRunning)
                     {
                         SetAnimationToRun();
                     }
-                    //LUCA sistemare salto
-                    //GURRA rivedere questa parte
+              
                     ResetPlayerAfterJump();
                 }
             }
@@ -406,6 +408,33 @@ public class PlayerController : MonoBehaviour
     {
         canJump = CheckGround(jumpCheckRayLength);
         thereIsGround = CheckGround(groundCheckRayLength);
+
+        if(thereIsGround == false)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Force);
+
+            if (!canJump && rb.velocity.y < 0)
+            {
+                if (!anim_isGliding)
+                {
+                    SetAnimationFromJumpToGlide();
+                }
+                if (rb.velocity.y < -drag)
+                {
+                    StabilizeAcceleration();
+                }
+                else
+                {
+                    Glide();
+                }
+
+                if(IsDead())
+                {
+                    KillPlayer();
+                }
+            }
+           
+        }
     }
 
     void UpdateArmsRotation()
@@ -512,7 +541,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void ResetPlayerAfterJump()
-    {
+    {        
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
     }
@@ -665,9 +694,8 @@ public class PlayerController : MonoBehaviour
 
     public bool IsDead()
     {
-        if (currentLives <= 0)
+        if (currentLives <= 0 || ((transform.position.y <= sideYMin + 0.1f) && (transform.position.y >= sideYMin - 0.1f)) )
         {
-            currentPlayerState = PlayerState.Dead;
             return true;
         }
         return false;

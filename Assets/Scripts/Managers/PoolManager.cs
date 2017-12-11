@@ -26,19 +26,17 @@ public class PoolManager : MonoBehaviour
             for (int i = 0; i < enemyAmount; i++)
             {
                 GameObject enemy = Instantiate(enemyTypeObject) as GameObject;
-                //enemy.GetComponent<Enemy>().ConstructEnemy();
                 enemy.SetActive(false);
                 pooledItems.Add(enemy);
             }
         }
-        //TO REVIEW THIS FUNCTION. WHEN INDEX IS POOLDEITEMS.COUNT - 1 IT BOTH GETS 0 AND INCREASES OF 1, SKIPPING THE 0.
         public GameObject GetpooledEnemy()
         {
             int currentIndex = index;
 
             if (currentIndex >= pooledItems.Count - 1)
             {
-                index = 0;
+                index = -1;
             }
 
             index++;
@@ -62,20 +60,18 @@ public class PoolManager : MonoBehaviour
 
             for (int i = 0; i < _bulletAmount; i++)
             {
-                //Debug.Log(_bulletTypeObject.name);
                 GameObject bullet = Instantiate(_bulletTypeObject) as GameObject;
                 bullet.SetActive(false);
                 pooledItems.Add(bullet);
             }
         }
-        //TO REVIEW THIS FUNCTION. WHEN INDEX IS POOLDEITEMS.COUNT - 1 IT BOTH GETS 0 AND INCREASES OF 1, SKIPPING THE 0.
         public GameObject GetpooledBullet()
         {
             int currentIndex = index;
 
             if (currentIndex >= pooledItems.Count - 1)
             {
-                index = 0;
+                index = -1;
             }
 
             index++;
