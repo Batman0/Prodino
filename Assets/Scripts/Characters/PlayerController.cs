@@ -8,15 +8,18 @@ public class PlayerController : MonoBehaviour
 
     public enum PlayerState { Moving, Attacking, Dead }
 
-    [Header("Initialization")]
     private PlayerState currentPlayerState;
+    public PlayerState CurrentPlayerState
+    {
+        get { return currentPlayerState; }
+    }
     [HideInInspector]
     //LUCA usata per settare la posizione di partenza e anche per farlo rimanere su una y costante. 
     //da cambiare se da design ci fosse bisogno di far cadere o spostare in basso trevor.
     public Vector3 startPosition;
     //[SerializeField]
     //private PropertiesPlayer properties;
-    
+
     private RaycastHit hit;
     private Rigidbody rb;
     public LayerMask groundMask;
@@ -207,7 +210,7 @@ public class PlayerController : MonoBehaviour
             jumpTimer += Time.deltaTime;
         }
         //GURRA ho rimesso il button down, poiché se il player sta planando c'è il rischio che appena tocchi terra salti subito involontariamente
-        if (player.GetButtonDown("Jump") && jumpTimer>=timeToJump && canJump)
+        if (player.GetButtonDown("Jump") && jumpTimer >= timeToJump && canJump)
         {
             jumpFrame = true;
         }
@@ -289,12 +292,12 @@ public class PlayerController : MonoBehaviour
                     {
                         SetAnimationToRun();
                     }
-              
+
                     ResetPlayerAfterJump();
                 }
             }
         }
-    
+
 
         if (player.GetButton("Jump"))
         {
@@ -409,7 +412,7 @@ public class PlayerController : MonoBehaviour
         canJump = CheckGround(jumpCheckRayLength);
         thereIsGround = CheckGround(groundCheckRayLength);
 
-        if(thereIsGround == false)
+        if (thereIsGround == false)
         {
             rb.AddForce(Vector3.down * gravity, ForceMode.Force);
 
@@ -428,12 +431,12 @@ public class PlayerController : MonoBehaviour
                     Glide();
                 }
 
-                if(IsDead())
+                if (IsDead())
                 {
                     KillPlayer();
                 }
             }
-           
+
         }
     }
 
@@ -541,7 +544,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void ResetPlayerAfterJump()
-    {        
+    {
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
     }
@@ -694,7 +697,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsDead()
     {
-        if (currentLives <= 0 || ((transform.position.y <= sideYMin + 0.1f) && (transform.position.y >= sideYMin - 0.1f)) )
+        if (currentLives <= 0 || ((transform.position.y <= sideYMin + 0.1f) && (transform.position.y >= sideYMin - 0.1f)))
         {
             return true;
         }
@@ -799,7 +802,7 @@ public class PlayerController : MonoBehaviour
         player = ReInput.players.GetPlayer(playerId);
     }
 
-   
+
     void ShootInit()
     {
         //Shooting
