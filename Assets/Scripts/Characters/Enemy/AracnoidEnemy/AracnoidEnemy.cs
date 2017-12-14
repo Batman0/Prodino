@@ -120,12 +120,14 @@ public class AracnoidEnemy : MonoBehaviour
 
         public AracnoidLaserParameters[] GetPattern()
         {
+            int patternToReturn =0;
             if(random)
             {
-                currentPattern = Random.Range(0, patterns.Length);
+                patternToReturn = Random.Range(0, patterns.Length);
             }
             else
             {
+                patternToReturn = currentPattern;
                 if (currentPattern < patterns.Length - 1)
                 {
                     currentPattern++;
@@ -135,7 +137,7 @@ public class AracnoidEnemy : MonoBehaviour
                     currentPattern = 0;
                 }
             }
-            return patterns[currentPattern].LaserBehaviour;
+            return patterns[patternToReturn].LaserBehaviour;
         }
     }
     void Awake()
