@@ -11,6 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
+  lives: 0
+  xSpeed: 0
+  enemyName: 
+  gameObjectPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 0}
   EditorBanks: []
   EditorEvents: []
   MasterBankRef: {fileID: 0}
